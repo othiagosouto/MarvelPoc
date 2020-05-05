@@ -12,6 +12,7 @@ ext {
     androidCompileSdkVersion = 29
 
     //Libraries
+    coroutinesVersion = '1.3.5'
     androidxAppCompatVersion = '1.1.0'
     androidxConstraintLayoutVersion = '1.1.3'
     androidxEspressoVersion = '3.2.0'
@@ -19,24 +20,28 @@ ext {
     androidxTestRulesVersion = '1.2.0'
     androidxTestJunitVersion = '1.1.1'
     junitVersion = '4.13'
+    koinAndroidVersion = '2.1.5'
     kotlinVersion = '1.3.61'
     materialVersion = '1.2.0-alpha06'
     mockkVersion = '1.10.0'
     moshiVersion = '1.9.2'
-    retrofitVersion = '2.8.1'
+    retrofitVersion = '2.6.1'
     lifecycleVersion = '2.2.0'
     coreKtx = '1.2.0'
     androidxTestCore = '2.1.0'
     robolectric = '4.3.1'
     recyclerViewActions = '3.2.0'
     recyclerView = '1.1.0'
+    truthVersion = '1.0.1'
 
     Dependencies = [
             androidxAppCompat     : "androidx.appcompat:appcompat:${androidxAppCompatVersion}",
+            coroutines : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
             kotlin                : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
             moshiKotlin           : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
             retrofit              : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             retrofitMoshiConverter: "com.squareup.retrofit2:converter-moshi:${retrofitVersion}",
+            koin : "org.koin:koin-androidx-viewmodel:${koinAndroidVersion}",
             archx                 : [
                     lifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:${lifecycleVersion}"
 
@@ -63,6 +68,7 @@ ext {
             junit                  : "junit:junit:${junitVersion}",
             mockk                  : "io.mockk:mockk:${mockkVersion}",
             robolectric            : "org.robolectric:robolectric:${robolectric}",
-            recyclerViewActions    : "androidx.test.espresso.contrib.RecyclerViewActions:${recyclerViewActions}"
+            recyclerViewActions    : "androidx.test.espresso.contrib.RecyclerViewActions:${recyclerViewActions}",
+            truth : "com.google.truth:truth:${truthVersion}"
     ]
 }

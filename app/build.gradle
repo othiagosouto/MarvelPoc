@@ -30,7 +30,10 @@ android {
         test.java.srcDirs += 'src/test/kotlin/'
         androidTest.java.srcDirs += 'src/androidTest/kotlin/'
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 def allTestsConfigs(dependency) {
@@ -44,10 +47,17 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation project(path: ':data')
+    implementation project(path: ':shared')
+
     implementation Dependencies.kotlin
+    implementation Dependencies.coroutines
     implementation Dependencies.androidxAppCompat
     implementation Dependencies.archx.lifecycleExtensions
     implementation Dependencies.design.androidxConstraintLayout
+
+
+    implementation Dependencies.koin
 
     implementation Dependencies.ktx.core
     implementation Dependencies.ktx.viewModel
@@ -63,4 +73,8 @@ dependencies {
 
     androidTestImplementation TestingDependencies.androidxTestRunner
     androidTestImplementation TestingDependencies.androidxTestJunit
+
+
+    // network
+
 }

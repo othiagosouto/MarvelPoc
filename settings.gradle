@@ -1,2 +1,4 @@
 rootProject.name='MarvelPoc'
 include ':app'
+include ':data'
+include ':shared'

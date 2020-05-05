@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.soutosss.marvelpoc.data">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application>
+        <provider
+            android:name=".DataInitializer"
+            android:authorities="${applicationId}.data"
+            android:enabled="true"
+            android:exported="false" />
+    </application>
+
+</manifest>
