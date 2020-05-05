@@ -1,0 +1,68 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+    //Android
+    androidBuildToolsVersion = "29.0.2"
+    androidMinSdkVersion = 19
+    androidTargetSdkVersion = 29
+    androidCompileSdkVersion = 29
+
+    //Libraries
+    androidxAppCompatVersion = '1.1.0'
+    androidxConstraintLayoutVersion = '1.1.3'
+    androidxEspressoVersion = '3.2.0'
+    androidxTestRunnerVersion = '1.2.0'
+    androidxTestRulesVersion = '1.2.0'
+    androidxTestJunitVersion = '1.1.1'
+    junitVersion = '4.13'
+    kotlinVersion = '1.3.61'
+    materialVersion = '1.2.0-alpha06'
+    mockkVersion = '1.10.0'
+    moshiVersion = '1.9.2'
+    retrofitVersion = '2.8.1'
+    lifecycleVersion = '2.2.0'
+    coreKtx = '1.2.0'
+    androidxTestCore = '2.1.0'
+    robolectric = '4.3.1'
+    recyclerViewActions = '3.2.0'
+    recyclerView = '1.1.0'
+
+    Dependencies = [
+            androidxAppCompat     : "androidx.appcompat:appcompat:${androidxAppCompatVersion}",
+            kotlin                : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
+            moshiKotlin           : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
+            retrofit              : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            retrofitMoshiConverter: "com.squareup.retrofit2:converter-moshi:${retrofitVersion}",
+            archx                 : [
+                    lifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:${lifecycleVersion}"
+
+            ],
+            design                : [
+                    material                : "com.google.android.material:material:${materialVersion}",
+                    androidxConstraintLayout: "androidx.constraintlayout:constraintlayout:${androidxConstraintLayoutVersion}",
+                    recyclerView            : "androidx.recyclerview:recyclerview:${recyclerView}"
+            ],
+            ktx                   : [
+                    core     : "androidx.core:core-ktx:${coreKtx}",
+                    liveData : "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}",
+                    viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}"
+            ]
+    ]
+
+    TestingDependencies = [
+            androidxTestCore       : "androidx.arch.core:core-testing:${androidxTestCore}",
+            androidxEspresso       : "androidx.test.espresso:espresso-core:${androidxEspressoVersion}",
+            androidxEspressoContrib: "androidx.test.espresso:espresso-contrib:${androidxEspressoVersion}",
+            androidxTestRunner     : "androidx.test:runner:${androidxTestRunnerVersion}",
+            androidxTestRules      : "androidx.test:rules:${androidxTestRulesVersion}",
+            androidxTestJunit      : "androidx.test.ext:junit:${androidxTestJunitVersion}",
+            junit                  : "junit:junit:${junitVersion}",
+            mockk                  : "io.mockk:mockk:${mockkVersion}",
+            robolectric            : "org.robolectric:robolectric:${robolectric}",
+            recyclerViewActions    : "androidx.test.espresso.contrib.RecyclerViewActions:${recyclerViewActions}"
+    ]
+}
