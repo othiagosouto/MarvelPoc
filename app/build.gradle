@@ -62,4 +62,5 @@ dependencies {
     allTestsConfigs TestingDependencies.junit
 
     androidTestImplementation TestingDependencies.androidxTestRunner
+    androidTestImplementation TestingDependencies.androidxTestJunit
 }
