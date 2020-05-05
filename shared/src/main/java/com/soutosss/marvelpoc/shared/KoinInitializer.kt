@@ -25,6 +25,7 @@ abstract class KoinInitializer : ContentProvider() {
     }
 
     override fun onCreate(): Boolean {
+        ModulesInitializer.addAll(createKoinModules())
         return true
     }
 
