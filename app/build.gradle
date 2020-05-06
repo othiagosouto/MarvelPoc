@@ -55,6 +55,7 @@ dependencies {
     implementation Dependencies.androidxAppCompat
     implementation Dependencies.archx.lifecycleExtensions
     implementation Dependencies.design.androidxConstraintLayout
+    implementation Dependencies.design.material
 
 
     implementation Dependencies.koin
@@ -76,8 +77,5 @@ dependencies {
 
     androidTestImplementation TestingDependencies.androidxTestRunner
     androidTestImplementation TestingDependencies.androidxTestJunit
-
-
-    // network
 
 }
