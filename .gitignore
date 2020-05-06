@@ -1,7 +1,10 @@
-
+it 
 # Created by https://www.gitignore.io/api/osx,macos,gradle,kotlin,android,windows,intellij,androidstudio
 # Edit at https://www.gitignore.io/?templates=osx,macos,gradle,kotlin,android,windows,intellij,androidstudio
 
+
+##Credential propertie
+data/src/main/resources/api.properties
 ### Android ###
 # Built application files
 *.apk
