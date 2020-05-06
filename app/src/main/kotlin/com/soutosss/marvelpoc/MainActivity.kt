@@ -2,6 +2,7 @@ package com.soutosss.marvelpoc
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.soutosss.marvelpoc.home.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {

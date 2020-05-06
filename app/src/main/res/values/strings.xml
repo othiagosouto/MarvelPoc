@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MarvelPoc</string>
+    <string name="home_error_loading">Uma falha inesperada aconteceu :(</string>
 </resources>
