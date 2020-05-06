@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.soutosss.marvelpoc">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
+        android:name=".MarvelPocApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,6 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".AppModulesInitializer"
+            android:authorities="${applicationId}.app"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>
