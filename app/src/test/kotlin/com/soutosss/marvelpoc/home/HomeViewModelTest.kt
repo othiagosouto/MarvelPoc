@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.soutosss.marvelpoc.R
-import com.soutosss.marvelpoc.Result
+import com.soutosss.marvelpoc.shared.livedata.Result
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
 import io.mockk.coEvery
