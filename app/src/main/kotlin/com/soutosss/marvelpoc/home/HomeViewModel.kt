@@ -17,7 +17,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
             _characters.postValue(Result.Loading)
             try {
                 val results = repository.fetchAllCharacters().data.results
-                _characters.postValue(Result.LoadedList(results.map { CharacterHome(it) }))
+                _characters.postValue(Result.Loaded(results.map { CharacterHome(it) }))
             } catch (e: Exception) {
                 _characters.postValue(
                     Result.Error(R.string.home_error_loading)

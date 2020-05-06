@@ -38,9 +38,9 @@ class HomeViewModelTest {
             coEvery { repository.fetchAllCharacters() } returns parseToJson()
 
             viewModel.fetchCharacters()
-            val value = viewModel.characters.value!! as Result.LoadedList
+            val value = viewModel.characters.value!! as Result.Loaded
             val charactersHome = parseToJson().data.results.map { CharacterHome(it) }
-            assertThat(value).isEqualTo(Result.LoadedList(charactersHome))
+            assertThat(value).isEqualTo(Result.Loaded(charactersHome))
         }
 
     @Test

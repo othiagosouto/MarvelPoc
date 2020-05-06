@@ -8,6 +8,7 @@ data class CharacterHome(
     val thumbnailUrl: String,
     val favorite: Boolean
 ) {
+
     constructor(response: Result) : this(
         id = response.id,
         name = response.name,
