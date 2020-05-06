@@ -18,6 +18,7 @@ android {
 
     buildTypes {
         release {
+            useProguard false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -45,7 +46,8 @@ dependencies {
     implementation Dependencies.coroutines
     implementation Dependencies.koin
     implementation Dependencies.retrofit
-    implementation Dependencies.retrofitMoshiConverter
+
+    implementation Dependencies.gsonConverter
 
     allTestsConfigs TestingDependencies.junit
     allTestsConfigs TestingDependencies.mockk

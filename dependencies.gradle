@@ -33,6 +33,7 @@ ext {
     recyclerViewActions = '3.2.0'
     recyclerView = '1.1.0'
     truthVersion = '1.0.1'
+    gsonConverterVersion = '2.8.1'
 
     Dependencies = [
             androidxAppCompat     : "androidx.appcompat:appcompat:${androidxAppCompatVersion}",
@@ -40,7 +41,7 @@ ext {
             kotlin                : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
             moshiKotlin           : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
             retrofit              : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
-            retrofitMoshiConverter: "com.squareup.retrofit2:converter-moshi:${retrofitVersion}",
+            gsonConverter: "com.squareup.retrofit2:converter-gson:${gsonConverterVersion}",
             koin : "org.koin:koin-androidx-viewmodel:${koinAndroidVersion}",
             archx                 : [
                     lifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:${lifecycleVersion}"
