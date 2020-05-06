@@ -48,5 +48,7 @@ dependencies {
     implementation Dependencies.retrofitMoshiConverter
 
     allTestsConfigs TestingDependencies.junit
+    allTestsConfigs TestingDependencies.mockk
+    allTestsConfigs TestingDependencies.coroutines
     allTestsConfigs TestingDependencies.truth
 }

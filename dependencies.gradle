@@ -69,6 +69,7 @@ ext {
             mockk                  : "io.mockk:mockk:${mockkVersion}",
             robolectric            : "org.robolectric:robolectric:${robolectric}",
             recyclerViewActions    : "androidx.test.espresso.contrib.RecyclerViewActions:${recyclerViewActions}",
-            truth : "com.google.truth:truth:${truthVersion}"
+            truth : "com.google.truth:truth:${truthVersion}",
+            coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesVersion}"
     ]
 }
