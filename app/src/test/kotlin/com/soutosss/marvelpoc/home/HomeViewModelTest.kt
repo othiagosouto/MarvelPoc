@@ -7,6 +7,7 @@ import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.shared.livedata.Result
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
+import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
@@ -37,9 +38,9 @@ class HomeViewModelTest {
             coEvery { repository.fetchAllCharacters() } returns parseToJson()
 
             viewModel.fetchCharacters()
-            val value = viewModel.characters.value!! as Result.Loaded
-
-            assertThat(value.item).isEqualTo(parseToJson())
+            val value = viewModel.characters.value!! as Result.LoadedList
+            val charactersHome = parseToJson().data.results.map { CharacterHome(it) }
+            assertThat(value).isEqualTo(Result.LoadedList(charactersHome))
         }
 
     @Test
@@ -49,9 +50,8 @@ class HomeViewModelTest {
             coEvery { repository.fetchAllCharacters() } throws Exception()
 
             viewModel.fetchCharacters()
-            val value = viewModel.characters.value!! as Result.Error
 
-            assertThat(value.errorMessage).isEqualTo(R.string.home_error_loading)
+            assertThat(viewModel.characters.value!!).isEqualTo(Result.Error(R.string.home_error_loading))
         }
 
 }

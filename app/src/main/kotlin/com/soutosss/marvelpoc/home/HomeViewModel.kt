@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.shared.livedata.Result
 import com.soutosss.marvelpoc.data.CharactersRepository
+import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: CharactersRepository) : ViewModel(), LifecycleObserver {
@@ -15,16 +16,11 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
         viewModelScope.launch {
             _characters.postValue(Result.Loading)
             try {
-                _characters.postValue(
-                    Result.Loaded(
-                        repository.fetchAllCharacters()
-                    )
-                )
+                val results = repository.fetchAllCharacters().data.results
+                _characters.postValue(Result.LoadedList(results.map { CharacterHome(it) }))
             } catch (e: Exception) {
                 _characters.postValue(
-                    Result.Error(
-                        R.string.home_error_loading
-                    )
+                    Result.Error(R.string.home_error_loading)
                 )
             }
         }
