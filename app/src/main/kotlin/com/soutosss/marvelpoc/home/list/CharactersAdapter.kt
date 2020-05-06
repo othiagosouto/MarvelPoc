@@ -1,14 +1,18 @@
 package com.soutosss.marvelpoc.home.list
 
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.home.list.CharactersAdapter.CharacterHomeViewHolder
@@ -28,9 +32,12 @@ class CharactersAdapter : ListAdapter<CharacterHome, CharacterHomeViewHolder>(Ch
 
     inner class CharacterHomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val headerText: TextView = itemView.findViewById(R.id.text)
+        private val imageView: ImageView = itemView.findViewById(R.id.image)
 
         fun bind(characterHome: CharacterHome) {
             headerText.text = characterHome.name
+
+            Glide.with(imageView.context).load(characterHome.thumbnailUrl).error(R.drawable.ic_launcher_background).dontAnimate().into(imageView)
         }
     }
 
