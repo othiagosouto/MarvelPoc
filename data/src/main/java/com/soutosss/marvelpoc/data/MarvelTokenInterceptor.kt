@@ -12,27 +12,18 @@ internal class MarvelTokenInterceptor(
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val timestamp = generateTimeStamp().toString()
-        val md5Hash = (timestamp +  privateKey + publicKey).toMD5()
+        val md5Hash = (timestamp + privateKey + publicKey).toMD5()
 
         val request = chain.request()
         val url = buildHttpUrl(request, timestamp, md5Hash)
         return chain.proceed(request.newBuilder().url(url).build())
     }
 
-    private fun buildHttpUrl(
-        request: Request,
-        timestamp: String,
-        md5Hash: String
-    ) = request.url()
-        .newBuilder()
-        .addQueryParameter(TIMESTAMP_PARAM, timestamp)
-        .addQueryParameter(API_KEY_PARAM, publicKey)
-        .addQueryParameter(HASH_PARAM, md5Hash)
-        .build()
-
-    companion object {
-        private const val API_KEY_PARAM = "apikey"
-        private const val HASH_PARAM = "hash"
-        private const val TIMESTAMP_PARAM = "ts"
-    }
+    private fun buildHttpUrl(request: Request, timestamp: String, md5Hash: String) =
+        request.url()
+            .newBuilder()
+            .addQueryParameter("apikey", publicKey)
+            .addQueryParameter("ts", timestamp)
+            .addQueryParameter("hash", md5Hash)
+            .build()
 }

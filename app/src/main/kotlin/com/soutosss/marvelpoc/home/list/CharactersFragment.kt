@@ -22,12 +22,20 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
 
         homeViewModel.characters.observe(this.viewLifecycleOwner, Observer {
             when (it) {
-                is Result.Loaded -> handle(it.item, adapter)
+                is Result.Loaded -> adapter.submitList(it.item as List<CharacterHome>)
             }
         })
     }
 
-    fun handle(content: Any, adapter: CharactersAdapter) {
-        adapter.submitList(content as List<CharacterHome>)
+    companion object {
+        private const val KEY_FAVORITE_TAB = "KEY_FAVORITE_TAB"
+        fun createHomeFragment(): Fragment = newInstance(false)
+        fun createFavoriteFragment(): Fragment = newInstance(true)
+
+        private fun newInstance(isFavoriteTab: Boolean): Fragment = CharactersFragment().apply {
+            val arguments = Bundle()
+            arguments.putBoolean(KEY_FAVORITE_TAB, isFavoriteTab)
+            this.arguments = arguments
+        }
     }
 }
