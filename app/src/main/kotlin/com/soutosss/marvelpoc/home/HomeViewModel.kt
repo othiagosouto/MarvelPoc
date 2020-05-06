@@ -15,7 +15,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
 
     fun fetchCharacters() {
         viewModelScope.launch {
-            _characters.postValue(Result.Loaded(repository.fetchAllCharacters()))
+            _characters.postValue(Result.Loading)
             try {
                 _characters.postValue(
                     Result.Loaded(

@@ -33,24 +33,25 @@ ext {
     recyclerView = '1.1.0'
     truthVersion = '1.0.1'
     gsonConverterVersion = '2.8.1'
+    gsonVersion = '2.8.5'
 
     Dependencies = [
-            androidxAppCompat     : "androidx.appcompat:appcompat:${androidxAppCompatVersion}",
-            coroutines : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
-            kotlin                : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
-            retrofit              : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
-            gsonConverter: "com.squareup.retrofit2:converter-gson:${gsonConverterVersion}",
-            koin : "org.koin:koin-androidx-viewmodel:${koinAndroidVersion}",
-            archx                 : [
+            androidxAppCompat: "androidx.appcompat:appcompat:${androidxAppCompatVersion}",
+            coroutines       : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
+            kotlin           : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
+            retrofit         : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            gsonConverter    : "com.squareup.retrofit2:converter-gson:${gsonConverterVersion}",
+            koin             : "org.koin:koin-androidx-viewmodel:${koinAndroidVersion}",
+            archx            : [
                     lifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:${lifecycleVersion}"
 
             ],
-            design                : [
+            design           : [
                     material                : "com.google.android.material:material:${materialVersion}",
                     androidxConstraintLayout: "androidx.constraintlayout:constraintlayout:${androidxConstraintLayoutVersion}",
                     recyclerView            : "androidx.recyclerview:recyclerview:${recyclerView}"
             ],
-            ktx                   : [
+            ktx              : [
                     core     : "androidx.core:core-ktx:${coreKtx}",
                     liveData : "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}",
                     viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}"
@@ -58,6 +59,8 @@ ext {
     ]
 
     TestingDependencies = [
+
+            gson                   : "com.google.code.gson:gson:${gsonVersion}",
             androidxTestCore       : "androidx.arch.core:core-testing:${androidxTestCore}",
             androidxEspresso       : "androidx.test.espresso:espresso-core:${androidxEspressoVersion}",
             androidxEspressoContrib: "androidx.test.espresso:espresso-contrib:${androidxEspressoVersion}",
@@ -68,7 +71,7 @@ ext {
             mockk                  : "io.mockk:mockk:${mockkVersion}",
             robolectric            : "org.robolectric:robolectric:${robolectric}",
             recyclerViewActions    : "androidx.test.espresso.contrib.RecyclerViewActions:${recyclerViewActions}",
-            truth : "com.google.truth:truth:${truthVersion}",
-            coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesVersion}"
+            truth                  : "com.google.truth:truth:${truthVersion}",
+            coroutines             : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesVersion}"
     ]
 }
