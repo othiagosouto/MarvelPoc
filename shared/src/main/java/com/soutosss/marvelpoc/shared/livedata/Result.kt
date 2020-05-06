@@ -1,4 +1,4 @@
-package com.soutosss.marvelpoc
+package com.soutosss.marvelpoc.shared.livedata
 
 sealed class Result {
     object Loading : Result()

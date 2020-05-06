@@ -1,7 +1,7 @@
 package com.soutosss.marvelpoc.data
 
 import com.soutosss.marvelpoc.data.network.CharactersApi
-import com.soutosss.marvelpoc.shared.KoinInitializer
+import com.soutosss.marvelpoc.shared.koin.KoinInitializer
 import okhttp3.OkHttpClient
 import org.koin.core.module.Module
 import org.koin.dsl.module

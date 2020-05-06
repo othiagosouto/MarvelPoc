@@ -1,4 +1,4 @@
-package com.soutosss.marvelpoc.shared
+package com.soutosss.marvelpoc.shared.koin
 
 import android.content.ContentProvider
 import android.content.ContentValues
