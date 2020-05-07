@@ -39,7 +39,7 @@ ext {
     Dependencies = [
             androidxAppCompat: "androidx.appcompat:appcompat:${androidxAppCompatVersion}",
             coroutines       : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
-            kotlin           : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
+            kotlin           : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}",
             retrofit         : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             gsonConverter    : "com.squareup.retrofit2:converter-gson:${gsonConverterVersion}",
             koin             : "org.koin:koin-androidx-viewmodel:${koinAndroidVersion}",
