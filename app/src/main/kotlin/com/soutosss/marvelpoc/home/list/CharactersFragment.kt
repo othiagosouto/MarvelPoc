@@ -1,6 +1,7 @@
 package com.soutosss.marvelpoc.home.list
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,15 +17,28 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        recycler.layoutManager = GridLayoutManager(context, 2)
         val adapter = CharactersAdapter()
         recycler.adapter = adapter
 
-        homeViewModel.characters.observe(this.viewLifecycleOwner, Observer {
+        val isFavoriteTab = arguments?.getBoolean(KEY_FAVORITE_TAB, false) == true
+
+        val liveData =
+            if (isFavoriteTab) homeViewModel.favoriteCharacters else homeViewModel.characters
+
+        liveData.observe(this.viewLifecycleOwner, Observer {
             when (it) {
-                is Result.Loaded -> adapter.submitList(it.item as List<CharacterHome>)
+                is Result.Loaded -> {
+                    adapter.submitList(it.item as List<CharacterHome>)
+                    progress.hide()
+                    recycler.visibility = View.VISIBLE
+                }
+                is Result.Loading -> {
+                    progress.show()
+                    recycler.visibility = View.GONE
+                }
             }
         })
+
     }
 
     companion object {

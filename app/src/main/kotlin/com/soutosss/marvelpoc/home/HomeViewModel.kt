@@ -11,6 +11,9 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
     private val _characters = MutableLiveData<Result>()
     val characters: LiveData<Result> = _characters
 
+    private val _favoriteCharacters = MutableLiveData<Result>()
+    val favoriteCharacters: LiveData<Result> = _favoriteCharacters
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchCharacters() {
         viewModelScope.launch {
