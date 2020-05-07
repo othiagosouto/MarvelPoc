@@ -3,6 +3,7 @@ package com.soutosss.marvelpoc.home.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -33,11 +34,13 @@ class CharactersAdapter : ListAdapter<CharacterHome, CharacterHomeViewHolder>(Ch
     inner class CharacterHomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val headerText: TextView = itemView.findViewById(R.id.text)
         private val imageView: ImageView = itemView.findViewById(R.id.image)
+        private val favoriteCheckBox: CheckBox = itemView.findViewById(R.id.favorite)
 
         fun bind(characterHome: CharacterHome) {
             headerText.text = characterHome.name
-
-            Glide.with(imageView.context).load(characterHome.thumbnailUrl).error(R.drawable.ic_launcher_background).dontAnimate().into(imageView)
+            Glide.with(imageView.context).load(characterHome.thumbnailUrl)
+                .error(R.drawable.ic_launcher_background).dontAnimate().into(imageView)
+            favoriteCheckBox.isChecked = characterHome.favorite
         }
     }
 
