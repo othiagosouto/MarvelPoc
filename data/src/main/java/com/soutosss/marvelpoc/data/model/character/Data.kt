@@ -1,6 +1,5 @@
 package com.soutosss.marvelpoc.data.model.character
 
-
 data class Data(
     val count: Int,
     val limit: Int,
