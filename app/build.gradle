@@ -34,6 +34,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 def allTestsConfigs(dependency) {
@@ -70,6 +74,7 @@ dependencies {
 
     testImplementation TestingDependencies.robolectric
     testImplementation TestingDependencies.mockk
+    debugImplementation TestingDependencies.fragment
 
     allTestsConfigs TestingDependencies.androidxTestRules
     allTestsConfigs TestingDependencies.gson

@@ -34,6 +34,7 @@ ext {
     truthVersion = '1.0.1'
     gsonConverterVersion = '2.8.1'
     gsonVersion = '2.8.5'
+    fragmentScenarioVersion = '1.2.4'
 
     Dependencies = [
             androidxAppCompat: "androidx.appcompat:appcompat:${androidxAppCompatVersion}",
@@ -69,6 +70,7 @@ ext {
             androidxTestJunit      : "androidx.test.ext:junit:${androidxTestJunitVersion}",
             junit                  : "junit:junit:${junitVersion}",
             mockk                  : "io.mockk:mockk:${mockkVersion}",
+            fragment               : "androidx.fragment:fragment-testing:${fragmentScenarioVersion}",
             robolectric            : "org.robolectric:robolectric:${robolectric}",
             recyclerViewActions    : "androidx.test.espresso.contrib.RecyclerViewActions:${recyclerViewActions}",
             truth                  : "com.google.truth:truth:${truthVersion}",
