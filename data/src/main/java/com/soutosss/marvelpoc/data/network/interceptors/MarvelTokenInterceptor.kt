@@ -1,4 +1,4 @@
-package com.soutosss.marvelpoc.data
+package com.soutosss.marvelpoc.data.network.interceptors
 
 import com.soutosss.marvelpoc.data.ext.toMD5
 import okhttp3.Interceptor
