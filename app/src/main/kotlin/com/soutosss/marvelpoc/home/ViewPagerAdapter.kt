@@ -23,5 +23,4 @@ class ViewPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle) :
         private const val HOME_FRAGMENT = 0
         private const val FAVORITE_FRAGMENT = 1
     }
-
 }
