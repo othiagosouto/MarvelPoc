@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.widget.ContentLoadingProgressBar
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.home.list.CharactersAdapter.CharacterHomeViewHolder
 
 class CharactersAdapter(
-    private val renderImage: (ImageView, String) -> Unit,
+    private val renderImage: (ImageView, String, ContentLoadingProgressBar) -> Unit,
     private val favoriteClick: (CharacterHome) -> Unit
 ) : ListAdapter<CharacterHome, CharacterHomeViewHolder>(CharacterHomeDiff()) {
 
@@ -31,6 +32,7 @@ class CharactersAdapter(
     inner class CharacterHomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val headerText: TextView = itemView.findViewById(R.id.text)
         private val imageView: ImageView = itemView.findViewById(R.id.image)
+        private val progress: ContentLoadingProgressBar = itemView.findViewById(R.id.progress)
         private val favoriteCheckBox: CheckBox = itemView.findViewById(R.id.favorite)
 
         init {
@@ -43,7 +45,7 @@ class CharactersAdapter(
 
         fun bind(characterHome: CharacterHome) {
             headerText.text = characterHome.name
-            renderImage(imageView, characterHome.thumbnailUrl)
+            renderImage(imageView, characterHome.thumbnailUrl, progress)
             favoriteCheckBox.isChecked = characterHome.favorite
         }
     }

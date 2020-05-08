@@ -16,14 +16,25 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_launcher_background" />
 
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/image"
+        app:layout_constraintEnd_toEndOf="@+id/image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/image" />
+
     <View
         android:id="@+id/header"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="#25000000"
-        app:layout_constraintTop_toBottomOf="@id/image"
         app:layout_constraintEnd_toEndOf="@id/image"
-        app:layout_constraintStart_toStartOf="@id/image" />
+        app:layout_constraintStart_toStartOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/image" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text"
@@ -39,9 +50,9 @@
 
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/favorite"
-        app:layout_constraintEnd_toEndOf="@+id/header"
-        app:layout_constraintBottom_toBottomOf="@id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:button="@drawable/favorite_drawable" />
+        android:button="@drawable/favorite_drawable"
+        app:layout_constraintBottom_toBottomOf="@id/header"
+        app:layout_constraintEnd_toEndOf="@+id/header" />
 </androidx.constraintlayout.widget.ConstraintLayout>
