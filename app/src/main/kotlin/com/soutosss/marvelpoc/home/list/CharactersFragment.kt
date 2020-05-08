@@ -30,14 +30,16 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
             if (isFavoriteTab) homeViewModel.favoriteCharacters else homeViewModel.characters
 
         homeViewModel.changeAdapter.observe(this.viewLifecycleOwner, Observer {
-            if (isFavoriteTab == false)
+            if (!isFavoriteTab)
                 adapter.notifyItemChanged(it)
         })
         liveData.observe(this.viewLifecycleOwner, Observer {
             when (it) {
                 is Result.Loaded -> {
                     recycler.visibility = View.VISIBLE
-                    adapter.submitList(it.item as List<CharacterHome>)
+                    if (it.item is List<*>) {
+                        adapter.submitList(it.item.filterIsInstance<CharacterHome>())
+                    }
                     progress.hide()
                 }
                 is Result.Loading -> {
