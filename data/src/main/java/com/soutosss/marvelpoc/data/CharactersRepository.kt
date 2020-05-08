@@ -9,7 +9,14 @@ class CharactersRepository(
     private val api: CharactersApi,
     private val characterHomeDAO: CharacterHomeDAO
 ) {
-    suspend fun fetchAllCharacters(): MarvelCharactersResponse = api.listCharacters()
+    suspend fun fetchAllCharacters(): List<CharacterHome> {
+        val results = api.listCharacters().data.results.map { CharacterHome(it) }
+        val favorites = fetchFavoriteCharacters()
+        favorites.forEach { favorite ->
+            results.firstOrNull { it.id == favorite.id }?.favorite = true
+        }
+        return results
+    }
 
     suspend fun fetchFavoriteCharacters(): List<CharacterHome> = characterHomeDAO.getAll()
 

@@ -1,9 +1,15 @@
 package com.soutosss.marvelpoc.data
 
+import com.google.common.truth.Truth.assertThat
+import com.google.gson.Gson
 import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
+import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
+import com.soutosss.marvelpoc.data.model.character.toCharacterHomeList
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.data.network.CharactersApi
+import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -14,7 +20,7 @@ class CharactersRepositoryTest {
     private lateinit var mockApi: CharactersApi
     private lateinit var mockDao: CharacterHomeDAO
     private lateinit var repository: CharactersRepository
-    private val item = CharacterHome(33, "some name", "some url", true)
+    private val item = CharacterHome(1011334, "some name", "some url", true)
 
     @Before
     fun setup() {
@@ -26,9 +32,21 @@ class CharactersRepositoryTest {
     @Test
     fun `fetchAllCharacters should call api to list all characters from marvel endpoint`() =
         runBlockingTest {
-            repository.fetchAllCharacters()
+            coEvery { mockApi.listCharacters() } returns parseToJson()
+            coEvery { mockDao.getAll() } returns emptyList()
 
-            coVerify(exactly = 1) { mockApi.listCharacters() }
+            assertThat(repository.fetchAllCharacters()).isEqualTo(parseToJson().toCharacterHomeList())
+        }
+
+    @Test
+    fun `fetchAllCharacters should update item favorite when there's is storage saved inside room`() =
+        runBlockingTest {
+            coEvery { mockApi.listCharacters() } returns parseToJson()
+            coEvery { mockDao.getAll() } returns listOf(item)
+
+            val expectedResult = parseToJson().toCharacterHomeList()
+            expectedResult.first().favorite = true
+            assertThat(repository.fetchAllCharacters()).isEqualTo(expectedResult)
         }
 
     @Test
@@ -51,5 +69,16 @@ class CharactersRepositoryTest {
         repository.unFavoriteCharacterHome(item)
 
         coVerify(exactly = 1) { mockDao.delete(item) }
+    }
+
+    private fun parseToJson(): MarvelCharactersResponse {
+        return Gson().fromJson(
+            "/characters/characters_response_ok.json".toJson(),
+            MarvelCharactersResponse::class.java
+        )
+    }
+
+    private fun String.toJson(): String {
+        return this::class.java.javaClass.getResource(this)!!.readText()
     }
 }

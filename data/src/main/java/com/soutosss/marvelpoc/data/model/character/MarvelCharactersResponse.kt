@@ -1,6 +1,6 @@
 package com.soutosss.marvelpoc.data.model.character
 
-import java.io.Serializable
+import com.soutosss.marvelpoc.data.model.view.CharacterHome
 
 data class MarvelCharactersResponse(
     val attributionHTML: String,
@@ -10,4 +10,8 @@ data class MarvelCharactersResponse(
     val data: Data,
     val etag: String,
     val status: String
-): Serializable
+) 
+
+
+fun MarvelCharactersResponse.toCharacterHomeList(): List<CharacterHome> =
+    this.data.results.map { CharacterHome(it) }
