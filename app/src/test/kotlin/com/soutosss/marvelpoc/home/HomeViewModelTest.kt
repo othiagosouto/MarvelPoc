@@ -10,6 +10,7 @@ import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.data.model.character.toCharacterHomeList
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import io.mockk.coEvery
+import io.mockk.coVerifyOrder
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -96,7 +97,7 @@ class HomeViewModelTest {
     fun fetchFavoriteCharacters_shouldPostErrorWhenIsEmpty() =
         coroutineTestRule.testDispatcher.runBlockingTest {
 
-            coEvery { repository.fetchFavoriteCharacters() } returns  emptyList()
+            coEvery { repository.fetchFavoriteCharacters() } returns emptyList()
 
             viewModel.fetchFavoriteCharacters()
 
@@ -107,11 +108,12 @@ class HomeViewModelTest {
                 )
             )
         }
+
     @Test
     fun fetchCharacters_shouldPostErrorWhenIsEmpty() =
         coroutineTestRule.testDispatcher.runBlockingTest {
 
-            coEvery { repository.fetchAllCharacters() }  returns  emptyList()
+            coEvery { repository.fetchAllCharacters() } returns emptyList()
 
             viewModel.fetchCharacters()
 
@@ -121,6 +123,41 @@ class HomeViewModelTest {
                     R.drawable.ic_deadpool
                 )
             )
+        }
+
+    @Test
+    fun `favoriteClick should favorite item when favorite flag is true`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            val item = CharacterHome(30, "", "", true)
+
+            coEvery { repository.favoriteCharacterHome(item) } returns Unit
+            coEvery { repository.fetchFavoriteCharacters() } returns listOf(item)
+
+            viewModel.favoriteClick(item)
+
+            coVerifyOrder {
+                repository.favoriteCharacterHome(item)
+                repository.fetchFavoriteCharacters()
+            }
+
+        }
+
+    @Test
+    fun `favoriteClick should unfavorite item when favoriteClick is false`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            val favoriteItem = CharacterHome(30, "", "", true)
+            val item = CharacterHome(30, "", "", false)
+            val list  =  listOf(favoriteItem)
+
+            coEvery { repository.fetchFavoriteCharacters() } returns emptyList()
+            coEvery { repository.fetchAllCharacters() } returns list
+            coEvery { repository.unFavoriteCharacterHome(item, list) } returns 30
+
+            viewModel.fetchCharacters()
+            viewModel.favoriteClick(item)
+
+            assertThat(viewModel.changeAdapter.value).isEqualTo(30)
+
         }
 }
 

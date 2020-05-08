@@ -9,7 +9,6 @@ import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.data.network.CharactersApi
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -20,13 +19,14 @@ class CharactersRepositoryTest {
     private lateinit var mockApi: CharactersApi
     private lateinit var mockDao: CharacterHomeDAO
     private lateinit var repository: CharactersRepository
-    private val item = CharacterHome(1011334, "some name", "some url", true)
+    private lateinit var item: CharacterHome
 
     @Before
     fun setup() {
         mockApi = mockk(relaxed = true)
         mockDao = mockk(relaxed = true)
         repository = CharactersRepository(mockApi, mockDao)
+        item = CharacterHome(1011334, "some name", "some url", true)
     }
 
     @Test
@@ -66,9 +66,11 @@ class CharactersRepositoryTest {
 
     @Test
     fun `unFavoriteCharacterHome should call dao to delete item`() = runBlockingTest {
-        repository.unFavoriteCharacterHome(item)
+        val result = repository.unFavoriteCharacterHome(item, listOf(item, item.copy(id = 300)))
 
         coVerify(exactly = 1) { mockDao.delete(item) }
+        assertThat(result).isEqualTo(0)
+        assertThat(item.favorite).isFalse()
     }
 
     private fun parseToJson(): MarvelCharactersResponse {

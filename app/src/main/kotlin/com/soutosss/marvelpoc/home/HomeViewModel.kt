@@ -15,6 +15,9 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
     private val _favoriteCharacters = MutableLiveData<Result>()
     val favoriteCharacters: LiveData<Result> = _favoriteCharacters
 
+    private val _changeAdapter = MutableLiveData<Int>()
+    val changeAdapter: LiveData<Int> = _changeAdapter
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchCharacters() {
         fetchListRequest(
@@ -77,8 +80,11 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
 
     private fun unFavorite(item: CharacterHome) {
         viewModelScope.launch {
-            repository.unFavoriteCharacterHome(item)
+            val result = _characters.value as? Result.Loaded
+            val items = result?.item as? List<*>
+            val position = repository.unFavoriteCharacterHome(item, items?.filterIsInstance<CharacterHome>())
             fetchFavoriteCharacters()
+            _changeAdapter.postValue(position)
         }
     }
 

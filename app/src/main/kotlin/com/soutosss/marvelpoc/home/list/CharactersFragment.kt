@@ -29,6 +29,10 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
         val liveData =
             if (isFavoriteTab) homeViewModel.favoriteCharacters else homeViewModel.characters
 
+        homeViewModel.changeAdapter.observe(this.viewLifecycleOwner, Observer {
+            if (isFavoriteTab == false)
+                adapter.notifyItemChanged(it)
+        })
         liveData.observe(this.viewLifecycleOwner, Observer {
             when (it) {
                 is Result.Loaded -> {
