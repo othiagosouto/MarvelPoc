@@ -14,4 +14,30 @@ class CharactersFragmentTest {
             recyclerViewIsHidden()
         }
     }
+
+    @Test
+    fun init_favoriteMode_shouldLoadEmptyViewWithExpectedFavoriteMessage() {
+        configure {
+            withFavoriteTab()
+            withEmptyFavoriteResult()
+        } launch {
+        } check {
+            loadingIsNotVisible()
+            recyclerViewIsHidden()
+            checkEmptyFavoriteTab()
+        }
+    }
+
+    @Test
+    fun init_homeMode_shouldLoadEmptyViewWithExpectedHomeeMessage() {
+        configure {
+            withHomeTab()
+            withEmptyHomeResult()
+        } launch {
+        } check {
+            loadingIsNotVisible()
+            recyclerViewIsHidden()
+            checkEmptyHomeTab()
+        }
+    }
 }

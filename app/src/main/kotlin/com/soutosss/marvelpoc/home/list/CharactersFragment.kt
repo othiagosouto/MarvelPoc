@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.home.HomeViewModel
+import com.soutosss.marvelpoc.loadHomeImage
 import com.soutosss.marvelpoc.shared.livedata.Result
 import kotlinx.android.synthetic.main.fragment_characters.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -16,28 +18,57 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val adapter = CharactersAdapter()
+        val adapter = CharactersAdapter(::loadHomeImage)
         recycler.adapter = adapter
+        observeLiveData(adapter)
+    }
 
+    private fun observeLiveData(adapter: CharactersAdapter) {
         val isFavoriteTab = arguments?.getBoolean(KEY_FAVORITE_TAB, false) == true
-
         val liveData =
             if (isFavoriteTab) homeViewModel.favoriteCharacters else homeViewModel.characters
 
         liveData.observe(this.viewLifecycleOwner, Observer {
             when (it) {
                 is Result.Loaded -> {
-                    adapter.submitList(it.item as List<CharacterHome>)
+                    val list = it.item as List<CharacterHome>
+                    adapter.submitList(list)
                     progress.hide()
-                    recycler.visibility = View.VISIBLE
+                    if (list.isEmpty()) {
+                        handleEmptyList(isFavoriteTab)
+                    } else {
+                        recycler.visibility = View.VISIBLE
+                    }
                 }
                 is Result.Loading -> {
-                    progress.show()
+                    group.visibility = View.GONE
                     recycler.visibility = View.GONE
+                    progress.show()
                 }
             }
         })
+    }
 
+    private fun handleEmptyList(isFavoriteTab: Boolean) {
+        if (isFavoriteTab) {
+            handleEmptyFavoriteList()
+        } else {
+            handleEmptyCharactersHome()
+        }
+    }
+
+    private fun handleEmptyCharactersHome() {
+        handleErrorState(R.string.empty_characters_home, R.drawable.ic_deadpool)
+    }
+
+    private fun handleEmptyFavoriteList() {
+        handleErrorState(R.string.empty_characters_favorites, R.drawable.ic_favorites)
+    }
+
+    private fun handleErrorState(messageResId: Int, drawableResId: Int) {
+        group.visibility = View.VISIBLE
+        message.text = getString(messageResId)
+        Glide.with(erroIcon.context).load(drawableResId).into(erroIcon)
     }
 
     companion object {

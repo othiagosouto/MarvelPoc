@@ -9,12 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.home.list.CharactersAdapter.CharacterHomeViewHolder
 
-class CharactersAdapter : ListAdapter<CharacterHome, CharacterHomeViewHolder>(CharacterHomeDiff()) {
+class CharactersAdapter(private val renderImage: (ImageView, String) -> Unit) : ListAdapter<CharacterHome, CharacterHomeViewHolder>(CharacterHomeDiff()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterHomeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -34,8 +33,7 @@ class CharactersAdapter : ListAdapter<CharacterHome, CharacterHomeViewHolder>(Ch
 
         fun bind(characterHome: CharacterHome) {
             headerText.text = characterHome.name
-            Glide.with(imageView.context).load(characterHome.thumbnailUrl)
-                .error(R.drawable.ic_launcher_background).dontAnimate().into(imageView)
+            renderImage(imageView, characterHome.thumbnailUrl)
             favoriteCheckBox.isChecked = characterHome.favorite
         }
     }
