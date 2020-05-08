@@ -1,8 +1,12 @@
 package com.soutosss.marvelpoc.data
 
+import android.content.Context
 import androidx.room.Room
 import com.soutosss.marvelpoc.data.local.AppDatabase
 import com.soutosss.marvelpoc.data.network.CharactersApi
+import com.soutosss.marvelpoc.data.network.interceptors.ConnectionDetectionInterceptor
+import com.soutosss.marvelpoc.data.network.interceptors.MarvelTokenInterceptor
+import com.soutosss.marvelpoc.data.network.interceptors.isNetworkNotConnected
 import com.soutosss.marvelpoc.shared.koin.KoinInitializer
 import okhttp3.OkHttpClient
 import org.koin.core.module.Module
@@ -14,8 +18,9 @@ import java.util.*
 class DataInitializer : KoinInitializer() {
     override fun createKoinModules(): List<Module> {
         return listOf(module {
-            single { getRetrofitInstance() }
-            single { Room.databaseBuilder(
+            single { getRetrofitInstance(get()) }
+            single {
+                Room.databaseBuilder(
                     get(), AppDatabase::class.java, "database-name"
                 ).build().charactersHomeDAO()
             }
@@ -23,14 +28,20 @@ class DataInitializer : KoinInitializer() {
         })
     }
 
-    private fun getRetrofitInstance(): CharactersApi {
-        val properties = eta()
+    private fun getRetrofitInstance(context: Context): CharactersApi {
+        val properties = getApiProperties()
         val httpBuilder = OkHttpClient.Builder()
         httpBuilder.addInterceptor(
             MarvelTokenInterceptor(
                 properties.getProperty("publicKey"),
                 properties.getProperty("privateKey"),
                 System::currentTimeMillis
+            )
+        )
+        httpBuilder.addInterceptor(
+            ConnectionDetectionInterceptor(
+                context,
+                ::isNetworkNotConnected
             )
         )
 
@@ -43,7 +54,7 @@ class DataInitializer : KoinInitializer() {
         return retrofit.create(CharactersApi::class.java)
     }
 
-    private fun eta(): Properties {
+    private fun getApiProperties(): Properties {
         val fis = javaClass.classLoader!!.getResource("api.properties").openStream()
         val prop = Properties()
         prop.load(fis)
