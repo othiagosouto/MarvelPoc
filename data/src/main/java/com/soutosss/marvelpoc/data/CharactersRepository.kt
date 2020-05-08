@@ -12,10 +12,9 @@ class CharactersRepository(
     suspend fun fetchAllCharacters(): MarvelCharactersResponse = api.listCharacters()
 
     suspend fun fetchFavoriteCharacters(): List<CharacterHome> = characterHomeDAO.getAll()
+
+    suspend fun unFavoriteCharacterHome(item: CharacterHome): Unit = characterHomeDAO.delete(item)
+
     suspend fun favoriteCharacterHome(characterHome: CharacterHome): Unit =
         characterHomeDAO.insertAll(characterHome)
-
-    suspend fun unFavoriteCharacterHome(item: CharacterHome) {
-        characterHomeDAO.delete(item)
-    }
 }
