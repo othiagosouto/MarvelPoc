@@ -10,8 +10,7 @@ data class MarvelCharactersResponse(
     val data: Data,
     val etag: String,
     val status: String
-) 
-
+)
 
 fun MarvelCharactersResponse.toCharacterHomeList(): List<CharacterHome> =
     this.data.results.map { CharacterHome(it) }

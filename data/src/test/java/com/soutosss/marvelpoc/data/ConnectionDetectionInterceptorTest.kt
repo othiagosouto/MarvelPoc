@@ -34,11 +34,7 @@ class ConnectionDetectionInterceptorTest {
     @Test
     fun `intercept should execute request when there's internet connection available`() {
         val isNetworkNotConnected: (Context) -> Boolean = { false }
-        val interceptor =
-            ConnectionDetectionInterceptor(
-                context,
-                isNetworkNotConnected
-            )
+        val interceptor = ConnectionDetectionInterceptor(context, isNetworkNotConnected)
 
         val request: Request = mockk()
         val response: Response = mockk()

@@ -19,8 +19,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
         viewModelScope.launch {
             _characters.postValue(Result.Loading)
             try {
-                val results = repository.fetchAllCharacters().data.results
-                _characters.postValue(Result.Loaded(results.map { CharacterHome(it) }))
+                _characters.postValue(Result.Loaded(repository.fetchAllCharacters()))
             } catch (e: Exception) {
                 _characters.postValue(
                     Result.Error(R.string.home_error_loading, R.drawable.thanos)
@@ -64,5 +63,4 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
             fetchFavoriteCharacters()
         }
     }
-
 }

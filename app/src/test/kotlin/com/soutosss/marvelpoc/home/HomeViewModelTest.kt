@@ -7,6 +7,7 @@ import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.shared.livedata.Result
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
+import com.soutosss.marvelpoc.data.model.character.toCharacterHomeList
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -35,12 +36,12 @@ class HomeViewModelTest {
     @Test
     fun fetchCharacters_shouldPostListWhenApiReturnsOK() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            coEvery { repository.fetchAllCharacters() } returns parseToJson()
+            val charactersList = parseToJson().toCharacterHomeList()
+            coEvery { repository.fetchAllCharacters() } returns charactersList
 
             viewModel.fetchCharacters()
             val value = viewModel.characters.value!! as Result.Loaded
-            val charactersHome = parseToJson().data.results.map { CharacterHome(it) }
-            assertThat(value).isEqualTo(Result.Loaded(charactersHome))
+            assertThat(value).isEqualTo(Result.Loaded(charactersList))
         }
 
     @Test
