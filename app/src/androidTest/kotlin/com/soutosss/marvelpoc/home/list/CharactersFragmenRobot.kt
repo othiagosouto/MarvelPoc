@@ -50,7 +50,7 @@ class CharactersFragmentConfiguration : KoinComponent {
     }
 
     fun withErrorFavorite() {
-        postLiveData(homeViewModel.favoriteCharacters, Result.Error(R.string.home_error_loading, R.drawable.thanos))
+        postLiveData(homeViewModel.favoriteCharacters, Result.Error(R.string.favorite_error_loading, R.drawable.thanos))
     }
 
     fun withErrorHome() {
@@ -125,7 +125,7 @@ class CharactersFragmentResult {
     }
 
     fun checkErrorFavoriteTab() {
-        checkErrorMessage("Looks like thanos didn't like you")
+        checkErrorMessage("Looks like thanos didn't like your favorite characters")
     }
 
     fun checkErrorHomeTab() {

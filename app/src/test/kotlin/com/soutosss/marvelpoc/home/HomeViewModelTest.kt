@@ -52,9 +52,45 @@ class HomeViewModelTest {
 
             viewModel.fetchCharacters()
 
-            assertThat(viewModel.characters.value!!).isEqualTo(Result.Error(R.string.home_error_loading, R.drawable.thanos))
+            assertThat(viewModel.characters.value!!).isEqualTo(
+                Result.Error(
+                    R.string.home_error_loading,
+                    R.drawable.thanos
+                )
+            )
         }
 
+    @Test
+    fun fetchFavoriteCharacters_shouldPostListhWithFavoritesStored() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            val favoriteCharacters = parseToJson().toCharacterHomeList()
+
+            coEvery { repository.fetchFavoriteCharacters() } returns favoriteCharacters
+
+            viewModel.fetchFavoriteCharacters()
+
+            assertThat(viewModel.favoriteCharacters.value!!).isEqualTo(
+                Result.Loaded(
+                    favoriteCharacters
+                )
+            )
+        }
+
+    @Test
+    fun fetchFavoriteCharacters_shouldPostErrorResWhenFailed() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+
+            coEvery { repository.fetchFavoriteCharacters() } throws Exception()
+
+            viewModel.fetchFavoriteCharacters()
+
+            assertThat(viewModel.favoriteCharacters.value!!).isEqualTo(
+                Result.Error(
+                    R.string.favorite_error_loading,
+                    R.drawable.thanos
+                )
+            )
+        }
 }
 
 private fun parseToJson(): MarvelCharactersResponse {

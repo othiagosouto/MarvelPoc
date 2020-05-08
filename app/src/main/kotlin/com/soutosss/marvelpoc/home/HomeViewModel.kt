@@ -36,7 +36,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
                 _favoriteCharacters.postValue(Result.Loaded(repository.fetchFavoriteCharacters()))
             } catch (e: Exception) {
                 _favoriteCharacters.postValue(
-                    Result.Error(R.string.home_error_loading, R.drawable.thanos)
+                    Result.Error(R.string.favorite_error_loading, R.drawable.thanos)
                 )
             }
         }

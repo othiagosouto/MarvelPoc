@@ -5,9 +5,59 @@ import org.junit.Test
 class CharactersFragmentTest {
 
     @Test
-    fun init_shouldPresentLoadingWhileContentIsBeingLoaded() {
+    fun init_homeMode_shouldPresentLoadingWhileContentIsBeingLoaded() {
         configure {
             withHomeTab()
+        } launch {
+        } check {
+            loadingIsVisible()
+            recyclerViewIsHidden()
+        }
+    }
+
+    @Test
+    fun init_homeMode_shouldLoadErrorWithExpectedMessage() {
+        configure {
+            withHomeTab()
+            withErrorHome()
+        } launch {
+        } check {
+            loadingIsNotVisible()
+            recyclerViewIsHidden()
+            checkErrorHomeTab()
+        }
+    }
+
+    @Test
+    fun init_homeMode_shouldLoadEmptyViewWithExpectedHomeMessage() {
+        configure {
+            withHomeTab()
+            withEmptyHomeResult()
+        } launch {
+        } check {
+            loadingIsNotVisible()
+            recyclerViewIsHidden()
+            checkEmptyHomeTab()
+        }
+    }
+
+    @Test
+    fun init_homeMode_shouldPresentExpectedCharacters() {
+        configure {
+            withHomeTab()
+            withHomeCharacters()
+        } launch {
+        } check {
+            checkCharacterHomeNamee()
+            loadingIsNotVisible()
+            errorMessageNotAvailable()
+        }
+    }
+
+    @Test
+    fun init_favoriteMode_shouldPresentLoadingWhileContentIsBeingLoaded() {
+        configure {
+            withFavoriteTab()
         } launch {
         } check {
             loadingIsVisible()
@@ -29,20 +79,7 @@ class CharactersFragmentTest {
     }
 
     @Test
-    fun init_homeMode_shouldLoadEmptyViewWithExpectedHomeMessage() {
-        configure {
-            withHomeTab()
-            withEmptyHomeResult()
-        } launch {
-        } check {
-            loadingIsNotVisible()
-            recyclerViewIsHidden()
-            checkEmptyHomeTab()
-        }
-    }
-
-    @Test
-    fun init_favorite_shouldLoadErrorWithExpectedMessage() {
+    fun init_favoriteMode_shouldLoadErrorWithExpectedMessage() {
         configure {
             withFavoriteTab()
             withErrorFavorite()
@@ -55,33 +92,7 @@ class CharactersFragmentTest {
     }
 
     @Test
-    fun init_home_shouldLoadErrorWithExpectedMessage() {
-        configure {
-            withHomeTab()
-            withErrorHome()
-        } launch {
-        } check {
-            loadingIsNotVisible()
-            recyclerViewIsHidden()
-            checkErrorHomeTab()
-        }
-    }
-
-    @Test
-    fun init_homeMode_shouldPresentExpectedCharacters() {
-        configure {
-            withHomeTab()
-            withHomeCharacters()
-        } launch {
-        } check {
-            checkCharacterHomeNamee()
-            loadingIsNotVisible()
-            errorMessageNotAvailable()
-        }
-    }
-
-    @Test
-    fun init_favorite_shouldPresentExpectedCharacters() {
+    fun init_favoriteMode_shouldPresentExpectedCharacters() {
         configure {
             withFavoriteTab()
             withFavoriteCharacters()
