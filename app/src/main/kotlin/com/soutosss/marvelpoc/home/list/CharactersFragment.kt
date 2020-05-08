@@ -38,7 +38,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
                 is Result.Loaded -> {
                     recycler.visibility = View.VISIBLE
                     if (it.item is List<*>) {
-                        adapter.submitList(it.item.filterIsInstance<CharacterHome>())
+                        adapter.submitList(it.item as? List<CharacterHome>)
                     }
                     progress.hide()
                 }
