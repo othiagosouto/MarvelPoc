@@ -91,6 +91,37 @@ class HomeViewModelTest {
                 )
             )
         }
+
+    @Test
+    fun fetchFavoriteCharacters_shouldPostErrorWhenIsEmpty() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+
+            coEvery { repository.fetchFavoriteCharacters() } returns  emptyList()
+
+            viewModel.fetchFavoriteCharacters()
+
+            assertThat(viewModel.favoriteCharacters.value!!).isEqualTo(
+                Result.Error(
+                    R.string.empty_characters_favorites,
+                    R.drawable.ic_favorites
+                )
+            )
+        }
+    @Test
+    fun fetchCharacters_shouldPostErrorWhenIsEmpty() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+
+            coEvery { repository.fetchAllCharacters() }  returns  emptyList()
+
+            viewModel.fetchCharacters()
+
+            assertThat(viewModel.characters.value!!).isEqualTo(
+                Result.Error(
+                    R.string.empty_characters_home,
+                    R.drawable.ic_deadpool
+                )
+            )
+        }
 }
 
 private fun parseToJson(): MarvelCharactersResponse {

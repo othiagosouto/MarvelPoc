@@ -6,6 +6,7 @@ import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.shared.livedata.Result
 import kotlinx.coroutines.launch
+import kotlin.reflect.KSuspendFunction0
 
 class HomeViewModel(private val repository: CharactersRepository) : ViewModel(), LifecycleObserver {
     private val _characters = MutableLiveData<Result>()
@@ -16,28 +17,45 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchCharacters() {
-        viewModelScope.launch {
-            _characters.postValue(Result.Loading)
-            try {
-                _characters.postValue(Result.Loaded(repository.fetchAllCharacters()))
-            } catch (e: Exception) {
-                _characters.postValue(
-                    Result.Error(R.string.home_error_loading, R.drawable.thanos)
-                )
-            }
-        }
+        fetchListRequest(
+            _characters,
+            repository::fetchAllCharacters,
+            R.string.home_error_loading,
+            R.string.empty_characters_home,
+            R.drawable.ic_deadpool
+        )
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchFavoriteCharacters() {
+        fetchListRequest(
+            _favoriteCharacters,
+            repository::fetchFavoriteCharacters,
+            R.string.favorite_error_loading,
+            R.string.empty_characters_favorites,
+            R.drawable.ic_favorites
+        )
+    }
+
+    private fun fetchListRequest(
+        liveData: MutableLiveData<Result>,
+        retrieveList: KSuspendFunction0<List<CharacterHome>>,
+        errorMessageRes: Int,
+        emptyErrorMessRes: Int,
+        emptyDrawableRes: Int
+    ) {
         viewModelScope.launch {
-            _favoriteCharacters.postValue(Result.Loading)
+            liveData.postValue(Result.Loading)
             try {
-                _favoriteCharacters.postValue(Result.Loaded(repository.fetchFavoriteCharacters()))
+                val list = retrieveList()
+                if (list.isEmpty()) {
+                    throw EmptyDataException()
+                }
+                liveData.postValue(Result.Loaded(list))
+            } catch (e: EmptyDataException) {
+                liveData.postValue(Result.Error(emptyErrorMessRes, emptyDrawableRes))
             } catch (e: Exception) {
-                _favoriteCharacters.postValue(
-                    Result.Error(R.string.favorite_error_loading, R.drawable.thanos)
-                )
+                liveData.postValue(Result.Error(errorMessageRes, R.drawable.thanos))
             }
         }
     }
@@ -63,4 +81,6 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
             fetchFavoriteCharacters()
         }
     }
+
+    private inner class EmptyDataException : Exception()
 }

@@ -32,14 +32,9 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
         liveData.observe(this.viewLifecycleOwner, Observer {
             when (it) {
                 is Result.Loaded -> {
-                    val list = it.item as List<CharacterHome>
-                    adapter.submitList(list)
+                    recycler.visibility = View.VISIBLE
+                    adapter.submitList(it.item as List<CharacterHome>)
                     progress.hide()
-                    if (list.isEmpty()) {
-                        handleEmptyList(isFavoriteTab)
-                    } else {
-                        recycler.visibility = View.VISIBLE
-                    }
                 }
                 is Result.Loading -> {
                     group.visibility = View.GONE
@@ -53,22 +48,6 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
                 }
             }
         })
-    }
-
-    private fun handleEmptyList(isFavoriteTab: Boolean) {
-        if (isFavoriteTab) {
-            handleEmptyFavoriteList()
-        } else {
-            handleEmptyCharactersHome()
-        }
-    }
-
-    private fun handleEmptyCharactersHome() {
-        handleErrorState(R.string.empty_characters_home, R.drawable.ic_deadpool)
-    }
-
-    private fun handleEmptyFavoriteList() {
-        handleErrorState(R.string.empty_characters_favorites, R.drawable.ic_favorites)
     }
 
     private fun handleErrorState(messageResId: Int, drawableResId: Int) {
