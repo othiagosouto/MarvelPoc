@@ -70,6 +70,7 @@ ext {
             androidxTestJunit      : "androidx.test.ext:junit:${androidxTestJunitVersion}",
             junit                  : "junit:junit:${junitVersion}",
             mockk                  : "io.mockk:mockk:${mockkVersion}",
+            mockkAndroid           : "io.mockk:mockk-android:${mockkVersion}",
             fragment               : "androidx.fragment:fragment-testing:${fragmentScenarioVersion}",
             robolectric            : "org.robolectric:robolectric:${robolectric}",
             recyclerViewActions    : "androidx.test.espresso.contrib.RecyclerViewActions:${recyclerViewActions}",
