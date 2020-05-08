@@ -51,7 +51,7 @@ class HomeViewModelTest {
 
             viewModel.fetchCharacters()
 
-            assertThat(viewModel.characters.value!!).isEqualTo(Result.Error(R.string.home_error_loading))
+            assertThat(viewModel.characters.value!!).isEqualTo(Result.Error(R.string.home_error_loading, R.drawable.thanos))
         }
 
 }

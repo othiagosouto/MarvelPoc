@@ -23,7 +23,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
                 _characters.postValue(Result.Loaded(results.map { CharacterHome(it) }))
             } catch (e: Exception) {
                 _characters.postValue(
-                    Result.Error(R.string.home_error_loading)
+                    Result.Error(R.string.home_error_loading, R.drawable.thanos)
                 )
             }
         }
@@ -37,7 +37,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
                 _favoriteCharacters.postValue(Result.Loaded(repository.fetchFavoriteCharacters()))
             } catch (e: Exception) {
                 _favoriteCharacters.postValue(
-                    Result.Error(R.string.home_error_loading)
+                    Result.Error(R.string.home_error_loading, R.drawable.thanos)
                 )
             }
         }
@@ -46,7 +46,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
     fun favoriteClick(item: CharacterHome) {
         if (item.favorite) {
             favorite(item)
-        }else{
+        } else {
             unFavorite(item)
         }
     }

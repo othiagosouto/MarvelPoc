@@ -46,6 +46,11 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
                     recycler.visibility = View.GONE
                     progress.show()
                 }
+                is Result.Error -> {
+                    recycler.visibility = View.GONE
+                    progress.hide()
+                    handleErrorState(it.errorMessage, it.drawableRes)
+                }
             }
         })
     }
