@@ -35,6 +35,7 @@ ext {
     gsonConverterVersion = '2.8.1'
     gsonVersion = '2.8.5'
     fragmentScenarioVersion = '1.2.4'
+    roomVersion = '2.2.5'
 
     Dependencies = [
             androidxAppCompat: "androidx.appcompat:appcompat:${androidxAppCompatVersion}",
@@ -55,7 +56,11 @@ ext {
             ktx              : [
                     core     : "androidx.core:core-ktx:${coreKtx}",
                     liveData : "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}",
-                    viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}"
+                    viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}",
+                    room     : "androidx.room:room-ktx:${roomVersion}"
+            ],
+            compiler         : [
+                    room: "androidx.room:room-compile${roomVersion}"
             ]
     ]
 
