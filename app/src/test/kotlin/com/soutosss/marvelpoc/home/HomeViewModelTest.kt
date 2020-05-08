@@ -21,7 +21,7 @@ class HomeViewModelTest {
     val rule = InstantTaskExecutorRule()
 
     @get:Rule
-    var coroutinesTestRule = CoroutinesTestRule()
+    var coroutineTestRule = CoroutineTestRule()
 
     private lateinit var repository: CharactersRepository
     private lateinit var viewModel: HomeViewModel
@@ -34,7 +34,7 @@ class HomeViewModelTest {
 
     @Test
     fun fetchCharacters_shouldPostListWhenApiReturnsOK() =
-        coroutinesTestRule.testDispatcher.runBlockingTest {
+        coroutineTestRule.testDispatcher.runBlockingTest {
             coEvery { repository.fetchAllCharacters() } returns parseToJson()
 
             viewModel.fetchCharacters()
@@ -45,7 +45,7 @@ class HomeViewModelTest {
 
     @Test
     fun fetchCharacters_shouldPostErrorResWhenFailed() =
-        coroutinesTestRule.testDispatcher.runBlockingTest {
+        coroutineTestRule.testDispatcher.runBlockingTest {
 
             coEvery { repository.fetchAllCharacters() } throws Exception()
 
