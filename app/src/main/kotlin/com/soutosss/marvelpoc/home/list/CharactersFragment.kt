@@ -18,7 +18,8 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val adapter = CharactersAdapter(::loadHomeImage)
+        val adapter = CharactersAdapter(::loadHomeImage, homeViewModel::favoriteClick)
+
         recycler.adapter = adapter
         observeLiveData(adapter)
     }

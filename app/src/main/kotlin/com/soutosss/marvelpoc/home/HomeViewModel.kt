@@ -2,9 +2,9 @@ package com.soutosss.marvelpoc.home
 
 import androidx.lifecycle.*
 import com.soutosss.marvelpoc.R
-import com.soutosss.marvelpoc.shared.livedata.Result
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
+import com.soutosss.marvelpoc.shared.livedata.Result
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: CharactersRepository) : ViewModel(), LifecycleObserver {
@@ -29,5 +29,40 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
         }
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun fetchFavoriteCharacters() {
+        viewModelScope.launch {
+            _favoriteCharacters.postValue(Result.Loading)
+            try {
+                _favoriteCharacters.postValue(Result.Loaded(repository.fetchFavoriteCharacters()))
+            } catch (e: Exception) {
+                _favoriteCharacters.postValue(
+                    Result.Error(R.string.home_error_loading)
+                )
+            }
+        }
+    }
+
+    fun favoriteClick(item: CharacterHome) {
+        if (item.favorite) {
+            favorite(item)
+        }else{
+            unFavorite(item)
+        }
+    }
+
+    private fun favorite(item: CharacterHome) {
+        viewModelScope.launch {
+            repository.favoriteCharacterHome(item)
+            fetchFavoriteCharacters()
+        }
+    }
+
+    private fun unFavorite(item: CharacterHome) {
+        viewModelScope.launch {
+            repository.unFavoriteCharacterHome(item)
+            fetchFavoriteCharacters()
+        }
+    }
 
 }

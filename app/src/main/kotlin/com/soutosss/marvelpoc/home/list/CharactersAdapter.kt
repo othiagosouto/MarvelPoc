@@ -13,12 +13,14 @@ import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.home.list.CharactersAdapter.CharacterHomeViewHolder
 
-class CharactersAdapter(private val renderImage: (ImageView, String) -> Unit) : ListAdapter<CharacterHome, CharacterHomeViewHolder>(CharacterHomeDiff()) {
+class CharactersAdapter(
+    private val renderImage: (ImageView, String) -> Unit,
+    private val favoriteClick: (CharacterHome) -> Unit
+) : ListAdapter<CharacterHome, CharacterHomeViewHolder>(CharacterHomeDiff()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterHomeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.characters_item, parent, false)
-
         return CharacterHomeViewHolder(view)
     }
 
@@ -30,6 +32,14 @@ class CharactersAdapter(private val renderImage: (ImageView, String) -> Unit) : 
         private val headerText: TextView = itemView.findViewById(R.id.text)
         private val imageView: ImageView = itemView.findViewById(R.id.image)
         private val favoriteCheckBox: CheckBox = itemView.findViewById(R.id.favorite)
+
+        init {
+            favoriteCheckBox.setOnClickListener {
+                val item = getItem(adapterPosition)
+                item.favorite = item.favorite.not()
+                favoriteClick(item)
+            }
+        }
 
         fun bind(characterHome: CharacterHome) {
             headerText.text = characterHome.name
