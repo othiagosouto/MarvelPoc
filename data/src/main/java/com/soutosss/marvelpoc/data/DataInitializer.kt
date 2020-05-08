@@ -1,5 +1,7 @@
 package com.soutosss.marvelpoc.data
 
+import androidx.room.Room
+import com.soutosss.marvelpoc.data.local.AppDatabase
 import com.soutosss.marvelpoc.data.network.CharactersApi
 import com.soutosss.marvelpoc.shared.koin.KoinInitializer
 import okhttp3.OkHttpClient
@@ -13,7 +15,11 @@ class DataInitializer : KoinInitializer() {
     override fun createKoinModules(): List<Module> {
         return listOf(module {
             single { getRetrofitInstance() }
-            single { CharactersRepository(get()) }
+            single { Room.databaseBuilder(
+                    get(), AppDatabase::class.java, "database-name"
+                ).build().charactersHomeDAO()
+            }
+            single { CharactersRepository(get(), get()) }
         })
     }
 

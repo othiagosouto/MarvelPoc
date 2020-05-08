@@ -11,6 +11,7 @@ class AppModulesInitializer : KoinInitializer() {
         return listOf(
             module {
                 viewModel { HomeViewModel(get()) }
+                single { context!!.applicationContext }
             })
     }
 }
