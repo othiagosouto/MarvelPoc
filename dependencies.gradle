@@ -60,7 +60,7 @@ ext {
                     room     : "androidx.room:room-ktx:${roomVersion}"
             ],
             compiler         : [
-                    room: "androidx.room:room-compile${roomVersion}"
+                    room: "androidx.room:room-compiler:${roomVersion}"
             ]
     ]
 
