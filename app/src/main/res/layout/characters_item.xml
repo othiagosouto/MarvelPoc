@@ -17,7 +17,7 @@
         tools:src="@drawable/ic_launcher_background" />
 
     <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/progress"
+        android:id="@+id/progressItem"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

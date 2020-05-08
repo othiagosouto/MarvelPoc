@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">MarvelPoc</string>
     <string name="home_error_loading">Looks like thanos didn\'t like you</string>
+    <string name="favorite_error_loading">Looks like thanos didn\'t like your favorite characters</string>
     <string name="search">Search</string>
     <string name="search_content_description">Search for Marvel Characters</string>
     <string name="home_app_title">Marvel Characters</string>
-    <string name="empty_characters_favorites">You don\'t have favorite no marvel character :(</string>
+    <string name="empty_characters_favorites">You don\'t have favorite marvel character :(</string>
     <string name="empty_characters_home">There`s no characters available :(</string>
 </resources>

@@ -12,10 +12,9 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
-        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -44,6 +43,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':shared')
+
     implementation Dependencies.kotlin
     implementation Dependencies.coroutines
     implementation Dependencies.koin
@@ -52,7 +52,7 @@ dependencies {
     implementation Dependencies.gsonConverter
 
     allTestsConfigs TestingDependencies.junit
-    allTestsConfigs TestingDependencies.mockk
+    testImplementation TestingDependencies.mockk
     allTestsConfigs TestingDependencies.coroutines
     allTestsConfigs TestingDependencies.truth
 

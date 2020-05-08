@@ -46,11 +46,19 @@ class CharactersFragmentConfiguration : KoinComponent {
     }
 
     fun withEmptyFavoriteResult() {
-        postLiveData(homeViewModel.favoriteCharacters, emptyList<CharacterHome>())
+        postLiveData(homeViewModel.favoriteCharacters, Result.Loaded(emptyList<CharacterHome>()))
+    }
+
+    fun withErrorFavorite() {
+        postLiveData(homeViewModel.favoriteCharacters, Result.Error(R.string.home_error_loading, R.drawable.thanos))
+    }
+
+    fun withErrorHome() {
+        postLiveData(homeViewModel.characters, Result.Error(R.string.home_error_loading, R.drawable.thanos))
     }
 
     fun withEmptyHomeResult() {
-        postLiveData(homeViewModel.characters, emptyList<CharacterHome>())
+        postLiveData(homeViewModel.characters, Result.Loaded(emptyList<CharacterHome>()))
     }
 
     fun withHomeCharacters() {
@@ -61,7 +69,7 @@ class CharactersFragmentConfiguration : KoinComponent {
             false
         )
 
-        postLiveData(homeViewModel.characters, listOf(item))
+        postLiveData(homeViewModel.characters, Result.Loaded(listOf(item)))
     }
 
     fun withFavoriteCharacters() {
@@ -71,13 +79,14 @@ class CharactersFragmentConfiguration : KoinComponent {
             "http://www.google.com",
             false
         )
-        postLiveData(homeViewModel.favoriteCharacters, listOf(item))
+        postLiveData(homeViewModel.favoriteCharacters, Result.Loaded(listOf(item)))
     }
 
-    private fun postLiveData(liveData: LiveData<Result>, items: Any) {
+    private fun postLiveData(liveData: LiveData<Result>, item: Result) {
         val mutableLiveData: MutableLiveData<Result> = liveData as MutableLiveData<Result>
-        mutableLiveData.postValue(Result.Loaded(items))
+        mutableLiveData.postValue(item)
     }
+
 }
 
 class CharactersFragmentRobot {
@@ -112,11 +121,19 @@ class CharactersFragmentResult {
     }
 
     fun checkEmptyFavoriteTab() {
-        checkEmptyFavoriteTab("You don't have favorite no marvel character :(")
+        checkErrorMessage("You don't have favorite marvel character :(")
+    }
+
+    fun checkErrorFavoriteTab() {
+        checkErrorMessage("Looks like thanos didn't like you")
+    }
+
+    fun checkErrorHomeTab() {
+        checkErrorMessage("Looks like thanos didn't like you")
     }
 
     fun checkEmptyHomeTab() {
-        checkEmptyFavoriteTab("There`s no characters available :(")
+        checkErrorMessage("There`s no characters available :(")
     }
 
     fun errorMessageNotAvailable() {
@@ -124,7 +141,7 @@ class CharactersFragmentResult {
         onView(withId(R.id.erroIcon)).check(matches(not(isDisplayed())))
     }
 
-    private fun checkEmptyFavoriteTab(message: String) {
+    private fun checkErrorMessage(message: String) {
         onView(withId(R.id.message)).check(matches(isDisplayed()))
         onView(withId(R.id.erroIcon)).check(matches(isDisplayed()))
         onView(withId(R.id.message)).check(matches(withText(message)))

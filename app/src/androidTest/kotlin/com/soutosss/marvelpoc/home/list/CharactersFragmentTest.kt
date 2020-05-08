@@ -29,7 +29,7 @@ class CharactersFragmentTest {
     }
 
     @Test
-    fun init_homeMode_shouldLoadEmptyViewWithExpectedHomeeMessage() {
+    fun init_homeMode_shouldLoadEmptyViewWithExpectedHomeMessage() {
         configure {
             withHomeTab()
             withEmptyHomeResult()
@@ -38,6 +38,32 @@ class CharactersFragmentTest {
             loadingIsNotVisible()
             recyclerViewIsHidden()
             checkEmptyHomeTab()
+        }
+    }
+
+    @Test
+    fun init_favorite_shouldLoadErrorWithExpectedMessage() {
+        configure {
+            withFavoriteTab()
+            withErrorFavorite()
+        } launch {
+        } check {
+            loadingIsNotVisible()
+            recyclerViewIsHidden()
+            checkErrorFavoriteTab()
+        }
+    }
+
+    @Test
+    fun init_home_shouldLoadErrorWithExpectedMessage() {
+        configure {
+            withHomeTab()
+            withErrorHome()
+        } launch {
+        } check {
+            loadingIsNotVisible()
+            recyclerViewIsHidden()
+            checkErrorHomeTab()
         }
     }
 

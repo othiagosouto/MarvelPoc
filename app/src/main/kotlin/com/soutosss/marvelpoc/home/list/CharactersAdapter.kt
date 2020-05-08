@@ -32,7 +32,7 @@ class CharactersAdapter(
     inner class CharacterHomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val headerText: TextView = itemView.findViewById(R.id.text)
         private val imageView: ImageView = itemView.findViewById(R.id.image)
-        private val progress: ContentLoadingProgressBar = itemView.findViewById(R.id.progress)
+        private val progress: ContentLoadingProgressBar = itemView.findViewById(R.id.progressItem)
         private val favoriteCheckBox: CheckBox = itemView.findViewById(R.id.favorite)
 
         init {

@@ -64,7 +64,7 @@
         app:layout_constraintEnd_toStartOf="@id/guide_end"
         app:layout_constraintStart_toStartOf="@id/guide_start"
         app:layout_constraintTop_toBottomOf="@+id/erroIcon"
-        tools:text="You don't have favorite no marvel character :("
+        tools:text="You don't have favorite marvel character :("
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:visibility="visible" />
