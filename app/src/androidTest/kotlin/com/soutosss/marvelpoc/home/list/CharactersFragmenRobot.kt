@@ -2,12 +2,15 @@ package com.soutosss.marvelpoc.home.list
 
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import com.google.gson.Gson
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
+import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.home.HomeViewModel
 import com.soutosss.marvelpoc.shared.livedata.Result
@@ -47,15 +50,37 @@ class CharactersFragmentConfiguration : KoinComponent {
     }
 
     fun withEmptyFavoriteResult() {
-        val mutableLiveData: MutableLiveData<Result> =
-            homeViewModel.favoriteCharacters as MutableLiveData<Result>
-        mutableLiveData.postValue(Result.Loaded(emptyList<CharacterHome>()))
+        postLiveData(homeViewModel.favoriteCharacters, emptyList<CharacterHome>())
     }
 
     fun withEmptyHomeResult() {
-        val mutableLiveData: MutableLiveData<Result> =
-            homeViewModel.characters as MutableLiveData<Result>
-        mutableLiveData.postValue(Result.Loaded(emptyList<CharacterHome>()))
+        postLiveData(homeViewModel.characters, emptyList<CharacterHome>())
+    }
+
+    fun withHomeCharacters() {
+        val item = CharacterHome(
+            30,
+            "3-D Man",
+            "http://www.google.com",
+            false
+        )
+
+        postLiveData(homeViewModel.characters, listOf(item))
+    }
+
+    fun withFavoriteCharacters() {
+        val item = CharacterHome(
+            30,
+            "3-D Test HAHAH",
+            "http://www.google.com",
+            false
+        )
+        postLiveData(homeViewModel.favoriteCharacters, listOf(item))
+    }
+
+    private fun postLiveData(liveData: LiveData<Result>, items: Any) {
+        val mutableLiveData: MutableLiveData<Result> = liveData as MutableLiveData<Result>
+        mutableLiveData.postValue(Result.Loaded(items))
     }
 }
 
@@ -68,6 +93,18 @@ class CharactersFragmentResult {
 
     fun recyclerViewIsHidden() {
         onView(withId(R.id.recycler)).check(matches(not(isDisplayed())))
+    }
+
+    fun checkCharacterHomeNamee() {
+        checkCharacterName("3-D Man")
+    }
+
+    fun characterFavoriteName() {
+        checkCharacterName("3-D Test HAHAH")
+    }
+
+    private fun checkCharacterName(characterName: String) {
+        onView(withId(R.id.recycler)).check(matches(hasDescendant(withText(characterName))))
     }
 
     fun loadingIsVisible() {
@@ -84,6 +121,11 @@ class CharactersFragmentResult {
 
     fun checkEmptyHomeTab() {
         checkEmptyFavoriteTab("There`s no characters available :(")
+    }
+
+    fun errorMessageNotAvailable() {
+        onView(withId(R.id.message)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.erroIcon)).check(matches(not(isDisplayed())))
     }
 
     private fun checkEmptyFavoriteTab(message: String) {

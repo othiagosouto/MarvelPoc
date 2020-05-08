@@ -40,4 +40,30 @@ class CharactersFragmentTest {
             checkEmptyHomeTab()
         }
     }
+
+    @Test
+    fun init_homeMode_shouldPresentExpectedCharacters() {
+        configure {
+            withHomeTab()
+            withHomeCharacters()
+        } launch {
+        } check {
+            checkCharacterHomeNamee()
+            loadingIsNotVisible()
+            errorMessageNotAvailable()
+        }
+    }
+
+    @Test
+    fun init_favorite_shouldPresentExpectedCharacters() {
+        configure {
+            withFavoriteTab()
+            withFavoriteCharacters()
+        } launch {
+        } check {
+            characterFavoriteName()
+            loadingIsNotVisible()
+            errorMessageNotAvailable()
+        }
+    }
 }
