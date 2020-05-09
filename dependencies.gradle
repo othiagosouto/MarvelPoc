@@ -36,7 +36,8 @@ ext {
     gsonVersion = '2.8.5'
     fragmentScenarioVersion = '1.2.4'
     roomVersion = '2.2.5'
-
+    glideVersion = '4.11.0'
+    
     Dependencies = [
             androidxAppCompat: "androidx.appcompat:appcompat:${androidxAppCompatVersion}",
             coroutines       : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
@@ -44,6 +45,7 @@ ext {
             retrofit         : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             gsonConverter    : "com.squareup.retrofit2:converter-gson:${gsonConverterVersion}",
             koin             : "org.koin:koin-androidx-viewmodel:${koinAndroidVersion}",
+            glide            : "com.github.bumptech.glide:glide:${glideVersion}",
             archx            : [
                     lifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:${lifecycleVersion}"
 
@@ -60,12 +62,12 @@ ext {
                     room     : "androidx.room:room-ktx:${roomVersion}"
             ],
             compiler         : [
-                    room: "androidx.room:room-compiler:${roomVersion}"
+                    room : "androidx.room:room-compiler:${roomVersion}",
+                    glide: "com.github.bumptech.glide:compiler:${glideVersion}"
             ]
     ]
 
     TestingDependencies = [
-
             gson                   : "com.google.code.gson:gson:${gsonVersion}",
             androidxTestCore       : "androidx.arch.core:core-testing:${androidxTestCore}",
             androidxEspresso       : "androidx.test.espresso:espresso-core:${androidxEspressoVersion}",

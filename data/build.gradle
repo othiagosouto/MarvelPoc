@@ -48,6 +48,8 @@ dependencies {
     implementation Dependencies.coroutines
     implementation Dependencies.koin
     implementation Dependencies.retrofit
+    implementation Dependencies.ktx.room
+    kapt Dependencies.compiler.room
 
     implementation Dependencies.gsonConverter
 
@@ -56,6 +58,4 @@ dependencies {
     allTestsConfigs TestingDependencies.coroutines
     allTestsConfigs TestingDependencies.truth
 
-    implementation Dependencies.ktx.room
-    kapt Dependencies.compiler.room
 }

@@ -63,8 +63,8 @@ dependencies {
     implementation Dependencies.design.androidxConstraintLayout
     implementation Dependencies.design.material
 
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation Dependencies.glide
+    annotationProcessor Dependencies.compiler.glide
 
     implementation Dependencies.koin
 
@@ -73,7 +73,6 @@ dependencies {
     implementation Dependencies.ktx.liveData
 
     testImplementation TestingDependencies.mockk
-    debugImplementation TestingDependencies.fragment
 
     allTestsConfigs TestingDependencies.androidxTestRules
     allTestsConfigs TestingDependencies.gson
@@ -86,5 +85,5 @@ dependencies {
     androidTestImplementation TestingDependencies.androidxTestRunner
     androidTestImplementation TestingDependencies.androidxTestJunit
     androidTestImplementation TestingDependencies.mockkAndroid
-
+    debugImplementation TestingDependencies.fragment
 }
