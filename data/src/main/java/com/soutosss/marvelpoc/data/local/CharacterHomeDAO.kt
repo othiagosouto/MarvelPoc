@@ -15,6 +15,9 @@ interface CharacterHomeDAO {
     @Insert
     suspend fun insertAll(vararg item: CharacterHome)
 
+    @Query("SELECT id FROM ${CharacterHome.TABLE_NAME}")
+    suspend fun favoriteIds(): List<Int>
+
     @Delete
     suspend fun delete(item: CharacterHome)
 }

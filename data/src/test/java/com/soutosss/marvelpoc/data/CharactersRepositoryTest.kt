@@ -34,7 +34,7 @@ class CharactersRepositoryTest {
     fun `fetchAllCharacters should call api to list all characters from marvel endpoint`() =
         runBlockingTest {
             coEvery { mockApi.listCharacters() } returns parseToJson()
-            coEvery { mockDao.getAll() } returns emptyList()
+            coEvery { mockDao.favoriteIds() } returns emptyList()
 
             assertThat(repository.fetchAllCharacters()).isEqualTo(parseToJson().toCharacterHomeList())
         }
@@ -43,7 +43,7 @@ class CharactersRepositoryTest {
     fun `fetchAllCharacters should call api to list all characters from marvel endpoint using expected parameter`() =
         runBlockingTest {
             coEvery { mockApi.listCharacters("ops") } returns parseToJson()
-            coEvery { mockDao.getAll() } returns emptyList()
+            coEvery { mockDao.favoriteIds() } returns emptyList()
 
             repository.fetchAllCharacters("ops")
 
@@ -54,7 +54,7 @@ class CharactersRepositoryTest {
     fun `fetchAllCharacters should update item favorite when there's is storage saved inside room`() =
         runBlockingTest {
             coEvery { mockApi.listCharacters() } returns parseToJson()
-            coEvery { mockDao.getAll() } returns listOf(item)
+            coEvery { mockDao.favoriteIds() } returns listOf(1011334)
 
             val expectedResult = parseToJson().toCharacterHomeList()
             expectedResult.first().favorite = true

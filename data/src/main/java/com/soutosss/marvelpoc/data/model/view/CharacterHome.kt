@@ -7,6 +7,7 @@ import com.soutosss.marvelpoc.data.model.character.Result
 
 @Entity(tableName = CharacterHome.TABLE_NAME)
 data class CharacterHome(
+    @ColumnInfo(name = "id")
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "thumbnail_url") val thumbnailUrl: String,

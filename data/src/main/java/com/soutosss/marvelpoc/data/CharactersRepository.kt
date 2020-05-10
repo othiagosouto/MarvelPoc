@@ -10,14 +10,14 @@ class CharactersRepository(
 ) {
     suspend fun fetchAllCharacters(querySearch: String ? = null): List<CharacterHome> {
         val results = api.listCharacters(querySearch).data.results.map { CharacterHome(it) }
-        val favorites = fetchFavoriteCharacters()
-        favorites.forEach { favorite ->
-            results.firstOrNull { it.id == favorite.id }?.favorite = true
+        val favorites = characterHomeDAO.favoriteIds()
+        favorites.forEach { id ->
+            results.firstOrNull { it.id == id }?.favorite = true
         }
         return results
     }
 
-    suspend fun fetchFavoriteCharacters(): List<CharacterHome> = characterHomeDAO.getAll()
+    suspend fun fetchFavoriteCharacters() =  characterHomeDAO.getAll()
 
     suspend fun unFavoriteCharacterHome(
         item: CharacterHome,
