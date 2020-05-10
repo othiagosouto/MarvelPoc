@@ -18,6 +18,8 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
     private val _changeAdapter = MutableLiveData<Int>()
     val changeAdapter: LiveData<Int> = _changeAdapter
 
+    private var searchedQuery: String = ""
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchCharacters() {
         fetchListRequest(
@@ -29,7 +31,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
         )
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun fetchFavoriteCharacters() {
         fetchListRequest(
             _favoriteCharacters,
@@ -39,6 +41,23 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
             R.drawable.ic_favorites
         )
     }
+
+    fun initSearchQuery(query: String) {
+        searchedQuery = query
+        fetchSearchedContent()
+    }
+
+    private fun fetchSearchedContent() {
+        fetchListRequest(
+            _characters,
+            this::searchWithQuery,
+            R.string.search_error_loading,
+            R.string.empty_characters_searched,
+            R.drawable.search_not_found
+        )
+    }
+
+    private suspend fun searchWithQuery() = repository.fetchSearchedContent(searchedQuery)
 
     private fun fetchListRequest(
         liveData: MutableLiveData<Result>,
@@ -82,7 +101,8 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
         viewModelScope.launch {
             val result = _characters.value as? Result.Loaded
             val items = result?.item as? List<*>
-            val position = repository.unFavoriteCharacterHome(item, items?.filterIsInstance<CharacterHome>())
+            val position =
+                repository.unFavoriteCharacterHome(item, items?.filterIsInstance<CharacterHome>())
             fetchFavoriteCharacters()
             _changeAdapter.postValue(position)
         }

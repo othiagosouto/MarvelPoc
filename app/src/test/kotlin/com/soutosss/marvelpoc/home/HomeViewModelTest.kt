@@ -35,7 +35,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun fetchCharacters_shouldPostListWhenApiReturnsOK() =
+    fun `fetchCharacters should post the content from the call when is not empty`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
             val charactersList = parseToJson().toCharacterHomeList()
             coEvery { repository.fetchAllCharacters() } returns charactersList
@@ -46,7 +46,7 @@ class HomeViewModelTest {
         }
 
     @Test
-    fun fetchCharacters_shouldPostErrorResWhenFailed() =
+    fun `fetchCharacters should post an error when the call fail`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
 
             coEvery { repository.fetchAllCharacters() } throws Exception()
@@ -62,7 +62,7 @@ class HomeViewModelTest {
         }
 
     @Test
-    fun fetchFavoriteCharacters_shouldPostListhWithFavoritesStored() =
+    fun `fetchFavoriteCharacters should post all favorite characters available`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
             val favoriteCharacters = parseToJson().toCharacterHomeList()
 
@@ -78,7 +78,7 @@ class HomeViewModelTest {
         }
 
     @Test
-    fun fetchFavoriteCharacters_shouldPostErrorResWhenFailed() =
+    fun `fetchFavoriteCharacters should post error when the call fail`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
 
             coEvery { repository.fetchFavoriteCharacters() } throws Exception()
@@ -94,7 +94,7 @@ class HomeViewModelTest {
         }
 
     @Test
-    fun fetchFavoriteCharacters_shouldPostErrorWhenIsEmpty() =
+    fun `fetchFavoriteCharacters should post error with expected content when there's no favorite characters available` () =
         coroutineTestRule.testDispatcher.runBlockingTest {
 
             coEvery { repository.fetchFavoriteCharacters() } returns emptyList()
@@ -110,7 +110,7 @@ class HomeViewModelTest {
         }
 
     @Test
-    fun fetchCharacters_shouldPostErrorWhenIsEmpty() =
+    fun `fetchCharacters should post error when there is no characters available`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
 
             coEvery { repository.fetchAllCharacters() } returns emptyList()
@@ -159,6 +159,18 @@ class HomeViewModelTest {
             assertThat(viewModel.changeAdapter.value).isEqualTo(30)
 
         }
+
+    @Test
+    fun `initSearchQuery should init searchContent and do search for characters starting expected name`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            val charactersList = parseToJson().toCharacterHomeList()
+            coEvery { repository.fetchSearchedContent("Ops") } returns charactersList
+
+            viewModel.initSearchQuery("Ops")
+            val value = viewModel.characters.value!! as Result.Loaded
+            assertThat(value).isEqualTo(Result.Loaded(charactersList))
+        }
+
 }
 
 private fun parseToJson(): MarvelCharactersResponse {
