@@ -41,6 +41,7 @@ ext {
     gsonConverterVersion = '2.8.1'
     gsonVersion = '2.8.5'
     glideVersion = '4.11.0'
+    pagingVersion = '2.1.2'
 
     Dependencies = [
             androidxAppCompat: "androidx.appcompat:appcompat:${androidxAppCompatVersion}",
@@ -63,7 +64,8 @@ ext {
                     core     : "androidx.core:core-ktx:${coreKtx}",
                     liveData : "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}",
                     viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}",
-                    room     : "androidx.room:room-ktx:${roomVersion}"
+                    room     : "androidx.room:room-ktx:${roomVersion}",
+                    paging : "androidx.paging:paging-runtime-ktx:${pagingVersion}"
             ],
             compiler         : [
                     room : "androidx.room:room-compiler:${roomVersion}",

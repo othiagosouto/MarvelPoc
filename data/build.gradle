@@ -51,6 +51,8 @@ dependencies {
     implementation Dependencies.ktx.room
     kapt Dependencies.compiler.room
 
+    implementation Dependencies.ktx.paging
+
     implementation Dependencies.gsonConverter
 
     allTestsConfigs TestingDependencies.junit
