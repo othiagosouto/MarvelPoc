@@ -74,16 +74,17 @@ dependencies {
 
     testImplementation TestingDependencies.mockk
 
-    allTestsConfigs TestingDependencies.androidxTestRules
     allTestsConfigs TestingDependencies.gson
-    allTestsConfigs TestingDependencies.androidxTestCore
     allTestsConfigs TestingDependencies.androidxEspresso
     allTestsConfigs TestingDependencies.junit
     allTestsConfigs TestingDependencies.coroutines
     allTestsConfigs TestingDependencies.truth
 
+    androidTestImplementation TestingDependencies.androidxTestCore
     androidTestImplementation TestingDependencies.androidxTestRunner
     androidTestImplementation TestingDependencies.androidxTestJunit
     androidTestImplementation TestingDependencies.mockkAndroid
+    androidTestImplementation TestingDependencies.androidxTestRules
+
     debugImplementation TestingDependencies.fragment
 }
