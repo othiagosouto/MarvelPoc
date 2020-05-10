@@ -12,7 +12,7 @@
     <string name="search_label">Search</string>
     <string name="search_characters_hint">Search for Marvel Characters</string>
     <string name="search_error_loading">Looks like thanos didn\'t like your searched characters</string>
-    <string name="empty_characters_searched">Black Widow and Captain weren\'t able find any characters :(</string>
-    <string name="search_title">Marvel characters search result</string>
+    <string name="empty_characters_searched">Black Widow and Captain weren\'t able to find any characters :(</string>
+    <string name="search_title">Marvel characters search</string>
 
 </resources>
