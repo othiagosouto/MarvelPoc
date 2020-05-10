@@ -25,9 +25,12 @@ class CharactersRepository(
     ): Int? {
         characterHomeDAO.delete(item)
         list?.firstOrNull { it.id == item.id }?.favorite = false
-       return  list?.indexOf(item)
+        return list?.indexOf(item)
     }
 
     suspend fun favoriteCharacterHome(characterHome: CharacterHome): Unit =
         characterHomeDAO.insertAll(characterHome)
+
+    suspend fun fetchSearchedContent(querySearch: String) =
+        api.listCharacters(querySearch).data.results.map { CharacterHome(it) }
 }

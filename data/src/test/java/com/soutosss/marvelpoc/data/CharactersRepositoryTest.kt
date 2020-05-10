@@ -10,6 +10,7 @@ import com.soutosss.marvelpoc.data.network.CharactersApi
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
@@ -36,6 +37,17 @@ class CharactersRepositoryTest {
             coEvery { mockDao.getAll() } returns emptyList()
 
             assertThat(repository.fetchAllCharacters()).isEqualTo(parseToJson().toCharacterHomeList())
+        }
+
+    @Test
+    fun `fetchSearchedContent should call api to list all characters from marvel endpoint using expected parameter`() =
+        runBlockingTest {
+            coEvery { mockApi.listCharacters("ops") } returns parseToJson()
+
+            repository.fetchSearchedContent("ops")
+
+            coVerify { mockApi.listCharacters("ops")}
+
         }
 
     @Test
