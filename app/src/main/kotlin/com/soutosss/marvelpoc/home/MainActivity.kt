@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.appbar.MaterialToolbar
 
-
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val homeViewModel: HomeViewModel by viewModel()
 
