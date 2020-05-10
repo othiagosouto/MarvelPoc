@@ -164,7 +164,7 @@ class HomeViewModelTest {
     fun `initSearchQuery should init searchContent and do search for characters starting expected name`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
             val charactersList = parseToJson().toCharacterHomeList()
-            coEvery { repository.fetchSearchedContent("Ops") } returns charactersList
+            coEvery { repository.fetchAllCharacters("Ops") } returns charactersList
 
             viewModel.initSearchQuery("Ops")
             val value = viewModel.characters.value!! as Result.Loaded

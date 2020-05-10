@@ -40,14 +40,14 @@ class CharactersRepositoryTest {
         }
 
     @Test
-    fun `fetchSearchedContent should call api to list all characters from marvel endpoint using expected parameter`() =
+    fun `fetchAllCharacters should call api to list all characters from marvel endpoint using expected parameter`() =
         runBlockingTest {
             coEvery { mockApi.listCharacters("ops") } returns parseToJson()
+            coEvery { mockDao.getAll() } returns emptyList()
 
-            repository.fetchSearchedContent("ops")
+            repository.fetchAllCharacters("ops")
 
             coVerify { mockApi.listCharacters("ops")}
-
         }
 
     @Test

@@ -24,7 +24,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
     fun fetchCharacters() {
         fetchListRequest(
             _characters,
-            repository::fetchAllCharacters,
+            this::fetchAllCharacters,
             R.string.home_error_loading,
             R.string.empty_characters_home,
             R.drawable.ic_deadpool
@@ -57,7 +57,8 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
         )
     }
 
-    private suspend fun searchWithQuery() = repository.fetchSearchedContent(searchedQuery)
+    private suspend fun fetchAllCharacters()= repository.fetchAllCharacters()
+    private suspend fun searchWithQuery() = repository.fetchAllCharacters(searchedQuery)
 
     private fun fetchListRequest(
         liveData: MutableLiveData<Result>,
