@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MarvelPoc</string>
+    <string name="app_name">Marvel Characters</string>
     <string name="home_error_loading">Looks like thanos didn\'t like you</string>
     <string name="favorite_error_loading">Looks like thanos didn\'t like your favorite characters</string>
     <string name="search">Search</string>
