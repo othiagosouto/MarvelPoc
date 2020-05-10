@@ -45,20 +45,12 @@ class CharactersFragmentConfiguration : KoinComponent {
         return CharactersFragmentRobot().apply(func)
     }
 
-    fun withEmptyFavoriteResult() {
-        postLiveData(homeViewModel.favoriteCharacters, Result.Loaded(emptyList<CharacterHome>()))
-    }
-
     fun withErrorFavorite() {
         postLiveData(homeViewModel.favoriteCharacters, Result.Error(R.string.favorite_error_loading, R.drawable.thanos))
     }
 
     fun withErrorHome() {
         postLiveData(homeViewModel.characters, Result.Error(R.string.home_error_loading, R.drawable.thanos))
-    }
-
-    fun withEmptyHomeResult() {
-        postLiveData(homeViewModel.characters, Result.Loaded(emptyList<CharacterHome>()))
     }
 
     fun withHomeCharacters() {
