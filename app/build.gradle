@@ -79,12 +79,12 @@ dependencies {
     allTestsConfigs TestingDependencies.junit
     allTestsConfigs TestingDependencies.coroutines
     allTestsConfigs TestingDependencies.truth
+    allTestsConfigs TestingDependencies.androidxTestRules
+    allTestsConfigs TestingDependencies.androidxTestCore
 
-    androidTestImplementation TestingDependencies.androidxTestCore
     androidTestImplementation TestingDependencies.androidxTestRunner
     androidTestImplementation TestingDependencies.androidxTestJunit
     androidTestImplementation TestingDependencies.mockkAndroid
-    androidTestImplementation TestingDependencies.androidxTestRules
 
     debugImplementation TestingDependencies.fragment
 }
