@@ -2,22 +2,20 @@ package com.soutosss.marvelpoc.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.Observer
-import androidx.paging.PositionalDataSource
+import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
+import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersDataSource
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
+import com.soutosss.marvelpoc.data.model.EmptyDataException
 import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.data.model.character.toCharacterHomeList
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.data.network.CharactersApi
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import com.soutosss.marvelpoc.shared.livedata.Result
+import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
@@ -34,72 +32,105 @@ class HomeViewModelTest {
 
     private lateinit var repository: CharactersRepository
     private lateinit var viewModel: HomeViewModel
+    private lateinit var dataSource: CharactersDataSource
+    private lateinit var exceptionHandler: (Exception) -> Unit
+    private lateinit var successHandler: () -> Unit
+    private lateinit var api: CharactersApi
+    private lateinit var dao: CharacterHomeDAO
+    private lateinit var charactersList: List<CharacterHome>
 
     @Before
     fun setup() {
-        repository = mockk()
+        exceptionHandler = mockk(relaxed = true)
+        successHandler = mockk(relaxed = true)
+        charactersList = parseToJson().toCharacterHomeList()
+        api = mockk()
+        dao = mockk()
+        repository = CharactersRepository(api, dao)
         viewModel = HomeViewModel(repository)
     }
 
     @Test
-    fun `fetchCharacters should post the content from the call when is not empty`() =
+    fun `charactersPageListContent should post the characters from datasource`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val charactersList = parseToJson().toCharacterHomeList()
-            val api: CharactersApi = mockk()
-            val dao: CharacterHomeDAO = mockk()
-            val mockedSource = CharactersDataSource("", this, api, dao, {}, {})
+            dataSource =
+                CharactersDataSource(null, this, api, dao, exceptionHandler, successHandler)
+
             coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
             coEvery { dao.favoriteIds() } returns emptyList()
-            val callback: PositionalDataSource.LoadInitialCallback<CharacterHome> =
-                mockk(relaxed = true)
-            every {
-                repository.charactersDataSource(
-                    null,
-                    any(),
-                    any(),
-                    any()
-                )
-            } returns mockedSource
 
             val item = viewModel.charactersPageListContent()
 
-            mockedSource.loadInitial(
-                PositionalDataSource.LoadInitialParams(0, 5, 5, false),
-                callback
-            )
-
-            item.observe(mockLifecycle(), Observer {
-
-                println("EITA 1")
+            var list: List<CharacterHome>? = null
+            item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                list = it.snapshot()
             })
-            verify { callback.onResult(charactersList, 0) }
-            println("EITA 2")
+            assertThat(list).isEqualTo(parseToJson().toCharacterHomeList())
+            assertThat(viewModel.characters.value!!).isEqualTo(Result.Loaded)
         }
 
+    @Test
+    fun `charactersPageListContent should post an expected message for Exception`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            dataSource =
+                CharactersDataSource(null, this, api, dao, exceptionHandler, successHandler)
+            val exception = Exception()
 
-    private fun mockLifecycle(): LifecycleOwner {
-        val owner = mockk<LifecycleOwner>(relaxed = true)
-        val lifecycle = LifecycleRegistry(owner)
-        lifecycle.currentState = Lifecycle.State.RESUMED
-        every { owner.lifecycle } returns lifecycle
-        return owner
-    }
-//
-//    @Test
-//    fun `fetchCharacters should post an error when the call fail`() =
-//        coroutineTestRule.testDispatcher.runBlockingTest {
-//
-//            coEvery { repository.fetchAllCharacters() } throws Exception()
-//
-//            viewModel.fetchCharacters()
-//
-//            assertThat(viewModel.characters.value!!).isEqualTo(
-//                Result.Error(
-//                    R.string.home_error_loading,
-//                    R.drawable.thanos
-//                )
-//            )
-//        }
+            coEvery { api.listCharacters(null, any(), any()) } throws exception
+
+            viewModel.charactersPageListContent()
+                .observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                })
+
+            assertThat(viewModel.characters.value!!).isEqualTo(
+                Result.Error(
+                    R.string.home_error_loading,
+                    R.drawable.thanos
+                )
+            )
+        }
+
+    @Test
+    fun `charactersPageListContent should post an item item with favorite when id its stored in the favorites table`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            dataSource =
+                CharactersDataSource(null, this, api, dao, exceptionHandler, successHandler)
+
+            coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
+            coEvery { dao.favoriteIds() } returns listOf(1011334)
+
+            val item = viewModel.charactersPageListContent()
+
+            var list: List<CharacterHome>? = null
+            item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                list = it.snapshot()
+            })
+            val expectedResult = parseToJson().toCharacterHomeList()
+            expectedResult.first().favorite = true
+            assertThat(list).isEqualTo(expectedResult)
+            assertThat(viewModel.characters.value!!).isEqualTo(Result.Loaded)
+        }
+
+    @Test
+    fun `charactersPageListContent should post an expected error message for EmptyDataException`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            dataSource =
+                CharactersDataSource(null, this, api, dao, exceptionHandler, successHandler)
+            val exception = EmptyDataException()
+
+            coEvery { api.listCharacters(null, any(), any()) } throws exception
+
+            viewModel.charactersPageListContent()
+                .observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                })
+
+            assertThat(viewModel.characters.value!!).isEqualTo(
+                Result.Error(
+                    R.string.empty_characters_home,
+                    R.drawable.ic_deadpool
+                )
+            )
+        }
 //
 //    @Test
 //    fun `fetchFavoriteCharacters should post all favorite characters available`() =
