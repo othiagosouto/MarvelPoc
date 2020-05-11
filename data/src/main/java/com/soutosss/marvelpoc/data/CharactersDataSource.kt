@@ -15,7 +15,7 @@ class CharactersDataSource(
     private val api: CharactersApi,
     private val dao: CharacterHomeDAO,
     private val exceptionHandler: (Exception) -> Unit,
-    private val loadFinished: ()  -> Unit
+    private val loadFinished: () -> Unit
 ) :
     PositionalDataSource<CharacterHome>() {
 
@@ -25,9 +25,15 @@ class CharactersDataSource(
     ) {
         scope.launch {
             try {
-                val response = api.listCharacters(name = queryText, offset = 0, limit = params.requestedLoadSize)
-                callback.onResult(response.toCharacterHomeList().checkFavorite(), 0)
-                loadFinished()
+                val response = api.listCharacters(
+                    name = queryText,
+                    offset = 0,
+                    limit = params.requestedLoadSize
+                ).toCharacterHomeList()
+                callback.onResult(response.checkFavorite(), 0)
+                if (response.isNotEmpty()) {
+                    loadFinished()
+                }
             } catch (e: Exception) {
                 exceptionHandler(e)
             }
@@ -49,7 +55,11 @@ class CharactersDataSource(
         scope.launch {
             try {
                 val response =
-                    api.listCharacters(name = queryText, offset = params.startPosition, limit = params.loadSize)
+                    api.listCharacters(
+                        name = queryText,
+                        offset = params.startPosition,
+                        limit = params.loadSize
+                    )
                 callback.onResult(response.toCharacterHomeList().checkFavorite())
             } catch (e: Exception) {
                 exceptionHandler(e)
