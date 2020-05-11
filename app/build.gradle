@@ -69,6 +69,7 @@ dependencies {
     implementation Dependencies.koin
 
     implementation Dependencies.ktx.core
+    implementation Dependencies.ktx.paging
     implementation Dependencies.ktx.viewModel
     implementation Dependencies.ktx.liveData
 
