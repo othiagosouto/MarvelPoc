@@ -7,11 +7,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import com.google.gson.Gson
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
+import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
+import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
+import com.soutosss.marvelpoc.data.network.CharactersApi
 import com.soutosss.marvelpoc.home.HomeViewModel
 import com.soutosss.marvelpoc.shared.livedata.Result
+import io.mockk.coEvery
 import io.mockk.mockk
 import org.hamcrest.Matchers.not
 import org.koin.core.KoinComponent
@@ -23,34 +28,41 @@ fun configure(func: CharactersFragmentConfiguration.() -> Unit) =
 
 class CharactersFragmentConfiguration : KoinComponent {
     private lateinit var bundle: Bundle
-    private val mockRepository: CharactersRepository = mockk(relaxed = true)
-    private val homeViewModel: HomeViewModel = HomeViewModel(mockRepository)
+    private val api: CharactersApi = mockk(relaxed = true)
+    private val mockDao: CharacterHomeDAO = mockk(relaxed = true)
+    private val repository: CharactersRepository = CharactersRepository(api, mockDao)
+    private val homeViewModel: HomeViewModel = HomeViewModel(repository)
 
     fun withFavoriteTab() {
         bundle = Bundle().apply { putBoolean("KEY_FAVORITE_TAB", true) }
     }
 
-    fun withHomeTab() {
-        bundle = Bundle().apply { putBoolean("KEY_FAVORITE_TAB", false) }
-    }
 
     infix fun launch(func: CharactersFragmentRobot.() -> Unit): CharactersFragmentRobot {
         loadKoinModules(
             module(override = true) {
-                single { mockRepository }
+                single { mockDao }
+                single { api }
+                single { repository }
                 single { homeViewModel }
             })
 
-        launchFragmentInContainer<CharactersFragment>(bundle)
+        launchFragmentInContainer<CharactersFragment>()
         return CharactersFragmentRobot().apply(func)
     }
 
     fun withErrorFavorite() {
-        postLiveData(homeViewModel.favoriteCharacters, Result.Error(R.string.favorite_error_loading, R.drawable.thanos))
+        postLiveData(
+            homeViewModel.favoriteCharacters,
+            Result.Error(R.string.favorite_error_loading, R.drawable.thanos)
+        )
     }
 
     fun withErrorHome() {
-        postLiveData(homeViewModel.characters, Result.Error(R.string.home_error_loading, R.drawable.thanos))
+        postLiveData(
+            homeViewModel.characters,
+            Result.Error(R.string.home_error_loading, R.drawable.thanos)
+        )
     }
 
     fun withHomeCharacters() {
@@ -60,8 +72,11 @@ class CharactersFragmentConfiguration : KoinComponent {
             "http://www.google.com",
             false
         )
+        coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
+    }
 
-        postLiveData(homeViewModel.characters, Result.Loaded(listOf(item)))
+    fun withNoFavorites(){
+        coEvery{mockDao.favoriteIds()} returns emptyList()
     }
 
     fun withFavoriteCharacters() {
@@ -71,7 +86,8 @@ class CharactersFragmentConfiguration : KoinComponent {
             "http://www.google.com",
             false
         )
-        postLiveData(homeViewModel.favoriteCharacters, Result.Loaded(listOf(item)))
+
+//        postLiveData(homeViewModel.favoriteCharacters, Result.Loaded())
     }
 
     private fun postLiveData(liveData: LiveData<Result>, item: Result) {
@@ -112,20 +128,12 @@ class CharactersFragmentResult {
         onView(withId(R.id.progress)).check(matches(not(isDisplayed())))
     }
 
-    fun checkEmptyFavoriteTab() {
-        checkErrorMessage("You don't have favorite marvel character :(")
-    }
-
     fun checkErrorFavoriteTab() {
         checkErrorMessage("Looks like thanos didn't like your favorite characters")
     }
 
     fun checkErrorHomeTab() {
         checkErrorMessage("Looks like thanos didn't like you")
-    }
-
-    fun checkEmptyHomeTab() {
-        checkErrorMessage("There`s no characters available :(")
     }
 
     fun errorMessageNotAvailable() {
@@ -139,4 +147,14 @@ class CharactersFragmentResult {
         onView(withId(R.id.message)).check(matches(withText(message)))
     }
 
+}
+private fun parseToJson(): MarvelCharactersResponse {
+    return Gson().fromJson(
+        "characters/characters_response_ok.json".toJson(),
+        MarvelCharactersResponse::class.java
+    )
+}
+
+private fun String.toJson(): String {
+    return CharactersFragmentConfiguration::class.java.classLoader!!.getResource(this)!!.readText()
 }
