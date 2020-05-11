@@ -2,7 +2,6 @@ package com.soutosss.marvelpoc.home.search
 
 import android.app.SearchManager
 import android.content.Intent
-import android.os.Bundle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import com.soutosss.marvelpoc.data.CharactersRepository

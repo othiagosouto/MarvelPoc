@@ -36,7 +36,6 @@ abstract class BaseFragment : Fragment(R.layout.fragment_characters) {
             adapter.submitList(it)
         })
 
-
         resultContent().observe(this.viewLifecycleOwner, Observer {
             when (it) {
                 is Result.Loaded -> {
