@@ -1,5 +1,6 @@
 package com.soutosss.marvelpoc.data.local
 
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -10,7 +11,7 @@ import com.soutosss.marvelpoc.data.model.view.CharacterHome
 interface CharacterHomeDAO {
 
     @Query("SELECT * FROM ${CharacterHome.TABLE_NAME}")
-    suspend fun getAll(): List<CharacterHome>
+    fun getAll(): DataSource.Factory<Int, CharacterHome>
 
     @Insert
     suspend fun insertAll(vararg item: CharacterHome)

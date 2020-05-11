@@ -1,18 +1,13 @@
 package com.soutosss.marvelpoc.data
 
 import com.google.common.truth.Truth.assertThat
-import com.google.gson.Gson
 import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
-import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
-import com.soutosss.marvelpoc.data.model.character.toCharacterHomeList
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.data.network.CharactersApi
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 class CharactersRepositoryTest {
@@ -29,37 +24,6 @@ class CharactersRepositoryTest {
         repository = CharactersRepository(mockApi, mockDao)
         item = CharacterHome(1011334, "some name", "some url", true)
     }
-
-    @Test
-    fun `fetchAllCharacters should call api to list all characters from marvel endpoint`() =
-        runBlockingTest {
-            coEvery { mockApi.listCharacters() } returns parseToJson()
-            coEvery { mockDao.favoriteIds() } returns emptyList()
-
-            assertThat(repository.fetchAllCharacters()).isEqualTo(parseToJson().toCharacterHomeList())
-        }
-
-    @Test
-    fun `fetchAllCharacters should call api to list all characters from marvel endpoint using expected parameter`() =
-        runBlockingTest {
-            coEvery { mockApi.listCharacters("ops") } returns parseToJson()
-            coEvery { mockDao.favoriteIds() } returns emptyList()
-
-            repository.fetchAllCharacters("ops")
-
-            coVerify { mockApi.listCharacters("ops")}
-        }
-
-    @Test
-    fun `fetchAllCharacters should update item favorite when there's is storage saved inside room`() =
-        runBlockingTest {
-            coEvery { mockApi.listCharacters() } returns parseToJson()
-            coEvery { mockDao.favoriteIds() } returns listOf(1011334)
-
-            val expectedResult = parseToJson().toCharacterHomeList()
-            expectedResult.first().favorite = true
-            assertThat(repository.fetchAllCharacters()).isEqualTo(expectedResult)
-        }
 
     @Test
     fun `fetchFavoriteCharacters should call dao to retrieve all favorite items`() =
@@ -85,14 +49,17 @@ class CharactersRepositoryTest {
         assertThat(item.favorite).isFalse()
     }
 
-    private fun parseToJson(): MarvelCharactersResponse {
-        return Gson().fromJson(
-            "/characters/characters_response_ok.json".toJson(),
-            MarvelCharactersResponse::class.java
-        )
+    @Test
+    @Ignore
+    fun `charactersDataSource should instantiate CharactersDataSource with expeceted parameters`() = runBlockingTest {
+        mockkConstructor(CharactersDataSource::class)
+        val queryText = "someTExt"
+        val scope = this
+        val exceptionHandler: (Exception) -> Unit = mockk()
+        val loadCallback: () -> Unit = mockk()
+
+        repository.charactersDataSource(queryText, scope, exceptionHandler, loadCallback)
+        verify(exactly = 1) {CharactersDataSource(queryText, scope, mockApi, mockDao, exceptionHandler, loadCallback)}
     }
 
-    private fun String.toJson(): String {
-        return this::class.java.javaClass.getResource(this)!!.readText()
-    }
 }
