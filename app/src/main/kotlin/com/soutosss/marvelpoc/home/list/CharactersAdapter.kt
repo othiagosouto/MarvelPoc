@@ -7,6 +7,7 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.widget.ContentLoadingProgressBar
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +18,7 @@ import com.soutosss.marvelpoc.home.list.CharactersAdapter.CharacterHomeViewHolde
 class CharactersAdapter(
     private val renderImage: (ImageView, String, ContentLoadingProgressBar) -> Unit,
     private val favoriteClick: (CharacterHome) -> Unit
-) : ListAdapter<CharacterHome, CharacterHomeViewHolder>(CharacterHomeDiff()) {
+) : PagedListAdapter<CharacterHome, CharacterHomeViewHolder>(CharacterHomeDiff()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterHomeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -26,7 +27,8 @@ class CharactersAdapter(
     }
 
     override fun onBindViewHolder(holder: CharacterHomeViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let(holder::bind)
+
     }
 
     inner class CharacterHomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -38,8 +40,8 @@ class CharactersAdapter(
         init {
             favoriteCheckBox.setOnClickListener {
                 val item = getItem(adapterPosition)
-                item.favorite = item.favorite.not()
-                favoriteClick(item)
+                item?.favorite = item?.favorite?.not() ?: false
+                item?.let(favoriteClick)
             }
         }
 

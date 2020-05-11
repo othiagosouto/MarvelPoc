@@ -14,12 +14,9 @@
         android:layout_height="?attr/actionBarSize"
         app:title="@string/search_title" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container_view"
-        android:layout_gravity="center"
-        android:name="com.soutosss.marvelpoc.home.list.CharactersFragment"
+    <FrameLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:tag="searchTag" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

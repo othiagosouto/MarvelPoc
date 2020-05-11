@@ -1,14 +1,26 @@
 package com.soutosss.marvelpoc.home
 
+import androidx.annotation.NonNull
 import androidx.lifecycle.*
+import androidx.paging.DataSource
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
+import com.soutosss.marvelpoc.data.model.EmptyDataException
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
+import com.soutosss.marvelpoc.data.CharactersDataSource
 import com.soutosss.marvelpoc.shared.livedata.Result
 import kotlinx.coroutines.launch
-import kotlin.reflect.KSuspendFunction0
+import org.koin.core.KoinComponent
+import org.koin.core.get
 
-class HomeViewModel(private val repository: CharactersRepository) : ViewModel(), LifecycleObserver {
+class HomeViewModel(private val repository: CharactersRepository) : ViewModel(), LifecycleObserver,
+    KoinComponent {
+
+    private lateinit var charactersPagedLiveData: LiveData<PagedList<CharacterHome>>
+
     private val _characters = MutableLiveData<Result>()
     val characters: LiveData<Result> = _characters
 
@@ -18,69 +30,95 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
     private val _changeAdapter = MutableLiveData<Int>()
     val changeAdapter: LiveData<Int> = _changeAdapter
 
-    private var searchedQuery: String = ""
+    private var searchedQuery: String? = null
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun fetchCharacters() {
-        fetchListRequest(
-            _characters,
-            this::fetchAllCharacters,
-            R.string.home_error_loading,
-            R.string.empty_characters_home,
-            R.drawable.ic_deadpool
-        )
+    fun charactersPageListContent(): LiveData<PagedList<CharacterHome>> {
+        val config = PagedList.Config.Builder()
+            .setPageSize(20)
+            .setEnablePlaceholders(false)
+            .build()
+
+        val dataSourceFactory = object : DataSource.Factory<Int, CharacterHome>() {
+            override fun create(): DataSource<Int, CharacterHome> {
+                return repository.charactersDataSource(
+                    searchedQuery,
+                    viewModelScope,
+                    charactersErrorHandle(),
+                    {
+                        _characters.postValue(Result.Loaded)
+                    })
+            }
+        }
+        charactersPagedLiveData = LivePagedListBuilder(dataSourceFactory, config).build()
+        return charactersPagedLiveData
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun fetchFavoriteCharacters() {
-        fetchListRequest(
-            _favoriteCharacters,
-            repository::fetchFavoriteCharacters,
-            R.string.favorite_error_loading,
-            R.string.empty_characters_favorites,
-            R.drawable.ic_favorites
-        )
+    fun charactersErrorHandle() =
+        if (searchedQuery != null) ::handleSearchContentException else ::handleHomeCharactersException
+
+    fun charactersFavorite(): LiveData<PagedList<CharacterHome>> {
+        val config = PagedList.Config.Builder()
+            .setPageSize(20)
+            .setEnablePlaceholders(false)
+            .build()
+
+        return repository.fetchFavoriteCharacters()
+            .toLiveData(config = config, boundaryCallback = emptyFavoritesHandler)
+    }
+
+    private val emptyFavoritesHandler by lazy {
+        object : PagedList.BoundaryCallback<CharacterHome>() {
+            override fun onZeroItemsLoaded() {
+                _favoriteCharacters.postValue(
+                    Result.Error(
+                        R.string.empty_characters_favorites,
+                        R.drawable.ic_favorites
+                    )
+                )
+            }
+
+            override fun onItemAtFrontLoaded(@NonNull itemAtFront: CharacterHome) {
+                _favoriteCharacters.postValue(Result.Loaded)
+            }
+        }
+    }
+
+    private fun handleHomeCharactersException(e: Exception) {
+        when (e) {
+            is EmptyDataException -> _characters.postValue(
+                Result.Error(
+                    R.string.empty_characters_home,
+                    R.drawable.ic_deadpool
+                )
+            )
+            else -> _characters.postValue(
+                Result.Error(
+                    R.string.home_error_loading,
+                    R.drawable.thanos
+                )
+            )
+        }
+    }
+
+    private fun handleSearchContentException(e: Exception) {
+        when (e) {
+            is EmptyDataException -> _characters.postValue(
+                Result.Error(
+                    R.string.empty_characters_searched,
+                    R.drawable.search_not_found
+                )
+            )
+            else -> _characters.postValue(
+                Result.Error(
+                    R.string.search_error_loading,
+                    R.drawable.thanos
+                )
+            )
+        }
     }
 
     fun initSearchQuery(query: String) {
         searchedQuery = query
-        fetchSearchedContent()
-    }
-
-    private fun fetchSearchedContent() {
-        fetchListRequest(
-            _characters,
-            this::searchWithQuery,
-            R.string.search_error_loading,
-            R.string.empty_characters_searched,
-            R.drawable.search_not_found
-        )
-    }
-
-    private suspend fun fetchAllCharacters()= repository.fetchAllCharacters()
-    private suspend fun searchWithQuery() = repository.fetchAllCharacters(searchedQuery)
-
-    private fun fetchListRequest(
-        liveData: MutableLiveData<Result>,
-        retrieveList: KSuspendFunction0<List<CharacterHome>>,
-        errorMessageRes: Int,
-        emptyErrorMessRes: Int,
-        emptyDrawableRes: Int
-    ) {
-        viewModelScope.launch {
-            liveData.postValue(Result.Loading)
-            try {
-                val list = retrieveList()
-                if (list.isEmpty()) {
-                    throw EmptyDataException()
-                }
-                liveData.postValue(Result.Loaded(list))
-            } catch (e: EmptyDataException) {
-                liveData.postValue(Result.Error(emptyErrorMessRes, emptyDrawableRes))
-            } catch (e: Exception) {
-                liveData.postValue(Result.Error(errorMessageRes, R.drawable.thanos))
-            }
-        }
     }
 
     fun favoriteClick(item: CharacterHome) {
@@ -94,20 +132,15 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
     private fun favorite(item: CharacterHome) {
         viewModelScope.launch {
             repository.favoriteCharacterHome(item)
-            fetchFavoriteCharacters()
         }
     }
 
     private fun unFavorite(item: CharacterHome) {
         viewModelScope.launch {
-            val result = _characters.value as? Result.Loaded
-            val items = result?.item as? List<*>
+            val items = charactersPagedLiveData.value?.snapshot()
             val position =
                 repository.unFavoriteCharacterHome(item, items?.filterIsInstance<CharacterHome>())
-            fetchFavoriteCharacters()
             _changeAdapter.postValue(position)
         }
     }
-
-    private inner class EmptyDataException : Exception()
 }
