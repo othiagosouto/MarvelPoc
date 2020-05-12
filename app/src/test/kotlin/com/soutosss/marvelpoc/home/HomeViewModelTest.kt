@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.soutosss.marvelpoc.R
-import com.soutosss.marvelpoc.data.CharactersDataSource
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
 import com.soutosss.marvelpoc.data.model.EmptyDataException
@@ -15,12 +14,13 @@ import com.soutosss.marvelpoc.data.model.character.toCharacterHomeList
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.data.network.CharactersApi
 import com.soutosss.marvelpoc.shared.livedata.Result
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-
 
 class HomeViewModelTest {
 
@@ -32,7 +32,6 @@ class HomeViewModelTest {
 
     private lateinit var repository: CharactersRepository
     private lateinit var viewModel: HomeViewModel
-    private lateinit var dataSource: CharactersDataSource
     private lateinit var exceptionHandler: (Exception) -> Unit
     private lateinit var successHandler: () -> Unit
     private lateinit var api: CharactersApi
@@ -53,8 +52,6 @@ class HomeViewModelTest {
     @Test
     fun `charactersPageListContent should post the characters from datasource`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            dataSource =
-                CharactersDataSource(null, this, api, dao, exceptionHandler, successHandler)
 
             coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
             coEvery { dao.favoriteIds() } returns emptyList()
@@ -72,8 +69,6 @@ class HomeViewModelTest {
     @Test
     fun `charactersPageListContent should post an expected message for Exception`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            dataSource =
-                CharactersDataSource(null, this, api, dao, exceptionHandler, successHandler)
             val exception = Exception()
 
             coEvery { api.listCharacters(null, any(), any()) } throws exception
@@ -91,10 +86,38 @@ class HomeViewModelTest {
         }
 
     @Test
+    fun `charactersPageListContent should post error when there is no characters available`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            val data = parseToJson().data
+            coEvery {
+                api.listCharacters(
+                    null,
+                    any(),
+                    any()
+                )
+            } returns parseToJson().copy(data = data.copy(results = emptyList()))
+            coEvery { dao.favoriteIds() } returns emptyList()
+
+            val item = viewModel.charactersPageListContent()
+
+            var list: List<CharacterHome>? = null
+            item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                list = it.snapshot()
+            })
+
+            assertThat(list).isEqualTo(emptyList<CharacterHome>())
+
+            assertThat(viewModel.characters.value!!).isEqualTo(
+                Result.Error(
+                    R.string.empty_characters_home,
+                    R.drawable.ic_deadpool
+                )
+            )
+        }
+
+    @Test
     fun `charactersPageListContent should post an item item with favorite when id its stored in the favorites table`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            dataSource =
-                CharactersDataSource(null, this, api, dao, exceptionHandler, successHandler)
 
             coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
             coEvery { dao.favoriteIds() } returns listOf(1011334)
@@ -114,8 +137,6 @@ class HomeViewModelTest {
     @Test
     fun `charactersPageListContent should post an expected error message for EmptyDataException`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            dataSource =
-                CharactersDataSource(null, this, api, dao, exceptionHandler, successHandler)
             val exception = EmptyDataException()
 
             coEvery { api.listCharacters(null, any(), any()) } throws exception
@@ -131,116 +152,90 @@ class HomeViewModelTest {
                 )
             )
         }
-//
-//    @Test
-//    fun `fetchFavoriteCharacters should post all favorite characters available`() =
-//        coroutineTestRule.testDispatcher.runBlockingTest {
-//            val favoriteCharacters = parseToJson().toCharacterHomeList()
-//
-//            coEvery { repository.fetchFavoriteCharacters() } returns favoriteCharacters
-//
-//            viewModel.fetchFavoriteCharacters()
-//
-//            assertThat(viewModel.favoriteCharacters.value!!).isEqualTo(
-//                Result.Loaded(
-//                    favoriteCharacters
-//                )
-//            )
-//        }
-//
-//    @Test
-//    fun `fetchFavoriteCharacters should post error when the call fail`() =
-//        coroutineTestRule.testDispatcher.runBlockingTest {
-//
-//            coEvery { repository.fetchFavoriteCharacters() } throws Exception()
-//
-//            viewModel.fetchFavoriteCharacters()
-//
-//            assertThat(viewModel.favoriteCharacters.value!!).isEqualTo(
-//                Result.Error(
-//                    R.string.favorite_error_loading,
-//                    R.drawable.thanos
-//                )
-//            )
-//        }
-//
-//    @Test
-//    fun `fetchFavoriteCharacters should post error with expected content when there's no favorite characters available` () =
-//        coroutineTestRule.testDispatcher.runBlockingTest {
-//
-//            coEvery { repository.fetchFavoriteCharacters() } returns emptyList()
-//
-//            viewModel.fetchFavoriteCharacters()
-//
-//            assertThat(viewModel.favoriteCharacters.value!!).isEqualTo(
-//                Result.Error(
-//                    R.string.empty_characters_favorites,
-//                    R.drawable.ic_favorites
-//                )
-//            )
-//        }
-//
-//    @Test
-//    fun `fetchCharacters should post error when there is no characters available`() =
-//        coroutineTestRule.testDispatcher.runBlockingTest {
-//
-//            coEvery { repository.fetchAllCharacters() } returns emptyList()
-//
-//            viewModel.fetchCharacters()
-//
-//            assertThat(viewModel.characters.value!!).isEqualTo(
-//                Result.Error(
-//                    R.string.empty_characters_home,
-//                    R.drawable.ic_deadpool
-//                )
-//            )
-//        }
-//
-//    @Test
-//    fun `favoriteClick should favorite item when favorite flag is true`() =
-//        coroutineTestRule.testDispatcher.runBlockingTest {
-//            val item = CharacterHome(30, "", "", true)
-//
-//            coEvery { repository.favoriteCharacterHome(item) } returns Unit
-//            coEvery { repository.fetchFavoriteCharacters() } returns listOf(item)
-//
-//            viewModel.favoriteClick(item)
-//
-//            coVerifyOrder {
-//                repository.favoriteCharacterHome(item)
-//                repository.fetchFavoriteCharacters()
-//            }
-//
-//        }
-//
-//    @Test
-//    fun `favoriteClick should unfavorite item when favoriteClick is false`() =
-//        coroutineTestRule.testDispatcher.runBlockingTest {
-//            val favoriteItem = CharacterHome(30, "", "", true)
-//            val item = CharacterHome(30, "", "", false)
-//            val list  =  listOf(favoriteItem)
-//
-//            coEvery { repository.fetchFavoriteCharacters() } returns emptyList()
-//            coEvery { repository.fetchAllCharacters() } returns list
-//            coEvery { repository.unFavoriteCharacterHome(item, list) } returns 30
-//
-//            viewModel.fetchCharacters()
-//            viewModel.favoriteClick(item)
-//
-//            assertThat(viewModel.changeAdapter.value).isEqualTo(30)
-//
-//        }
-//
-//    @Test
-//    fun `initSearchQuery should init searchContent and do search for characters starting expected name`() =
-//        coroutineTestRule.testDispatcher.runBlockingTest {
-//            val charactersList = parseToJson().toCharacterHomeList()
-//            coEvery { repository.fetchAllCharacters("Ops") } returns charactersList
-//
-//            viewModel.initSearchQuery("Ops")
-//            val value = viewModel.characters.value!! as Result.Loaded
-//            assertThat(value).isEqualTo(Result.Loaded(charactersList))
-//        }
+
+    @Test
+    fun `charactersFavorite should post all favorite characters available`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+
+            val favoriteCharacters = parseToJson().toCharacterHomeList()
+            favoriteCharacters.first().favorite = true
+
+            coEvery { dao.getAll() } returns FakeHomeDataSource(favoriteCharacters)
+
+            val item = viewModel.charactersFavorite()
+            var list: List<CharacterHome>? = null
+            item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                list = it.snapshot()
+            })
+            assertThat(list).isEqualTo(favoriteCharacters)
+        }
+
+    @Test
+    fun `charactersFavorite should post error with expected content when there's no favorite characters available`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            coEvery { dao.getAll() } returns FakeHomeDataSource(emptyList())
+
+            val item = viewModel.charactersFavorite()
+            var list: List<CharacterHome>? = null
+            item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                list = it.snapshot()
+            })
+            assertThat(list).isEqualTo(emptyList<CharacterHome>())
+            assertThat(viewModel.favoriteCharacters.value).isEqualTo(
+                Result.Error(
+                    R.string.empty_characters_favorites,
+                    R.drawable.ic_favorites
+                )
+            )
+        }
+
+    @Test
+    fun `favoriteClick should favorite item when favorite flag is true`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            val item = CharacterHome(30, "", "", true)
+
+            coEvery { repository.favoriteCharacterHome(item) } returns Unit
+
+            viewModel.favoriteClick(item)
+
+            coVerify { repository.favoriteCharacterHome(item) }
+
+        }
+
+    @Test
+    fun `favoriteClick should post the position of the item that was unfavorited`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            val item = parseToJson().toCharacterHomeList().first()
+
+            coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
+            coEvery { dao.favoriteIds() } returns listOf(1011334)
+            coEvery { dao.insertAll(item) } returns Unit
+            coEvery { dao.delete(item) } returns Unit
+
+            viewModel.charactersPageListContent()
+                .observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                })
+
+            viewModel.favoriteClick(item)
+
+            assertThat(viewModel.changeAdapter.value).isEqualTo(0)
+        }
+
+    @Test
+    fun `initSearchQuery should init searchContent and do search for characters starting expected name`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+
+            coEvery { api.listCharacters("Ops", any(), any()) } returns parseToJson()
+            coEvery { dao.favoriteIds() } returns emptyList()
+
+            val item = viewModel.charactersPageListContent()
+
+            viewModel.initSearchQuery("Ops")
+            item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+            })
+
+            coVerify { api.listCharacters("Ops", any(), any()) }
+        }
 
 }
 

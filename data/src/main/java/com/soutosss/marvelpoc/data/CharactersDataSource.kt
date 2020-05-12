@@ -2,6 +2,7 @@ package com.soutosss.marvelpoc.data
 
 import androidx.paging.PositionalDataSource
 import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
+import com.soutosss.marvelpoc.data.model.EmptyDataException
 import com.soutosss.marvelpoc.data.model.character.toCharacterHomeList
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.data.network.CharactersApi
@@ -33,6 +34,8 @@ class CharactersDataSource(
                 callback.onResult(response.checkFavorite(), 0)
                 if (response.isNotEmpty()) {
                     loadFinished()
+                } else {
+                    exceptionHandler(EmptyDataException())
                 }
             } catch (e: Exception) {
                 exceptionHandler(e)
