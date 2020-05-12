@@ -116,6 +116,62 @@ class HomeViewModelTest {
         }
 
     @Test
+    fun `charactersPageListContent should post error search error when didn't found any characters from search`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            val data = parseToJson().data
+            coEvery {
+                api.listCharacters(
+                    "content",
+                    any(),
+                    any()
+                )
+            } returns parseToJson().copy(data = data.copy(results = emptyList()))
+            coEvery { dao.favoriteIds() } returns emptyList()
+
+            viewModel.initSearchQuery("content")
+            val item = viewModel.charactersPageListContent()
+
+            var list: List<CharacterHome>? = null
+            item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                list = it.snapshot()
+            })
+
+            assertThat(list).isEqualTo(emptyList<CharacterHome>())
+
+            assertThat(viewModel.characters.value!!).isEqualTo(
+                Result.Error(
+                    R.string.empty_characters_searched,
+                    R.drawable.search_not_found
+                )
+            )
+        }
+
+
+    @Test
+    fun `charactersPageListContent should post search fail error when search wasn't finished as expected`() =
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            coEvery { api.listCharacters("content", any(), any()) } throws Exception()
+
+            viewModel.initSearchQuery("content")
+            val item = viewModel.charactersPageListContent()
+
+            var list: List<CharacterHome>? = null
+            item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                list = it.snapshot()
+            })
+
+            assertThat(list).isEqualTo(emptyList<CharacterHome>())
+
+            assertThat(viewModel.characters.value!!).isEqualTo(
+                Result.Error(
+                    R.string.search_error_loading,
+                    R.drawable.thanos
+                )
+            )
+        }
+
+
+    @Test
     fun `charactersPageListContent should post an item item with favorite when id its stored in the favorites table`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
 
