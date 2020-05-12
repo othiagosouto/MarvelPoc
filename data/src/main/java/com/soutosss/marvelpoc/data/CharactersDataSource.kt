@@ -31,12 +31,11 @@ class CharactersDataSource(
                     offset = 0,
                     limit = params.requestedLoadSize
                 ).toCharacterHomeList()
-                callback.onResult(response.checkFavorite(), 0)
-                if (response.isNotEmpty()) {
-                    loadFinished()
-                } else {
-                    exceptionHandler(EmptyDataException())
+                if (response.isEmpty()) {
+                    throw EmptyDataException()
                 }
+                callback.onResult(response.checkFavorite(), 0)
+                loadFinished()
             } catch (e: Exception) {
                 exceptionHandler(e)
             }

@@ -1,8 +1,10 @@
 package com.soutosss.marvelpoc.data
 
 import androidx.paging.PositionalDataSource
+import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
+import com.soutosss.marvelpoc.data.model.EmptyDataException
 import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.data.model.character.toCharacterHomeList
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
@@ -11,7 +13,6 @@ import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
-import java.lang.Exception
 
 class CharactersDataSourceTest {
 
@@ -79,6 +80,23 @@ class CharactersDataSourceTest {
 
         verify { errorCallback(exception) }
     }
+
+    @Test
+    fun `loadInitial should call error callback with EmptyDataException when there is no items`() =
+        runBlockingTest {
+            val slot = slot<Exception>()
+            val response = parseToJson().copy(data = parseToJson().data.copy(results = emptyList()))
+            val source = CharactersDataSource(null, this, api, dao, errorCallback, mockk())
+            every { errorCallback(any()) } returns Unit
+            coEvery { api.listCharacters(null, 0, 5) } returns response
+            coEvery { dao.favoriteIds() } returns emptyList()
+
+            every { errorCallback(capture(slot)) } returns Unit
+
+            source.loadInitial(PositionalDataSource.LoadInitialParams(0, 5, 5, false), mockk())
+
+            assertThat(slot.captured).isInstanceOf(EmptyDataException::class.java)
+        }
 
     private fun parseToJson(): MarvelCharactersResponse {
         return Gson().fromJson(
