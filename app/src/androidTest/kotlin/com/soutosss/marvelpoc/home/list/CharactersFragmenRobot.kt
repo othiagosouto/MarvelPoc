@@ -31,12 +31,7 @@ class CharactersFragmentConfiguration : KoinComponent {
     private val api: CharactersApi = mockk(relaxed = true)
     private val mockDao: CharacterHomeDAO = mockk(relaxed = true)
     private val repository: CharactersRepository = CharactersRepository(api, mockDao)
-    private val homeViewModel: HomeViewModel = HomeViewModel(repository)
-
-    fun withFavoriteTab() {
-        bundle = Bundle().apply { putBoolean("KEY_FAVORITE_TAB", true) }
-    }
-
+    private var homeViewModel: HomeViewModel = HomeViewModel(repository)
 
     infix fun launch(func: CharactersFragmentRobot.() -> Unit): CharactersFragmentRobot {
         loadKoinModules(
@@ -48,6 +43,19 @@ class CharactersFragmentConfiguration : KoinComponent {
             })
 
         launchFragmentInContainer<CharactersFragment>()
+        return CharactersFragmentRobot().apply(func)
+    }
+
+    infix fun launchSearch(func: CharactersFragmentRobot.() -> Unit): CharactersFragmentRobot {
+        loadKoinModules(
+            module(override = true) {
+                single { mockDao }
+                single { api }
+                single { repository }
+                single { homeViewModel }
+            })
+
+        launchFragmentInContainer<CharactersFragment>( Bundle().apply { putString("QUERY_TEXT_KEY", "searchQuery") })
         return CharactersFragmentRobot().apply(func)
     }
 
@@ -66,17 +74,19 @@ class CharactersFragmentConfiguration : KoinComponent {
     }
 
     fun withHomeCharacters() {
-        val item = CharacterHome(
-            30,
-            "3-D Man",
-            "http://www.google.com",
-            false
-        )
         coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
     }
 
-    fun withNoFavorites(){
-        coEvery{mockDao.favoriteIds()} returns emptyList()
+    fun withSearchContent() {
+        coEvery { api.listCharacters("searchQuery", any(), any()) } returns parseToJson()
+    }
+
+    fun withLoading() {
+        coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
+    }
+
+    fun withNoFavorites() {
+        coEvery { mockDao.favoriteIds() } returns emptyList()
     }
 
     fun withFavoriteCharacters() {
@@ -93,6 +103,10 @@ class CharactersFragmentConfiguration : KoinComponent {
     private fun postLiveData(liveData: LiveData<Result>, item: Result) {
         val mutableLiveData: MutableLiveData<Result> = liveData as MutableLiveData<Result>
         mutableLiveData.postValue(item)
+    }
+
+    fun withMockedViewModelLoading() {
+        homeViewModel = mockk(relaxed = true)
     }
 
 }
@@ -148,6 +162,7 @@ class CharactersFragmentResult {
     }
 
 }
+
 private fun parseToJson(): MarvelCharactersResponse {
     return Gson().fromJson(
         "characters/characters_response_ok.json".toJson(),

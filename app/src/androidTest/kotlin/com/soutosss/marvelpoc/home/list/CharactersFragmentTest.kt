@@ -1,20 +1,13 @@
 package com.soutosss.marvelpoc.home.list
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import org.junit.Ignore
-import org.junit.Rule
 import org.junit.Test
 
 class CharactersFragmentTest {
 
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
-
     @Test
-    @Ignore
     fun init_homeMode_shouldPresentLoadingWhileContentIsBeingLoaded() {
         configure {
-            withNoFavorites()
+            withMockedViewModelLoading()
         } launch {
         } check {
             loadingIsVisible()
@@ -47,6 +40,22 @@ class CharactersFragmentTest {
             errorMessageNotAvailable()
         }
     }
+
+
+    @Test
+    fun init_searchMode_shouldPresentExpectedCharacters() {
+        configure {
+            withNoFavorites()
+            withSearchContent()
+        } launchSearch  {
+        } check {
+            checkCharacterHomeNamee()
+            loadingIsNotVisible()
+            errorMessageNotAvailable()
+        }
+    }
+
+
 //
 //    @Test
 //    fun init_favoriteMode_shouldPresentLoadingWhileContentIsBeingLoaded() {
