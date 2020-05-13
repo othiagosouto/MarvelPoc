@@ -1,5 +1,6 @@
 package com.soutosss.marvelpoc.home.list
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -9,8 +10,8 @@ import androidx.paging.PagedList
 import com.bumptech.glide.Glide
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.Character
+import com.soutosss.marvelpoc.detail.CharacterDetailsActivity
 import com.soutosss.marvelpoc.home.HomeViewModel
-import com.soutosss.marvelpoc.loadHomeImage
 import com.soutosss.marvelpoc.shared.livedata.Result
 import kotlinx.android.synthetic.main.fragment_characters.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -20,10 +21,16 @@ abstract class BaseFragment : Fragment(R.layout.fragment_characters) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val adapter = CharactersAdapter(::loadHomeImage, homeViewModel::favoriteClick)
+        val adapter = CharactersAdapter(homeViewModel::favoriteClick, ::startDetails)
 
         recycler.adapter = adapter
         observeLiveData(adapter)
+    }
+
+    private fun startDetails(character: Character) {
+        val intent = Intent(context, CharacterDetailsActivity::class.java)
+        intent.putExtra("CHARACTER", character)
+        startActivity(intent)
     }
 
     abstract fun paginatedContent(): LiveData<PagedList<Character>>
