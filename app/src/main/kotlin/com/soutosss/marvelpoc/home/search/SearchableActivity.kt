@@ -2,15 +2,10 @@ package com.soutosss.marvelpoc.home.search
 
 import android.app.SearchManager
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.soutosss.marvelpoc.R
-import com.soutosss.marvelpoc.home.HomeViewModel
 import com.soutosss.marvelpoc.home.list.CharactersFragment
-import org.koin.androidx.viewmodel.compat.SharedViewModelCompat.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchableActivity : AppCompatActivity() {
     
