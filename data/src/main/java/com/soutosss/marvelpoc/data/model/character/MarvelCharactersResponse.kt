@@ -1,6 +1,6 @@
 package com.soutosss.marvelpoc.data.model.character
 
-import com.soutosss.marvelpoc.data.model.view.CharacterHome
+import com.soutosss.marvelpoc.data.model.view.Character
 
 data class MarvelCharactersResponse(
     val attributionHTML: String,
@@ -12,5 +12,5 @@ data class MarvelCharactersResponse(
     val status: String
 )
 
-fun MarvelCharactersResponse.toCharacterHomeList(): List<CharacterHome> =
-    this.data.results.map { CharacterHome(it) }
+fun MarvelCharactersResponse.toCharacterList(): List<Character> =
+    this.data.results.map { Character(it) }

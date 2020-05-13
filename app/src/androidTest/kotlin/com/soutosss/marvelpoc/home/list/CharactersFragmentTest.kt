@@ -35,7 +35,7 @@ class CharactersFragmentTest {
             withHomeCharacters()
         } launch {
         } check {
-            checkCharacterHomeNamee()
+            checkCharacterName()
             loadingIsNotVisible()
             errorMessageNotAvailable()
         }
@@ -48,7 +48,7 @@ class CharactersFragmentTest {
             withSearchContent()
         } launchSearch  {
         } check {
-            checkCharacterHomeNamee()
+            checkCharacterName()
             loadingIsNotVisible()
             errorMessageNotAvailable()
         }

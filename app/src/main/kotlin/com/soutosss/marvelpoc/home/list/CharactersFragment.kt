@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.soutosss.marvelpoc.data.model.view.CharacterHome
+import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.shared.livedata.Result
 
 class CharactersFragment : BaseFragment() {
-    override fun paginatedContent(): LiveData<PagedList<CharacterHome>> =
+    override fun paginatedContent(): LiveData<PagedList<Character>> =
         homeViewModel.charactersPageListContent()
 
     override fun observeNotCommonContent(adapter: CharactersAdapter) {

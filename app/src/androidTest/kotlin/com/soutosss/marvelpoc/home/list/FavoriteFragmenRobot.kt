@@ -1,19 +1,15 @@
 package com.soutosss.marvelpoc.home.list
 
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
-import com.soutosss.marvelpoc.data.model.view.CharacterHome
+import com.soutosss.marvelpoc.data.local.CharacterDAO
+import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.data.network.CharactersApi
 import com.soutosss.marvelpoc.home.HomeViewModel
-import com.soutosss.marvelpoc.shared.livedata.Result
-import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.Matchers.not
@@ -26,7 +22,7 @@ fun configureFavorite(func: FavoriteFragmentConfiguration.() -> Unit) =
 
 class FavoriteFragmentConfiguration : KoinComponent {
     private val api: CharactersApi = mockk(relaxed = true)
-    private val mockDao: CharacterHomeDAO = mockk(relaxed = true)
+    private val mockDao: CharacterDAO = mockk(relaxed = true)
     private val repository: CharactersRepository = CharactersRepository(api, mockDao)
     private var homeViewModel: HomeViewModel = HomeViewModel(repository)
 
@@ -50,7 +46,7 @@ class FavoriteFragmentConfiguration : KoinComponent {
     fun withNotEmptyList() {
         every { mockDao.getAll() } returns FakeHomeDataSource(
             listOf(
-                CharacterHome(
+                Character(
                     30,
                     "3-D Test HAHAH",
                     "http://www.google.com",

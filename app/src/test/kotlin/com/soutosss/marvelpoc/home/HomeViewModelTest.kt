@@ -7,11 +7,11 @@ import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
+import com.soutosss.marvelpoc.data.local.CharacterDAO
 import com.soutosss.marvelpoc.data.model.EmptyDataException
 import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
-import com.soutosss.marvelpoc.data.model.character.toCharacterHomeList
-import com.soutosss.marvelpoc.data.model.view.CharacterHome
+import com.soutosss.marvelpoc.data.model.character.toCharacterList
+import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.data.network.CharactersApi
 import com.soutosss.marvelpoc.shared.livedata.Result
 import io.mockk.coEvery
@@ -35,14 +35,14 @@ class HomeViewModelTest {
     private lateinit var exceptionHandler: (Exception) -> Unit
     private lateinit var successHandler: () -> Unit
     private lateinit var api: CharactersApi
-    private lateinit var dao: CharacterHomeDAO
-    private lateinit var charactersList: List<CharacterHome>
+    private lateinit var dao: CharacterDAO
+    private lateinit var charactersList: List<Character>
 
     @Before
     fun setup() {
         exceptionHandler = mockk(relaxed = true)
         successHandler = mockk(relaxed = true)
-        charactersList = parseToJson().toCharacterHomeList()
+        charactersList = parseToJson().toCharacterList()
         api = mockk()
         dao = mockk()
         repository = CharactersRepository(api, dao)
@@ -58,11 +58,11 @@ class HomeViewModelTest {
 
             val item = viewModel.charactersPageListContent()
 
-            var list: List<CharacterHome>? = null
+            var list: List<Character>? = null
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 list = it.snapshot()
             })
-            assertThat(list).isEqualTo(parseToJson().toCharacterHomeList())
+            assertThat(list).isEqualTo(parseToJson().toCharacterList())
             assertThat(viewModel.characters.value!!).isEqualTo(Result.Loaded)
         }
 
@@ -100,12 +100,12 @@ class HomeViewModelTest {
 
             val item = viewModel.charactersPageListContent()
 
-            var list: List<CharacterHome>? = null
+            var list: List<Character>? = null
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 list = it.snapshot()
             })
 
-            assertThat(list).isEqualTo(emptyList<CharacterHome>())
+            assertThat(list).isEqualTo(emptyList<Character>())
 
             assertThat(viewModel.characters.value!!).isEqualTo(
                 Result.Error(
@@ -131,12 +131,12 @@ class HomeViewModelTest {
             viewModel.initSearchQuery("content")
             val item = viewModel.charactersPageListContent()
 
-            var list: List<CharacterHome>? = null
+            var list: List<Character>? = null
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 list = it.snapshot()
             })
 
-            assertThat(list).isEqualTo(emptyList<CharacterHome>())
+            assertThat(list).isEqualTo(emptyList<Character>())
 
             assertThat(viewModel.characters.value!!).isEqualTo(
                 Result.Error(
@@ -155,12 +155,12 @@ class HomeViewModelTest {
             viewModel.initSearchQuery("content")
             val item = viewModel.charactersPageListContent()
 
-            var list: List<CharacterHome>? = null
+            var list: List<Character>? = null
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 list = it.snapshot()
             })
 
-            assertThat(list).isEqualTo(emptyList<CharacterHome>())
+            assertThat(list).isEqualTo(emptyList<Character>())
 
             assertThat(viewModel.characters.value!!).isEqualTo(
                 Result.Error(
@@ -180,11 +180,11 @@ class HomeViewModelTest {
 
             val item = viewModel.charactersPageListContent()
 
-            var list: List<CharacterHome>? = null
+            var list: List<Character>? = null
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 list = it.snapshot()
             })
-            val expectedResult = parseToJson().toCharacterHomeList()
+            val expectedResult = parseToJson().toCharacterList()
             expectedResult.first().favorite = true
             assertThat(list).isEqualTo(expectedResult)
             assertThat(viewModel.characters.value!!).isEqualTo(Result.Loaded)
@@ -213,13 +213,13 @@ class HomeViewModelTest {
     fun `charactersFavorite should post all favorite characters available`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
 
-            val favoriteCharacters = parseToJson().toCharacterHomeList()
+            val favoriteCharacters = parseToJson().toCharacterList()
             favoriteCharacters.first().favorite = true
 
             coEvery { dao.getAll() } returns FakeHomeDataSource(favoriteCharacters)
 
             val item = viewModel.charactersFavorite()
-            var list: List<CharacterHome>? = null
+            var list: List<Character>? = null
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 list = it.snapshot()
             })
@@ -232,11 +232,11 @@ class HomeViewModelTest {
             coEvery { dao.getAll() } returns FakeHomeDataSource(emptyList())
 
             val item = viewModel.charactersFavorite()
-            var list: List<CharacterHome>? = null
+            var list: List<Character>? = null
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 list = it.snapshot()
             })
-            assertThat(list).isEqualTo(emptyList<CharacterHome>())
+            assertThat(list).isEqualTo(emptyList<Character>())
             assertThat(viewModel.favoriteCharacters.value).isEqualTo(
                 Result.Error(
                     R.string.empty_characters_favorites,
@@ -248,20 +248,20 @@ class HomeViewModelTest {
     @Test
     fun `favoriteClick should favorite item when favorite flag is true`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val item = CharacterHome(30, "", "", "", true)
+            val item = Character(30, "", "", "", true)
 
-            coEvery { repository.favoriteCharacterHome(item) } returns Unit
+            coEvery { repository.favoriteCharacter(item) } returns Unit
 
             viewModel.favoriteClick(item)
 
-            coVerify { repository.favoriteCharacterHome(item) }
+            coVerify { repository.favoriteCharacter(item) }
 
         }
 
     @Test
     fun `favoriteClick should post the position of the item that was unfavorited`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val item = parseToJson().toCharacterHomeList().first()
+            val item = parseToJson().toCharacterList().first()
 
             coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
             coEvery { dao.favoriteIds() } returns listOf(1011334)

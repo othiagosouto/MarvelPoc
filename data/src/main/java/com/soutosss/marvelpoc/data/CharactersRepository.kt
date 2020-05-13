@@ -1,28 +1,28 @@
 package com.soutosss.marvelpoc.data
 
-import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
-import com.soutosss.marvelpoc.data.model.view.CharacterHome
+import com.soutosss.marvelpoc.data.local.CharacterDAO
+import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.data.network.CharactersApi
 import kotlinx.coroutines.CoroutineScope
 import java.lang.Exception
 
 class CharactersRepository(
     private val api: CharactersApi,
-    private val characterHomeDAO: CharacterHomeDAO
+    private val characterDAO: CharacterDAO
 ) {
-    fun fetchFavoriteCharacters() = characterHomeDAO.getAll()
+    fun fetchFavoriteCharacters() = characterDAO.getAll()
 
-    suspend fun unFavoriteCharacterHome(
-        item: CharacterHome,
-        list: List<CharacterHome>?
+    suspend fun unFavoriteCharacter(
+        item: Character,
+        list: List<Character>?
     ): Int? {
-        characterHomeDAO.delete(item)
+        characterDAO.delete(item)
         list?.firstOrNull { it.id == item.id }?.favorite = false
         return list?.indexOf(item)
     }
 
-    suspend fun favoriteCharacterHome(characterHome: CharacterHome): Unit =
-        characterHomeDAO.insertAll(characterHome)
+    suspend fun favoriteCharacter(character: Character): Unit =
+        characterDAO.insertAll(character)
 
     fun charactersDataSource(
         queryText: String?,
@@ -33,7 +33,7 @@ class CharactersRepository(
         queryText,
         scope,
         api,
-        characterHomeDAO,
+        characterDAO,
         exceptionHandler,
         loadFinished
     )

@@ -10,7 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.gson.Gson
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
+import com.soutosss.marvelpoc.data.local.CharacterDAO
 import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.data.network.CharactersApi
 import com.soutosss.marvelpoc.home.HomeViewModel
@@ -27,7 +27,7 @@ fun configure(func: CharactersFragmentConfiguration.() -> Unit) =
 
 class CharactersFragmentConfiguration : KoinComponent {
     private val api: CharactersApi = mockk(relaxed = true)
-    private val mockDao: CharacterHomeDAO = mockk(relaxed = true)
+    private val mockDao: CharacterDAO = mockk(relaxed = true)
     private val repository: CharactersRepository = CharactersRepository(api, mockDao)
     private var homeViewModel: HomeViewModel = HomeViewModel(repository)
 
@@ -98,7 +98,7 @@ class CharactersFragmentResult {
         onView(withId(R.id.recycler)).check(matches(not(isDisplayed())))
     }
 
-    fun checkCharacterHomeNamee() {
+    fun checkCharacterName() {
         checkCharacterName("3-D Man")
     }
 

@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.soutosss.marvelpoc.data.model.character.Result
 
-@Entity(tableName = CharacterHome.TABLE_NAME)
-data class CharacterHome(
+@Entity(tableName = Character.TABLE_NAME)
+data class Character(
     @ColumnInfo(name = "id")
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "name") val name: String,
@@ -23,6 +23,6 @@ data class CharacterHome(
     )
 
     companion object{
-        const val TABLE_NAME = "character_home"
+        const val TABLE_NAME = "character"
     }
 }

@@ -3,11 +3,11 @@ package com.soutosss.marvelpoc.data
 import androidx.paging.PositionalDataSource
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
-import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
+import com.soutosss.marvelpoc.data.local.CharacterDAO
 import com.soutosss.marvelpoc.data.model.EmptyDataException
 import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
-import com.soutosss.marvelpoc.data.model.character.toCharacterHomeList
-import com.soutosss.marvelpoc.data.model.view.CharacterHome
+import com.soutosss.marvelpoc.data.model.character.toCharacterList
+import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.data.network.CharactersApi
 import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
@@ -16,9 +16,9 @@ import org.junit.Test
 
 class CharactersDataSourceTest {
 
-    private val charactersList = parseToJson().toCharacterHomeList()
+    private val charactersList = parseToJson().toCharacterList()
     private lateinit var api: CharactersApi
-    private lateinit var dao: CharacterHomeDAO
+    private lateinit var dao: CharacterDAO
     private val exception = Exception()
     private lateinit var errorCallback: (Exception) -> Unit
 
@@ -36,7 +36,7 @@ class CharactersDataSourceTest {
         coEvery { api.listCharacters(null, 0, 5) } returns parseToJson()
         coEvery { dao.favoriteIds() } returns emptyList()
 
-        val callback: PositionalDataSource.LoadInitialCallback<CharacterHome> =
+        val callback: PositionalDataSource.LoadInitialCallback<Character> =
             mockk(relaxed = true)
 
         source.loadInitial(PositionalDataSource.LoadInitialParams(0, 5, 5, false), callback)
@@ -61,7 +61,7 @@ class CharactersDataSourceTest {
         coEvery { api.listCharacters(null, 0, 5) } returns parseToJson()
         coEvery { dao.favoriteIds() } returns emptyList()
 
-        val callback: PositionalDataSource.LoadRangeCallback<CharacterHome> = mockk(relaxed = true)
+        val callback: PositionalDataSource.LoadRangeCallback<Character> = mockk(relaxed = true)
 
         source.loadRange(PositionalDataSource.LoadRangeParams(0, 5), callback)
 
@@ -74,7 +74,7 @@ class CharactersDataSourceTest {
         coEvery { api.listCharacters(null, 0, 5) } throws exception
         coEvery { dao.favoriteIds() } returns emptyList()
 
-        val callback: PositionalDataSource.LoadRangeCallback<CharacterHome> = mockk(relaxed = true)
+        val callback: PositionalDataSource.LoadRangeCallback<Character> = mockk(relaxed = true)
 
         source.loadRange(PositionalDataSource.LoadRangeParams(0, 5), callback)
 

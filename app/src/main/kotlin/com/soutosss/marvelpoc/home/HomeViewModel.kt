@@ -9,7 +9,7 @@ import androidx.paging.toLiveData
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.model.EmptyDataException
-import com.soutosss.marvelpoc.data.model.view.CharacterHome
+import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.shared.livedata.Result
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
@@ -17,7 +17,7 @@ import org.koin.core.KoinComponent
 class HomeViewModel(private val repository: CharactersRepository) : ViewModel(), LifecycleObserver,
     KoinComponent {
 
-    private lateinit var charactersPagedLiveData: LiveData<PagedList<CharacterHome>>
+    private lateinit var charactersPagedLiveData: LiveData<PagedList<Character>>
 
     private val _characters = MutableLiveData<Result>()
     val characters: LiveData<Result> = _characters
@@ -30,14 +30,14 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
 
     private var searchedQuery: String? = null
 
-    fun charactersPageListContent(): LiveData<PagedList<CharacterHome>> {
+    fun charactersPageListContent(): LiveData<PagedList<Character>> {
         val config = PagedList.Config.Builder()
             .setPageSize(20)
             .setEnablePlaceholders(false)
             .build()
 
-        val dataSourceFactory = object : DataSource.Factory<Int, CharacterHome>() {
-            override fun create(): DataSource<Int, CharacterHome> {
+        val dataSourceFactory = object : DataSource.Factory<Int, Character>() {
+            override fun create(): DataSource<Int, Character> {
                 return repository.charactersDataSource(
                     searchedQuery,
                     viewModelScope,
@@ -54,7 +54,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
     fun charactersErrorHandle() =
         if (searchedQuery != null) ::handleSearchContentException else ::handleHomeCharactersException
 
-    fun charactersFavorite(): LiveData<PagedList<CharacterHome>> {
+    fun charactersFavorite(): LiveData<PagedList<Character>> {
         val config = PagedList.Config.Builder()
             .setPageSize(20)
             .setEnablePlaceholders(false)
@@ -65,7 +65,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
     }
 
     private val emptyFavoritesHandler by lazy {
-        object : PagedList.BoundaryCallback<CharacterHome>() {
+        object : PagedList.BoundaryCallback<Character>() {
             override fun onZeroItemsLoaded() {
                 _favoriteCharacters.postValue(
                     Result.Error(
@@ -75,7 +75,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
                 )
             }
 
-            override fun onItemAtFrontLoaded(@NonNull itemAtFront: CharacterHome) {
+            override fun onItemAtFrontLoaded(@NonNull itemAtFront: Character) {
                 _favoriteCharacters.postValue(Result.Loaded)
             }
         }
@@ -119,7 +119,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
         searchedQuery = query
     }
 
-    fun favoriteClick(item: CharacterHome) {
+    fun favoriteClick(item: Character) {
         if (item.favorite) {
             favorite(item)
         } else {
@@ -127,17 +127,17 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel(),
         }
     }
 
-    private fun favorite(item: CharacterHome) {
+    private fun favorite(item: Character) {
         viewModelScope.launch {
-            repository.favoriteCharacterHome(item)
+            repository.favoriteCharacter(item)
         }
     }
 
-    private fun unFavorite(item: CharacterHome) {
+    private fun unFavorite(item: Character) {
         viewModelScope.launch {
             val items = charactersPagedLiveData.value?.snapshot()
             val position =
-                repository.unFavoriteCharacterHome(item, items?.filterIsInstance<CharacterHome>())
+                repository.unFavoriteCharacter(item, items?.filterIsInstance<Character>())
             _changeAdapter.postValue(position)
         }
     }

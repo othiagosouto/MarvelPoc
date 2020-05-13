@@ -22,7 +22,7 @@ class DataInitializer : KoinInitializer() {
             single {
                 Room.databaseBuilder(
                     get(), AppDatabase::class.java, "database-name"
-                ).build().charactersHomeDAO()
+                ).build().charactersDAO()
             }
             single { CharactersRepository(get(), get()) }
         })

@@ -11,13 +11,13 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.soutosss.marvelpoc.R
-import com.soutosss.marvelpoc.data.model.view.CharacterHome
+import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.home.list.CharactersAdapter.CharacterHomeViewHolder
 
 class CharactersAdapter(
     private val renderImage: (ImageView, String, ContentLoadingProgressBar) -> Unit,
-    private val favoriteClick: (CharacterHome) -> Unit
-) : PagedListAdapter<CharacterHome, CharacterHomeViewHolder>(CharacterHomeDiff()) {
+    private val favoriteClick: (Character) -> Unit
+) : PagedListAdapter<Character, CharacterHomeViewHolder>(CharacterDiff()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterHomeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -43,18 +43,18 @@ class CharactersAdapter(
             }
         }
 
-        fun bind(characterHome: CharacterHome) {
-            headerText.text = characterHome.name
-            renderImage(imageView, characterHome.thumbnailUrl, progress)
-            favoriteCheckBox.isChecked = characterHome.favorite
+        fun bind(character: Character) {
+            headerText.text = character.name
+            renderImage(imageView, character.thumbnailUrl, progress)
+            favoriteCheckBox.isChecked = character.favorite
         }
     }
 
-    class CharacterHomeDiff : DiffUtil.ItemCallback<CharacterHome>() {
-        override fun areItemsTheSame(oldItem: CharacterHome, newItem: CharacterHome) =
+    class CharacterDiff : DiffUtil.ItemCallback<Character>() {
+        override fun areItemsTheSame(oldItem: Character, newItem: Character) =
             oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: CharacterHome, newItem: CharacterHome) =
+        override fun areContentsTheSame(oldItem: Character, newItem: Character) =
             oldItem == newItem
     }
 
