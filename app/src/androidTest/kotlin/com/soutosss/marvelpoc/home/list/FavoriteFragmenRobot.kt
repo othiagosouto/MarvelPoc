@@ -54,6 +54,7 @@ class FavoriteFragmentConfiguration : KoinComponent {
                     30,
                     "3-D Test HAHAH",
                     "http://www.google.com",
+                    "description",
                     true
                 )
             )

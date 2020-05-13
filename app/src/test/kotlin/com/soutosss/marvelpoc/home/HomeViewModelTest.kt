@@ -248,7 +248,7 @@ class HomeViewModelTest {
     @Test
     fun `favoriteClick should favorite item when favorite flag is true`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val item = CharacterHome(30, "", "", true)
+            val item = CharacterHome(30, "", "", "", true)
 
             coEvery { repository.favoriteCharacterHome(item) } returns Unit
 

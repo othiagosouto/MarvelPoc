@@ -22,7 +22,7 @@ class CharactersRepositoryTest {
         mockApi = mockk(relaxed = true)
         mockDao = mockk(relaxed = true)
         repository = CharactersRepository(mockApi, mockDao)
-        item = CharacterHome(1011334, "some name", "some url", true)
+        item = CharacterHome(1011334, "some name", "some url", "description", true)
     }
 
     @Test
@@ -51,15 +51,25 @@ class CharactersRepositoryTest {
 
     @Test
     @Ignore
-    fun `charactersDataSource should instantiate CharactersDataSource with expeceted parameters`() = runBlockingTest {
-        mockkConstructor(CharactersDataSource::class)
-        val queryText = "someTExt"
-        val scope = this
-        val exceptionHandler: (Exception) -> Unit = mockk()
-        val loadCallback: () -> Unit = mockk()
+    fun `charactersDataSource should instantiate CharactersDataSource with expeceted parameters`() =
+        runBlockingTest {
+            mockkConstructor(CharactersDataSource::class)
+            val queryText = "someTExt"
+            val scope = this
+            val exceptionHandler: (Exception) -> Unit = mockk()
+            val loadCallback: () -> Unit = mockk()
 
-        repository.charactersDataSource(queryText, scope, exceptionHandler, loadCallback)
-        verify(exactly = 1) {CharactersDataSource(queryText, scope, mockApi, mockDao, exceptionHandler, loadCallback)}
-    }
+            repository.charactersDataSource(queryText, scope, exceptionHandler, loadCallback)
+            verify(exactly = 1) {
+                CharactersDataSource(
+                    queryText,
+                    scope,
+                    mockApi,
+                    mockDao,
+                    exceptionHandler,
+                    loadCallback
+                )
+            }
+        }
 
 }
