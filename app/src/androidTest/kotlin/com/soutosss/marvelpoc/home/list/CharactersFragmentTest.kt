@@ -41,7 +41,6 @@ class CharactersFragmentTest {
         }
     }
 
-
     @Test
     fun init_searchMode_shouldPresentExpectedCharacters() {
         configure {
@@ -55,42 +54,4 @@ class CharactersFragmentTest {
         }
     }
 
-
-//
-//    @Test
-//    fun init_favoriteMode_shouldPresentLoadingWhileContentIsBeingLoaded() {
-//        configure {
-//            withFavoriteTab()
-//        } launch {
-//        } check {
-//            loadingIsVisible()
-//            recyclerViewIsHidden()
-//        }
-//    }
-//
-//    @Test
-//    fun init_favoriteMode_shouldLoadErrorWithExpectedMessage() {
-//        configure {
-//            withFavoriteTab()
-//            withErrorFavorite()
-//        } launch {
-//        } check {
-//            loadingIsNotVisible()
-//            recyclerViewIsHidden()
-//            checkErrorFavoriteTab()
-//        }
-//    }
-//
-//    @Test
-//    fun init_favoriteMode_shouldPresentExpectedCharacters() {
-//        configure {
-//            withFavoriteTab()
-//            withFavoriteCharacters()
-//        } launch {
-//        } check {
-//            characterFavoriteName()
-//            loadingIsNotVisible()
-//            errorMessageNotAvailable()
-//        }
-//    }
 }

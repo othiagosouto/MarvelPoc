@@ -10,11 +10,9 @@ import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.model.EmptyDataException
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
-import com.soutosss.marvelpoc.data.CharactersDataSource
 import com.soutosss.marvelpoc.shared.livedata.Result
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
-import org.koin.core.get
 
 class HomeViewModel(private val repository: CharactersRepository) : ViewModel(), LifecycleObserver,
     KoinComponent {

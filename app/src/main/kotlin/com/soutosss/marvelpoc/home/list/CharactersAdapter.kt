@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.CharacterHome
@@ -28,7 +27,6 @@ class CharactersAdapter(
 
     override fun onBindViewHolder(holder: CharacterHomeViewHolder, position: Int) {
         getItem(position)?.let(holder::bind)
-
     }
 
     inner class CharacterHomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

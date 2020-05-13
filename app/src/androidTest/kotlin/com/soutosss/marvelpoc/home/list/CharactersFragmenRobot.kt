@@ -12,7 +12,6 @@ import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.local.CharacterHomeDAO
 import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
-import com.soutosss.marvelpoc.data.model.view.CharacterHome
 import com.soutosss.marvelpoc.data.network.CharactersApi
 import com.soutosss.marvelpoc.home.HomeViewModel
 import com.soutosss.marvelpoc.shared.livedata.Result
@@ -27,7 +26,6 @@ fun configure(func: CharactersFragmentConfiguration.() -> Unit) =
     CharactersFragmentConfiguration().apply(func)
 
 class CharactersFragmentConfiguration : KoinComponent {
-    private lateinit var bundle: Bundle
     private val api: CharactersApi = mockk(relaxed = true)
     private val mockDao: CharacterHomeDAO = mockk(relaxed = true)
     private val repository: CharactersRepository = CharactersRepository(api, mockDao)
@@ -59,13 +57,6 @@ class CharactersFragmentConfiguration : KoinComponent {
         return CharactersFragmentRobot().apply(func)
     }
 
-    fun withErrorFavorite() {
-        postLiveData(
-            homeViewModel.favoriteCharacters,
-            Result.Error(R.string.favorite_error_loading, R.drawable.thanos)
-        )
-    }
-
     fun withErrorHome() {
         postLiveData(
             homeViewModel.characters,
@@ -81,23 +72,8 @@ class CharactersFragmentConfiguration : KoinComponent {
         coEvery { api.listCharacters("searchQuery", any(), any()) } returns parseToJson()
     }
 
-    fun withLoading() {
-        coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
-    }
-
     fun withNoFavorites() {
         coEvery { mockDao.favoriteIds() } returns emptyList()
-    }
-
-    fun withFavoriteCharacters() {
-        val item = CharacterHome(
-            30,
-            "3-D Test HAHAH",
-            "http://www.google.com",
-            false
-        )
-
-//        postLiveData(homeViewModel.favoriteCharacters, Result.Loaded())
     }
 
     private fun postLiveData(liveData: LiveData<Result>, item: Result) {
@@ -126,10 +102,6 @@ class CharactersFragmentResult {
         checkCharacterName("3-D Man")
     }
 
-    fun characterFavoriteName() {
-        checkCharacterName("3-D Test HAHAH")
-    }
-
     private fun checkCharacterName(characterName: String) {
         onView(withId(R.id.recycler)).check(matches(hasDescendant(withText(characterName))))
     }
@@ -140,10 +112,6 @@ class CharactersFragmentResult {
 
     fun loadingIsNotVisible() {
         onView(withId(R.id.progress)).check(matches(not(isDisplayed())))
-    }
-
-    fun checkErrorFavoriteTab() {
-        checkErrorMessage("Looks like thanos didn't like your favorite characters")
     }
 
     fun checkErrorHomeTab() {

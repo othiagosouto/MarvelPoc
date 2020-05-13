@@ -6,11 +6,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.soutosss.marvelpoc.R
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.content.Intent
-import android.view.MenuItem
-import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
-import com.google.android.material.appbar.MaterialToolbar
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val homeViewModel: HomeViewModel by viewModel()
