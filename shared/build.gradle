@@ -41,7 +41,12 @@ android {
 
 dependencies {
     def Dependencies = rootProject.ext.Dependencies
+    def TestingDependencies = rootProject.ext.TestingDependencies
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dependencies.kotlin
     implementation Dependencies.koin
+
+
+    testImplementation TestingDependencies.junit
+    testImplementation TestingDependencies.truth
 }
