@@ -29,7 +29,7 @@ abstract class BaseFragment : Fragment(R.layout.fragment_characters) {
 
     private fun startDetails(character: Character) {
         val intent = Intent(context, CharacterDetailsActivity::class.java)
-        intent.putExtra("CHARACTER", character)
+        intent.putExtra(CharacterDetailsActivity.CHARACTER_KEY, character)
         startActivity(intent)
     }
 

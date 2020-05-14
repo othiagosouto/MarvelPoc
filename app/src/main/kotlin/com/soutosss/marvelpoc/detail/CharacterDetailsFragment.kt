@@ -14,7 +14,7 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val character: Character = arguments?.getSerializable("CHARACTER_KEY") as Character
+        val character: Character = arguments?.getSerializable(CHARACTER_KEY) as Character
 
         characterImage.setListeners(favoriteClick = characterDetailsViewModel::favoriteClick)
         characterImage.updateCharacter(character)
@@ -26,8 +26,10 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
     }
 
     companion object {
+        private const val CHARACTER_KEY = "CHARACTER_KEY"
+
         fun createInstance(character: Character): Fragment = CharacterDetailsFragment().also {
-            it.arguments = Bundle().apply { putSerializable("CHARACTER_KEY", character) }
+            it.arguments = Bundle().apply { putSerializable(CHARACTER_KEY, character) }
         }
     }
 }
