@@ -10,7 +10,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.ContentLoadingProgressBar
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.Character
-import com.soutosss.marvelpoc.loadHomeImage
 
 class CharacterView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -44,7 +43,11 @@ class CharacterView @JvmOverloads constructor(
     fun updateCharacter(character: Character) {
         this.character = character
         headerText.text = character.name
-        loadHomeImage(imageView, character.thumbnailUrl, progress)
+        loadHomeImage(
+            imageView,
+            character.thumbnailUrl,
+            progress
+        )
         favoriteCheckBox.isChecked = character.favorite
     }
 

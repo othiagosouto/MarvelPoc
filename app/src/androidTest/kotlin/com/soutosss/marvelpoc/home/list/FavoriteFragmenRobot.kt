@@ -86,10 +86,6 @@ class FavoriteFragmentResult {
         onView(withId(R.id.message)).check(matches(withText(message)))
     }
 
-    fun loadingIsVisible() {
-        onView(withId(R.id.progress)).check(matches(isDisplayed()))
-    }
-
     fun recyclerViewIsHidden() {
         onView(withId(R.id.recycler)).check(matches(not(isDisplayed())))
     }
