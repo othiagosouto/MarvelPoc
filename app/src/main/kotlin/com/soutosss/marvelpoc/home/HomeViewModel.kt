@@ -14,8 +14,7 @@ import com.soutosss.marvelpoc.shared.livedata.Result
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 
-class HomeViewModel(private val repository: CharactersRepository) : ViewModel(), LifecycleObserver,
-    KoinComponent {
+class HomeViewModel(private val repository: CharactersRepository) : ViewModel() {
 
     private lateinit var charactersPagedLiveData: LiveData<PagedList<Character>>
 

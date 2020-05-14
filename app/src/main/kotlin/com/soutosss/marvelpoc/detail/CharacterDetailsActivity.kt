@@ -19,7 +19,7 @@ class CharacterDetailsActivity : AppCompatActivity(R.layout.activity_character_d
             supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commitNow()
         }
 
-        toolbar.setNavigationOnClickListener() {
+        toolbar.setNavigationOnClickListener {
             finish()
         }
     }

@@ -29,6 +29,27 @@ class CharacterDetailsFragmentTest {
             favoriteNotChecked()
             checkExpectedCharacterDescription()
         }
+    }
 
+    @Test
+    fun favorite_whenClicked_shouldFireViewModelMethodToFavorite() {
+        configureDetail {
+            withSomeDescriptionNotFavorite()
+        } launch {
+            clickOnFavorite()
+        } check {
+            checkFavoriteMethodFiredToFavorite()
+        }
+    }
+
+    @Test
+    fun favorite_whenClicked_shouldFireViewModelMethodToUnFavoriteFavorite() {
+        configureDetail {
+            withEmptyDescriptionAndFavorite()
+        } launch {
+            clickOnFavorite()
+        } check {
+            checkFavoriteMethodFiredToUnFavorite()
+        }
     }
 }
