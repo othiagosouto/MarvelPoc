@@ -4,9 +4,8 @@ import androidx.paging.PositionalDataSource
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.soutosss.marvelpoc.data.local.CharacterDAO
-import com.soutosss.marvelpoc.data.model.EmptyDataException
-import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
-import com.soutosss.marvelpoc.data.model.character.toCharacterList
+import com.soutosss.marvelpoc.data.network.character.MarvelCharactersResponse
+import com.soutosss.marvelpoc.data.network.character.toCharacterList
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.data.network.CharactersApi
 import io.mockk.*

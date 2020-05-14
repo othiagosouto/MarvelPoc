@@ -1,6 +1,6 @@
-package com.soutosss.marvelpoc.data.model.character
+package com.soutosss.marvelpoc.data.network.character
 
-data class Comics(
+data class Events(
     val available: Int,
     val collectionURI: String,
     val items: List<Item>,

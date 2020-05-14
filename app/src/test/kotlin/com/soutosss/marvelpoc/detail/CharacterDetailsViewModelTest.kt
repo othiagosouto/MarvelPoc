@@ -2,7 +2,7 @@ package com.soutosss.marvelpoc.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.model.character.toCharacterList
+import com.soutosss.marvelpoc.data.network.character.toCharacterList
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.home.CoroutineTestRule
 import com.soutosss.marvelpoc.parseToJson

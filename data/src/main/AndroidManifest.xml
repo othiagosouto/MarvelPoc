@@ -7,7 +7,7 @@
 
     <application>
         <provider
-            android:name=".DataInitializer"
+            android:name=".koin.DataInitializer"
             android:authorities="${applicationId}.data"
             android:enabled="true"
             android:exported="false" />

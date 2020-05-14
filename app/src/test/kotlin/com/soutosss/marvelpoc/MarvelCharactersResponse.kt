@@ -1,7 +1,7 @@
 package com.soutosss.marvelpoc
 
 import com.google.gson.Gson
-import com.soutosss.marvelpoc.data.model.character.MarvelCharactersResponse
+import com.soutosss.marvelpoc.data.network.character.MarvelCharactersResponse
 
 fun parseToJson(): MarvelCharactersResponse {
     return Gson().fromJson(

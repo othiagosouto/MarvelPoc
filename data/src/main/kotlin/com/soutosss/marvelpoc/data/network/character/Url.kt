@@ -1,4 +1,4 @@
-package com.soutosss.marvelpoc.data.model.character
+package com.soutosss.marvelpoc.data.network.character
 
 data class Url(
     val type: String,

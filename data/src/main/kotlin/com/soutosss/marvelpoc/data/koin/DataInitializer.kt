@@ -1,7 +1,8 @@
-package com.soutosss.marvelpoc.data
+package com.soutosss.marvelpoc.data.koin
 
 import android.content.Context
 import androidx.room.Room
+import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.local.AppDatabase
 import com.soutosss.marvelpoc.data.network.CharactersApi
 import com.soutosss.marvelpoc.data.network.interceptors.ConnectionDetectionInterceptor
@@ -24,7 +25,12 @@ class DataInitializer : KoinInitializer() {
                     get(), AppDatabase::class.java, "database-name"
                 ).build().charactersDAO()
             }
-            single { CharactersRepository(get(), get()) }
+            single {
+                CharactersRepository(
+                    get(),
+                    get()
+                )
+            }
         })
     }
 

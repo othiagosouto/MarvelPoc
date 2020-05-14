@@ -3,7 +3,7 @@ package com.soutosss.marvelpoc.data.model.view
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.soutosss.marvelpoc.data.model.character.Result
+import com.soutosss.marvelpoc.data.network.character.Result
 import java.io.Serializable
 
 @Entity(tableName = Character.TABLE_NAME)

@@ -1,4 +1,4 @@
-package com.soutosss.marvelpoc.data.model
+package com.soutosss.marvelpoc.data
 
 import java.lang.Exception
 

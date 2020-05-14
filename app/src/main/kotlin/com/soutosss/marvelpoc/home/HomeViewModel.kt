@@ -1,18 +1,20 @@
 package com.soutosss.marvelpoc.home
 
 import androidx.annotation.NonNull
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.model.EmptyDataException
+import com.soutosss.marvelpoc.data.EmptyDataException
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.shared.livedata.Result
 import kotlinx.coroutines.launch
-import org.koin.core.KoinComponent
 
 class HomeViewModel(private val repository: CharactersRepository) : ViewModel() {
 
