@@ -23,7 +23,7 @@ class DataInitializer : KoinInitializer() {
             single { getRetrofitInstance(get()) }
             single {
                 Room.databaseBuilder(
-                    get(), AppDatabase::class.java, "database-name"
+                    get(), AppDatabase::class.java, BuildConfig.DATABASE_NAME
                 ).build().charactersDAO()
             }
             single {

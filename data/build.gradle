@@ -26,9 +26,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "SERVICE_HOST", "\"https://gateway.marvel.com/v1/public/\"")
+            buildConfigField("String", "DATABASE_NAME", "\"apps-database-prod\"")
         }
         debug {
             buildConfigField("String", "SERVICE_HOST", "\"https://gateway.marvel.com/v1/public/\"")
+            buildConfigField("String", "DATABASE_NAME", "\"apps-database-debug\"")
         }
 
     }
