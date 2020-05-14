@@ -25,7 +25,12 @@ android {
             useProguard false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "SERVICE_HOST", "\"https://gateway.marvel.com/v1/public/\"")
         }
+        debug {
+            buildConfigField("String", "SERVICE_HOST", "\"https://gateway.marvel.com/v1/public/\"")
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

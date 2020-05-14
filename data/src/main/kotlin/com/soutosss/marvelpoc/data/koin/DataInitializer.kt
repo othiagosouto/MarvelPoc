@@ -2,6 +2,7 @@ package com.soutosss.marvelpoc.data.koin
 
 import android.content.Context
 import androidx.room.Room
+import com.soutosss.marvelpoc.data.BuildConfig
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.local.AppDatabase
 import com.soutosss.marvelpoc.data.network.CharactersApi
@@ -52,7 +53,7 @@ class DataInitializer : KoinInitializer() {
         )
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://gateway.marvel.com/v1/public/")
+            .baseUrl(BuildConfig.SERVICE_HOST)
             .client(httpBuilder.build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
