@@ -1,0 +1,18 @@
+package com.soutosss.data.data_retrofit
+
+import androidx.paging.PositionalDataSource
+import com.soutosss.marvelpoc.data.character.CharacterRemoteContract
+import com.soutosss.marvelpoc.data.model.view.Character
+import kotlinx.coroutines.CoroutineScope
+
+class RetrofitCharacterRemote(private val charactersApi: CharactersApi) :
+    CharacterRemoteContract<Character> {
+    override fun listCharacters(
+        scope: CoroutineScope,
+        queryText: String?,
+        exceptionHandler: (Exception) -> Unit,
+        loadFinished: () -> Unit
+    ): PositionalDataSource<Character> {
+        return CharactersDataSource(queryText, scope, charactersApi, exceptionHandler, loadFinished)
+    }
+}

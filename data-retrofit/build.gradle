@@ -6,7 +6,6 @@ apply plugin: 'kotlin-kapt'
 android {
 
     def globalConfiguration = rootProject.extensions.getByName("ext")
-
     compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
     buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
 
@@ -16,20 +15,23 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
         release {
-            useProguard false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
+            buildConfigField("String", "SERVICE_HOST", "\"https://gateway.marvel.com/v1/public/\"")
         }
 
+        debug {
+            buildConfigField("String", "SERVICE_HOST", "\"https://gateway.marvel.com/v1/public/\"")
+        }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -43,33 +45,24 @@ android {
 
 }
 
-def allTestsConfigs(dependency) {
-    dependencies.add('testImplementation', dependency)
-    dependencies.add('androidTestImplementation', dependency)
-}
-
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':shared')
+    implementation project(path: ':data')
 
     def Dependencies = rootProject.ext.Dependencies
     def TestingDependencies = rootProject.ext.TestingDependencies
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':shared')
-
-    implementation Dependencies.kotlin
     implementation Dependencies.coroutines
     implementation Dependencies.koin
-    implementation Dependencies.retrofit
-    implementation Dependencies.ktx.room
-    kapt Dependencies.compiler.room
-
     implementation Dependencies.ktx.paging
-
+    implementation Dependencies.retrofit
     implementation Dependencies.gsonConverter
 
-    allTestsConfigs TestingDependencies.junit
-    testImplementation TestingDependencies.mockk
-    allTestsConfigs TestingDependencies.coroutines
-    allTestsConfigs TestingDependencies.truth
+    testImplementation TestingDependencies.coroutines
+    testImplementation TestingDependencies.truth
 
+    testImplementation TestingDependencies.mockk
+    testImplementation TestingDependencies.androidxTestCore
+    testImplementation TestingDependencies.androidxTestRunner
+    testImplementation TestingDependencies.androidxTestJunit
 }
