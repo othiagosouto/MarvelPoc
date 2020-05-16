@@ -3,6 +3,7 @@ package com.soutosss.marvelpoc.data.room_source
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.soutosss.marvelpoc.data.model.view.Character
 
 @Entity(tableName = CharacterLocal.TABLE_NAME)
 data class CharacterLocal(
@@ -18,3 +19,12 @@ data class CharacterLocal(
         const val TABLE_NAME = "character_local"
     }
 }
+
+fun CharacterLocal.toCharacter() =
+    Character(
+        this.id,
+        this.name,
+        this.thumbnailUrl,
+        this.description,
+        this.favorite
+    )

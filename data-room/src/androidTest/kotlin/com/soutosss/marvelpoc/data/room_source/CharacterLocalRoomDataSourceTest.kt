@@ -2,10 +2,12 @@ package com.soutosss.marvelpoc.data.room_source
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.paging.PositionalDataSource
 import androidx.room.Room
 import androidx.room.paging.LimitOffsetDataSource
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
+import com.soutosss.marvelpoc.data.model.view.Character
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
@@ -19,6 +21,15 @@ class CharacterLocalRoomDataSourceTest {
     private lateinit var dataSource: CharacterLocalRoomDataSource
     private val characterLocal =
         CharacterLocal(
+            30,
+            "name",
+            "url",
+            "description",
+            true
+        )
+
+    private val character =
+        Character(
             30,
             "name",
             "url",
@@ -43,22 +54,22 @@ class CharacterLocalRoomDataSourceTest {
     @Test
     fun favorite_shouldInsertTheExpectedItemToFavoriteAndReturnItsId() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val characterLocal =
-                CharacterLocal(
+            val character =
+                Character(
                     30,
                     "name",
                     "url",
                     "description",
                     true
                 )
-            assertThat(dataSource.favorite(characterLocal)).isEqualTo(30)
+            assertThat(dataSource.favorite(character)).isEqualTo(30)
         }
 
     @Test
     fun unFavorite_shouldUnFavoriteAndReturnsTheIdOfItemRemoved() =
         coroutineTestRule.testDispatcher.runBlockingTest {
             characterLocalDAO.favorite(characterLocal)
-            assertThat(dataSource.unFavorite(characterLocal)).isEqualTo(30)
+            assertThat(dataSource.unFavorite(character)).isEqualTo(30)
         }
 
     @Test
@@ -73,13 +84,31 @@ class CharacterLocalRoomDataSourceTest {
     @Test
     fun favoriteList_shouldReturnFavoriteList() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            characterLocalDAO.favorite(characterLocal.copy(id = 1))
-            characterLocalDAO.favorite(characterLocal.copy(id = 2))
-            characterLocalDAO.favorite(characterLocal.copy(id = 3))
+            val character1 = characterLocal.copy(id = 1)
+            val character2 = characterLocal.copy(id = 2)
+            val character3 = characterLocal.copy(id = 3)
+
+            characterLocalDAO.favorite(character1)
+            characterLocalDAO.favorite(character2)
+            characterLocalDAO.favorite(character3)
 
             val favorites = dataSource.favoriteList()
 
-            val list = (favorites.create() as LimitOffsetDataSource).loadRange(0, 10).map { it.id }
-            assertThat(list).isEqualTo(listOf<Long>(1, 2, 3))
+            val params = PositionalDataSource.LoadRangeParams(0, 10)
+            var characters: List<Character>? = null
+            val teste = object : PositionalDataSource.LoadRangeCallback<Character>() {
+                override fun onResult(data: MutableList<Character>) {
+                    characters = data
+                }
+
+            }
+            (favorites.create() as PositionalDataSource).loadRange(params, teste)
+            assertThat(characters).isEqualTo(
+                listOf(
+                    character1.toCharacter(),
+                    character2.toCharacter(),
+                    character3.toCharacter()
+                )
+            )
         }
 }

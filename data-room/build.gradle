@@ -48,6 +48,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':shared')
+    implementation project(path: ':data')
 
     def Dependencies = rootProject.ext.Dependencies
     def TestingDependencies = rootProject.ext.TestingDependencies
