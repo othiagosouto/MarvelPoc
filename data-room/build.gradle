@@ -1,0 +1,67 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+    buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
+
+    defaultConfig {
+        minSdkVersion globalConfiguration["androidMinSdkVersion"]
+        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "DATABASE_NAME", "\"apps-database-prod\"")
+        }
+
+        debug {
+            buildConfigField("String", "DATABASE_NAME", "\"apps-database-debug\"")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin/'
+        test.java.srcDirs += 'src/test/kotlin/'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin/'
+    }
+
+}
+
+def allTestsConfigs(dependency) {
+    dependencies.add('testImplementation', dependency)
+    dependencies.add('androidTestImplementation', dependency)
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':shared')
+
+    def Dependencies = rootProject.ext.Dependencies
+    def TestingDependencies = rootProject.ext.TestingDependencies
+    implementation Dependencies.coroutines
+    implementation Dependencies.koin
+    implementation Dependencies.ktx.room
+    kapt Dependencies.compiler.room
+    implementation Dependencies.ktx.paging
+
+    allTestsConfigs TestingDependencies.coroutines
+    allTestsConfigs TestingDependencies.truth
+    testImplementation TestingDependencies.mockk
+}
