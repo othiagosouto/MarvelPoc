@@ -1,10 +1,8 @@
 package com.soutosss.marvelpoc.data.koin
 
 import android.content.Context
-import androidx.room.Room
 import com.soutosss.marvelpoc.data.BuildConfig
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.local.AppDatabase
 import com.soutosss.marvelpoc.data.network.CharactersApi
 import com.soutosss.marvelpoc.data.network.interceptors.ConnectionDetectionInterceptor
 import com.soutosss.marvelpoc.data.network.interceptors.MarvelTokenInterceptor
@@ -21,11 +19,6 @@ class DataInitializer : KoinInitializer() {
     override fun createKoinModules(): List<Module> {
         return listOf(module {
             single { getRetrofitInstance(get()) }
-            single {
-                Room.databaseBuilder(
-                    get(), AppDatabase::class.java, BuildConfig.DATABASE_NAME
-                ).build().charactersDAO()
-            }
             single {
                 CharactersRepository(
                     get(),

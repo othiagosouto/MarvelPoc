@@ -4,7 +4,7 @@
     <application>
         <provider
             android:name=".koin.DataRoomInitializer"
-            android:authorities="${applicationId}.data"
+            android:authorities="${applicationId}.room_source"
             android:enabled="true"
             android:exported="false" />
     </application>

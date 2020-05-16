@@ -10,10 +10,10 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.gson.Gson
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.local.CharacterDAO
-import com.soutosss.marvelpoc.data.network.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.data.network.CharactersApi
+import com.soutosss.marvelpoc.data.network.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.home.HomeViewModel
+import com.soutosss.marvelpoc.shared.contracts.character.CharacterLocalContract
 import com.soutosss.marvelpoc.shared.livedata.Result
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -21,13 +21,14 @@ import org.hamcrest.Matchers.not
 import org.koin.core.KoinComponent
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
+import com.soutosss.marvelpoc.data.room_source.CharacterLocal
 
 fun configure(func: CharactersFragmentConfiguration.() -> Unit) =
     CharactersFragmentConfiguration().apply(func)
 
 class CharactersFragmentConfiguration : KoinComponent {
     private val api: CharactersApi = mockk(relaxed = true)
-    private val mockDao: CharacterDAO = mockk(relaxed = true)
+    private val mockDao: CharacterLocalContract<CharacterLocal> = mockk(relaxed = true)
     private val repository: CharactersRepository = CharactersRepository(api, mockDao)
     private var homeViewModel: HomeViewModel = HomeViewModel(repository)
 

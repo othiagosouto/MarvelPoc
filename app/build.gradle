@@ -83,10 +83,12 @@ dependencies {
     allTestsConfigs TestingDependencies.truth
     allTestsConfigs TestingDependencies.androidxTestRules
     allTestsConfigs TestingDependencies.androidxTestCore
+    allTestsConfigs project(':data-room')
 
     androidTestImplementation TestingDependencies.androidxTestRunner
     androidTestImplementation TestingDependencies.androidxTestJunit
     androidTestImplementation TestingDependencies.mockkAndroid
 
     debugImplementation TestingDependencies.fragment
+
 }

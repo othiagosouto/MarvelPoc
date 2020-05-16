@@ -3,11 +3,12 @@ package com.soutosss.marvelpoc.data
 import androidx.paging.PositionalDataSource
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
-import com.soutosss.marvelpoc.data.local.CharacterDAO
-import com.soutosss.marvelpoc.data.network.character.MarvelCharactersResponse
-import com.soutosss.marvelpoc.data.network.character.toCharacterList
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.data.network.CharactersApi
+import com.soutosss.marvelpoc.data.network.character.MarvelCharactersResponse
+import com.soutosss.marvelpoc.data.network.character.toCharacterList
+import com.soutosss.marvelpoc.data.room_source.CharacterLocal
+import com.soutosss.marvelpoc.shared.contracts.character.CharacterLocalContract
 import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -17,7 +18,7 @@ class CharactersDataSourceTest {
 
     private val charactersList = parseToJson().toCharacterList()
     private lateinit var api: CharactersApi
-    private lateinit var dao: CharacterDAO
+    private lateinit var dao: CharacterLocalContract<CharacterLocal>
     private val exception = Exception()
     private lateinit var errorCallback: (Exception) -> Unit
 

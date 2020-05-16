@@ -7,12 +7,14 @@ import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.local.CharacterDAO
 import com.soutosss.marvelpoc.data.EmptyDataException
 import com.soutosss.marvelpoc.data.network.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.data.network.character.toCharacterList
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.data.network.CharactersApi
+import com.soutosss.marvelpoc.data.room_source.CharacterLocal
+import com.soutosss.marvelpoc.data.toCharacterLocal
+import com.soutosss.marvelpoc.shared.contracts.character.CharacterLocalContract
 import com.soutosss.marvelpoc.shared.livedata.Result
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -35,7 +37,7 @@ class HomeViewModelTest {
     private lateinit var exceptionHandler: (Exception) -> Unit
     private lateinit var successHandler: () -> Unit
     private lateinit var api: CharactersApi
-    private lateinit var dao: CharacterDAO
+    private lateinit var localDataSource: CharacterLocalContract<CharacterLocal>
     private lateinit var charactersList: List<Character>
 
     @Before
@@ -44,8 +46,8 @@ class HomeViewModelTest {
         successHandler = mockk(relaxed = true)
         charactersList = parseToJson().toCharacterList()
         api = mockk()
-        dao = mockk()
-        repository = CharactersRepository(api, dao)
+        localDataSource = mockk()
+        repository = CharactersRepository(api, localDataSource)
         viewModel = HomeViewModel(repository)
     }
 
@@ -54,7 +56,7 @@ class HomeViewModelTest {
         coroutineTestRule.testDispatcher.runBlockingTest {
 
             coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
-            coEvery { dao.favoriteIds() } returns emptyList()
+            coEvery { localDataSource.favoriteIds() } returns emptyList()
 
             val item = viewModel.charactersPageListContent()
 
@@ -96,7 +98,7 @@ class HomeViewModelTest {
                     any()
                 )
             } returns parseToJson().copy(data = data.copy(results = emptyList()))
-            coEvery { dao.favoriteIds() } returns emptyList()
+            coEvery { localDataSource.favoriteIds() } returns emptyList()
 
             val item = viewModel.charactersPageListContent()
 
@@ -126,7 +128,7 @@ class HomeViewModelTest {
                     any()
                 )
             } returns parseToJson().copy(data = data.copy(results = emptyList()))
-            coEvery { dao.favoriteIds() } returns emptyList()
+            coEvery { localDataSource.favoriteIds() } returns emptyList()
 
             viewModel.initSearchQuery("content")
             val item = viewModel.charactersPageListContent()
@@ -176,7 +178,7 @@ class HomeViewModelTest {
         coroutineTestRule.testDispatcher.runBlockingTest {
 
             coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
-            coEvery { dao.favoriteIds() } returns listOf(1011334)
+            coEvery { localDataSource.favoriteIds() } returns listOf(1011334)
 
             val item = viewModel.charactersPageListContent()
 
@@ -212,24 +214,26 @@ class HomeViewModelTest {
     @Test
     fun `charactersFavorite should post all favorite characters available`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-
-            val favoriteCharacters = parseToJson().toCharacterList()
+            val response = parseToJson()
+            val favoriteCharacters = response.toCharacterLocal()
+            val expectedList = response.toCharacterList()
             favoriteCharacters.first().favorite = true
+            expectedList.first().favorite = true
 
-            coEvery { dao.getAll() } returns FakeHomeDataSource(favoriteCharacters)
+            coEvery { localDataSource.favoriteList() } returns FakeHomeDataSource(favoriteCharacters)
 
             val item = viewModel.charactersFavorite()
             var list: List<Character>? = null
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 list = it.snapshot()
             })
-            assertThat(list).isEqualTo(favoriteCharacters)
+            assertThat(list).isEqualTo(expectedList)
         }
 
     @Test
     fun `charactersFavorite should post error with expected content when there's no favorite characters available`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            coEvery { dao.getAll() } returns FakeHomeDataSource(emptyList())
+            coEvery { localDataSource.favoriteList() } returns FakeHomeDataSource(emptyList())
 
             val item = viewModel.charactersFavorite()
             var list: List<Character>? = null
@@ -261,18 +265,19 @@ class HomeViewModelTest {
     @Test
     fun `favoriteClick should post the position of the item that was unfavorited`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val item = parseToJson().toCharacterList().first()
+            val item = parseToJson().toCharacterLocal().first()
+
 
             coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
-            coEvery { dao.favoriteIds() } returns listOf(1011334)
-            coEvery { dao.insertAll(item) } returns Unit
-            coEvery { dao.delete(item) } returns Unit
+            coEvery { localDataSource.favoriteIds() } returns listOf(1011334)
+            coEvery { localDataSource.favorite(item) } returns item.id
+            coEvery { localDataSource.unFavorite(item) } returns item.id
 
             viewModel.charactersPageListContent()
                 .observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 })
 
-            viewModel.favoriteClick(item)
+            viewModel.favoriteClick(parseToJson().toCharacterList().first())
 
             assertThat(viewModel.changeAdapter.value).isEqualTo(0)
         }
@@ -282,7 +287,7 @@ class HomeViewModelTest {
         coroutineTestRule.testDispatcher.runBlockingTest {
 
             coEvery { api.listCharacters("Ops", any(), any()) } returns parseToJson()
-            coEvery { dao.favoriteIds() } returns emptyList()
+            coEvery { localDataSource.favoriteIds() } returns emptyList()
 
             val item = viewModel.charactersPageListContent()
 
@@ -305,3 +310,6 @@ private fun parseToJson(): MarvelCharactersResponse {
 private fun String.toJson(): String {
     return this::class.java.javaClass.getResource(this)!!.readText()
 }
+
+private fun MarvelCharactersResponse.toCharacterLocal(): List<CharacterLocal> =
+    this.data.results.map { Character(it).toCharacterLocal() }

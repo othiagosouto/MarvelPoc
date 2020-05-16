@@ -13,7 +13,7 @@ interface CharacterLocalDAO {
     suspend fun favorite(item: CharacterLocal): Long
 
     @Query("SELECT id FROM ${CharacterLocal.TABLE_NAME}")
-    suspend fun favoriteIds(): List<Int>
+    suspend fun favoriteIds(): List<Long>
 
     @Delete
     suspend fun unFavorite(item: CharacterLocal)

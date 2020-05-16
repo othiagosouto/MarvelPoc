@@ -8,7 +8,7 @@ interface CharacterLocalContract<T> {
 
     suspend fun favorite(item: T): Long
 
-    suspend fun favoriteIds(): List<Int>
+    suspend fun favoriteIds(): List<Long>
 
     suspend fun unFavorite(item: T) : Long
 }

@@ -1,19 +1,19 @@
 package com.soutosss.marvelpoc.data
 
 import androidx.paging.PositionalDataSource
-import com.soutosss.marvelpoc.data.local.CharacterDAO
-import com.soutosss.marvelpoc.data.network.character.toCharacterList
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.data.network.CharactersApi
+import com.soutosss.marvelpoc.data.network.character.toCharacterList
+import com.soutosss.marvelpoc.data.room_source.CharacterLocal
+import com.soutosss.marvelpoc.shared.contracts.character.CharacterLocalContract
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class CharactersDataSource(
     private val queryText: String?,
     private val scope: CoroutineScope,
     private val api: CharactersApi,
-    private val dao: CharacterDAO,
+    private val localDataSource: CharacterLocalContract<CharacterLocal>,
     private val exceptionHandler: (Exception) -> Unit,
     private val loadFinished: () -> Unit
 ) :
@@ -42,7 +42,7 @@ class CharactersDataSource(
     }
 
     private suspend fun List<Character>.checkFavorite(): List<Character> {
-        val favorites = dao.favoriteIds()
+        val favorites = localDataSource.favoriteIds()
         favorites.forEach { id ->
             this.firstOrNull { it.id == id }?.favorite = true
         }

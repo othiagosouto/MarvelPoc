@@ -1,9 +1,10 @@
 package com.soutosss.marvelpoc.data
 
 import com.google.common.truth.Truth.assertThat
-import com.soutosss.marvelpoc.data.local.CharacterDAO
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.data.network.CharactersApi
+import com.soutosss.marvelpoc.data.room_source.CharacterLocal
+import com.soutosss.marvelpoc.shared.contracts.character.CharacterLocalContract
 import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -13,7 +14,7 @@ import org.junit.Test
 class CharactersRepositoryTest {
 
     private lateinit var mockApi: CharactersApi
-    private lateinit var mockDao: CharacterDAO
+    private lateinit var mockDao: CharacterLocalContract<CharacterLocal>
     private lateinit var repository: CharactersRepository
     private lateinit var item: Character
 
@@ -30,23 +31,27 @@ class CharactersRepositoryTest {
         runBlockingTest {
             repository.fetchFavoriteCharacters()
 
-            coVerify(exactly = 1) { mockDao.getAll() }
+            coVerify(exactly = 1) { mockDao.favoriteList() }
         }
 
     @Test
     fun `favoriteCharacter should call dao to insert favorite item`() = runBlockingTest {
         repository.favoriteCharacter(item)
 
-        coVerify(exactly = 1) { mockDao.insertAll(item) }
+        coVerify(exactly = 1) { mockDao.favorite(item.toCharacterLocal()) }
     }
 
     @Test
     fun `unFavoriteCharacter should call dao to delete item`() = runBlockingTest {
-        val result = repository.unFavoriteCharacter(item, listOf(item, item.copy(id = 300)))
+        val unFavoriteItem = item.copy(id = 300L)
+        val parameter = unFavoriteItem.copy(favorite = false)
 
-        coVerify(exactly = 1) { mockDao.delete(item) }
-        assertThat(result).isEqualTo(0)
-        assertThat(item.favorite).isFalse()
+        coEvery { mockDao.unFavorite(parameter.toCharacterLocal()) } returns parameter.id
+        val result = repository.unFavoriteCharacter(parameter, listOf(item, unFavoriteItem))
+
+        assertThat(result).isEqualTo(1)
+        assertThat(unFavoriteItem.favorite).isFalse()
+        coVerify (exactly = 1){ mockDao.unFavorite(parameter.toCharacterLocal()) }
     }
 
     @Test
@@ -71,5 +76,23 @@ class CharactersRepositoryTest {
                 )
             }
         }
+
+    private fun Character.toCharacterLocal() =
+        CharacterLocal(
+            this.id.toLong(),
+            this.name,
+            this.thumbnailUrl,
+            this.description,
+            this.favorite
+        )
+
+    private fun CharacterLocal.toCharacter() =
+        Character(
+            this.id,
+            this.name,
+            this.thumbnailUrl,
+            this.description,
+            this.favorite
+        )
 
 }

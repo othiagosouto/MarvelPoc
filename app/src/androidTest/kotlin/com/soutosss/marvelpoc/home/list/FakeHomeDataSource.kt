@@ -3,22 +3,23 @@ package com.soutosss.marvelpoc.home.list
 import androidx.paging.DataSource
 import androidx.paging.PositionalDataSource
 import com.soutosss.marvelpoc.data.model.view.Character
+import com.soutosss.marvelpoc.data.room_source.CharacterLocal
 
-class FakeHomeDataSource(private val items: List<Character>) :
-    DataSource.Factory<Int, Character>() {
-    override fun create(): DataSource<Int, Character> = FakeDataSource(items)
+class FakeHomeDataSource(private val items: List<CharacterLocal>) :
+    DataSource.Factory<Int, CharacterLocal>() {
+    override fun create(): DataSource<Int, CharacterLocal> = FakeDataSource(items)
 
-    class FakeDataSource(var items: List<Character>) : PositionalDataSource<Character>() {
+    class FakeDataSource(var items: List<CharacterLocal>) : PositionalDataSource<CharacterLocal>() {
         override fun loadRange(
             params: LoadRangeParams,
-            callback: LoadRangeCallback<Character>
+            callback: LoadRangeCallback<CharacterLocal>
         ) {
             callback.onResult(emptyList())
         }
 
         override fun loadInitial(
             params: LoadInitialParams,
-            callback: LoadInitialCallback<Character>
+            callback: LoadInitialCallback<CharacterLocal>
         ) {
             val totalCount = items.size
 

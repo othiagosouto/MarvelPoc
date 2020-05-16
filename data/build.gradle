@@ -59,6 +59,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':shared')
+    implementation project(path: ':data-room')
 
     implementation Dependencies.kotlin
     implementation Dependencies.coroutines

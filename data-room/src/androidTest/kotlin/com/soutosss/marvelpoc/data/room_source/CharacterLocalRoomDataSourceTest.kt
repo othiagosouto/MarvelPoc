@@ -17,7 +17,14 @@ class CharacterLocalRoomDataSourceTest {
     private lateinit var appDatabase: AppDatabase
     private lateinit var characterLocalDAO: CharacterLocalDAO
     private lateinit var dataSource: CharacterLocalRoomDataSource
-    private val characterLocal = CharacterLocal(30, "name", "url", "description", true)
+    private val characterLocal =
+        CharacterLocal(
+            30,
+            "name",
+            "url",
+            "description",
+            true
+        )
 
     @get:Rule
     var coroutineTestRule = CoroutineTestRule()
@@ -36,7 +43,14 @@ class CharacterLocalRoomDataSourceTest {
     @Test
     fun favorite_shouldInsertTheExpectedItemToFavoriteAndReturnItsId() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val characterLocal = CharacterLocal(30, "name", "url", "description", true)
+            val characterLocal =
+                CharacterLocal(
+                    30,
+                    "name",
+                    "url",
+                    "description",
+                    true
+                )
             assertThat(dataSource.favorite(characterLocal)).isEqualTo(30)
         }
 
@@ -53,7 +67,7 @@ class CharacterLocalRoomDataSourceTest {
             characterLocalDAO.favorite(characterLocal.copy(id = 1))
             characterLocalDAO.favorite(characterLocal.copy(id = 2))
             characterLocalDAO.favorite(characterLocal.copy(id = 3))
-            assertThat(dataSource.favoriteIds()).isEqualTo(listOf(1, 2, 3))
+            assertThat(dataSource.favoriteIds()).isEqualTo(listOf<Long>(1, 2, 3))
         }
 
     @Test
