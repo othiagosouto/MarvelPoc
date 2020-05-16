@@ -1,4 +1,4 @@
-package com.soutosss.marvelpoc.data
+package com.soutosss.marvelpoc.shared
 
 import java.lang.Exception
 

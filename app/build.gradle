@@ -53,7 +53,8 @@ dependencies {
     def TestingDependencies = rootProject.ext.TestingDependencies
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation project(path: ':data-room')
+    implementation project(path: ':data-retrofit')
     implementation project(path: ':data')
     implementation project(path: ':shared')
 
@@ -83,7 +84,6 @@ dependencies {
     allTestsConfigs TestingDependencies.truth
     allTestsConfigs TestingDependencies.androidxTestRules
     allTestsConfigs TestingDependencies.androidxTestCore
-    allTestsConfigs project(':data-room')
 
     androidTestImplementation TestingDependencies.androidxTestRunner
     androidTestImplementation TestingDependencies.androidxTestJunit
