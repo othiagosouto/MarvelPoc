@@ -6,9 +6,9 @@ interface CharacterLocalContract<T> {
 
     fun favoriteList(): DataSource.Factory<Int, T>
 
-    suspend fun favorite(item: T): Int
+    suspend fun favorite(item: T): Long
 
     suspend fun favoriteIds(): List<Int>
 
-    suspend fun unFavorite(item: T) : Int
+    suspend fun unFavorite(item: T) : Long
 }

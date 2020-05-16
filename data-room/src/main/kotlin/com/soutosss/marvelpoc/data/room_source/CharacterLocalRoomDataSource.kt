@@ -9,10 +9,13 @@ class CharacterLocalRoomDataSource(private val characterDAO: CharacterLocalDAO) 
     override fun favoriteList(): DataSource.Factory<Int, CharacterLocal> =
         characterDAO.favoriteList()
 
-    override suspend fun favorite(item: CharacterLocal): Int = characterDAO.favorite(item)
+    override suspend fun favorite(item: CharacterLocal): Long = characterDAO.favorite(item)
 
     override suspend fun favoriteIds(): List<Int> = characterDAO.favoriteIds()
 
-    override suspend fun unFavorite(item: CharacterLocal): Int = characterDAO.unFavorite(item)
+    override suspend fun unFavorite(item: CharacterLocal): Long {
+        characterDAO.unFavorite(item)
+        return item.id
+    }
 
 }

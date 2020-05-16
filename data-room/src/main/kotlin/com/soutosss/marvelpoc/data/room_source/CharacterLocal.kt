@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = CharacterLocal.TABLE_NAME)
 data class CharacterLocal(
     @ColumnInfo(name = "id")
-    @PrimaryKey val id: Int,
+    @PrimaryKey val id: Long,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "thumbnail_url") val thumbnailUrl: String,
     @ColumnInfo(name = "description") val description: String,
