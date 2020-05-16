@@ -45,6 +45,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dependencies.kotlin
     implementation Dependencies.koin
+    implementation Dependencies.ktx.paging
 
 
     testImplementation TestingDependencies.junit

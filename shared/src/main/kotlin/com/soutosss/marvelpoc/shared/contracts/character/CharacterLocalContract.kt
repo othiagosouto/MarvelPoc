@@ -1,0 +1,14 @@
+package com.soutosss.marvelpoc.shared.contracts.character
+
+import androidx.paging.DataSource
+
+interface CharacterLocalContract<T> {
+
+    fun favoriteList(): DataSource.Factory<Int, T>
+
+    suspend fun favorite(item: T): Int
+
+    suspend fun favoriteIds(): List<Int>
+
+    suspend fun unFavorite(item: T) : Int
+}
