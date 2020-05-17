@@ -2,10 +2,8 @@ package com.soutosss.marvelpoc.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.network.character.toCharacterList
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.home.CoroutineTestRule
-import com.soutosss.marvelpoc.parseToJson
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -18,17 +16,17 @@ class CharacterDetailsViewModelTest {
     private lateinit var viewModel: CharacterDetailsViewModel
     private lateinit var repository: CharactersRepository
 
-    @Before
-    fun setup() {
-        repository = mockk()
-        viewModel = CharacterDetailsViewModel(repository)
-    }
-
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
     @get:Rule
     var coroutineTestRule = CoroutineTestRule()
+
+    @Before
+    fun setup() {
+        repository = mockk(relaxed = true)
+        viewModel = CharacterDetailsViewModel(repository)
+    }
 
     @Test
     fun `favoriteClick should favorite item when favorite flag is true`() =
@@ -45,7 +43,7 @@ class CharacterDetailsViewModelTest {
     @Test
     fun `favoriteClick should unfavorite when the flag is false`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val item = parseToJson().toCharacterList().first()
+            val item = Character(300, "name", "url", "Description", false)
 
             viewModel.favoriteClick(item)
 
