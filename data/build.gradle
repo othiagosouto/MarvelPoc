@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 
 android {
 
@@ -59,9 +58,6 @@ dependencies {
     implementation Dependencies.kotlin
     implementation Dependencies.coroutines
     implementation Dependencies.koin
-    implementation Dependencies.retrofit
-    implementation Dependencies.ktx.room
-    kapt Dependencies.compiler.room
 
     implementation Dependencies.ktx.paging
 

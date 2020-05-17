@@ -1,11 +1,10 @@
 package com.soutosss.marvelpoc.data.room_source.koin
 
 import androidx.room.Room
+import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.room_source.AppDatabase
 import com.soutosss.marvelpoc.data.room_source.BuildConfig
-import com.soutosss.marvelpoc.data.room_source.CharacterLocal
 import com.soutosss.marvelpoc.data.room_source.CharacterLocalRoomDataSource
-import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.shared.koin.KoinInitializer
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -21,7 +20,7 @@ class DataRoomInitializer : KoinInitializer() {
             single {
                 CharacterLocalRoomDataSource(
                     get()
-                ) as CharacterLocalContract<CharacterLocal>
+                ) as CharacterLocalContract<Character>
             }
         })
     }
