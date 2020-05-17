@@ -43,6 +43,7 @@ ext {
     glideVersion = '4.11.0'
     pagingVersion = '2.1.2'
     coroutinesRoomVersion = '2.1.0-alpha04'
+    orchestratorVersion = '1.2.0'
     Dependencies = [
             androidxAppCompat: "androidx.appcompat:appcompat:${androidxAppCompatVersion}",
             coroutines       : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
@@ -87,6 +88,7 @@ ext {
             fragment               : "androidx.fragment:fragment-testing:${fragmentScenarioVersion}",
             recyclerViewActions    : "androidx.test.espresso.contrib.RecyclerViewActions:${recyclerViewActions}",
             truth                  : "com.google.truth:truth:${truthVersion}",
-            coroutines             : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesVersion}"
+            coroutines             : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesVersion}",
+            orchestrator           : "androidx.test:orchestrator:${orchestratorVersion}"
     ]
 }

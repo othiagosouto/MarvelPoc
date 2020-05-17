@@ -96,7 +96,7 @@ dependencies {
 
     debugImplementation TestingDependencies.fragment
 
-    androidTestUtil 'androidx.test:orchestrator:1.2.0'
+    androidTestUtil TestingDependencies.orchestrator
 
 
 }

@@ -3,6 +3,7 @@ package com.soutosss.marvelpoc.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,6 +17,7 @@ class CharacterView @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
     private val headerText by lazy { findViewById<TextView>(R.id.text) }
     private val imageView by lazy { findViewById<ImageView>(R.id.image) }
+    private val header by lazy { findViewById<View>(R.id.header) }
     private val progress by lazy { findViewById<ContentLoadingProgressBar>(R.id.progressItem) }
     private val favoriteCheckBox by lazy { findViewById<CheckBox>(R.id.favorite) }
     private lateinit var character: Character
@@ -27,6 +29,7 @@ class CharacterView @JvmOverloads constructor(
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.view_character, this, true)
 
+        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         favoriteCheckBox.setOnClickListener {
             character.favorite = character.favorite.not()
             character.let(favoriteClick)
@@ -46,14 +49,18 @@ class CharacterView @JvmOverloads constructor(
         loadHomeImage(
             imageView,
             character.thumbnailUrl,
-            progress
+            progress,
+            favoriteCheckBox, headerText, header
         )
         favoriteCheckBox.isChecked = character.favorite
     }
 
     fun applyDetailMode() {
         imageView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        imageView.adjustViewBounds = true
+        imageView.scaleType = ImageView.ScaleType.FIT_XY
         imageView.setPadding(0, 0, 0, 0)
+        imageView.invalidate()
     }
 
     fun setListeners(favoriteClick: (Character) -> Unit, itemClick: ((Character) -> Unit)? = null) {

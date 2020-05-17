@@ -11,10 +11,16 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.soutosss.marvelpoc.R
 
-fun loadHomeImage(imageView: ImageView, url: String, progress: ContentLoadingProgressBar) {
-    progress.visibility = View.VISIBLE
-    progress.show()
-    imageView.visibility = View.INVISIBLE
+fun loadHomeImage(
+    imageView: ImageView,
+    url: String,
+    progress: ContentLoadingProgressBar,
+    favorite: View,
+    headerText: View,
+    headerView: View
+) {
+
+    setLoading(true, imageView, progress, favorite, headerText, headerView)
     Glide.with(imageView.context).load(url).error(R.drawable.ic_launcher_background).dontAnimate()
         .listener(object : RequestListener<Drawable> {
             override fun onLoadFailed(
@@ -23,8 +29,7 @@ fun loadHomeImage(imageView: ImageView, url: String, progress: ContentLoadingPro
                 target: Target<Drawable>?,
                 isFirstResource: Boolean
             ): Boolean {
-                progress.hide()
-                imageView.visibility = View.VISIBLE
+                setLoading(false, imageView, progress, favorite, headerText, headerView)
                 return false
             }
 
@@ -35,9 +40,30 @@ fun loadHomeImage(imageView: ImageView, url: String, progress: ContentLoadingPro
                 dataSource: DataSource?,
                 isFirstResource: Boolean
             ): Boolean {
-                progress.hide()
-                imageView.visibility = View.VISIBLE
+                setLoading(false, imageView, progress, favorite, headerText, headerView)
                 return false
             }
         }).into(imageView)
+}
+
+private fun setLoading(
+    isLoading: Boolean,
+    imageView: View,
+    progress: ContentLoadingProgressBar,
+    favorite: View,
+    headerText: View,
+    headerView: View
+) {
+    val visibility = if (isLoading) View.INVISIBLE else View.VISIBLE
+    imageView.visibility = visibility
+    favorite.visibility = visibility
+    headerText.visibility = visibility
+    headerView.visibility = visibility
+    if (isLoading) {
+        progress.visibility = View.VISIBLE
+        progress.show()
+    } else {
+        progress.visibility = View.INVISIBLE
+        progress.hide()
+    }
 }

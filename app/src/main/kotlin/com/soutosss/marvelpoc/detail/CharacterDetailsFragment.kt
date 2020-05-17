@@ -17,8 +17,8 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
         val character: Character = arguments?.getSerializable(CHARACTER_KEY) as Character
 
         characterImage.setListeners(favoriteClick = characterDetailsViewModel::favoriteClick)
-        characterImage.updateCharacter(character)
         characterImage.applyDetailMode()
+        characterImage.updateCharacter(character)
         description.text =
             if (character.description.isNotBlank()) character.description else getString(
                 R.string.character_details_description_not_available
