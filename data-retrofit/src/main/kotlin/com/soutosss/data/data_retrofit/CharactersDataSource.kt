@@ -1,18 +1,21 @@
 package com.soutosss.data.data_retrofit
 
 import androidx.paging.PositionalDataSource
+import com.soutosss.data.data_retrofit.character.Result
 import com.soutosss.data.data_retrofit.ext.toCharacter
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.shared.EmptyDataException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlin.reflect.KSuspendFunction0
 
 class CharactersDataSource(
     private val queryText: String?,
     private val scope: CoroutineScope,
     private val api: CharactersApi,
     private val exceptionHandler: (Exception) -> Unit,
-    private val loadFinished: () -> Unit
+    private val loadFinished: () -> Unit,
+    private val provideFavoriteIds: suspend () -> List<Long>
 ) :
     PositionalDataSource<Character>() {
 
@@ -22,11 +25,12 @@ class CharactersDataSource(
     ) {
         scope.launch {
             try {
+                val favoriteIds = provideFavoriteIds()
                 val response = api.listCharacters(
                     name = queryText,
                     offset = 0,
                     limit = params.requestedLoadSize
-                ).data.results.map { it.toCharacter() }
+                ).data.results.map { mapToFavoriteCharacter(it, favoriteIds) }
                 if (response.isEmpty()) {
                     throw EmptyDataException()
                 }
@@ -38,18 +42,29 @@ class CharactersDataSource(
         }
     }
 
+    private fun mapToFavoriteCharacter(result: Result, favoriteIds: List<Long>): Character {
+        val character = result.toCharacter()
+        character.checkIfFavorite(favoriteIds)
+        return character
+    }
+
+    private fun Character.checkIfFavorite(list: List<Long>) {
+        this.favorite = list.contains(this.id)
+    }
+
     override fun loadRange(
         params: LoadRangeParams,
         callback: LoadRangeCallback<Character>
     ) {
         scope.launch {
             try {
+                val favoriteIds = provideFavoriteIds()
                 val response =
                     api.listCharacters(
                         name = queryText,
                         offset = params.startPosition,
                         limit = params.loadSize
-                    ).data.results.map { it.toCharacter() }
+                    ).data.results.map { mapToFavoriteCharacter(it, favoriteIds) }
                 callback.onResult(response)
             } catch (e: Exception) {
                 exceptionHandler(e)

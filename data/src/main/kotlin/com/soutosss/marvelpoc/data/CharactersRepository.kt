@@ -11,7 +11,6 @@ class CharactersRepository(
 ) {
     fun fetchFavoriteCharacters() = localDataSource.favoriteList()
 
-
     suspend fun unFavoriteCharacter(
         item: Character,
         list: List<Character>?
@@ -30,7 +29,6 @@ class CharactersRepository(
         scope: CoroutineScope,
         exceptionHandler: (Exception) -> Unit,
         loadFinished: () -> Unit
-    ) = remoteDataSource.listCharacters(scope, queryText, exceptionHandler, loadFinished)
-
+    ) = remoteDataSource.listCharacters(scope, queryText, exceptionHandler, loadFinished, localDataSource::favoriteIds)
 }
 

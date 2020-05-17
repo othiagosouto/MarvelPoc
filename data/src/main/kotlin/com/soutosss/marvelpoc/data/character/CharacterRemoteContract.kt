@@ -8,6 +8,7 @@ interface CharacterRemoteContract<T> {
         scope: CoroutineScope,
         queryText: String? = null,
         exceptionHandler: (Exception) -> Unit,
-        loadFinished: () -> Unit
+        loadFinished: () -> Unit,
+        provideFavoriteIds: suspend () -> List<Long>
     ): PositionalDataSource<T>
 }

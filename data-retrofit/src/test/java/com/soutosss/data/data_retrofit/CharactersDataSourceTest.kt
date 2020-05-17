@@ -19,12 +19,18 @@ class CharactersDataSourceTest {
     private val exception = Exception()
     private lateinit var errorCallback: (Exception) -> Unit
     private lateinit var characterList : List<Character>
+    private lateinit var characterFavoredList : List<Character>
+    private lateinit var provideFavoriteIds :  suspend () -> List<Long>
 
     @Before
     fun setup() {
         api = mockk()
-        characterList =listOf(charactersList.data.results.first().toCharacter())
+        val character = charactersList.data.results.first().toCharacter()
+        characterList =listOf(character)
+        characterFavoredList =listOf(character.copy(favorite = true))
         errorCallback = mockk(relaxed = true)
+        provideFavoriteIds = mockk()
+        coEvery { provideFavoriteIds.invoke() } returns emptyList()
     }
 
     @Test
@@ -35,7 +41,8 @@ class CharactersDataSourceTest {
             this,
             api,
             {},
-            loadFinishMock
+            loadFinishMock,
+            provideFavoriteIds
         )
         coEvery { api.listCharacters(null, 0, 5) } returns parseToJson()
 
@@ -49,13 +56,38 @@ class CharactersDataSourceTest {
     }
 
     @Test
+    fun `loadInitial should call callback with expected transformed list with favorite and position`() = runBlockingTest {
+        val loadFinishMock: () -> Unit = mockk(relaxed = true)
+
+        coEvery { provideFavoriteIds.invoke() } returns listOf(1011334L)
+        val source = CharactersDataSource(
+            null,
+            this,
+            api,
+            {},
+            loadFinishMock,
+            provideFavoriteIds
+        )
+        coEvery { api.listCharacters(null, 0, 5) } returns parseToJson()
+
+        val callback: PositionalDataSource.LoadInitialCallback<Character> =
+            mockk(relaxed = true)
+
+        source.loadInitial(PositionalDataSource.LoadInitialParams(0, 5, 5, false), callback)
+
+        verify { callback.onResult(characterFavoredList, 0) }
+        verify { loadFinishMock() }
+    }
+
+    @Test
     fun `loadInitial should call error callback when an error occurs`() = runBlockingTest {
         val source = CharactersDataSource(
             null,
             this,
             api,
             errorCallback,
-            mockk()
+            mockk(),
+            provideFavoriteIds
         )
         coEvery { api.listCharacters(null, 0, 5) } throws exception
 
@@ -71,7 +103,8 @@ class CharactersDataSourceTest {
             this,
             api,
             {},
-            mockk()
+            mockk(),
+            provideFavoriteIds
         )
         coEvery { api.listCharacters(null, 0, 5) } returns parseToJson()
 
@@ -83,13 +116,34 @@ class CharactersDataSourceTest {
     }
 
     @Test
+    fun `loadRange should call callback with expected transformed list with favorite and position`() = runBlockingTest {
+        coEvery { provideFavoriteIds() } returns listOf(1011334)
+        val source = CharactersDataSource(
+            null,
+            this,
+            api,
+            {},
+            mockk(),
+            provideFavoriteIds
+        )
+        coEvery { api.listCharacters(null, 0, 5) } returns parseToJson()
+
+        val callback: PositionalDataSource.LoadRangeCallback<Character> = mockk(relaxed = true)
+
+        source.loadRange(PositionalDataSource.LoadRangeParams(0, 5), callback)
+
+        verify { callback.onResult(characterFavoredList) }
+    }
+
+    @Test
     fun `loadRange should call error callback when an error occurs`() = runBlockingTest {
         val source = CharactersDataSource(
             null,
             this,
             api,
             errorCallback,
-            mockk()
+            mockk(),
+            provideFavoriteIds
         )
         coEvery { api.listCharacters(null, 0, 5) } throws exception
         val callback: PositionalDataSource.LoadRangeCallback<Character> = mockk(relaxed = true)
@@ -109,7 +163,8 @@ class CharactersDataSourceTest {
                 this,
                 api,
                 errorCallback,
-                mockk()
+                mockk(),
+                provideFavoriteIds
             )
             every { errorCallback(any()) } returns Unit
             coEvery { api.listCharacters(null, 0, 5) } returns response

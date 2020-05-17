@@ -10,6 +10,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
+import java.lang.Exception
 
 class CharactersRepositoryTest {
 
@@ -53,6 +54,25 @@ class CharactersRepositoryTest {
         assertThat(unFavoriteItem.favorite).isFalse()
         coVerify(exactly = 1) { localSourceMock.unFavorite(parameter) }
     }
+
+    @Test
+    fun `charactersDataSource should call listCharacters with expected parameters `() =
+        runBlockingTest {
+            val exceptionHandler: (Exception) -> Unit = mockk(relaxed = true)
+            val sucessCallback: () -> Unit = mockk(relaxed = true)
+
+            repository.charactersDataSource(null, this, exceptionHandler, sucessCallback)
+            coVerify {
+                remoteSourceMock.listCharacters(
+                    this@runBlockingTest,
+                    null,
+                    exceptionHandler,
+                    sucessCallback,
+                    localSourceMock::favoriteIds
+                )
+            }
+
+        }
 
 
 }

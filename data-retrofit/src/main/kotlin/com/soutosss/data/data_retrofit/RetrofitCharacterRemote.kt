@@ -11,8 +11,9 @@ class RetrofitCharacterRemote(private val charactersApi: CharactersApi) :
         scope: CoroutineScope,
         queryText: String?,
         exceptionHandler: (Exception) -> Unit,
-        loadFinished: () -> Unit
+        loadFinished: () -> Unit,
+        provideFavoriteIds: suspend () -> List<Long>
     ): PositionalDataSource<Character> {
-        return CharactersDataSource(queryText, scope, charactersApi, exceptionHandler, loadFinished)
+        return CharactersDataSource(queryText, scope, charactersApi, exceptionHandler, loadFinished, provideFavoriteIds)
     }
 }
