@@ -20,6 +20,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -90,5 +95,8 @@ dependencies {
     androidTestImplementation TestingDependencies.mockkAndroid
 
     debugImplementation TestingDependencies.fragment
+
+    androidTestUtil 'androidx.test:orchestrator:1.2.0'
+
 
 }

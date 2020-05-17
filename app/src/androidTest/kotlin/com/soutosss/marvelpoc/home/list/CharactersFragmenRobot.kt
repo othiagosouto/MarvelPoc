@@ -8,12 +8,12 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.gson.Gson
+import com.soutosss.data.data_retrofit.CharactersApi
+import com.soutosss.data.data_retrofit.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.network.CharactersApi
-import com.soutosss.marvelpoc.data.network.character.MarvelCharactersResponse
+import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.home.HomeViewModel
-import com.soutosss.marvelpoc.shared.contracts.character.CharacterLocalContract
 import com.soutosss.marvelpoc.shared.livedata.Result
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -22,6 +22,7 @@ import org.koin.core.KoinComponent
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 import com.soutosss.marvelpoc.data.room_source.CharacterLocal
+import org.koin.core.get
 
 fun configure(func: CharactersFragmentConfiguration.() -> Unit) =
     CharactersFragmentConfiguration().apply(func)
@@ -29,8 +30,18 @@ fun configure(func: CharactersFragmentConfiguration.() -> Unit) =
 class CharactersFragmentConfiguration : KoinComponent {
     private val api: CharactersApi = mockk(relaxed = true)
     private val mockDao: CharacterLocalContract<CharacterLocal> = mockk(relaxed = true)
-    private val repository: CharactersRepository = CharactersRepository(api, mockDao)
-    private var homeViewModel: HomeViewModel = HomeViewModel(repository)
+    private val repository: CharactersRepository
+    private var homeViewModel: HomeViewModel
+
+    init {
+        loadKoinModules(
+            module(override = true) {
+                single { api }
+                single { mockDao }
+            })
+        repository = CharactersRepository(get(), get())
+        homeViewModel = HomeViewModel(repository)
+    }
 
     infix fun launch(func: CharactersFragmentRobot.() -> Unit): CharactersFragmentRobot {
         loadKoinModules(
@@ -54,7 +65,12 @@ class CharactersFragmentConfiguration : KoinComponent {
                 single { homeViewModel }
             })
 
-        launchFragmentInContainer<CharactersFragment>( Bundle().apply { putString("QUERY_TEXT_KEY", "searchQuery") })
+        launchFragmentInContainer<CharactersFragment>(Bundle().apply {
+            putString(
+                "QUERY_TEXT_KEY",
+                "searchQuery"
+            )
+        })
         return CharactersFragmentRobot().apply(func)
     }
 

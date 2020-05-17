@@ -48,7 +48,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
                     })
             }
         }
-        charactersPagedLiveData = LivePagedListBuilder(dataSourceFactory, config).build()
+        charactersPagedLiveData = LivePagedListBuilder(dataSourceFactory, config).setBoundaryCallback(emptyHandlerSuccess).build()
         return charactersPagedLiveData
     }
 
@@ -78,6 +78,23 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
 
             override fun onItemAtFrontLoaded(@NonNull itemAtFront: Character) {
                 _favoriteCharacters.postValue(Result.Loaded)
+            }
+        }
+    }
+
+    private val emptyHandlerSuccess by lazy {
+        object : PagedList.BoundaryCallback<Character>() {
+            override fun onZeroItemsLoaded() {
+                _characters.postValue(
+                    Result.Error(
+                        R.string.empty_characters_favorites,
+                        R.drawable.ic_favorites
+                    )
+                )
+            }
+
+            override fun onItemAtFrontLoaded(@NonNull itemAtFront: Character) {
+                _characters.postValue(Result.Loaded)
             }
         }
     }

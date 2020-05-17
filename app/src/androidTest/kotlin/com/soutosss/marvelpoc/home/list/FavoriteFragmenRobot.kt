@@ -6,10 +6,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.network.CharactersApi
-import com.soutosss.marvelpoc.data.room_source.CharacterLocal
-import com.soutosss.marvelpoc.home.HomeViewModel
-import com.soutosss.marvelpoc.shared.contracts.character.CharacterLocalContract
+import com.soutosss.marvelpoc.data.character.CharacterLocalContract
+import com.soutosss.marvelpoc.data.model.view.Character
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.Matchers.not
@@ -21,18 +19,13 @@ fun configureFavorite(func: FavoriteFragmentConfiguration.() -> Unit) =
     FavoriteFragmentConfiguration().apply(func)
 
 class FavoriteFragmentConfiguration : KoinComponent {
-    private val api: CharactersApi = mockk(relaxed = true)
-    private val localSource: CharacterLocalContract<CharacterLocal> = mockk(relaxed = true)
-    private val repository: CharactersRepository = CharactersRepository(api, localSource)
-    private var homeViewModel: HomeViewModel = HomeViewModel(repository)
-
+    private val localSource: CharacterLocalContract<Character> = mockk(relaxed = true)
+    private val repository: CharactersRepository = CharactersRepository(mockk(), mockk())
     infix fun launch(func: FavoriteFragmentRobot.() -> Unit): FavoriteFragmentRobot {
         loadKoinModules(
             module(override = true) {
                 single { localSource }
-                single { api }
                 single { repository }
-                single { homeViewModel }
             })
 
         launchFragmentInContainer<FavoriteFragment>()
@@ -41,9 +34,9 @@ class FavoriteFragmentConfiguration : KoinComponent {
 
 
     fun withNotEmptyList() {
-        every { localSource.favoriteList() } returns FakeHomeDataSource(
+        every { repository.fetchFavoriteCharacters() } returns FakeHomeDataSource(
             listOf(
-                CharacterLocal(
+                Character(
                     30,
                     "3-D Test HAHAH",
                     "http://www.google.com",
@@ -55,7 +48,7 @@ class FavoriteFragmentConfiguration : KoinComponent {
     }
 
     fun withNoFavorites() {
-        every { localSource.favoriteList() } returns FakeHomeDataSource(emptyList())
+        every { repository.fetchFavoriteCharacters() } returns FakeHomeDataSource(emptyList())
     }
 
 }
