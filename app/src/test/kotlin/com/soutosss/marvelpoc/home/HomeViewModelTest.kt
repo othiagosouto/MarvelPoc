@@ -3,22 +3,16 @@ package com.soutosss.marvelpoc.home
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.paging.PositionalDataSource
 import com.google.common.truth.Truth.assertThat
-import com.google.gson.Gson
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.EmptyDataException
-import com.soutosss.marvelpoc.data.network.character.MarvelCharactersResponse
-import com.soutosss.marvelpoc.data.network.character.toCharacterList
+import com.soutosss.marvelpoc.data.character.CharacterLocalContract
+import com.soutosss.marvelpoc.data.character.CharacterRemoteContract
 import com.soutosss.marvelpoc.data.model.view.Character
-import com.soutosss.marvelpoc.data.network.CharactersApi
-import com.soutosss.marvelpoc.data.room_source.CharacterLocal
-import com.soutosss.marvelpoc.data.toCharacterLocal
-import com.soutosss.marvelpoc.shared.contracts.character.CharacterLocalContract
+import com.soutosss.marvelpoc.shared.EmptyDataException
 import com.soutosss.marvelpoc.shared.livedata.Result
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.mockk
+import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
@@ -36,27 +30,44 @@ class HomeViewModelTest {
     private lateinit var viewModel: HomeViewModel
     private lateinit var exceptionHandler: (Exception) -> Unit
     private lateinit var successHandler: () -> Unit
-    private lateinit var api: CharactersApi
-    private lateinit var localDataSource: CharacterLocalContract<CharacterLocal>
+    private lateinit var remotePageSource: PositionalDataSource<Character>
     private lateinit var charactersList: List<Character>
+    private val character = Character(1011334, "name", "thumbnail", "description", false)
+    private val characterFavorite = Character(1011334, "name", "thumbnail", "description", true)
+
+    private lateinit var characterRemoteContract: CharacterRemoteContract<Character>
+    private lateinit var characterLocalContract: CharacterLocalContract<Character>
 
     @Before
     fun setup() {
         exceptionHandler = mockk(relaxed = true)
         successHandler = mockk(relaxed = true)
-        charactersList = parseToJson().toCharacterList()
-        api = mockk()
-        localDataSource = mockk()
-        repository = CharactersRepository(api, localDataSource)
-        viewModel = HomeViewModel(repository)
+
+        charactersList = listOf(character)
+        remotePageSource = FakeDataSource(charactersList)
+
+
+        characterRemoteContract = mockk()
+        characterLocalContract = mockk()//FakeCharacterDataSource(charactersList, null)
+
+
+        repository = spyk(CharactersRepository(characterLocalContract, characterRemoteContract))
+        viewModel = spyk(HomeViewModel(repository))
     }
 
     @Test
     fun `charactersPageListContent should post the characters from datasource`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
 
-            coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
-            coEvery { localDataSource.favoriteIds() } returns emptyList()
+            val successSlot = slot<() -> Unit>()
+            every {
+                repository.charactersDataSource(
+                    null,
+                    any(),
+                    any(),
+                    capture(successSlot)
+                )
+            } returns remotePageSource
 
             val item = viewModel.charactersPageListContent()
 
@@ -64,20 +75,26 @@ class HomeViewModelTest {
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 list = it.snapshot()
             })
-            assertThat(list).isEqualTo(parseToJson().toCharacterList())
+            successSlot.captured.invoke()
+            assertThat(list).isEqualTo(charactersList)
             assertThat(viewModel.characters.value!!).isEqualTo(Result.Loaded)
         }
 
     @Test
     fun `charactersPageListContent should post an expected message for Exception`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val exception = Exception()
+            remotePageSource = FakeDataSource(emptyList(),Exception())
+            val errorSlot = slot<(java.lang.Exception) -> Unit>()
 
-            coEvery { api.listCharacters(null, any(), any()) } throws exception
-
+            every{repository.charactersDataSource(null, any(),capture(errorSlot), any())} returns remotePageSource
+            var list: List<Character>? = null
             viewModel.charactersPageListContent()
                 .observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                    list = it.snapshot()
                 })
+
+            errorSlot.captured.invoke(Exception())
+            assertThat(list).isEqualTo(emptyList<Character>())
 
             assertThat(viewModel.characters.value!!).isEqualTo(
                 Result.Error(
@@ -90,15 +107,9 @@ class HomeViewModelTest {
     @Test
     fun `charactersPageListContent should post error when there is no characters available`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val data = parseToJson().data
-            coEvery {
-                api.listCharacters(
-                    null,
-                    any(),
-                    any()
-                )
-            } returns parseToJson().copy(data = data.copy(results = emptyList()))
-            coEvery { localDataSource.favoriteIds() } returns emptyList()
+            remotePageSource = FakeDataSource(emptyList(),EmptyDataException())
+            val errorSlot = slot<(java.lang.Exception) -> Unit>()
+            every{repository.charactersDataSource(null, any(),capture(errorSlot), any())} returns remotePageSource
 
             val item = viewModel.charactersPageListContent()
 
@@ -106,7 +117,7 @@ class HomeViewModelTest {
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 list = it.snapshot()
             })
-
+            errorSlot.captured.invoke(EmptyDataException())
             assertThat(list).isEqualTo(emptyList<Character>())
 
             assertThat(viewModel.characters.value!!).isEqualTo(
@@ -120,15 +131,9 @@ class HomeViewModelTest {
     @Test
     fun `charactersPageListContent should post error search error when didn't found any characters from search`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val data = parseToJson().data
-            coEvery {
-                api.listCharacters(
-                    "content",
-                    any(),
-                    any()
-                )
-            } returns parseToJson().copy(data = data.copy(results = emptyList()))
-            coEvery { localDataSource.favoriteIds() } returns emptyList()
+            remotePageSource = FakeDataSource(emptyList(),EmptyDataException())
+            val errorSlot = slot<(java.lang.Exception) -> Unit>()
+            every{repository.charactersDataSource("content", any(),capture(errorSlot), any())} returns remotePageSource
 
             viewModel.initSearchQuery("content")
             val item = viewModel.charactersPageListContent()
@@ -138,8 +143,8 @@ class HomeViewModelTest {
                 list = it.snapshot()
             })
 
+            errorSlot.captured.invoke(EmptyDataException())
             assertThat(list).isEqualTo(emptyList<Character>())
-
             assertThat(viewModel.characters.value!!).isEqualTo(
                 Result.Error(
                     R.string.empty_characters_searched,
@@ -148,11 +153,12 @@ class HomeViewModelTest {
             )
         }
 
-
     @Test
     fun `charactersPageListContent should post search fail error when search wasn't finished as expected`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            coEvery { api.listCharacters("content", any(), any()) } throws Exception()
+            remotePageSource = FakeDataSource(emptyList(),Exception())
+            val errorSlot = slot<(Exception) -> Unit>()
+            every{repository.charactersDataSource("content", any(),capture(errorSlot), any())} returns remotePageSource
 
             viewModel.initSearchQuery("content")
             val item = viewModel.charactersPageListContent()
@@ -162,6 +168,7 @@ class HomeViewModelTest {
                 list = it.snapshot()
             })
 
+            errorSlot.captured.invoke(Exception())
             assertThat(list).isEqualTo(emptyList<Character>())
 
             assertThat(viewModel.characters.value!!).isEqualTo(
@@ -172,68 +179,25 @@ class HomeViewModelTest {
             )
         }
 
-
-    @Test
-    fun `charactersPageListContent should post an item item with favorite when id its stored in the favorites table`() =
-        coroutineTestRule.testDispatcher.runBlockingTest {
-
-            coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
-            coEvery { localDataSource.favoriteIds() } returns listOf(1011334)
-
-            val item = viewModel.charactersPageListContent()
-
-            var list: List<Character>? = null
-            item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
-                list = it.snapshot()
-            })
-            val expectedResult = parseToJson().toCharacterList()
-            expectedResult.first().favorite = true
-            assertThat(list).isEqualTo(expectedResult)
-            assertThat(viewModel.characters.value!!).isEqualTo(Result.Loaded)
-        }
-
-    @Test
-    fun `charactersPageListContent should post an expected error message for EmptyDataException`() =
-        coroutineTestRule.testDispatcher.runBlockingTest {
-            val exception = EmptyDataException()
-
-            coEvery { api.listCharacters(null, any(), any()) } throws exception
-
-            viewModel.charactersPageListContent()
-                .observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
-                })
-
-            assertThat(viewModel.characters.value!!).isEqualTo(
-                Result.Error(
-                    R.string.empty_characters_home,
-                    R.drawable.ic_deadpool
-                )
-            )
-        }
-
     @Test
     fun `charactersFavorite should post all favorite characters available`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val response = parseToJson()
-            val favoriteCharacters = response.toCharacterLocal()
-            val expectedList = response.toCharacterList()
-            favoriteCharacters.first().favorite = true
-            expectedList.first().favorite = true
+            val favoriteCharacters  = listOf(characterFavorite)
 
-            coEvery { localDataSource.favoriteList() } returns FakeHomeDataSource(favoriteCharacters)
+            coEvery { characterLocalContract.favoriteList() } returns FakeCharacterDataSource(favoriteCharacters, null)
 
             val item = viewModel.charactersFavorite()
             var list: List<Character>? = null
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 list = it.snapshot()
             })
-            assertThat(list).isEqualTo(expectedList)
+            assertThat(list).isEqualTo(favoriteCharacters)
         }
 
     @Test
     fun `charactersFavorite should post error with expected content when there's no favorite characters available`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            coEvery { localDataSource.favoriteList() } returns FakeHomeDataSource(emptyList())
+            coEvery { characterLocalContract.favoriteList() } returns FakeCharacterDataSource(emptyList(), null)
 
             val item = viewModel.charactersFavorite()
             var list: List<Character>? = null
@@ -252,64 +216,51 @@ class HomeViewModelTest {
     @Test
     fun `favoriteClick should favorite item when favorite flag is true`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val item = Character(30, "", "", "", true)
 
-            coEvery { repository.favoriteCharacter(item) } returns Unit
+            coEvery { repository.favoriteCharacter(characterFavorite) } returns Unit
 
-            viewModel.favoriteClick(item)
+            viewModel.favoriteClick(characterFavorite)
 
-            coVerify { repository.favoriteCharacter(item) }
+            coVerify { repository.favoriteCharacter(characterFavorite) }
 
         }
 
     @Test
     fun `favoriteClick should post the position of the item that was unfavorited`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            val item = parseToJson().toCharacterLocal().first()
 
+            every{repository.charactersDataSource(null, any(),any(), any())} returns FakeDataSource(listOf(character.copy(id = 33), character))
 
-            coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
-            coEvery { localDataSource.favoriteIds() } returns listOf(1011334)
-            coEvery { localDataSource.favorite(item) } returns item.id
-            coEvery { localDataSource.unFavorite(item) } returns item.id
+            coEvery { characterLocalContract.favoriteIds() } returns listOf(1011334)
+            coEvery { characterLocalContract.unFavorite(character) } returns character.id
 
             viewModel.charactersPageListContent()
                 .observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
                 })
 
-            viewModel.favoriteClick(parseToJson().toCharacterList().first())
+            viewModel.favoriteClick(character)
 
-            assertThat(viewModel.changeAdapter.value).isEqualTo(0)
+            assertThat(viewModel.changeAdapter.value).isEqualTo(1)
         }
 
     @Test
     fun `initSearchQuery should init searchContent and do search for characters starting expected name`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
 
-            coEvery { api.listCharacters("Ops", any(), any()) } returns parseToJson()
-            coEvery { localDataSource.favoriteIds() } returns emptyList()
+            coEvery { characterLocalContract.favoriteIds() } returns emptyList()
+
+            every{repository.charactersDataSource("Ops", any(),any(), any())} returns remotePageSource
 
             val item = viewModel.charactersPageListContent()
 
             viewModel.initSearchQuery("Ops")
+            var characters: List<Character>? = null
+
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                characters = it.snapshot()
             })
 
-            coVerify { api.listCharacters("Ops", any(), any()) }
+            assertThat(characters).isEqualTo(charactersList)
         }
 
 }
-
-private fun parseToJson(): MarvelCharactersResponse {
-    return Gson().fromJson(
-        "/characters/characters_response_ok.json".toJson(),
-        MarvelCharactersResponse::class.java
-    )
-}
-
-private fun String.toJson(): String {
-    return this::class.java.javaClass.getResource(this)!!.readText()
-}
-
-private fun MarvelCharactersResponse.toCharacterLocal(): List<CharacterLocal> =
-    this.data.results.map { Character(it).toCharacterLocal() }
