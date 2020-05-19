@@ -4,6 +4,11 @@ Marvel characters it's an app built to present info related to marvel charaters 
 # Goals
 - Study Kotlin and apply some architecture concepts in this project.
 
+# Architecture
+This project is built using a MVVM architecture with multi module structure. The diagram below represents the structure of the modules.
+![image](https://user-images.githubusercontent.com/5900020/82272449-098f2c00-9951-11ea-9bcf-13ea55b1d6f3.png)
+
+
 # Stack
   - MVVM Architecture without databinding
   - Coroutines
