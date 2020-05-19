@@ -26,9 +26,11 @@ This project is built using a MVVM architecture with multi module structure. The
   - Robot Pattern
 
 # How To Run?
-Import the project to AndroidStudio
-copy api.properties.clone as api.properties and put your Marvel Credentials thre.
-[How can I get a Marvel key?](https://developer.marvel.com)
+You need to follow the steps describeds steps in order to the application does't crash during runtime.
+* Import the project to AndroidStudio
+* copy api.properties.clone as api.properties
+* Put your Marvel Credentials on the file api.properties.
+  * [How can I get a Marvel key?](https://developer.marvel.com)
 
 # Contact:
 soutosss@gmail.com
