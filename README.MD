@@ -25,6 +25,7 @@ This project is built using a MVVM architecture with multi module structure. The
   - Junit
   - Espresso
   - Robot Pattern
+  - Orchestrator
 
 # How To Run?
 You need to follow the steps described steps in order to the application doesn't crash during runtime.
