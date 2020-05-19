@@ -69,7 +69,7 @@ class CharacterDetailsFragmentResult : KoinComponent {
     }
 
     fun checkEmptyCharacterDescription() {
-        onView(withId(R.id.description)).check(matches(withText("This character don't have any description available :(")))
+        onView(withId(R.id.description)).check(matches(withText("This character doesn't have any description available :(")))
     }
 
     fun favoriteChecked() {
