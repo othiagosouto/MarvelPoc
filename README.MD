@@ -27,7 +27,7 @@ This project is built using a MVVM architecture with multi module structure. The
   - Robot Pattern
 
 # How To Run?
-You need to follow the steps describeds steps in order to the application does't crash during runtime.
+You need to follow the steps described steps in order to the application doesn't crash during runtime.
 * Import the project to AndroidStudio
 * Copy api.properties.clone as api.properties
 * Put your Marvel Credentials on the file api.properties.
