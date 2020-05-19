@@ -33,6 +33,7 @@ You need to follow the steps described steps in order to the application doesn't
 * Copy api.properties.clone as api.properties
 * Put your Marvel Credentials on the file api.properties.
   * [How can I get a Marvel key?](https://developer.marvel.com)
+* Build the application
 
 # How To run tests?
 * Instrumented: `./gradlew connectedAndroidTest`
