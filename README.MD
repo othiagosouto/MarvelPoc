@@ -33,5 +33,9 @@ You need to follow the steps described steps in order to the application doesn't
 * Put your Marvel Credentials on the file api.properties.
   * [How can I get a Marvel key?](https://developer.marvel.com)
 
+# How To run tests?
+* Instrumented: `./gradlew connectedAndroidTest`
+* Unit: `./gradlew test`
+
 # Contact:
 soutosss@gmail.com
