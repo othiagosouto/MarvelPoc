@@ -28,9 +28,9 @@ This project is built using a MVVM architecture with multi module structure. The
 
 # How To Run?
 You need to follow the steps describeds steps in order to the application does't crash during runtime.
-* Item Import the project to AndroidStudio
-* Item Copy api.properties.clone as api.properties
-* Item Put your Marvel Credentials on the file api.properties.
+* Import the project to AndroidStudio
+* Copy api.properties.clone as api.properties
+* Put your Marvel Credentials on the file api.properties.
   * [How can I get a Marvel key?](https://developer.marvel.com)
 
 # Contact:
