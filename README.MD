@@ -18,7 +18,7 @@ This project is built using a MVVM architecture with multi module structure. The
   - Koin
   - Retrofit
   - Paging
-  - Bitrise CI
+  - Github actions
   
  # Testing
   - AndroidX Test
