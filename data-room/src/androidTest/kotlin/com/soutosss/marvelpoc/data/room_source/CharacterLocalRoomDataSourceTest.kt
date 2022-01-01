@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PositionalDataSource
 import androidx.room.Room
-import androidx.room.paging.LimitOffsetDataSource
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.soutosss.marvelpoc.data.model.view.Character
@@ -97,7 +96,7 @@ class CharacterLocalRoomDataSourceTest {
             val params = PositionalDataSource.LoadRangeParams(0, 10)
             var characters: List<Character>? = null
             val teste = object : PositionalDataSource.LoadRangeCallback<Character>() {
-                override fun onResult(data: MutableList<Character>) {
+                override fun onResult(data: List<Character>) {
                     characters = data
                 }
 

@@ -178,12 +178,8 @@ class CharactersDataSourceTest {
 
     private fun parseToJson(): MarvelCharactersResponse {
         return Gson().fromJson(
-            "/characters/characters_response_ok.json".toJson(),
+            ClassLoader.getSystemResource( "characters/characters_response_ok.json").readText(),
             MarvelCharactersResponse::class.java
         )
-    }
-
-    private fun String.toJson(): String {
-        return this::class.java.javaClass.getResource(this)!!.readText()
     }
 }

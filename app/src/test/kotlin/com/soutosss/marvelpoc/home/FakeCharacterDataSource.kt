@@ -12,7 +12,7 @@ class FakeCharacterDataSource(
     override fun create(): DataSource<Int, Character> = FakeDataSource(items, exception)
 }
 
-class FakeDataSource<T>(var items: List<T>, private val exception: Exception? = null) :
+class FakeDataSource<T : Any>(var items: List<T>, private val exception: Exception? = null) :
     PositionalDataSource<T>() {
     override fun loadRange(
         params: LoadRangeParams,

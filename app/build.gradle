@@ -1,18 +1,20 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+import dev.thiagosouto.Libs
 
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+}
 
 android {
-    def globalConfiguration = rootProject.extensions.getByName("ext")
-
-    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
-    buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
+    compileSdkVersion Libs.Config.Android.androidCompileSdkVersion
+    buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
 
     defaultConfig {
         applicationId "com.soutosss.marvelpoc"
-        minSdkVersion globalConfiguration["androidMinSdkVersion"]
-        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+        minSdkVersion Libs.Config.Android.minSdkVersion
+        targetSdkVersion Libs.Config.Android.targetSdkVersion
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -54,8 +56,6 @@ def allTestsConfigs(dependency) {
 }
 
 dependencies {
-    def Dependencies = rootProject.ext.Dependencies
-    def TestingDependencies = rootProject.ext.TestingDependencies
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':data-room')
@@ -63,40 +63,40 @@ dependencies {
     implementation project(path: ':data')
     implementation project(path: ':shared')
 
-    implementation Dependencies.kotlin
-    implementation Dependencies.coroutines
-    implementation Dependencies.androidxAppCompat
-    implementation Dependencies.archx.lifecycleExtensions
-    implementation Dependencies.design.androidxConstraintLayout
-    implementation Dependencies.design.material
+    implementation Libs.Kotlin.stdlib
+    implementation Libs.Coroutines.android
+    implementation Libs.AndroidX.androidxAppCompat
+    implementation Libs.AndroidX.lifecycleExtensions
+    implementation Libs.AndroidX.androidxConstraintLayout
+    implementation Libs.AndroidX.material
 
-    implementation Dependencies.glide
-    annotationProcessor Dependencies.compiler.glide
+    implementation Libs.Network.glide
+    annotationProcessor Libs.Network.glideCompiler
 
-    implementation Dependencies.koin
+    implementation Libs.DI.koin
 
-    implementation Dependencies.ktx.core
-    implementation Dependencies.ktx.paging
-    implementation Dependencies.ktx.viewModel
-    implementation Dependencies.ktx.liveData
+    implementation Libs.AndroidX.coreKtx
+    implementation Libs.AndroidX.paging
+    implementation Libs.AndroidX.viewModel
+    implementation Libs.AndroidX.liveData
 
-    testImplementation TestingDependencies.mockk
+    testImplementation Libs.Test.mockk
+    testImplementation Libs.AndroidX.Test.archRules
 
-    allTestsConfigs TestingDependencies.gson
-    allTestsConfigs TestingDependencies.androidxEspresso
-    allTestsConfigs TestingDependencies.junit
-    allTestsConfigs TestingDependencies.coroutines
-    allTestsConfigs TestingDependencies.truth
-    allTestsConfigs TestingDependencies.androidxTestRules
-    allTestsConfigs TestingDependencies.androidxTestCore
-
-    androidTestImplementation TestingDependencies.androidxTestRunner
-    androidTestImplementation TestingDependencies.androidxTestJunit
-    androidTestImplementation TestingDependencies.mockkAndroid
-
-    debugImplementation TestingDependencies.fragment
-
-    androidTestUtil TestingDependencies.orchestrator
+    allTestsConfigs Libs.Network.gson
+    allTestsConfigs Libs.AndroidX.Test.espressoCore
+    allTestsConfigs Libs.Test.junit
+    allTestsConfigs Libs.Coroutines.test
+    allTestsConfigs Libs.Test.truth
+    allTestsConfigs Libs.AndroidX.Test.rules
+    allTestsConfigs Libs.AndroidX.Test.core
 
 
+    androidTestImplementation Libs.AndroidX.Test.runner
+    androidTestImplementation Libs.AndroidX.Test.Ext.junit
+    androidTestImplementation Libs.Test.mockkAndroid
+
+    androidTestImplementation "androidx.fragment:fragment-testing:1.4.0"
+
+    androidTestUtil "androidx.test:orchestrator:1.4.1"
 }

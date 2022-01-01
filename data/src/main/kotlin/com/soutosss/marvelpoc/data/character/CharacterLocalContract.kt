@@ -2,7 +2,7 @@ package com.soutosss.marvelpoc.data.character
 
 import androidx.paging.DataSource
 
-interface CharacterLocalContract<T> {
+interface CharacterLocalContract<T: Any> {
 
     fun favoriteList(): DataSource.Factory<Int, T>
 

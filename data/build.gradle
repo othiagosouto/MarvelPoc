@@ -1,27 +1,21 @@
+import dev.thiagosouto.Libs
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
-
-    def globalConfiguration = rootProject.extensions.getByName("ext")
-
-    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
-    buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
+    compileSdkVersion Libs.Config.Android.androidCompileSdkVersion
+    buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion globalConfiguration["androidMinSdkVersion"]
-        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
-        versionCode 1
-        versionName "1.0"
-        multiDexEnabled true
+        minSdkVersion Libs.Config.Android.minSdkVersion
+        targetSdkVersion Libs.Config.Android.targetSdkVersion
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
         release {
-            useProguard false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -39,7 +33,6 @@ android {
         test.java.srcDirs += 'src/test/kotlin/'
         androidTest.java.srcDirs += 'src/androidTest/kotlin/'
     }
-
 }
 
 def allTestsConfigs(dependency) {
@@ -48,24 +41,20 @@ def allTestsConfigs(dependency) {
 }
 
 dependencies {
-
-    def Dependencies = rootProject.ext.Dependencies
-    def TestingDependencies = rootProject.ext.TestingDependencies
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':shared')
 
-    implementation Dependencies.kotlin
-    implementation Dependencies.coroutines
-    implementation Dependencies.koin
+    implementation Libs.Kotlin.stdlib
+    implementation Libs.Coroutines.android
 
-    implementation Dependencies.ktx.paging
+    implementation Libs.DI.koin
 
-    implementation Dependencies.gsonConverter
+    implementation Libs.AndroidX.paging
 
-    allTestsConfigs TestingDependencies.junit
-    testImplementation TestingDependencies.mockk
-    allTestsConfigs TestingDependencies.coroutines
-    allTestsConfigs TestingDependencies.truth
+    implementation Libs.Network.gsonConverter
 
+    allTestsConfigs Libs.Test.junit
+    testImplementation Libs.Test.mockk
+    allTestsConfigs Libs.Coroutines.test
+    allTestsConfigs Libs.Test.truth
 }

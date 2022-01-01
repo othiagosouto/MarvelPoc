@@ -1,19 +1,19 @@
+import dev.thiagosouto.Libs
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
 
-    def globalConfiguration = rootProject.extensions.getByName("ext")
-
-    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
-    buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
+    compileSdkVersion Libs.Config.Android.androidCompileSdkVersion
+    buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion globalConfiguration["androidMinSdkVersion"]
-        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion Libs.Config.Android.minSdkVersion
+        targetSdkVersion Libs.Config.Android.targetSdkVersion
+        versionCode Libs.Config.Android.versionCode
+        versionName Libs.Config.Android.versionName
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -40,14 +40,12 @@ android {
 }
 
 dependencies {
-    def Dependencies = rootProject.ext.Dependencies
-    def TestingDependencies = rootProject.ext.TestingDependencies
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation Dependencies.kotlin
-    implementation Dependencies.koin
-    implementation Dependencies.ktx.paging
 
+    implementation Libs.Kotlin.stdlib
+    implementation Libs.DI.koin
+    implementation Libs.AndroidX.paging
 
-    testImplementation TestingDependencies.junit
-    testImplementation TestingDependencies.truth
+    testImplementation Libs.Coroutines.test
+    testImplementation Libs.Test.truth
 }

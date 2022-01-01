@@ -21,7 +21,7 @@ class CharacterLocalRoomDataSource(private val characterDAO: CharacterLocalDAO) 
         return item.id
     }
 
-    private fun characterAdapter(list: MutableList<CharacterLocal>): MutableList<Character> =
+    private fun characterAdapter(list: List<CharacterLocal>): MutableList<Character> =
         mutableListOf<Character>().apply {
             addAll(list.map { it.toCharacter() })
         }

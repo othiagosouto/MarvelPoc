@@ -1,18 +1,19 @@
+import dev.thiagosouto.Libs
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
 
-    def globalConfiguration = rootProject.extensions.getByName("ext")
-    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
-    buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
+    compileSdkVersion Libs.Config.Android.androidCompileSdkVersion
+    buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion globalConfiguration["androidMinSdkVersion"]
-        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion Libs.Config.Android.minSdkVersion
+        targetSdkVersion Libs.Config.Android.targetSdkVersion
+        versionCode Libs.Config.Android.versionCode
+        versionName Libs.Config.Android.versionName
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -41,7 +42,6 @@ android {
         test.java.srcDirs += 'src/test/kotlin/'
         androidTest.java.srcDirs += 'src/androidTest/kotlin/'
     }
-
 }
 
 dependencies {
@@ -49,19 +49,17 @@ dependencies {
     implementation project(path: ':shared')
     implementation project(path: ':data')
 
-    def Dependencies = rootProject.ext.Dependencies
-    def TestingDependencies = rootProject.ext.TestingDependencies
-    implementation Dependencies.coroutines
-    implementation Dependencies.koin
-    implementation Dependencies.ktx.paging
-    implementation Dependencies.retrofit
-    implementation Dependencies.gsonConverter
+    implementation Libs.Coroutines.android
+    implementation Libs.DI.koin
+    implementation Libs.AndroidX.paging
+    implementation Libs.Network.retrofit
+    implementation Libs.Network.gsonConverter
 
-    testImplementation TestingDependencies.coroutines
-    testImplementation TestingDependencies.truth
+    testImplementation Libs.Coroutines.test
+    testImplementation Libs.Test.truth
 
-    testImplementation TestingDependencies.mockk
-    testImplementation TestingDependencies.androidxTestCore
-    testImplementation TestingDependencies.androidxTestRunner
-    testImplementation TestingDependencies.androidxTestJunit
+    testImplementation Libs.Test.mockk
+    testImplementation Libs.AndroidX.Test.core
+    testImplementation Libs.AndroidX.Test.runner
+    testImplementation Libs.AndroidX.Test.Ext.junit
 }
