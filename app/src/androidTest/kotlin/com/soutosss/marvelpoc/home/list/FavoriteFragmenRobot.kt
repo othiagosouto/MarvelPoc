@@ -11,7 +11,7 @@ import com.soutosss.marvelpoc.data.model.view.Character
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.Matchers.not
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 

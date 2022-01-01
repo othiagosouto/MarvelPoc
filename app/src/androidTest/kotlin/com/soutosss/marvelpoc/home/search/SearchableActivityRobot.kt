@@ -9,9 +9,9 @@ import com.soutosss.marvelpoc.home.HomeViewModel
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.core.context.loadKoinModules
-import org.koin.core.inject
 import org.koin.dsl.module
 
 fun configure(func: SearchableActivityConfiguration.() -> Unit) =

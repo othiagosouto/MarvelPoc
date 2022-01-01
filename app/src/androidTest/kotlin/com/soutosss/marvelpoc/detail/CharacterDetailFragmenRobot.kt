@@ -11,9 +11,9 @@ import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.Character
 import io.mockk.mockk
 import io.mockk.verify
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.core.context.loadKoinModules
-import org.koin.core.inject
 import org.koin.dsl.module
 
 fun configureDetail(func: CharacterDetailsFragmentConfiguration.() -> Unit) =

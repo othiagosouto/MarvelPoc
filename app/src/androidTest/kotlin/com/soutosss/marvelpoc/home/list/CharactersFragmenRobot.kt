@@ -18,11 +18,11 @@ import com.soutosss.marvelpoc.shared.livedata.Result
 import io.mockk.coEvery
 import io.mockk.mockk
 import org.hamcrest.Matchers.not
-import org.koin.core.KoinComponent
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 import com.soutosss.marvelpoc.data.room_source.CharacterLocal
-import org.koin.core.get
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 fun configure(func: CharactersFragmentConfiguration.() -> Unit) =
     CharactersFragmentConfiguration().apply(func)

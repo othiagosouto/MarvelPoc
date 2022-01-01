@@ -96,7 +96,7 @@ dependencies {
     androidTestImplementation Libs.AndroidX.Test.Ext.junit
     androidTestImplementation Libs.Test.mockkAndroid
 
-    androidTestImplementation "androidx.fragment:fragment-testing:1.4.0"
+    debugImplementation "androidx.fragment:fragment-testing:1.4.0"
 
     androidTestUtil "androidx.test:orchestrator:1.4.1"
 }

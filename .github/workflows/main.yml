@@ -26,9 +26,7 @@ jobs:
   instrumented_testing:
     name: instrumented testing
     runs-on: macos-latest
-    timeout-minutes: 15
-    strategy:
-      fail-fast: true
+    timeout-minutes: 25
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -42,7 +40,7 @@ jobs:
       - name: instrumented testing
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 27
-          arch: x86
+          api-level: 29
+          arch: x86_64
           script:
-            ./gradlew clean connectedCheck
+            ./gradlew connectedCheck
