@@ -51,6 +51,7 @@ class CharactersFragmentTest {
             withSearchContent()
         } launchSearch  {
         } check {
+            Thread.sleep(30_000)
             checkCharacterName()
             loadingIsNotVisible()
             errorMessageNotAvailable()
