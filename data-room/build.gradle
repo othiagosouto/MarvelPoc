@@ -38,6 +38,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin/'
         test.java.srcDirs += 'src/test/kotlin/'
@@ -61,6 +65,12 @@ dependencies {
     testImplementation Libs.Test.truth
 
     androidTestImplementation Libs.AndroidX.Test.archRules
+    androidTestImplementation Libs.Test.truth
+    androidTestImplementation Libs.Coroutines.test
+
+    androidTestImplementation Libs.AndroidX.Test.core
+    androidTestImplementation Libs.AndroidX.Test.runner
+    androidTestImplementation Libs.AndroidX.Test.Ext.junit
 
     testImplementation Libs.AndroidX.Test.core
     testImplementation Libs.AndroidX.Test.runner
