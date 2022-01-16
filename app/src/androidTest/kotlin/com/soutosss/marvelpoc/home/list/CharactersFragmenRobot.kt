@@ -13,16 +13,16 @@ import com.soutosss.data.data_retrofit.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
+import com.soutosss.marvelpoc.data.room_source.CharacterLocal
 import com.soutosss.marvelpoc.home.HomeViewModel
 import com.soutosss.marvelpoc.shared.livedata.Result
 import io.mockk.coEvery
 import io.mockk.mockk
 import org.hamcrest.Matchers.not
-import org.koin.core.context.loadKoinModules
-import org.koin.dsl.module
-import com.soutosss.marvelpoc.data.room_source.CharacterLocal
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import org.koin.core.context.loadKoinModules
+import org.koin.dsl.module
 
 fun configure(func: CharactersFragmentConfiguration.() -> Unit) =
     CharactersFragmentConfiguration().apply(func)
@@ -75,10 +75,7 @@ class CharactersFragmentConfiguration : KoinComponent {
     }
 
     fun withErrorHome() {
-        postLiveData(
-            homeViewModel.characters,
-            Result.Error(R.string.home_error_loading, R.drawable.thanos)
-        )
+        coEvery { api.listCharacters(null, any(), any()) } throws Exception()
     }
 
     fun withHomeCharacters() {
