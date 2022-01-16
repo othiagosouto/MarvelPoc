@@ -44,3 +44,10 @@ jobs:
           arch: x86_64
           script:
             ./gradlew connectedCheck
+
+      - name: Upload emulator tests artifacts
+        if: always()
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: emulator_tests_30
+          path: app/build/reports/androidTests
