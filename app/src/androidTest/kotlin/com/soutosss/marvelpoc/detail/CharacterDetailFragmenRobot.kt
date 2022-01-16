@@ -6,13 +6,9 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import com.google.common.truth.Truth.assertThat
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.Character
-import io.mockk.mockk
-import io.mockk.verify
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
@@ -21,7 +17,6 @@ fun configureDetail(func: CharacterDetailsFragmentConfiguration.() -> Unit) =
 
 class CharacterDetailsFragmentConfiguration : KoinComponent {
     private lateinit var character: Character
-    private val viewModel: CharacterDetailsViewModel = mockk(relaxed = true)
 
     fun withEmptyDescriptionAndFavorite() {
         character = Character(30, "name", "thumbNail", "", true)
@@ -36,7 +31,6 @@ class CharacterDetailsFragmentConfiguration : KoinComponent {
         loadKoinModules(
             module(override = true) {
                 single { character }
-                single { viewModel }
             })
 
 
@@ -56,9 +50,7 @@ class CharacterDetailsFragmentRobot {
     }
 }
 
-class CharacterDetailsFragmentResult : KoinComponent {
-    private val character: Character by inject()
-    private val viewModel: CharacterDetailsViewModel by inject()
+class CharacterDetailsFragmentResult {
 
     fun checkCharacterName() {
         onView(withId(R.id.text)).check(matches(withText("name")))
@@ -81,8 +73,7 @@ class CharacterDetailsFragmentResult : KoinComponent {
     }
 
     fun checkFavoriteMethodFiredToFavorite() {
-        assertThat(character.favorite).isTrue()
-        verify { viewModel.favoriteClick(character) }
+        onView(withId(R.id.favorite)).check(matches(isChecked()))
     }
 
     fun unFavorite() {
