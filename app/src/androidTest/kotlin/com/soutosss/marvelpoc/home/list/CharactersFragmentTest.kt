@@ -51,8 +51,8 @@ class CharactersFragmentTest {
             withSearchContent()
         } launchSearch  {
         } check {
-            checkCharacterName()
             loadingIsNotVisible()
+            checkCharacterName()
             errorMessageNotAvailable()
         }
     }
