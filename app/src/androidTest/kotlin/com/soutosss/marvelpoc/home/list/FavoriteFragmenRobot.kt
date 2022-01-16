@@ -8,6 +8,7 @@ import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.model.view.Character
+import com.soutosss.marvelpoc.home.HomeViewModel
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.Matchers.not
@@ -21,11 +22,14 @@ fun configureFavorite(func: FavoriteFragmentConfiguration.() -> Unit) =
 class FavoriteFragmentConfiguration : KoinComponent {
     private val localSource: CharacterLocalContract<Character> = mockk(relaxed = true)
     private val repository: CharactersRepository = CharactersRepository(mockk(), mockk())
+    private val viewModel: HomeViewModel = HomeViewModel(repository)
+
     infix fun launch(func: FavoriteFragmentRobot.() -> Unit): FavoriteFragmentRobot {
         loadKoinModules(
             module(override = true) {
                 single { localSource }
                 single { repository }
+                single { viewModel }
             })
 
         launchFragmentInContainer<FavoriteFragment>()
