@@ -2,8 +2,6 @@ package com.soutosss.marvelpoc.home.list
 
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -15,7 +13,7 @@ import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.room_source.CharacterLocal
 import com.soutosss.marvelpoc.home.HomeViewModel
-import com.soutosss.marvelpoc.shared.livedata.Result
+import com.soutosss.marvelpoc.test.RecyclerViewMatcher
 import com.soutosss.marvelpoc.test.waitUntilNotVisible
 import com.soutosss.marvelpoc.test.waitUntilVisible
 import io.mockk.coEvery
@@ -92,11 +90,6 @@ class CharactersFragmentConfiguration : KoinComponent {
         coEvery { mockDao.favoriteIds() } returns emptyList()
     }
 
-    private fun postLiveData(liveData: LiveData<Result>, item: Result) {
-        val mutableLiveData: MutableLiveData<Result> = liveData as MutableLiveData<Result>
-        mutableLiveData.postValue(item)
-    }
-
     fun withMockedViewModelLoading() {
         homeViewModel = mockk(relaxed = true)
     }
@@ -119,8 +112,10 @@ class CharactersFragmentResult {
     }
 
     private fun checkCharacterName(characterName: String) {
-        onView(withId(R.id.recycler)).waitUntilVisible(10_000)
-            .check(matches(hasDescendant(withText(characterName))))
+        onView(
+            RecyclerViewMatcher(R.id.recycler)
+            .atPositionOnView(0, R.id.text))
+            .waitUntilVisible().check(matches(withText(characterName)))
     }
 
     fun loadingIsVisible() {
