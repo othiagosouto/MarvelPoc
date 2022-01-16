@@ -9,6 +9,7 @@ import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.home.HomeViewModel
+import com.soutosss.marvelpoc.test.RecyclerViewMatcher
 import com.soutosss.marvelpoc.test.waitUntilNotVisible
 import com.soutosss.marvelpoc.test.waitUntilVisible
 import io.mockk.every
@@ -72,7 +73,9 @@ class FavoriteFragmentResult {
     }
 
     private fun checkCharacterName(characterName: String) {
-        onView(withId(R.id.recycler)).waitUntilVisible().check(matches(hasDescendant(withText(characterName))))
+        onView(RecyclerViewMatcher(R.id.recycler)
+            .atPositionOnView(0, R.id.text))
+        .waitUntilVisible().check(matches(withText(characterName)))
     }
 
 
