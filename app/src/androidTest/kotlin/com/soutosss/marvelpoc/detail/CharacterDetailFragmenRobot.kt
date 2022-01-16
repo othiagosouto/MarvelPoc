@@ -15,7 +15,7 @@ import org.koin.dsl.module
 fun configureDetail(func: CharacterDetailsFragmentConfiguration.() -> Unit) =
     CharacterDetailsFragmentConfiguration().apply(func)
 
-class CharacterDetailsFragmentConfiguration : KoinComponent {
+class CharacterDetailsFragmentConfiguration {
     private lateinit var character: Character
 
     fun withEmptyDescriptionAndFavorite() {
@@ -27,13 +27,6 @@ class CharacterDetailsFragmentConfiguration : KoinComponent {
     }
 
     infix fun launch(func: CharacterDetailsFragmentRobot.() -> Unit): CharacterDetailsFragmentRobot {
-
-        loadKoinModules(
-            module(override = true) {
-                single { character }
-            })
-
-
         val bundle = Bundle().also { it.putSerializable("CHARACTER_KEY", character) }
         launchFragmentInContainer<CharacterDetailsFragment>(bundle)
         return CharacterDetailsFragmentRobot().apply(func)
@@ -77,7 +70,7 @@ class CharacterDetailsFragmentResult {
     }
 
     fun unFavorite() {
-       onView(withId(R.id.favorite)).check(matches(isNotChecked()))
+        onView(withId(R.id.favorite)).check(matches(isNotChecked()))
     }
 
 }
