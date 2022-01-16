@@ -42,6 +42,5 @@ jobs:
         with:
           api-level: 30
           arch: x86_64
-          profile: Pixel
           script:
             ./gradlew connectedCheck
