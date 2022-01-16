@@ -8,6 +8,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.Character
+import io.mockk.mockk
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
@@ -15,8 +16,9 @@ import org.koin.dsl.module
 fun configureDetail(func: CharacterDetailsFragmentConfiguration.() -> Unit) =
     CharacterDetailsFragmentConfiguration().apply(func)
 
-class CharacterDetailsFragmentConfiguration {
+class CharacterDetailsFragmentConfiguration : KoinComponent {
     private lateinit var character: Character
+    private val viewModel: CharacterDetailsViewModel = CharacterDetailsViewModel(mockk(relaxed = true))
 
     fun withEmptyDescriptionAndFavorite() {
         character = Character(30, "name", "thumbNail", "", true)
@@ -27,8 +29,13 @@ class CharacterDetailsFragmentConfiguration {
     }
 
     infix fun launch(func: CharacterDetailsFragmentRobot.() -> Unit): CharacterDetailsFragmentRobot {
+        loadKoinModules(
+            module(override = true) {
+                single { viewModel }
+            })
+
         val bundle = Bundle().also { it.putSerializable("CHARACTER_KEY", character) }
-        launchFragmentInContainer<CharacterDetailsFragment>(bundle)
+        launchFragmentInContainer<CharacterDetailsFragment>(bundle, themeResId = R.style.AppTheme)
         return CharacterDetailsFragmentRobot().apply(func)
     }
 
