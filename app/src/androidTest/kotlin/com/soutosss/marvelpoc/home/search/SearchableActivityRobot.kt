@@ -7,7 +7,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.home.HomeViewModel
 import io.mockk.mockk
-import io.mockk.spyk
 import io.mockk.verify
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -19,7 +18,7 @@ fun configure(func: SearchableActivityConfiguration.() -> Unit) =
 
 class SearchableActivityConfiguration : KoinComponent {
     private val mockRepository: CharactersRepository = mockk(relaxed = true)
-    private val homeViewModel: HomeViewModel = HomeViewModel(mockRepository)
+    private val homeViewModel: HomeViewModel = mockk(relaxed = true)
     private lateinit var intent: Intent
 
     fun withSearchableIntent() {
@@ -42,7 +41,7 @@ class SearchableActivityConfiguration : KoinComponent {
         loadKoinModules(
             module(override = true) {
                 single { mockRepository }
-                single { spyk(homeViewModel) }
+                single { homeViewModel }
             })
 
         ActivityScenario.launch<SearchableActivity>(intent)
