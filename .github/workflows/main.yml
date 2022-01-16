@@ -37,7 +37,7 @@ jobs:
           distribution: 'zulu'
           java-version: 11
 
-      - name: instrumented testing
+      - name: espresso testing
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 30

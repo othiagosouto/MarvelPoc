@@ -23,7 +23,6 @@ class FavoriteFragmentTest {
             withNoFavorites()
         } launch {
         } check {
-            Thread.sleep(30_000)
             recyclerViewIsHidden()
             checkFavoritesEmptyMessage()
         }

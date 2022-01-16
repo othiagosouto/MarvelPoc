@@ -9,6 +9,8 @@ import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.home.HomeViewModel
+import com.soutosss.marvelpoc.test.waitUntilNotVisible
+import com.soutosss.marvelpoc.test.waitUntilVisible
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.Matchers.not
@@ -70,7 +72,7 @@ class FavoriteFragmentResult {
     }
 
     private fun checkCharacterName(characterName: String) {
-        onView(withId(R.id.recycler)).check(matches(hasDescendant(withText(characterName))))
+        onView(withId(R.id.recycler)).waitUntilVisible().check(matches(hasDescendant(withText(characterName))))
     }
 
 
@@ -81,7 +83,7 @@ class FavoriteFragmentResult {
     }
 
     fun recyclerViewIsHidden() {
-        onView(withId(R.id.recycler)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.recycler)).waitUntilNotVisible().check(matches(not(isDisplayed())))
     }
 
     fun checkFavoritesEmptyMessage() =
