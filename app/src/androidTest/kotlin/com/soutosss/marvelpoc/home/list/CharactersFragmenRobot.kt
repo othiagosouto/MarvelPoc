@@ -16,6 +16,8 @@ import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.room_source.CharacterLocal
 import com.soutosss.marvelpoc.home.HomeViewModel
 import com.soutosss.marvelpoc.shared.livedata.Result
+import com.soutosss.marvelpoc.test.waitUntilNotVisible
+import com.soutosss.marvelpoc.test.waitUntilVisible
 import io.mockk.coEvery
 import io.mockk.mockk
 import org.hamcrest.Matchers.not
@@ -109,7 +111,7 @@ class CharactersFragmentRobot {
 class CharactersFragmentResult {
 
     fun recyclerViewIsHidden() {
-        onView(withId(R.id.recycler)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.recycler)).waitUntilNotVisible(10_000).check(matches(not(isDisplayed())))
     }
 
     fun checkCharacterName() {
@@ -117,15 +119,16 @@ class CharactersFragmentResult {
     }
 
     private fun checkCharacterName(characterName: String) {
-        onView(withId(R.id.recycler)).check(matches(hasDescendant(withText(characterName))))
+        onView(withId(R.id.recycler)).waitUntilVisible(10_000)
+            .check(matches(hasDescendant(withText(characterName))))
     }
 
     fun loadingIsVisible() {
-        onView(withId(R.id.progress)).check(matches(isDisplayed()))
+        onView(withId(R.id.progress)).waitUntilVisible(10_000).check(matches(isDisplayed()))
     }
 
     fun loadingIsNotVisible() {
-        onView(withId(R.id.progress)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.progress)).waitUntilNotVisible(10_000).check(matches(not(isDisplayed())))
     }
 
     fun checkErrorHomeTab() {
@@ -133,14 +136,14 @@ class CharactersFragmentResult {
     }
 
     fun errorMessageNotAvailable() {
-        onView(withId(R.id.message)).check(matches(not(isDisplayed())))
-        onView(withId(R.id.erroIcon)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.message)).waitUntilNotVisible(10_000).check(matches(not(isDisplayed())))
+        onView(withId(R.id.erroIcon)).waitUntilNotVisible(10_000).check(matches(not(isDisplayed())))
     }
 
     private fun checkErrorMessage(message: String) {
-        onView(withId(R.id.message)).check(matches(isDisplayed()))
-        onView(withId(R.id.erroIcon)).check(matches(isDisplayed()))
-        onView(withId(R.id.message)).check(matches(withText(message)))
+        onView(withId(R.id.message)).waitUntilVisible(10_000).check(matches(isDisplayed()))
+        onView(withId(R.id.erroIcon)).waitUntilVisible(10_000).check(matches(isDisplayed()))
+        onView(withId(R.id.message)).waitUntilVisible(10_000).check(matches(withText(message)))
     }
 
 }
