@@ -49,7 +49,7 @@ class CharacterDetailsFragmentTest {
         } launch {
             clickOnFavorite()
         } check {
-            checkFavoriteMethodFiredToUnFavorite()
+            unFavorite()
         }
     }
 }

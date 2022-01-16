@@ -85,9 +85,8 @@ class CharacterDetailsFragmentResult : KoinComponent {
         verify { viewModel.favoriteClick(character) }
     }
 
-    fun checkFavoriteMethodFiredToUnFavorite() {
-        assertThat(character.favorite).isFalse()
-        verify { viewModel.favoriteClick(character) }
+    fun unFavorite() {
+       onView(withId(R.id.favorite)).check(matches(isNotChecked()))
     }
 
 }
