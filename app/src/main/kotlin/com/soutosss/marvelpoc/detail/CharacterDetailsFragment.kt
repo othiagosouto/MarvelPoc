@@ -2,13 +2,20 @@ package com.soutosss.marvelpoc.detail
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.Character
-import kotlinx.android.synthetic.main.fragment_character_details.*
+import com.soutosss.marvelpoc.widget.CharacterView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
+
+    private val characterImage: CharacterView
+        get() = requireView().findViewById(R.id.characterImage)
+
+    private val description: TextView
+        get() = requireView().findViewById(R.id.description)
 
     private val characterDetailsViewModel: CharacterDetailsViewModel by viewModel()
 

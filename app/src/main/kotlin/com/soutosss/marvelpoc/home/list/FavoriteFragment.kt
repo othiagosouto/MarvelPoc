@@ -1,18 +1,27 @@
 package com.soutosss.marvelpoc.home.list
 
 import android.view.View
+import android.widget.ProgressBar
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
+import androidx.recyclerview.widget.RecyclerView
+import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.shared.livedata.Result
-import kotlinx.android.synthetic.main.fragment_characters.*
 
 class FavoriteFragment : BaseFragment() {
+
+    private val recycler: RecyclerView
+        get() = requireView().findViewById(R.id.recycler)
+
+    private val progress: ProgressBar
+        get() = requireView().findViewById(R.id.progress)
+
     override fun paginatedContent(): LiveData<PagedList<Character>> =
         homeViewModel.charactersFavorite()
 
     override fun observeNotCommonContent(adapter: CharactersAdapter) {
-        progress.hide()
+        progress.visibility = View.GONE
         recycler.visibility = View.VISIBLE
     }
 
