@@ -12,6 +12,8 @@ import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.room_source.CharacterLocal
+import com.soutosss.marvelpoc.data.room_source.CharacterLocalDAO
+import com.soutosss.marvelpoc.data.room_source.CharacterLocalRoomDataSource
 import com.soutosss.marvelpoc.home.HomeViewModel
 import com.soutosss.marvelpoc.test.RecyclerViewMatcher
 import com.soutosss.marvelpoc.test.waitUntilNotVisible
@@ -29,7 +31,7 @@ fun configure(func: CharactersFragmentConfiguration.() -> Unit) =
 
 class CharactersFragmentConfiguration : KoinComponent {
     private val api: CharactersApi = mockk(relaxed = true)
-    private val mockDao: CharacterLocalContract<CharacterLocal> = mockk(relaxed = true)
+    private val characterLocalDao: CharacterLocalDAO = mockk(relaxed = true)
     private val repository: CharactersRepository
     private var homeViewModel: HomeViewModel
 
@@ -37,7 +39,8 @@ class CharactersFragmentConfiguration : KoinComponent {
         loadKoinModules(
             module(override = true) {
                 single { api }
-                single { mockDao }
+                single { characterLocalDao }
+                single { CharacterLocalRoomDataSource(characterLocalDao) }
             })
         repository = CharactersRepository(get(), get())
         homeViewModel = HomeViewModel(repository)
@@ -46,9 +49,9 @@ class CharactersFragmentConfiguration : KoinComponent {
     infix fun launch(func: CharactersFragmentRobot.() -> Unit): CharactersFragmentRobot {
         loadKoinModules(
             module(override = true) {
-                single { mockDao }
                 single { api }
                 single { repository }
+                single { characterLocalDao }
                 single { homeViewModel }
             })
 
@@ -59,7 +62,7 @@ class CharactersFragmentConfiguration : KoinComponent {
     infix fun launchSearch(func: CharactersFragmentRobot.() -> Unit): CharactersFragmentRobot {
         loadKoinModules(
             module(override = true) {
-                single { mockDao }
+                single { characterLocalDao }
                 single { api }
                 single { repository }
                 single { homeViewModel }
@@ -87,7 +90,7 @@ class CharactersFragmentConfiguration : KoinComponent {
     }
 
     fun withNoFavorites() {
-        coEvery { mockDao.favoriteIds() } returns emptyList()
+        coEvery { characterLocalDao.favoriteIds() } returns emptyList()
     }
 
     fun withMockedViewModelLoading() {
@@ -114,7 +117,8 @@ class CharactersFragmentResult {
     private fun checkCharacterName(characterName: String) {
         onView(
             RecyclerViewMatcher(R.id.recycler)
-            .atPositionOnView(0, R.id.text))
+                .atPositionOnView(0, R.id.text)
+        )
             .waitUntilVisible().check(matches(withText(characterName)))
     }
 
