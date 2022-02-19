@@ -48,6 +48,14 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.version
+    }
 }
 
 def allTestsConfigs(dependency) {
@@ -80,6 +88,15 @@ dependencies {
     implementation Libs.AndroidX.viewModel
     implementation Libs.AndroidX.liveData
 
+    //Compose
+    implementation Libs.AndroidX.Compose.layout
+    implementation Libs.AndroidX.Compose.material
+    implementation Libs.AndroidX.Compose.toolingPreview
+    implementation Libs.AndroidX.Compose.uiUtil
+    implementation Libs.AndroidX.Compose.runtime
+    debugImplementation Libs.AndroidX.Compose.tooling
+
+
     testImplementation Libs.Test.mockk
     testImplementation Libs.AndroidX.Test.archRules
 
@@ -92,6 +109,7 @@ dependencies {
     allTestsConfigs Libs.AndroidX.Test.core
 
 
+    androidTestImplementation Libs.AndroidX.Compose.uiTest
     androidTestImplementation Libs.AndroidX.Test.runner
     androidTestImplementation Libs.AndroidX.Test.Ext.junit
     androidTestImplementation Libs.Test.mockkAndroid
