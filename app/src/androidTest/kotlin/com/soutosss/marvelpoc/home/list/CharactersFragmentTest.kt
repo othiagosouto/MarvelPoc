@@ -32,7 +32,7 @@ class CharactersFragmentTest {
         }
     }
 
-    @Ignore("not working on the CI")
+//    @Ignore("not working on the CI")
     @Test
     fun init_homeMode_shouldPresentExpectedCharacters() {
         configure {

@@ -8,6 +8,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.Character
+import com.soutosss.marvelpoc.test.waitUntilVisible
 import io.mockk.mockk
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
@@ -77,7 +78,7 @@ class CharacterDetailsFragmentResult {
     }
 
     fun unFavorite() {
-        onView(withId(R.id.favorite)).check(matches(isNotChecked()))
+        onView(withId(R.id.favorite)).waitUntilVisible().check(matches(isNotChecked()))
     }
 
 }

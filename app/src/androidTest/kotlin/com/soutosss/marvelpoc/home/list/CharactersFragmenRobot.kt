@@ -7,6 +7,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.gson.Gson
 import com.soutosss.data.data_retrofit.CharactersApi
+import com.soutosss.data.data_retrofit.RetrofitCharacterRemote
 import com.soutosss.data.data_retrofit.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
@@ -41,6 +42,7 @@ class CharactersFragmentConfiguration : KoinComponent {
                 single { api }
                 single { characterLocalDao }
                 single { CharacterLocalRoomDataSource(characterLocalDao) }
+                single { RetrofitCharacterRemote(api) }
             })
         repository = CharactersRepository(get(), get())
         homeViewModel = HomeViewModel(repository)
@@ -107,7 +109,7 @@ class CharactersFragmentRobot {
 class CharactersFragmentResult {
 
     fun recyclerViewIsHidden() {
-        onView(withId(R.id.recycler)).waitUntilNotVisible(10_000).check(matches(not(isDisplayed())))
+        onView(withId(R.id.recycler)).waitUntilNotVisible().check(matches(not(isDisplayed())))
     }
 
     fun checkCharacterName() {
@@ -123,11 +125,11 @@ class CharactersFragmentResult {
     }
 
     fun loadingIsVisible() {
-        onView(withId(R.id.progress)).waitUntilVisible(10_000).check(matches(isDisplayed()))
+        onView(withId(R.id.progress)).waitUntilVisible().check(matches(isDisplayed()))
     }
 
     fun loadingIsNotVisible() {
-        onView(withId(R.id.progress)).waitUntilNotVisible(10_000).check(matches(not(isDisplayed())))
+        onView(withId(R.id.progress)).waitUntilNotVisible().check(matches(not(isDisplayed())))
     }
 
     fun checkErrorHomeTab() {
