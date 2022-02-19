@@ -48,7 +48,7 @@ object Libs {
         const val roomCompiler = "androidx.room:room-compiler:$roomVersion"
 
         object Compose {
-            const val version = "1.1.0-rc01"
+            const val version = "1.1.0"
 
             const val foundation = "androidx.compose.foundation:foundation:${version}"
             const val layout = "androidx.compose.foundation:foundation-layout:${version}"
