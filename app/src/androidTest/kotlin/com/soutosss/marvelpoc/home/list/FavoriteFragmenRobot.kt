@@ -24,7 +24,7 @@ fun configureFavorite(func: FavoriteFragmentConfiguration.() -> Unit) =
 
 class FavoriteFragmentConfiguration : KoinComponent {
     private val localSource: CharacterLocalContract<Character> = mockk(relaxed = true)
-    private val repository: CharactersRepository = CharactersRepository(mockk(), mockk())
+    private val repository: CharactersRepository = CharactersRepository(localSource, mockk())
     private val viewModel: HomeViewModel = HomeViewModel(repository)
 
     infix fun launch(func: FavoriteFragmentRobot.() -> Unit): FavoriteFragmentRobot {
@@ -41,7 +41,7 @@ class FavoriteFragmentConfiguration : KoinComponent {
 
 
     fun withNotEmptyList() {
-        every { repository.fetchFavoriteCharacters() } returns FakeHomeDataSource(
+        every { localSource.favoriteList() } returns FakeHomeDataSource(
             listOf(
                 Character(
                     30,
@@ -55,7 +55,7 @@ class FavoriteFragmentConfiguration : KoinComponent {
     }
 
     fun withNoFavorites() {
-        every { repository.fetchFavoriteCharacters() } returns FakeHomeDataSource(emptyList())
+        every { localSource.favoriteList() } returns FakeHomeDataSource(emptyList())
     }
 
 }
