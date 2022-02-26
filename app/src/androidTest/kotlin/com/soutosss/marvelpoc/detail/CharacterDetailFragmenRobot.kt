@@ -7,8 +7,11 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.soutosss.marvelpoc.R
+import com.soutosss.marvelpoc.data.CharacterDetails
+import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.test.waitUntilVisible
+import io.mockk.coEvery
 import io.mockk.mockk
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
@@ -19,14 +22,24 @@ fun configureDetail(func: CharacterDetailsFragmentConfiguration.() -> Unit) =
 
 class CharacterDetailsFragmentConfiguration : KoinComponent {
     private lateinit var character: Character
-    private val viewModel: CharacterDetailsViewModel = CharacterDetailsViewModel(mockk(relaxed = true))
+    private val repository: CharactersRepository = mockk(relaxed = true)
+    private val viewModel: CharacterDetailsViewModel =
+        CharacterDetailsViewModel(repository)
 
     fun withEmptyDescriptionAndFavorite() {
         character = Character(30, "name", "thumbNail", "", true)
+        coEvery { repository.fetchCharacterDetails("30") } returns CharacterDetails(
+            character.id, character.name, character.description, character.thumbnailUrl,
+            emptyList()
+        )
     }
 
     fun withSomeDescriptionNotFavorite() {
         character = Character(30, "name", "thumbNail", "Some description", false)
+        coEvery { repository.fetchCharacterDetails("30") } returns CharacterDetails(
+            character.id, character.name, character.description, character.thumbnailUrl,
+            emptyList()
+        )
     }
 
     infix fun launch(func: CharacterDetailsFragmentRobot.() -> Unit): CharacterDetailsFragmentRobot {

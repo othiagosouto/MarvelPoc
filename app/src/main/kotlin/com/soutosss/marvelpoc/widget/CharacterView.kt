@@ -64,7 +64,7 @@ class CharacterView @JvmOverloads constructor(
             progress,
             favoriteCheckBox, headerText, header
         )
-        favoriteCheckBox.isChecked = character.favorite
+        favoriteCheckBox.visibility = View.GONE
     }
 
     fun applyDetailMode() {

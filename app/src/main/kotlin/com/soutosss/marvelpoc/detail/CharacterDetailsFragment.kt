@@ -30,9 +30,11 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
             characterImage.applyDetailMode()
             characterImage.updateCharacter(details)
             description.text =
-                if (details.description.isNotBlank()) details.description else getString(
-                    R.string.character_details_description_not_available
-                )
+                details.description.ifBlank {
+                    getString(
+                        R.string.character_details_description_not_available
+                    )
+                }
         }
     }
 
