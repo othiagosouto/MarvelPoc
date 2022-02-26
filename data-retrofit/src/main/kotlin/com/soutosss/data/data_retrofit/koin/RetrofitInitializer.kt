@@ -53,7 +53,7 @@ class RetrofitInitializer : KoinInitializer() {
 
     private fun getBffApi(): CharactersBFFApi {
         val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.SERVICE_HOST)
+            .baseUrl(BuildConfig.BFF_HOST)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
