@@ -29,6 +29,7 @@ android {
 
         debug {
             buildConfigField("String", "SERVICE_HOST", "\"https://gateway.marvel.com/v1/public/\"")
+            buildConfigField("String", "BFF_HOST", "\"https://gateway.marvel.com/v1/public/\"")
         }
     }
 
