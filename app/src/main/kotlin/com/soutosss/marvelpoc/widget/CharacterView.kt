@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.ContentLoadingProgressBar
 import com.soutosss.marvelpoc.R
+import com.soutosss.marvelpoc.data.CharacterDetails
 import com.soutosss.marvelpoc.data.model.view.Character
 
 class CharacterView @JvmOverloads constructor(
@@ -41,6 +42,17 @@ class CharacterView @JvmOverloads constructor(
         headerText.setOnClickListener {
             itemClick?.invoke(character)
         }
+    }
+
+    fun updateCharacter(details: CharacterDetails) {
+        val character = Character(
+            id = details.id,
+            name = details.name,
+            description = details.description,
+            thumbnailUrl = details.imageUrl,
+            favorite = false
+        )
+        updateCharacter(character)
     }
 
     fun updateCharacter(character: Character) {
