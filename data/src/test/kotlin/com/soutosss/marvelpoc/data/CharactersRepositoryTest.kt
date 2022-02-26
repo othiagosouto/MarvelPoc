@@ -1,6 +1,7 @@
 package com.soutosss.marvelpoc.data
 
 import com.google.common.truth.Truth.assertThat
+import com.soutosss.marvelpoc.data.character.CharacterDetailsRemoteContract
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.character.CharacterRemoteContract
 import com.soutosss.marvelpoc.data.model.view.Character
@@ -16,6 +17,7 @@ class CharactersRepositoryTest {
 
     private lateinit var remoteSourceMock: CharacterRemoteContract<Character>
     private lateinit var localSourceMock: CharacterLocalContract<Character>
+    private lateinit var characterDetailsRemoteContract: CharacterDetailsRemoteContract<CharacterDetails>
     private lateinit var repository: CharactersRepository
     private lateinit var item: Character
 
@@ -23,7 +25,9 @@ class CharactersRepositoryTest {
     fun setup() {
         remoteSourceMock = mockk(relaxed = true)
         localSourceMock = mockk(relaxed = true)
-        repository = CharactersRepository(localSourceMock, remoteSourceMock)
+        characterDetailsRemoteContract = mockk()
+        repository =
+            CharactersRepository(localSourceMock, remoteSourceMock, characterDetailsRemoteContract)
         item = Character(1011334, "some name", "some url", "description", true)
     }
 

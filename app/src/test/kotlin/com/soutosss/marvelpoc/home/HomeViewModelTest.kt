@@ -17,6 +17,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito.mock
 
 class HomeViewModelTest {
 
@@ -51,7 +52,7 @@ class HomeViewModelTest {
         characterLocalContract = mockk()//FakeCharacterDataSource(charactersList, null)
 
 
-        repository = spyk(CharactersRepository(characterLocalContract, characterRemoteContract))
+        repository = spyk(CharactersRepository(characterLocalContract, characterRemoteContract, mock()))
         viewModel = spyk(HomeViewModel(repository))
     }
 

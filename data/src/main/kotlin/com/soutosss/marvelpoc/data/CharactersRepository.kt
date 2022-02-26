@@ -1,5 +1,6 @@
 package com.soutosss.marvelpoc.data
 
+import com.soutosss.marvelpoc.data.character.CharacterDetailsRemoteContract
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.character.CharacterRemoteContract
@@ -7,7 +8,8 @@ import kotlinx.coroutines.CoroutineScope
 
 class CharactersRepository(
     private val localDataSource: CharacterLocalContract<Character>,
-    private val remoteDataSource: CharacterRemoteContract<Character>
+    private val remoteDataSource: CharacterRemoteContract<Character>,
+    private val remoteCharacterDetailsSource: CharacterDetailsRemoteContract<CharacterDetails>
 ) {
     fun fetchFavoriteCharacters() = localDataSource.favoriteList()
 
@@ -29,6 +31,12 @@ class CharactersRepository(
         scope: CoroutineScope,
         exceptionHandler: (Exception) -> Unit,
         loadFinished: () -> Unit
-    ) = remoteDataSource.listCharacters(scope, queryText, exceptionHandler, loadFinished, localDataSource::favoriteIds)
+    ) = remoteDataSource.listCharacters(
+        scope,
+        queryText,
+        exceptionHandler,
+        loadFinished,
+        localDataSource::favoriteIds
+    )
 }
 

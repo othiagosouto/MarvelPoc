@@ -44,7 +44,7 @@ class CharactersFragmentConfiguration : KoinComponent {
                 single { CharacterLocalRoomDataSource(characterLocalDao) }
                 single { RetrofitCharacterRemote(api) }
             })
-        repository = CharactersRepository(get(), get())
+        repository = CharactersRepository(get(), get(), mockk())
         homeViewModel = HomeViewModel(repository)
     }
 

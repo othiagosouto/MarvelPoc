@@ -10,7 +10,8 @@ class DataInitializer : KoinInitializer() {
         return listOf(module {
 
             single {
-               CharactersRepository(
+                CharactersRepository(
+                    get(),
                     get(),
                     get()
                 )
