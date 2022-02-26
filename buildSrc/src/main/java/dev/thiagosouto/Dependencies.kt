@@ -62,11 +62,9 @@ object Libs {
             const val uiTest = "androidx.compose.ui:ui-test-junit4:$version"
             const val toolingPreview = "androidx.compose.ui:ui-tooling-preview:$version"
             const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:$version"
-
-        }
-
-        object Activity {
             const val activityCompose = "androidx.activity:activity-compose:1.4.0"
+
+
         }
 
         object Lifecycle {

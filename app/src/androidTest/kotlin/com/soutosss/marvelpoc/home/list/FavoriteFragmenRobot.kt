@@ -24,7 +24,7 @@ fun configureFavorite(func: FavoriteFragmentConfiguration.() -> Unit) =
 
 class FavoriteFragmentConfiguration : KoinComponent {
     private val localSource: CharacterLocalContract<Character> = mockk(relaxed = true)
-    private val repository: CharactersRepository = CharactersRepository(localSource, mockk(), mock())
+    private val repository: CharactersRepository = CharactersRepository(localSource, mockk(), mockk())
     private val viewModel: HomeViewModel = HomeViewModel(repository)
 
     infix fun launch(func: FavoriteFragmentRobot.() -> Unit): FavoriteFragmentRobot {

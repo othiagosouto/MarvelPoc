@@ -52,7 +52,7 @@ class HomeViewModelTest {
         characterLocalContract = mockk()//FakeCharacterDataSource(charactersList, null)
 
 
-        repository = spyk(CharactersRepository(characterLocalContract, characterRemoteContract, mock()))
+        repository = spyk(CharactersRepository(characterLocalContract, characterRemoteContract, mockk()))
         viewModel = spyk(HomeViewModel(repository))
     }
 

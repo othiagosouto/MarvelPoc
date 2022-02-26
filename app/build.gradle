@@ -88,6 +88,7 @@ dependencies {
     implementation Libs.AndroidX.liveData
 
     //Compose
+    implementation Libs.AndroidX.Compose.activityCompose
     implementation Libs.AndroidX.Compose.layout
     implementation Libs.AndroidX.Compose.material
     implementation Libs.AndroidX.Compose.toolingPreview
