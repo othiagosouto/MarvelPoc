@@ -38,5 +38,7 @@ class CharactersRepository(
         loadFinished,
         localDataSource::favoriteIds
     )
+
+    suspend fun fetchCharacterDetails(characterId: String) = remoteCharacterDetailsSource.fetchCharacterDetails(characterId)
 }
 
