@@ -23,8 +23,7 @@ fun configureDetail(func: CharacterDetailsFragmentConfiguration.() -> Unit) =
 class CharacterDetailsFragmentConfiguration : KoinComponent {
     private lateinit var character: Character
     private val repository: CharactersRepository = mockk(relaxed = true)
-    private val viewModel: CharacterDetailsViewModel =
-        CharacterDetailsViewModel(repository)
+    private val viewModel: CharacterDetailsViewModel = CharacterDetailsViewModel(repository)
 
     fun withEmptyDescriptionAndFavorite() {
         character = Character(30, "name", "thumbNail", "", true)
@@ -49,7 +48,7 @@ class CharacterDetailsFragmentConfiguration : KoinComponent {
             })
 
         val bundle = Bundle().also { it.putSerializable("CHARACTER_KEY", character) }
-        launchFragmentInContainer<CharacterDetailsFragment>(bundle, themeResId = R.style.AppTheme)
+//        launchFragmentInContainer<CharacterDetailsFragment>(bundle, themeResId = R.style.AppTheme)
         return CharacterDetailsFragmentRobot().apply(func)
     }
 

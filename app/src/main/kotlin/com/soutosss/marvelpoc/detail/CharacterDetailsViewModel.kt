@@ -1,44 +1,49 @@
 package com.soutosss.marvelpoc.detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.soutosss.marvelpoc.data.CharacterDetails
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.model.view.Character
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class CharacterDetailsViewModel(private val repository: CharactersRepository) : ViewModel() {
+class CharacterDetailsViewModel(private val repository: CharactersRepository) : ViewModel(),
+    Presenter<Intent, DetailsViewState, Effect> {
 
+    private val _state: MutableStateFlow<DetailsViewState> = MutableStateFlow(DetailsViewState.Idle)
+    override val state: StateFlow<DetailsViewState> = _state
 
-    private val _characterDetail = MutableLiveData<CharacterDetails>()
-    val characterDetails: LiveData<CharacterDetails> = _characterDetail
+    private val _effects: MutableStateFlow<Effect> = MutableStateFlow(Effect.Idle)
+    override val effects: StateFlow<Effect> = _effects
 
-    fun favoriteClick(item: Character) {
-        if (item.favorite) {
-            favorite(item)
-        } else {
-            unFavorite(item)
+    override fun process(intent: Intent) {
+        processIntent(intent)?.let {
+            processToEffect(intent)
         }
     }
 
-    private fun favorite(item: Character) {
-        viewModelScope.launch {
-            repository.favoriteCharacter(item)
-        }
+    private fun processToEffect(intent: Intent) {
+        if (intent is Intent.CloseScreen) _effects.value = Effect.CloseScreen
     }
 
-    private fun unFavorite(item: Character) {
-        viewModelScope.launch {
-            repository.unFavoriteCharacter(item, emptyList())
+    private fun processIntent(intent: Intent): Intent? = when (intent) {
+        is Intent.OpenScreen -> {
+            process(Intent.Internal.LoadScreen(intent.characterId))
+            null
         }
-    }
-
-    fun loadFavoriteData(characterId: String) {
-        viewModelScope.launch {
-            val details = repository.fetchCharacterDetails(characterId)
-            _characterDetail.postValue(details)
+        is Intent.Internal.LoadScreen -> {
+            viewModelScope.launch(Dispatchers.IO) {
+                _state.value = DetailsViewState.Loading
+                val details = repository.fetchCharacterDetails(intent.characterId.toString())
+                _state.value = DetailsViewState.Loaded(
+                    details.name,
+                    details.description,
+                    details.imageUrl
+                )
+            }
+            null
         }
+        else -> intent
     }
 }
