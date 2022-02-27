@@ -7,7 +7,7 @@ object Versions {
 
 object Libs {
 
-    object Config{
+    object Config {
         object Android {
             const val androidCompileSdkVersion = 32
             const val androidBuildToolsVersion = "32.0.0"
@@ -17,6 +17,7 @@ object Libs {
             const val versionName = "1.0"
         }
     }
+
     const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.4"
 
     object Kotlin {
@@ -44,7 +45,7 @@ object Libs {
         const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
         const val androidxConstraintLayout = "androidx.constraintlayout:constraintlayout:2.1.2"
         const val material = "com.google.android.material:material:1.4.0"
-        const val room =  "androidx.room:room-ktx:$roomVersion"
+        const val room = "androidx.room:room-ktx:$roomVersion"
         const val roomCompiler = "androidx.room:room-compiler:$roomVersion"
 
         object Compose {
@@ -63,6 +64,7 @@ object Libs {
             const val toolingPreview = "androidx.compose.ui:ui-tooling-preview:$version"
             const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:$version"
             const val activityCompose = "androidx.activity:activity-compose:1.4.0"
+            const val coil = "io.coil-kt:coil-compose:1.4.0"
 
 
         }
@@ -97,7 +99,7 @@ object Libs {
         const val gsonConverter = "com.squareup.retrofit2:converter-gson:2.8.1"
         const val glide = "com.github.bumptech.glide:glide:4.11.0"
         const val glideCompiler = "com.github.bumptech.glide:compiler:4.11.0"
-        const val gson =  "com.google.code.gson:gson:2.8.5"
+        const val gson = "com.google.code.gson:gson:2.8.5"
         const val retrofit = "com.squareup.retrofit2:retrofit:2.6.1"
     }
 
