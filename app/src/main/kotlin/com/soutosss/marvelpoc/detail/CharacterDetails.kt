@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.ImagePainter
@@ -46,13 +47,14 @@ fun CharacterDetails(name: String, description: String, imageUrl: String) {
             modifier = Modifier
                 .height(50.dp)
                 .fillMaxWidth()
-                .background(color = Color(android.graphics.Color.parseColor("#25000000")))
+                .background(color = Color(android.graphics.Color.parseColor("#25000000"))),
         ) {
             Text(
                 text = name,
                 modifier = Modifier
                     .wrapContentSize()
                     .align(Alignment.Center)
+                    .testTag("name"),
             )
         }
         Text(
@@ -61,7 +63,8 @@ fun CharacterDetails(name: String, description: String, imageUrl: String) {
                 .padding(
                     horizontal = 16.dp,
                     vertical = 8.dp
-                ),
+                )
+                .testTag("description"),
             text = description.ifBlank { stringResource(id = R.string.character_details_description_not_available) })
     }
 }

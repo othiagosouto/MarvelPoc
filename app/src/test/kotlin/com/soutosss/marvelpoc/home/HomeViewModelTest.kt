@@ -5,7 +5,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.paging.PositionalDataSource
 import com.google.common.truth.Truth.assertThat
-import com.soutosss.marvelpoc.AppDispatchers
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
