@@ -105,11 +105,12 @@ class CharacterDetailsResult(private val rule: ComposeTestRule) {
     }
 
     private fun comics(index: Int, title: String) {
+        val item = rule.onNodeWithTag("character-detais-comics").performScrollToIndex(index)
         rule.onNodeWithTag("comics-title-$index").assert(hasText(title)).assertIsDisplayed()
     }
 }
 
-private fun ids() = listOf<Long>(0, 1)
+private fun ids() = listOf<Long>(0, 1, 3, 4, 5)
 private fun comicsDomain(id: Long) =
     Comics(id = id, title = "title - $id", imageUrl = "thumb-$id")
 

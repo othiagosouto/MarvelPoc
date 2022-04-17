@@ -92,7 +92,7 @@ fun CharacterDetails(name: String, description: String, imageUrl: String, comics
             text = description.ifBlank { stringResource(id = R.string.character_details_description_not_available) })
 
 
-        LazyRow {
+        LazyRow (modifier = Modifier.testTag("character-detais-comics")){
             this.itemsIndexed(comics) { index, item ->
                 ComicsView(item, index)
             }
