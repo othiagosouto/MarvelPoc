@@ -1,0 +1,27 @@
+import dev.thiagosouto.Libs
+
+plugins {
+    id "com.android.library"
+    id "kotlin-android"
+}
+
+android {
+    compileSdkVersion Libs.Config.Android.androidCompileSdkVersion
+    buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion Libs.Config.Android.minSdkVersion
+        targetSdkVersion Libs.Config.Android.targetSdkVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
