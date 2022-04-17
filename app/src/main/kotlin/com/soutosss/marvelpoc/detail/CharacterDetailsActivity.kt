@@ -81,7 +81,7 @@ fun LoadedViewState(viewState: DetailsViewState.Loaded, process: (Intent) -> Uni
             elevation = 2.dp
         )
 
-        CharacterDetails(viewState.name, viewState.description, viewState.imageUrl)
+        CharacterDetails(viewState.name, viewState.description, viewState.imageUrl, viewState.comics)
     }
 }
 

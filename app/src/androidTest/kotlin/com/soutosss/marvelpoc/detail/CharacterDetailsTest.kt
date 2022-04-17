@@ -22,6 +22,7 @@ class CharacterDetailsTest {
         } check {
             characterName()
             description()
+            comics()
         }
     }
 

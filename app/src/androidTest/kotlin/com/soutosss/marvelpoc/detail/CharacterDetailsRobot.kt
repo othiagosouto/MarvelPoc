@@ -12,6 +12,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharacterDetails
 import com.soutosss.marvelpoc.data.CharactersRepository
+import com.soutosss.marvelpoc.data.Comics
 import com.soutosss.marvelpoc.data.mappers.ComicsMapper
 import com.soutosss.marvelpoc.data.model.view.Character
 import io.mockk.coEvery
@@ -26,7 +27,8 @@ fun configureDetail(func: CharacterDetailsConfiguration.() -> Unit) =
 class CharacterDetailsConfiguration() : KoinComponent {
     private lateinit var character: Character
     private val repository: CharactersRepository = mockk(relaxed = true)
-    private val viewModel: CharacterDetailsViewModel = CharacterDetailsViewModel(repository, ComicsMapper())
+    private val viewModel: CharacterDetailsViewModel =
+        CharacterDetailsViewModel(repository, ComicsMapper())
     private lateinit var rule: ComposeTestRule
 
     fun withComposeTestRule(rule: ComposeTestRule) {
@@ -36,7 +38,10 @@ class CharacterDetailsConfiguration() : KoinComponent {
     fun withEmptyDescription() {
         character = Character(30, "some name", "thumbNail", "", false)
         coEvery { repository.fetchCharacterDetails("30") } returns CharacterDetails(
-            character.id, character.name, character.description, character.thumbnailUrl,
+            character.id,
+            character.name,
+            character.description,
+            character.thumbnailUrl,
             emptyList()
         )
     }
@@ -44,8 +49,11 @@ class CharacterDetailsConfiguration() : KoinComponent {
     fun withSomeDescription() {
         character = Character(30, "some name", "thumbNail", "Some description", false)
         coEvery { repository.fetchCharacterDetails("30") } returns CharacterDetails(
-            character.id, character.name, character.description, character.thumbnailUrl,
-            emptyList()
+            character.id,
+            character.name,
+            character.description,
+            character.thumbnailUrl,
+            ids().map(::comicsDomain)
         )
     }
 
@@ -88,6 +96,21 @@ class CharacterDetailsResult(private val rule: ComposeTestRule) {
     }
 
     fun defaultDescription() {
-        rule.onNodeWithTag("description").assert(hasText("This character doesn't have any description available :("))
+        rule.onNodeWithTag("description")
+            .assert(hasText("This character doesn't have any description available :("))
+    }
+
+    fun comics() {
+        ids().map(::titles).forEachIndexed(::comics)
+    }
+
+    private fun comics(index: Int, title: String) {
+        rule.onNodeWithTag("comics-title-$index").assert(hasText(title)).assertIsDisplayed()
     }
 }
+
+private fun ids() = listOf<Long>(0, 1)
+private fun comicsDomain(id: Long) =
+    Comics(id = id, title = "title - $id", imageUrl = "thumb-$id")
+
+private fun titles(id: Long) = "title - $id"
