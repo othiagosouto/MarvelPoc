@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.mappers.ComicsMapper
 import com.soutosss.marvelpoc.data.model.view.Comics
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -37,7 +38,7 @@ class CharacterDetailsViewModel(
             null
         }
         is Intent.Internal.LoadScreen -> {
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 _state.value = DetailsViewState.Loading
                 val details = repository.fetchCharacterDetails(intent.characterId.toString())
                 _state.value = DetailsViewState.Loaded(
