@@ -43,7 +43,7 @@ jobs:
           api-level: 30
           arch: x86_64
           script:
-            ./gradlew connectedCheck
+            avdmanager list device
 
       - name: Upload emulator tests artifacts
         if: always()
