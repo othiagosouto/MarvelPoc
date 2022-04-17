@@ -39,7 +39,7 @@ object Libs {
         private const val lifecycleVersion = "2.2.0"
         private const val roomVersion = "2.4.0"
         const val coreKtx = "androidx.core:core-ktx:1.7.0"
-        const val paging = "androidx.paging:paging-runtime-ktx:3.1.0"
+        const val paging = "androidx.paging:paging-runtime-ktx:3.1.1"
         const val androidxAppCompat = "androidx.appcompat:appcompat:1.4.0"
         const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
