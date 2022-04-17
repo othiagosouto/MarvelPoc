@@ -3,23 +3,16 @@ package com.soutosss.marvelpoc.detail
 import app.cash.turbine.test
 import com.soutosss.marvelpoc.data.CharacterDetails
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.home.CoroutineTestRule
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class CharacterDetailsViewModelTest {
     private lateinit var viewModel: CharacterDetailsViewModel
     private lateinit var repository: CharactersRepository
-
-    @get:Rule
-    var coroutineTestRule = CoroutineTestRule()
 
     @Before
     fun setup() {
@@ -28,7 +21,7 @@ class CharacterDetailsViewModelTest {
     }
 
     @Test
-    fun `favoriteClick should favorite item when favorite flag is true`() = runTest {
+    fun `favoriteClick should favorite item when favorite flag is true`() = runBlocking {
             val characterDetails = CharacterDetails(
                 id = 300L,
                 name = "character-name",
