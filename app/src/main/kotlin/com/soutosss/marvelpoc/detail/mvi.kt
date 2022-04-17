@@ -1,6 +1,6 @@
 package com.soutosss.marvelpoc.detail
 
-import kotlinx.coroutines.flow.Flow
+import com.soutosss.marvelpoc.data.model.view.Comics
 import kotlinx.coroutines.flow.StateFlow
 
 interface MviView<S> {
@@ -25,7 +25,7 @@ sealed class Intent {
 
 sealed class DetailsViewState {
 
-    data class Loaded(val name: String, val description: String, val imageUrl: String) :
+    data class Loaded(val name: String, val description: String, val imageUrl: String, val comics: List<Comics>) :
         DetailsViewState()
 
     object Loading : DetailsViewState()

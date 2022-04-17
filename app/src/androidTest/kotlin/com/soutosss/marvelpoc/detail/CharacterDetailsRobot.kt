@@ -12,6 +12,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharacterDetails
 import com.soutosss.marvelpoc.data.CharactersRepository
+import com.soutosss.marvelpoc.data.mappers.ComicsMapper
 import com.soutosss.marvelpoc.data.model.view.Character
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -25,7 +26,7 @@ fun configureDetail(func: CharacterDetailsConfiguration.() -> Unit) =
 class CharacterDetailsConfiguration() : KoinComponent {
     private lateinit var character: Character
     private val repository: CharactersRepository = mockk(relaxed = true)
-    private val viewModel: CharacterDetailsViewModel = CharacterDetailsViewModel(repository)
+    private val viewModel: CharacterDetailsViewModel = CharacterDetailsViewModel(repository, ComicsMapper())
     private lateinit var rule: ComposeTestRule
 
     fun withComposeTestRule(rule: ComposeTestRule) {

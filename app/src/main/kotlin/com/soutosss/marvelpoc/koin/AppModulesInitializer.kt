@@ -12,7 +12,7 @@ class AppModulesInitializer : KoinInitializer() {
         return listOf(
             module {
                 viewModel { HomeViewModel(get()) }
-                viewModel { CharacterDetailsViewModel(get()) }
+                viewModel { CharacterDetailsViewModel(get(), get()) }
                 single { context!!.applicationContext }
             })
     }
