@@ -40,10 +40,11 @@ jobs:
       - name: espresso testing
         uses: reactivecircus/android-emulator-runner@v2
         with:
+          profile: pixel_3_xl
           api-level: 30
           arch: x86_64
           script:
-            avdmanager list device
+            ./gradlew connectedCheck
 
       - name: Upload emulator tests artifacts
         if: always()
