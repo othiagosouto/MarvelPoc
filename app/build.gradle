@@ -101,6 +101,7 @@ dependencies {
 
     testImplementation Libs.Test.mockk
     testImplementation Libs.AndroidX.Test.archRules
+    testImplementation Libs.Coroutines.turbine
 
     allTestsConfigs Libs.Network.gson
     allTestsConfigs Libs.AndroidX.Test.espressoCore
