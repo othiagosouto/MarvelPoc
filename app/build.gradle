@@ -68,6 +68,7 @@ dependencies {
     implementation project(path: ':data-room')
     implementation project(path: ':data-retrofit')
     implementation project(path: ':data')
+    implementation project(path: ':design')
     implementation project(path: ':shared')
 
     implementation Libs.Kotlin.stdlib
