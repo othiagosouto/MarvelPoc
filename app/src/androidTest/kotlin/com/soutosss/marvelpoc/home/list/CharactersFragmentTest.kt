@@ -32,7 +32,6 @@ class CharactersFragmentTest {
         }
     }
 
-//    @Ignore("not working on the CI")
     @Test
     fun init_homeMode_shouldPresentExpectedCharacters() {
         configure {
@@ -40,8 +39,9 @@ class CharactersFragmentTest {
             withHomeCharacters()
         } launch {
         } check {
-            checkCharacterName()
+            recyclerViewVisible()
             loadingIsNotVisible()
+            checkCharacterName()
             errorMessageNotAvailable()
         }
     }

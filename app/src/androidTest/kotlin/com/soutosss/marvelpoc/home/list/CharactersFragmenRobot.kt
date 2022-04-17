@@ -112,6 +112,10 @@ class CharactersFragmentResult {
         onView(withId(R.id.recycler)).waitUntilNotVisible().check(matches(not(isDisplayed())))
     }
 
+    fun recyclerViewVisible() {
+        onView(withId(R.id.recycler)).waitUntilVisible().check(matches(isDisplayed()))
+    }
+
     fun checkCharacterName() {
         checkCharacterName("3-D Man")
     }
