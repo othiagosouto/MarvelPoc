@@ -138,25 +138,22 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
     }
 
     fun favoriteClick(item: Character) {
-        if (item.favorite) {
-            favorite(item)
-        } else {
-            unFavorite(item)
+        viewModelScope.launch {
+            if (item.favorite) {
+                favorite(item)
+            } else {
+                unFavorite(item)
+            }
         }
     }
 
-    private fun favorite(item: Character) {
-        viewModelScope.launch {
-            repository.favoriteCharacter(item)
-        }
+    private suspend fun favorite(item: Character)  {
+        repository.favoriteCharacter(item)
     }
 
-    private fun unFavorite(item: Character) {
-        viewModelScope.launch {
-            val items = charactersPagedLiveData.value?.snapshot()
-            val position =
-                repository.unFavoriteCharacter(item, items?.filterIsInstance<Character>())
-            _changeAdapter.postValue(position)
-        }
+    private suspend fun unFavorite(item: Character)  {
+        val items = charactersPagedLiveData.value?.snapshot()
+        val position = repository.unFavoriteCharacter(item, items?.filterIsInstance<Character>())
+        position?.let(_changeAdapter::postValue)
     }
 }
