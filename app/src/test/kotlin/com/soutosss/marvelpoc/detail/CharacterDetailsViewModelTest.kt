@@ -1,19 +1,12 @@
 package com.soutosss.marvelpoc.detail
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import app.cash.turbine.test
 import com.soutosss.marvelpoc.data.CharacterDetails
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.Comics
-import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.home.CoroutineTestRule
 import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -26,11 +19,7 @@ class CharacterDetailsViewModelTest {
     private lateinit var repository: CharactersRepository
 
     @get:Rule
-    val rule = InstantTaskExecutorRule()
-
-    @get:Rule
     var coroutineTestRule = CoroutineTestRule()
-
 
     @Before
     fun setup() {
