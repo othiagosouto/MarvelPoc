@@ -13,6 +13,7 @@ class FavoriteFragmentTest {
             withNotEmptyList()
         } launch {
         } check {
+            recyclerViewVisible()
             characterFavoriteName()
         }
     }

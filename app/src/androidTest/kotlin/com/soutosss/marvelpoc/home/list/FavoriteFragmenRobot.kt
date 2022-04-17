@@ -89,6 +89,10 @@ class FavoriteFragmentResult {
         onView(withId(R.id.recycler)).waitUntilNotVisible().check(matches(not(isDisplayed())))
     }
 
+    fun recyclerViewVisible() {
+        onView(withId(R.id.recycler)).waitUntilVisible().check(matches(isDisplayed()))
+    }
+
     fun checkFavoritesEmptyMessage() =
         checkErrorMessage("You don't have favorite marvel character :(")
 }
