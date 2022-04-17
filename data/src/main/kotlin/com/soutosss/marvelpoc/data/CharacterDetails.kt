@@ -10,7 +10,6 @@ class CharacterDetails(
 ) {
     companion object {
         val empty = CharacterDetails(-1, "", "", "", emptyList())
-
     }
 }
 

@@ -32,7 +32,14 @@ fun CharacterDetails(name: String, description: String, imageUrl: String) {
     ) {
         val painterImage = rememberImagePainter(imageUrl)
         if (painterImage.state is ImagePainter.State.Loading) {
-            CircularProgressIndicator()
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(400.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
         } else {
             Image(
                 painter = painterImage,
