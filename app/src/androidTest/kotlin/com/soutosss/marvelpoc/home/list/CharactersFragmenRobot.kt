@@ -121,11 +121,13 @@ class CharactersFragmentResult {
     }
 
     private fun checkCharacterName(characterName: String) {
+        onView(withId(R.id.recycler)).waitUntilVisible()
         onView(
             RecyclerViewMatcher(R.id.recycler)
                 .atPositionOnView(0, R.id.text)
         )
-            .waitUntilVisible().check(matches(withText(characterName)))
+            .waitUntilVisible()
+            .check(matches(withText(characterName)))
     }
 
     fun loadingIsVisible() {
