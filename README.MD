@@ -1,6 +1,12 @@
 # Marvel Characters
 Marvel characters it's an app built to present info related to marvel charaters available at https://developer.marvel.com/docs.
 
+# Current objective
+- Refactor the app to use compose
+- Replace the directs calls to MarvelApi to use a BFF as middle
+- Refactor the koin usage to Hilt
+- Create design system structure
+
 # Goals
 - Study Kotlin and apply some architecture concepts in this project.
 
@@ -30,10 +36,7 @@ This project is built using a MVVM architecture with multi module structure. The
 
 # How To Run?
 You need to follow the steps described steps in order to the application doesn't crash during runtime.
-* Import the project to AndroidStudio
-* Copy api.properties.clone as api.properties
-* Put your Marvel Credentials on the file api.properties.
-  * [How can I get a Marvel key?](https://developer.marvel.com)
+* This app uses a private BFF hosted on digital ocean
 * Build the application
 
 # How To run tests?
@@ -41,4 +44,4 @@ You need to follow the steps described steps in order to the application doesn't
 * Unit: `./gradlew test`
 
 # Contact:
-soutosss@gmail.com
+thiagosouto@duck.com
