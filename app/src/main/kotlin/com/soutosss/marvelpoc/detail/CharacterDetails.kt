@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -49,56 +48,11 @@ fun CharacterDetails(name: String, description: String, imageUrl: String, comics
     ) {
         val painterImage = rememberImagePainter(imageUrl)
         if (painterImage.state is ImagePainter.State.Loading) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(400.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+            Loading()
         } else {
-            Image(
-                painter = painterImage,
-                contentDescription = null,
-                modifier = Modifier
-                    .heightIn(max = 400.dp)
-                    .fillMaxWidth(),
-                contentScale = ContentScale.FillWidth,
-            )
-        }
-        Box(
-            modifier = Modifier
-                .height(50.dp)
-                .fillMaxWidth()
-                .background(color = Color(android.graphics.Color.parseColor("#25000000"))),
-        ) {
-            Text(
-                text = name,
-                modifier = Modifier
-                    .wrapContentSize()
-                    .align(Alignment.Center)
-                    .testTag("name"),
-            )
-        }
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = dimensionResource(id = RDesign.dimen.spacing_medium),
-                    vertical = dimensionResource(id = RDesign.dimen.spacing_small)
-                )
-                .testTag("description"),
-            text = description.ifBlank { stringResource(id = R.string.character_details_description_not_available) })
-
-
-        LazyRow (modifier = Modifier.testTag("character-detais-comics")){
-            this.itemsIndexed(comics) { index, item ->
-                ComicsView(item, index)
-            }
+            ScrollableArea(painterImage, name, description, comics)
         }
     }
-
 }
 
 @Composable
@@ -108,33 +62,97 @@ fun Loading() {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = RDesign.dimen.loading_page_size)))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(400.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = RDesign.dimen.loading_page_size)))
+        }
+    }
+}
+
+@Composable
+fun ScrollableArea(
+    painterImage: ImagePainter,
+    name: String,
+    description: String,
+    comics: List<Comics>
+) {
+    Image(
+        painter = painterImage,
+        contentDescription = null,
+        modifier = Modifier
+            .heightIn(max = 400.dp)
+            .fillMaxWidth(),
+        contentScale = ContentScale.FillWidth,
+    )
+    Box(
+        modifier = Modifier
+            .height(50.dp)
+            .fillMaxWidth()
+            .background(color = Color(android.graphics.Color.parseColor("#25000000"))),
+    ) {
+        Text(
+            text = name,
+            modifier = Modifier
+                .wrapContentSize()
+                .align(Alignment.Center)
+                .testTag("name"),
+        )
+    }
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                horizontal = dimensionResource(id = RDesign.dimen.spacing_medium),
+                vertical = dimensionResource(id = RDesign.dimen.spacing_small)
+            )
+            .testTag("description"),
+        text = description.ifBlank { stringResource(id = R.string.character_details_description_not_available) })
+
+    LazyRow(modifier = Modifier.testTag("character-detais-comics")) {
+        this.itemsIndexed(comics) { index, item ->
+            ComicsView(item, index)
+        }
     }
 }
 
 @Composable
 fun ComicsView(comics: Comics, index: Int) {
     val painterImage = rememberImagePainter(comics.thumbnailUrl)
-    Column(modifier = Modifier.padding(8.dp)) {
-        Image(
-            painter = painterImage,
-            contentDescription = comics.title,
-            Modifier
-                .height(220.dp)
-                .width(150.dp),
-            contentScale = ContentScale.FillWidth,
-        )
-
-        Text(
-            text = comics.title,
+    if (painterImage.state is ImagePainter.State.Loading) {
+        Box(
             modifier = Modifier
-                .width(150.dp)
-                .heightIn(48.dp)
-                .background(color = Color(android.graphics.Color.parseColor("#25000000")))
-                .padding(2.dp)
-                .testTag("comics-title-$index"),
-            maxLines = 2,
-            textAlign = TextAlign.Center
-        )
+                .width(220.dp)
+                .height(200.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = RDesign.dimen.loading_page_size)))
+        }
+    } else {
+        Column(modifier = Modifier.padding(8.dp)) {
+            Image(
+                painter = painterImage,
+                contentDescription = comics.title,
+                Modifier
+                    .height(220.dp)
+                    .width(150.dp),
+                contentScale = ContentScale.FillWidth,
+            )
+
+            Text(
+                text = comics.title,
+                modifier = Modifier
+                    .width(150.dp)
+                    .heightIn(48.dp)
+                    .background(color = Color(android.graphics.Color.parseColor("#25000000")))
+                    .padding(2.dp)
+                    .testTag("comics-title-$index"),
+                maxLines = 2,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
