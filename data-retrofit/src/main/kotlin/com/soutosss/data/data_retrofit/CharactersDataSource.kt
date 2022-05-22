@@ -12,7 +12,7 @@ import kotlin.reflect.KSuspendFunction0
 class CharactersDataSource(
     private val queryText: String?,
     private val scope: CoroutineScope,
-    private val api: CharactersApi,
+    private val api: CharactersBFFApi,
     private val exceptionHandler: (Exception) -> Unit,
     private val loadFinished: () -> Unit,
     private val provideFavoriteIds: suspend () -> List<Long>

@@ -15,7 +15,7 @@ import org.junit.Test
 class CharactersDataSourceTest {
 
     private val charactersList = parseToJson()
-    private lateinit var api: CharactersApi
+    private lateinit var api: CharactersBFFApi
     private val exception = Exception()
     private lateinit var errorCallback: (Exception) -> Unit
     private lateinit var characterList : List<Character>

@@ -6,7 +6,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.gson.Gson
-import com.soutosss.data.data_retrofit.CharactersApi
+import com.soutosss.data.data_retrofit.CharactersBFFApi
 import com.soutosss.data.data_retrofit.RetrofitCharacterRemote
 import com.soutosss.data.data_retrofit.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.R
@@ -31,7 +31,7 @@ fun configure(func: CharactersFragmentConfiguration.() -> Unit) =
     CharactersFragmentConfiguration().apply(func)
 
 class CharactersFragmentConfiguration : KoinComponent {
-    private val api: CharactersApi = mockk(relaxed = true)
+    private val api: CharactersBFFApi = mockk(relaxed = true)
     private val characterLocalDao: CharacterLocalDAO = mockk(relaxed = true)
     private val repository: CharactersRepository
     private var homeViewModel: HomeViewModel

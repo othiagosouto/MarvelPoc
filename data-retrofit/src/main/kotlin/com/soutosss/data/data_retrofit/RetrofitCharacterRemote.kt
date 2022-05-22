@@ -5,7 +5,7 @@ import com.soutosss.marvelpoc.data.character.CharacterRemoteContract
 import com.soutosss.marvelpoc.data.model.view.Character
 import kotlinx.coroutines.CoroutineScope
 
-class RetrofitCharacterRemote(private val charactersApi: CharactersApi) :
+class RetrofitCharacterRemote(private val charactersApi: CharactersBFFApi) :
     CharacterRemoteContract<Character> {
     override fun listCharacters(
         scope: CoroutineScope,
