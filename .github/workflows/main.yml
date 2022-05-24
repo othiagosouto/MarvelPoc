@@ -7,6 +7,22 @@ on:
       - main
 
 jobs:
+  static_analysis:
+    name: "Setup step"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: 11
+
+      - name: Run detekt
+        run: ./gradlew clean detekt
+
   unit_testing:
     name: "Tests step"
     runs-on: ubuntu-latest
