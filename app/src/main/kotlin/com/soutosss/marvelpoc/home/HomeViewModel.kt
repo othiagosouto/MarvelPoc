@@ -1,10 +1,7 @@
 package com.soutosss.marvelpoc.home
 
 import androidx.annotation.NonNull
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -31,6 +28,19 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
 
     private var searchedQuery: String? = null
 
+    private val favoritesIds: MutableList<Long> = mutableListOf()
+
+    init {
+        viewModelScope.launch {
+            fetchFavoriteIds()
+        }
+    }
+
+    private suspend fun fetchFavoriteIds(){
+        favoritesIds.clear()
+        favoritesIds.addAll(repository.fetchFavoriteIds())
+    }
+
     fun charactersPageListContent(): LiveData<PagedList<Character>> {
         val config = PagedList.Config.Builder()
             .setPageSize(20)
@@ -48,7 +58,11 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
                     })
             }
         }
-        charactersPagedLiveData = LivePagedListBuilder(dataSourceFactory, config).setBoundaryCallback(emptyHandlerSuccess).build()
+        charactersPagedLiveData = LivePagedListBuilder(dataSourceFactory, config)
+            .setBoundaryCallback(emptyHandlerSuccess)
+            .build()
+
+
         return charactersPagedLiveData
     }
 
@@ -144,6 +158,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
             } else {
                 unFavorite(item)
             }
+            fetchFavoriteIds()
         }
     }
 
@@ -155,5 +170,9 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
         val items = charactersPagedLiveData.value?.snapshot()
         val position = repository.unFavoriteCharacter(item, items?.filterIsInstance<Character>())
         position?.let(_changeAdapter::postValue)
+    }
+
+    fun isCharacterFavorite(id: Long): Boolean {
+       return favoritesIds.contains(id)
     }
 }

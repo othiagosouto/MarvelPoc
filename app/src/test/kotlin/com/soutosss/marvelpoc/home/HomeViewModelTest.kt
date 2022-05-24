@@ -53,10 +53,8 @@ class HomeViewModelTest {
         charactersList = listOf(character)
         remotePageSource = FakeDataSource(charactersList)
 
-
         characterRemoteContract = mockk()
         characterLocalContract = mockk()
-
 
         repository =
             spyk(CharactersRepository(characterLocalContract, characterRemoteContract, mockk()))
@@ -310,5 +308,24 @@ class HomeViewModelTest {
             })
 
             assertThat(characters).isEqualTo(charactersList)
+        }
+
+    @Test
+    fun `isCharacterFavorite returns true for favorite recipe id`() =
+        runTest {
+            coEvery { characterLocalContract.favoriteIds() } returns listOf(1,2,3)
+            val viewModel = spyk(HomeViewModel(repository))
+
+
+            assertThat(viewModel.isCharacterFavorite(2)).isTrue()
+        }
+
+    @Test
+    fun `isCharacterFavorite returns false for non favorite recipe id`() =
+        runTest {
+            coEvery { characterLocalContract.favoriteIds() } returns listOf(1,2,3)
+            val viewModel = spyk(HomeViewModel(repository))
+
+            assertThat(viewModel.isCharacterFavorite(6)).isFalse()
         }
 }
