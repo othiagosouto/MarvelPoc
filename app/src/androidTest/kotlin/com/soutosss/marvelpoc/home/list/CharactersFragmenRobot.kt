@@ -1,6 +1,8 @@
 package com.soutosss.marvelpoc.home.list
 
 import android.os.Bundle
+import androidx.compose.ui.test.*
+import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -11,12 +13,9 @@ import com.soutosss.data.data_retrofit.RetrofitCharacterRemote
 import com.soutosss.data.data_retrofit.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.character.CharacterLocalContract
-import com.soutosss.marvelpoc.data.room_source.CharacterLocal
 import com.soutosss.marvelpoc.data.room_source.CharacterLocalDAO
 import com.soutosss.marvelpoc.data.room_source.CharacterLocalRoomDataSource
 import com.soutosss.marvelpoc.home.HomeViewModel
-import com.soutosss.marvelpoc.test.RecyclerViewMatcher
 import com.soutosss.marvelpoc.test.waitUntilNotVisible
 import com.soutosss.marvelpoc.test.waitUntilVisible
 import io.mockk.coEvery
@@ -27,10 +26,11 @@ import org.koin.core.component.get
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
-fun configure(func: CharactersFragmentConfiguration.() -> Unit) =
-    CharactersFragmentConfiguration().apply(func)
+fun configure(composeTestRule: ComposeTestRule, func: CharactersFragmentConfiguration.() -> Unit) =
+    CharactersFragmentConfiguration(composeTestRule).apply(func)
 
-class CharactersFragmentConfiguration : KoinComponent {
+class CharactersFragmentConfiguration(private val composeTestRule: ComposeTestRule) :
+    KoinComponent {
     private val api: CharactersBFFApi = mockk(relaxed = true)
     private val characterLocalDao: CharacterLocalDAO = mockk(relaxed = true)
     private val repository: CharactersRepository
@@ -58,7 +58,7 @@ class CharactersFragmentConfiguration : KoinComponent {
             })
 
         launchFragmentInContainer<CharactersFragment>()
-        return CharactersFragmentRobot().apply(func)
+        return CharactersFragmentRobot(composeTestRule).apply(func)
     }
 
     infix fun launchSearch(func: CharactersFragmentRobot.() -> Unit): CharactersFragmentRobot {
@@ -76,7 +76,7 @@ class CharactersFragmentConfiguration : KoinComponent {
                 "searchQuery"
             )
         })
-        return CharactersFragmentRobot().apply(func)
+        return CharactersFragmentRobot(composeTestRule).apply(func)
     }
 
     fun withErrorHome() {
@@ -84,11 +84,17 @@ class CharactersFragmentConfiguration : KoinComponent {
     }
 
     fun withHomeCharacters() {
-        coEvery { api.listCharacters(null, any(), any()) } returns parseToJson()
+        val response = parseToJson()
+        val data = parseToJson().data.copy(results = emptyList())
+        coEvery { api.listCharacters(null, any(), any()) } returns response andThen response.copy(
+            data = data
+        )
     }
 
     fun withSearchContent() {
-        coEvery { api.listCharacters("searchQuery", any(), any()) } returns parseToJson()
+        val response = parseToJson()
+        val data = parseToJson().data.copy(results = emptyList())
+        coEvery { api.listCharacters("searchQuery", any(), any()) } returns parseToJson() andThen response.copy(data = data)
     }
 
     fun withNoFavorites() {
@@ -101,12 +107,12 @@ class CharactersFragmentConfiguration : KoinComponent {
 
 }
 
-class CharactersFragmentRobot {
+class CharactersFragmentRobot(private val composeTestRule: ComposeTestRule) {
     infix fun check(func: CharactersFragmentResult.() -> Unit) =
-        CharactersFragmentResult().apply(func)
+        CharactersFragmentResult(composeTestRule).apply(func)
 }
 
-class CharactersFragmentResult {
+class CharactersFragmentResult(private val composeTestRule: ComposeTestRule) {
 
     fun recyclerViewIsHidden() {
         onView(withId(R.id.recycler)).waitUntilNotVisible().check(matches(not(isDisplayed())))
@@ -121,13 +127,9 @@ class CharactersFragmentResult {
     }
 
     private fun checkCharacterName(characterName: String) {
-        onView(withId(R.id.recycler)).waitUntilVisible()
-        onView(
-            RecyclerViewMatcher(R.id.recycler)
-                .atPositionOnView(0, R.id.text)
-        )
-            .waitUntilVisible()
-            .check(matches(withText(characterName)))
+        composeTestRule
+            .onNodeWithText(characterName)
+            .assertIsDisplayed()
     }
 
     fun loadingIsVisible() {

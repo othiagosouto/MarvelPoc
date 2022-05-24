@@ -1,15 +1,19 @@
 package com.soutosss.marvelpoc.home.list
 
+import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class FavoriteFragmentTest {
+    @get:Rule
+    val composeTestRule = createEmptyComposeRule()
 
     @Test
     fun init_shouldLoadContentFromRoom() {
-        configureFavorite {
+        configureFavorite(composeTestRule) {
             withNotEmptyList()
         } launch {
         } check {
@@ -20,7 +24,7 @@ class FavoriteFragmentTest {
 
     @Test
     fun init_shouldLoadEmptyMessageWhenThereIsNoFavorites() {
-        configureFavorite {
+        configureFavorite(composeTestRule) {
             withNoFavorites()
         } launch {
         } check {

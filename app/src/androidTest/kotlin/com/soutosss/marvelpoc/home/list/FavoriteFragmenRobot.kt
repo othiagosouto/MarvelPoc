@@ -1,5 +1,8 @@
 package com.soutosss.marvelpoc.home.list
 
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onNodeWithText
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -9,7 +12,6 @@ import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.home.HomeViewModel
-import com.soutosss.marvelpoc.test.RecyclerViewMatcher
 import com.soutosss.marvelpoc.test.waitUntilNotVisible
 import com.soutosss.marvelpoc.test.waitUntilVisible
 import io.mockk.every
@@ -19,10 +21,10 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
-fun configureFavorite(func: FavoriteFragmentConfiguration.() -> Unit) =
-    FavoriteFragmentConfiguration().apply(func)
+fun configureFavorite(composeTestRule: ComposeTestRule, func: FavoriteFragmentConfiguration.() -> Unit) =
+    FavoriteFragmentConfiguration(composeTestRule).apply(func)
 
-class FavoriteFragmentConfiguration : KoinComponent {
+class FavoriteFragmentConfiguration(private val composeTestRule: ComposeTestRule) : KoinComponent {
     private val localSource: CharacterLocalContract<Character> = mockk(relaxed = true)
     private val repository: CharactersRepository = CharactersRepository(localSource, mockk(), mockk())
     private val viewModel: HomeViewModel = HomeViewModel(repository)
@@ -36,7 +38,7 @@ class FavoriteFragmentConfiguration : KoinComponent {
             })
 
         launchFragmentInContainer<FavoriteFragment>()
-        return FavoriteFragmentRobot().apply(func)
+        return FavoriteFragmentRobot(composeTestRule).apply(func)
     }
 
 
@@ -57,25 +59,24 @@ class FavoriteFragmentConfiguration : KoinComponent {
     fun withNoFavorites() {
         every { localSource.favoriteList() } returns FakeHomeDataSource(emptyList())
     }
-
 }
 
-class FavoriteFragmentRobot {
+class FavoriteFragmentRobot(private val composeTestRule: ComposeTestRule) {
     infix fun check(func: FavoriteFragmentResult.() -> Unit) =
-        FavoriteFragmentResult().apply(func)
+        FavoriteFragmentResult(composeTestRule).apply(func)
 
 }
 
-class FavoriteFragmentResult {
+class FavoriteFragmentResult(private val composeTestRule: ComposeTestRule) {
 
     fun characterFavoriteName() {
         checkCharacterName("3-D Test HAHAH")
     }
 
     private fun checkCharacterName(characterName: String) {
-        onView(RecyclerViewMatcher(R.id.recycler)
-            .atPositionOnView(0, R.id.text))
-        .waitUntilVisible().check(matches(withText(characterName)))
+        composeTestRule
+            .onNodeWithText(characterName)
+            .assertIsDisplayed()
     }
 
 

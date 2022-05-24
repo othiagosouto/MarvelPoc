@@ -8,4 +8,15 @@ data class Character(
     val thumbnailUrl: String,
     val description: String,
     var favorite: Boolean
-) : Serializable
+) : Serializable{
+
+    companion object{
+        val EMPTY = Character(
+            id = 0L,
+            name = "",
+            thumbnailUrl = "",
+            description = "",
+            favorite = false
+        )
+    }
+}

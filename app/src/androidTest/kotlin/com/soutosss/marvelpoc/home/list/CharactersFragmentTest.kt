@@ -1,16 +1,19 @@
 package com.soutosss.marvelpoc.home.list
 
+import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Ignore
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class CharactersFragmentTest {
+    @get:Rule
+    val composeTestRule = createEmptyComposeRule()
 
     @Test
     fun init_homeMode_shouldPresentLoadingWhileContentIsBeingLoaded() {
-        configure {
+        configure(composeTestRule) {
             withMockedViewModelLoading()
         } launch {
         } check {
@@ -21,7 +24,7 @@ class CharactersFragmentTest {
 
     @Test
     fun init_homeMode_shouldLoadErrorWithExpectedMessage() {
-        configure {
+        configure(composeTestRule) {
             withErrorHome()
             withNoFavorites()
         } launch {
@@ -34,7 +37,7 @@ class CharactersFragmentTest {
 
     @Test
     fun init_homeMode_shouldPresentExpectedCharacters() {
-        configure {
+        configure(composeTestRule) {
             withNoFavorites()
             withHomeCharacters()
         } launch {
@@ -48,7 +51,7 @@ class CharactersFragmentTest {
 
     @Test
     fun init_searchMode_shouldPresentExpectedCharacters() {
-        configure {
+        configure(composeTestRule) {
             withNoFavorites()
             withSearchContent()
         } launchSearch  {
