@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>NewLineAtEndOfFile:EmptyDataException.kt$com.soutosss.marvelpoc.shared.EmptyDataException.kt</ID>
+    <ID>NewLineAtEndOfFile:KoinInitializer.kt$com.soutosss.marvelpoc.shared.koin.KoinInitializer.kt</ID>
+    <ID>NewLineAtEndOfFile:ModulesInitializer.kt$com.soutosss.marvelpoc.shared.koin.ModulesInitializer.kt</ID>
+    <ID>NewLineAtEndOfFile:ModulesInitializerTest.kt$com.soutosss.marvelpoc.shared.koin.ModulesInitializerTest.kt</ID>
+  </CurrentIssues>
+</SmellBaseline>

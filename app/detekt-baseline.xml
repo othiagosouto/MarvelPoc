@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>FunctionNaming:CharacterDetails.kt$@Composable fun CharacterDetails(name: String, description: String, imageUrl: String, comics: List&lt;Comics&gt;)</ID>
+    <ID>FunctionNaming:CharacterDetails.kt$@Composable fun ComicsView(comics: Comics, index: Int)</ID>
+    <ID>FunctionNaming:CharacterDetails.kt$@Composable fun Loading()</ID>
+    <ID>FunctionNaming:CharacterDetails.kt$@Composable fun ScrollableArea( painterImage: ImagePainter, name: String, description: String, comics: List&lt;Comics&gt; )</ID>
+    <ID>FunctionNaming:CharacterDetailsActivity.kt$@Composable fun CharacterDetailsScreen( process: (Intent) -&gt; Unit, viewState: State&lt;DetailsViewState&gt; )</ID>
+    <ID>FunctionNaming:CharacterDetailsActivity.kt$@Composable fun LoadedViewState(viewState: DetailsViewState.Loaded, process: (Intent) -&gt; Unit)</ID>
+    <ID>FunctionNaming:CharacterItem.kt$@Composable fun CharacterItem( modifier: Modifier = Modifier, character: Character, onClick: (Character) -&gt; Unit, onCheckedChange: (Boolean) -&gt; Unit )</ID>
+    <ID>LongParameterList:imageFunctions.kt$( imageView: ImageView, url: String, progress: ContentLoadingProgressBar, favorite: View, headerText: View, headerView: View )</ID>
+    <ID>LongParameterList:imageFunctions.kt$( isLoading: Boolean, imageView: View, progress: ContentLoadingProgressBar, favorite: View, headerText: View, headerView: View )</ID>
+    <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$20</ID>
+    <ID>MaxLineLength:BaseFragment.kt$BaseFragment$val adapter = CharactersAdapter(homeViewModel::favoriteClick, ::startDetails, homeViewModel::isCharacterFavorite)</ID>
+    <ID>MaxLineLength:CharactersAdapter.kt$CharactersAdapter.CharacterHomeViewHolder$inner</ID>
+    <ID>NewLineAtEndOfFile:AppModulesInitializer.kt$com.soutosss.marvelpoc.koin.AppModulesInitializer.kt</ID>
+    <ID>NewLineAtEndOfFile:CharacterView.kt$com.soutosss.marvelpoc.widget.CharacterView.kt</ID>
+    <ID>NewLineAtEndOfFile:HomeViewModelTest.kt$com.soutosss.marvelpoc.home.HomeViewModelTest.kt</ID>
+    <ID>NewLineAtEndOfFile:LifecycleFunctions.kt$com.soutosss.marvelpoc.home.LifecycleFunctions.kt</ID>
+    <ID>NewLineAtEndOfFile:MarvelPocApplication.kt$com.soutosss.marvelpoc.MarvelPocApplication.kt</ID>
+    <ID>NewLineAtEndOfFile:ViewPagerAdapter.kt$com.soutosss.marvelpoc.home.ViewPagerAdapter.kt</ID>
+    <ID>NewLineAtEndOfFile:imageFunctions.kt$com.soutosss.marvelpoc.widget.imageFunctions.kt</ID>
+    <ID>NewLineAtEndOfFile:mvi.kt$com.soutosss.marvelpoc.detail.mvi.kt</ID>
+    <ID>TooManyFunctions:HomeViewModel.kt$HomeViewModel : ViewModel</ID>
+    <ID>UnusedPrivateMember:CharacterItem.kt$@Composable @Preview("EIta") private fun eitacarai()</ID>
+    <ID>WildcardImport:CharacterDetailsActivity.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:CharacterDetailsActivity.kt$import androidx.compose.material.*</ID>
+    <ID>WildcardImport:CharacterItem.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:HomeViewModel.kt$import androidx.lifecycle.*</ID>
+  </CurrentIssues>
+</SmellBaseline>
