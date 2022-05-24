@@ -78,5 +78,13 @@ class CharactersRepositoryTest {
 
         }
 
+    @Test
+    fun `fetchFavoriteIds return a list of favorite ids`() = runBlockingTest {
+        val ids: List<Long> = listOf(1, 2, 3)
+
+        coEvery { localSourceMock.favoriteIds() } returns ids
+
+        assertThat(repository.fetchFavoriteIds()).isEqualTo(ids)
+    }
 
 }

@@ -13,6 +13,8 @@ class CharactersRepository(
 ) {
     fun fetchFavoriteCharacters() = localDataSource.favoriteList()
 
+    suspend fun fetchFavoriteIds(): List<Long> = localDataSource.favoriteIds()
+
     suspend fun unFavoriteCharacter(
         item: Character,
         list: List<Character>?
