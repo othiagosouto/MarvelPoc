@@ -8,7 +8,7 @@ on:
 
 jobs:
   static_analysis:
-    name: "Setup step"
+    name: "Static analysis step"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -20,8 +20,11 @@ jobs:
           distribution: 'zulu'
           java-version: 11
 
-      - name: Run detekt
+      - name: Run detekt & detekt ktlint wrapper
         run: ./gradlew clean detekt
+
+      - name: Run android lint
+        run: ./gradlew lint
 
   unit_testing:
     name: "Tests step"
