@@ -39,7 +39,7 @@ abstract class BaseFragment : Fragment(R.layout.fragment_characters) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val adapter = CharactersAdapter(homeViewModel::favoriteClick, ::startDetails)
+        val adapter = CharactersAdapter(homeViewModel::favoriteClick, ::startDetails, homeViewModel::isCharacterFavorite)
 
         recycler.adapter = adapter
         observeLiveData(adapter)
