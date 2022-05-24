@@ -8,6 +8,8 @@ buildscript {
     dependencies {
         classpath Libs.androidGradlePlugin
         classpath Libs.Kotlin.gradlePlugin
+        classpath Libs.Kotlin.detektPlugin
+
     }
 }
 
@@ -29,4 +31,8 @@ subprojects {
             freeCompilerArgs += '-Xopt-in=kotlin.RequiresOptIn'
         }
     }
+}
+
+allprojects {
+    apply plugin: "io.gitlab.arturbosch.detekt"
 }
