@@ -35,4 +35,9 @@ subprojects {
 
 allprojects {
     apply plugin: "io.gitlab.arturbosch.detekt"
+
+    detekt{
+        config.setFrom(files(rootProject.file("configs/detekt.yaml")))
+        buildUponDefaultConfig = true
+    }
 }
