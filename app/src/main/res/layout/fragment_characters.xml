@@ -10,14 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/default_padding" />
+        app:layout_constraintGuide_begin="@dimen/spacing_medium" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/default_padding" />
+        app:layout_constraintGuide_end="@dimen/spacing_medium" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
