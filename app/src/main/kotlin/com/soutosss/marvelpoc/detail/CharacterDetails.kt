@@ -132,7 +132,7 @@ fun ComicsView(comics: Comics, index: Int) {
             CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = RDesign.dimen.loading_page_size)))
         }
     } else {
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = Modifier.padding(dimensionResource(id = RDesign.dimen.spacing_small))) {
             Image(
                 painter = painterImage,
                 contentDescription = comics.title,
