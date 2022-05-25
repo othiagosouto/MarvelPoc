@@ -20,6 +20,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
@@ -34,25 +35,12 @@ fun CharacterItem(
     onCheckedChange: (Boolean) -> Unit
 ) {
     Column(modifier = modifier.clickable(onClick = { onClick(character) })) {
-        val painterImage = rememberImagePainter(character.thumbnailUrl)
-        if (painterImage.state is ImagePainter.State.Loading) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(150.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = R.dimen.loading_page_size)))
-            }
-        } else {
-            Image(
-                painter = painterImage,
-                modifier = Modifier
-                    .height(150.dp),
-                contentDescription = "",
-                contentScale = ContentScale.Crop,
-            )
-        }
+
+        Image(
+            modifier = Modifier.fillMaxWidth(),
+            url = character.thumbnailUrl,
+            height = 150.dp
+        )
 
         Row(
             modifier = Modifier
@@ -81,6 +69,34 @@ fun CharacterItem(
                 Icon(painter = painter, contentDescription = "")
             }
         }
+    }
+}
+
+@Composable
+private fun Image(modifier: Modifier = Modifier, url: String, height: Dp) {
+    val painterImage = rememberImagePainter(url)
+
+    if (painterImage.state is ImagePainter.State.Loading) {
+        Loading(modifier = modifier, heightIn = height)
+    } else {
+        Image(
+            painter = painterImage,
+            modifier = modifier
+                .height(height),
+            contentDescription = "",
+            contentScale = ContentScale.Crop,
+        )
+    }
+}
+
+@Composable
+private fun Loading(modifier: Modifier = Modifier, heightIn: Dp) {
+    Box(
+        modifier = modifier
+            .heightIn(heightIn),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = R.dimen.loading_page_size)))
     }
 }
 
