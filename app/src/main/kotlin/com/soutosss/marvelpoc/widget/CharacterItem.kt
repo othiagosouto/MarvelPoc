@@ -9,7 +9,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -18,7 +17,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -87,8 +85,8 @@ fun CharacterItem(
 }
 
 @Composable
-@Preview("EIta")
-private fun eitacarai() {
+@Preview("Character Item Preview")
+private fun CharacterItemPreview() {
     val character = Character(id = 30L, name = "Souto", "httt", description = "", favorite = true)
     CharacterItem(modifier = Modifier.height(150.dp), character, {}) {}
 }
