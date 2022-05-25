@@ -79,10 +79,6 @@ class CharacterDetailsConfiguration() : KoinComponent {
 class CharacterDetailsRobot(private val rule: ComposeTestRule) {
     infix fun check(func: CharacterDetailsResult.() -> Unit) =
         CharacterDetailsResult(rule).apply(func)
-
-    fun clickOnFavorite() {
-        onView(withId(R.id.favorite)).perform(click())
-    }
 }
 
 class CharacterDetailsResult(private val rule: ComposeTestRule) {
