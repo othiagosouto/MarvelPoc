@@ -66,7 +66,7 @@ fun CharacterItem(
                 checked = character.favorite,
                 onCheckedChange = onCheckedChange
             ) {
-                Icon(painter = painter, contentDescription = "")
+                Icon(painter = painter, contentDescription = "", tint = colorResource(id = R.color.colorPrimary))
             }
         }
     }
