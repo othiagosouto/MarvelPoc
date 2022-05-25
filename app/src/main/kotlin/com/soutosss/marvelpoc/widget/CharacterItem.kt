@@ -59,16 +59,31 @@ fun CharacterItem(
                 maxLines = 2,
                 textAlign = TextAlign.Center
             )
-            val resId =
-                if (character.favorite) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px
-            val painter = rememberVectorPainter(ImageVector.vectorResource(id = resId))
-            IconToggleButton(
-                checked = character.favorite,
+            FavoriteToggle(
+                isFavorite = character.favorite,
                 onCheckedChange = onCheckedChange
-            ) {
-                Icon(painter = painter, contentDescription = "", tint = colorResource(id = R.color.colorPrimary))
-            }
+            )
         }
+    }
+}
+
+@Composable
+private fun FavoriteToggle(
+    isFavorite: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    val resId =
+        if (isFavorite) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px
+    val painter = rememberVectorPainter(ImageVector.vectorResource(id = resId))
+    IconToggleButton(
+        checked = isFavorite,
+        onCheckedChange = onCheckedChange
+    ) {
+        Icon(
+            painter = painter,
+            contentDescription = "",
+            tint = colorResource(id = R.color.colorPrimary)
+        )
     }
 }
 
