@@ -14,19 +14,27 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 
 class RetrofitInitializer : KoinInitializer() {
     override fun createKoinModules(): List<Module> = listOf(module {
         single { RetrofitCharacterRemote(get()) as CharacterRemoteContract<Result> }
-        single { getBffApi()}
+        single { getRetrofitInstance(get())}
         single { RetrofitCharacterDetailsRemote(get()) as CharacterDetailsRemoteContract<CharacterDetails> }
     })
 
+    private fun getRetrofitInstance(context: Context): CharactersBFFApi {
+        val httpBuilder = OkHttpClient.Builder()
 
-    private fun getBffApi(): CharactersBFFApi {
+        httpBuilder.addInterceptor(
+            ConnectionDetectionInterceptor(
+                context,
+                ::isNetworkNotConnected
+            )
+        )
+
         val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.BFF_HOST)
+            .client(httpBuilder.build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

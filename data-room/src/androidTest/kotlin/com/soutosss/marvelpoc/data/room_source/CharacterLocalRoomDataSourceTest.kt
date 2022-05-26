@@ -12,7 +12,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class CharacterLocalRoomDataSourceTest {
+internal class CharacterLocalRoomDataSourceTest {
 
     private lateinit var context: Context
     private lateinit var appDatabase: AppDatabase
