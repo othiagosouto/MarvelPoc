@@ -7,9 +7,10 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.home.HomeViewModel
+import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
-import io.mockk.verify
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.loadKoinModules
@@ -22,6 +23,11 @@ internal class SearchableActivityConfiguration : KoinComponent {
     private val mockRepository: CharactersRepository = mockk(relaxed = true)
     private val homeViewModel: HomeViewModel = spyk(HomeViewModel(mockRepository))
     private lateinit var intent: Intent
+
+    init {
+        coEvery { mockRepository.fetchFavoriteIds() } returns emptyList()
+        every { homeViewModel.charactersPageListContent() } returns mockk(relaxed = true)
+    }
 
     fun withSearchableIntent() {
         intent = Intent(
@@ -60,7 +66,7 @@ internal class SearchableActivityResult : KoinComponent {
     private val viewModel: HomeViewModel by inject()
 
     fun callViewModelWithExpectedContent() {
-        verify { viewModel.searchedQuery = "ops" }
+        assertThat(viewModel.searchedQuery).isEqualTo("ops")
     }
 
     fun notCallViewModel() {
