@@ -284,7 +284,7 @@ class HomeViewModelTest {
         }
 
     @Test
-    fun `initSearchQuery should init searchContent and do search for characters starting expected name`() =
+    fun `updating searchedQuery should init searchContent and do search for characters starting expected name`() =
         runTest {
 
             coEvery { characterLocalContract.favoriteIds() } returns emptyList()

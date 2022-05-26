@@ -5,7 +5,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class SearchableActivityTest {
+internal class SearchableActivityTest {
 
     @Test
     fun whenActivityStartedWithSearchableIntent_shouldCallSearchApiWithExpectedContent() {

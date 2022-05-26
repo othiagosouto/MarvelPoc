@@ -7,7 +7,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class CharactersFragmentTest {
+internal class CharactersFragmentTest {
     @get:Rule
     val composeTestRule = createEmptyComposeRule()
 

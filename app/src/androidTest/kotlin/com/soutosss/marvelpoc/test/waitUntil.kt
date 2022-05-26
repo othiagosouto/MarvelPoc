@@ -8,10 +8,10 @@ import junit.framework.AssertionFailedError
 import org.hamcrest.Matchers.not
 import java.util.concurrent.TimeoutException
 
-fun ViewInteraction.waitUntilVisible(timeout: Long = 10_000L): ViewInteraction =
+internal fun ViewInteraction.waitUntilVisible(timeout: Long = 10_000L): ViewInteraction =
     waitUntil(matches(isDisplayed()), timeout)
 
-fun ViewInteraction.waitUntilNotVisible(timeout: Long = 10_000L): ViewInteraction =
+internal fun ViewInteraction.waitUntilNotVisible(timeout: Long = 10_000L): ViewInteraction =
     waitUntil(matches(not(isDisplayed())), timeout)
 
 private fun ViewInteraction.waitUntil(viewMatcher: ViewAssertion, timeout: Long): ViewInteraction {

@@ -4,21 +4,24 @@ import android.app.SearchManager
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
+import com.google.common.truth.Truth.assertThat
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.home.HomeViewModel
+import io.mockk.impl.annotations.SpyK
 import io.mockk.mockk
+import io.mockk.spyk
 import io.mockk.verify
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
-fun configure(func: SearchableActivityConfiguration.() -> Unit) =
+internal fun configure(func: SearchableActivityConfiguration.() -> Unit) =
     SearchableActivityConfiguration().apply(func)
 
-class SearchableActivityConfiguration : KoinComponent {
+internal class SearchableActivityConfiguration : KoinComponent {
     private val mockRepository: CharactersRepository = mockk(relaxed = true)
-    private val homeViewModel: HomeViewModel = mockk(relaxed = true)
+    private val homeViewModel: HomeViewModel = spyk(HomeViewModel(mockRepository))
     private lateinit var intent: Intent
 
     fun withSearchableIntent() {
@@ -49,12 +52,12 @@ class SearchableActivityConfiguration : KoinComponent {
     }
 }
 
-class SearchableActivityRobot {
+internal class SearchableActivityRobot {
     infix fun check(func: SearchableActivityResult.() -> Unit) =
         SearchableActivityResult().apply(func)
 }
 
-class SearchableActivityResult : KoinComponent {
+internal class SearchableActivityResult : KoinComponent {
     private val viewModel: HomeViewModel by inject()
 
     fun callViewModelWithExpectedContent() {

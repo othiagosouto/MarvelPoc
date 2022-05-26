@@ -21,10 +21,10 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
-fun configureFavorite(composeTestRule: ComposeTestRule, func: FavoriteFragmentConfiguration.() -> Unit) =
+internal fun configureFavorite(composeTestRule: ComposeTestRule, func: FavoriteFragmentConfiguration.() -> Unit) =
     FavoriteFragmentConfiguration(composeTestRule).apply(func)
 
-class FavoriteFragmentConfiguration(private val composeTestRule: ComposeTestRule) : KoinComponent {
+internal class FavoriteFragmentConfiguration(private val composeTestRule: ComposeTestRule) : KoinComponent {
     private val localSource: CharacterLocalContract<Character> = mockk(relaxed = true)
     private val repository: CharactersRepository = CharactersRepository(localSource, mockk(), mockk())
     private val viewModel: HomeViewModel = HomeViewModel(repository)
@@ -61,13 +61,13 @@ class FavoriteFragmentConfiguration(private val composeTestRule: ComposeTestRule
     }
 }
 
-class FavoriteFragmentRobot(private val composeTestRule: ComposeTestRule) {
+internal class FavoriteFragmentRobot(private val composeTestRule: ComposeTestRule) {
     infix fun check(func: FavoriteFragmentResult.() -> Unit) =
         FavoriteFragmentResult(composeTestRule).apply(func)
 
 }
 
-class FavoriteFragmentResult(private val composeTestRule: ComposeTestRule) {
+internal class FavoriteFragmentResult(private val composeTestRule: ComposeTestRule) {
 
     fun characterFavoriteName() {
         checkCharacterName("3-D Test HAHAH")

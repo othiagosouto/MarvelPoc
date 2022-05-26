@@ -26,10 +26,10 @@ import org.koin.core.component.get
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
-fun configure(composeTestRule: ComposeTestRule, func: CharactersFragmentConfiguration.() -> Unit) =
+internal fun configure(composeTestRule: ComposeTestRule, func: CharactersFragmentConfiguration.() -> Unit) =
     CharactersFragmentConfiguration(composeTestRule).apply(func)
 
-class CharactersFragmentConfiguration(private val composeTestRule: ComposeTestRule) :
+internal class CharactersFragmentConfiguration(private val composeTestRule: ComposeTestRule) :
     KoinComponent {
     private val api: CharactersBFFApi = mockk(relaxed = true)
     private val characterLocalDao: CharacterLocalDAO = mockk(relaxed = true)
@@ -107,12 +107,12 @@ class CharactersFragmentConfiguration(private val composeTestRule: ComposeTestRu
 
 }
 
-class CharactersFragmentRobot(private val composeTestRule: ComposeTestRule) {
+internal class CharactersFragmentRobot(private val composeTestRule: ComposeTestRule) {
     infix fun check(func: CharactersFragmentResult.() -> Unit) =
         CharactersFragmentResult(composeTestRule).apply(func)
 }
 
-class CharactersFragmentResult(private val composeTestRule: ComposeTestRule) {
+internal class CharactersFragmentResult(private val composeTestRule: ComposeTestRule) {
 
     fun recyclerViewIsHidden() {
         onView(withId(R.id.recycler)).waitUntilNotVisible().check(matches(not(isDisplayed())))
