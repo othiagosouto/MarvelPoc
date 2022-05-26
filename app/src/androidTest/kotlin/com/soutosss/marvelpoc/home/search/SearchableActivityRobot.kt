@@ -65,6 +65,6 @@ internal class SearchableActivityResult : KoinComponent {
     }
 
     fun notCallViewModel() {
-        verify (exactly = 0){ viewModel.searchedQuery?.setProperty(any()) }
+        assertThat(viewModel.searchedQuery).isNull()
     }
 }
