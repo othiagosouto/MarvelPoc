@@ -20,5 +20,4 @@ class DataInitializer : KoinInitializer() {
             factory { ComicsMapper() }
         })
     }
-
 }

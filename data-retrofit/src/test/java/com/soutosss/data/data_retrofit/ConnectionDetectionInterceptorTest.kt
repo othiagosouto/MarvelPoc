@@ -11,7 +11,7 @@ import okhttp3.Response
 import org.junit.Before
 import org.junit.Test
 
-class ConnectionDetectionInterceptorTest {
+internal class ConnectionDetectionInterceptorTest {
     private lateinit var context: Context
 
     @Before

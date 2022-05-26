@@ -7,12 +7,16 @@ import com.soutosss.data.data_retrofit.character.MarvelCharactersResponse
 import com.soutosss.data.data_retrofit.ext.toCharacter
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.shared.EmptyDataException
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 
-class CharactersDataSourceTest {
+internal class CharactersDataSourceTest {
 
     private val charactersList = parseToJson()
     private lateinit var api: CharactersBFFApi

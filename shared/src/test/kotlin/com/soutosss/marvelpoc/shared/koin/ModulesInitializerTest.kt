@@ -5,7 +5,7 @@ import org.junit.Test
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-class ModulesInitializerTest {
+internal class ModulesInitializerTest {
 
     @Test
     fun `addAll should add content to modules list`() {

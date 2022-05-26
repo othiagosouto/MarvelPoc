@@ -13,7 +13,7 @@ import org.junit.Before
 import org.junit.Test
 import java.lang.Exception
 
-class CharactersRepositoryTest {
+internal class CharactersRepositoryTest {
 
     private lateinit var remoteSourceMock: CharacterRemoteContract<Character>
     private lateinit var localSourceMock: CharacterLocalContract<Character>
@@ -75,7 +75,6 @@ class CharactersRepositoryTest {
                     localSourceMock::favoriteIds
                 )
             }
-
         }
 
     @Test
@@ -86,5 +85,4 @@ class CharactersRepositoryTest {
 
         assertThat(repository.fetchFavoriteIds()).isEqualTo(ids)
     }
-
 }

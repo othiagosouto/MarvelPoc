@@ -4,7 +4,7 @@ import com.soutosss.marvelpoc.data.Comics
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ComicsMapperTest {
+internal class ComicsMapperTest {
 
     @Test
     fun `returns comics`() {
