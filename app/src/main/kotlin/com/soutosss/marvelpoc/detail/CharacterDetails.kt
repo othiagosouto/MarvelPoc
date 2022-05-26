@@ -2,23 +2,19 @@ package com.soutosss.marvelpoc.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,6 +30,8 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.Comics
+import dev.thiagosouto.marvelpoc.design.components.Loading
+import dev.thiagosouto.marvelpoc.design.components.LoadingPage
 import dev.thiagosouto.marvelpoc.design.R as RDesign
 
 @Composable
@@ -48,27 +46,9 @@ fun CharacterDetails(name: String, description: String, imageUrl: String, comics
     ) {
         val painterImage = rememberImagePainter(imageUrl)
         if (painterImage.state is ImagePainter.State.Loading) {
-            Loading()
+            LoadingPage()
         } else {
             ScrollableArea(painterImage, name, description, comics)
-        }
-    }
-}
-
-@Composable
-fun Loading() {
-    Row(
-        modifier = Modifier.fillMaxSize(),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(400.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = RDesign.dimen.loading_page_size)))
         }
     }
 }
@@ -123,14 +103,8 @@ fun ScrollableArea(
 fun ComicsView(comics: Comics, index: Int) {
     val painterImage = rememberImagePainter(comics.thumbnailUrl)
     if (painterImage.state is ImagePainter.State.Loading) {
-        Box(
-            modifier = Modifier
-                .width(220.dp)
-                .height(200.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = RDesign.dimen.loading_page_size)))
-        }
+        val loadingSize = dimensionResource(id = RDesign.dimen.loading_page_size)
+        Loading(modifier = Modifier.width(220.dp).height(200.dp), loadingSize)
     } else {
         Column(modifier = Modifier.padding(dimensionResource(id = RDesign.dimen.spacing_small))) {
             Image(

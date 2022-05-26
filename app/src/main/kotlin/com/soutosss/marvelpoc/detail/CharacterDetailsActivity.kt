@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.design.components.LoadingPage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterDetailsActivity : ComponentActivity() {
@@ -58,7 +59,7 @@ fun CharacterDetailsScreen(
     viewState: State<DetailsViewState>
 ) {
     when (val content = viewState.value) {
-        is DetailsViewState.Loading -> Loading()
+        is DetailsViewState.Loading -> LoadingPage()
         is DetailsViewState.Loaded -> LoadedViewState(content as DetailsViewState.Loaded, process)
     }
 }
