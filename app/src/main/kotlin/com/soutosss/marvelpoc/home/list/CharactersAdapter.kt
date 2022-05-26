@@ -30,7 +30,8 @@ class CharactersAdapter(
         getItem(position)?.let(holder::bind)
     }
 
-    inner class CharacterHomeViewHolder(private val characterView: CharacterView) : RecyclerView.ViewHolder(characterView) {
+    inner class CharacterHomeViewHolder(private val characterView: CharacterView) :
+        RecyclerView.ViewHolder(characterView) {
 
         fun bind(character: Character) {
             val isFavorite = isFavorite(character.id)

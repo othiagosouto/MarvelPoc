@@ -12,7 +12,7 @@ class CharactersFragment : BaseFragment() {
         homeViewModel.charactersPageListContent()
 
     override fun observeNotCommonContent(adapter: CharactersAdapter) {
-        arguments?.getString(QUERY_TEXT_KEY, null)?.let(homeViewModel::initSearchQuery)
+        arguments?.getString(QUERY_TEXT_KEY, null)?.let(homeViewModel::searchedQuery::set)
         homeViewModel.changeAdapter.observe(this.viewLifecycleOwner, Observer {
             adapter.notifyItemChanged(it)
         })

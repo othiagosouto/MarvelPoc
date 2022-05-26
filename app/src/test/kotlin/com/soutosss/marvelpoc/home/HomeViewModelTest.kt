@@ -159,7 +159,7 @@ class HomeViewModelTest {
                 )
             } returns remotePageSource
 
-            viewModel.initSearchQuery("content")
+            viewModel.searchedQuery = "content"
             val item = viewModel.charactersPageListContent()
 
             var list: List<Character>? = null
@@ -191,7 +191,7 @@ class HomeViewModelTest {
                 )
             } returns remotePageSource
 
-            viewModel.initSearchQuery("content")
+            viewModel.searchedQuery = "content"
             val item = viewModel.charactersPageListContent()
 
             var list: List<Character>? = null
@@ -300,7 +300,7 @@ class HomeViewModelTest {
 
             val item = viewModel.charactersPageListContent()
 
-            viewModel.initSearchQuery("Ops")
+            viewModel.searchedQuery = "Ops"
             var characters: List<Character>? = null
 
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {

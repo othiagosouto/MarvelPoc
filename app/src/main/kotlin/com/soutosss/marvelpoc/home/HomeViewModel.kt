@@ -29,7 +29,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
     private val _changeAdapter = MutableLiveData<Int>()
     val changeAdapter: LiveData<Int> = _changeAdapter
 
-    private var searchedQuery: String? = null
+    var searchedQuery: String? = null
 
     private val favoritesIds: MutableList<Long> = mutableListOf()
 
@@ -39,14 +39,14 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
         }
     }
 
-    private suspend fun fetchFavoriteIds(){
+    private suspend fun fetchFavoriteIds() {
         favoritesIds.clear()
         favoritesIds.addAll(repository.fetchFavoriteIds())
     }
 
     fun charactersPageListContent(): LiveData<PagedList<Character>> {
         val config = PagedList.Config.Builder()
-            .setPageSize(20)
+            .setPageSize(PAGE_SIZE)
             .setEnablePlaceholders(false)
             .build()
 
@@ -74,7 +74,7 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
 
     fun charactersFavorite(): LiveData<PagedList<Character>> {
         val config = PagedList.Config.Builder()
-            .setPageSize(20)
+            .setPageSize(PAGE_SIZE)
             .setEnablePlaceholders(false)
             .build()
 
@@ -150,10 +150,6 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
         }
     }
 
-    fun initSearchQuery(query: String) {
-        searchedQuery = query
-    }
-
     fun favoriteClick(item: Character) {
         viewModelScope.launch {
             if (item.favorite) {
@@ -165,17 +161,21 @@ class HomeViewModel(private val repository: CharactersRepository) : ViewModel() 
         }
     }
 
-    private suspend fun favorite(item: Character)  {
+    private suspend fun favorite(item: Character) {
         repository.favoriteCharacter(item)
     }
 
-    private suspend fun unFavorite(item: Character)  {
+    private suspend fun unFavorite(item: Character) {
         val items = charactersPagedLiveData.value?.snapshot()
-        val position = repository.unFavoriteCharacter(item, items?.filterIsInstance<Character>())
+        val position = repository.unFavoriteCharacter(item, items)
         position?.let(_changeAdapter::postValue)
     }
 
     fun isCharacterFavorite(id: Long): Boolean {
-       return favoritesIds.contains(id)
+        return favoritesIds.contains(id)
+    }
+
+    companion object {
+        private const val PAGE_SIZE = 20
     }
 }

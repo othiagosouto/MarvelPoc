@@ -58,10 +58,10 @@ class SearchableActivityResult : KoinComponent {
     private val viewModel: HomeViewModel by inject()
 
     fun callViewModelWithExpectedContent() {
-        verify { viewModel.initSearchQuery("ops") }
+        verify { viewModel.searchedQuery = "ops" }
     }
 
     fun notCallViewModel() {
-        verify (exactly = 0){ viewModel.initSearchQuery(any()) }
+        verify (exactly = 0){ viewModel.searchedQuery?.setProperty(any()) }
     }
 }
