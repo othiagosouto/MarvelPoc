@@ -21,10 +21,10 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
-fun configureDetail(func: CharacterDetailsConfiguration.() -> Unit) =
+internal fun configureDetail(func: CharacterDetailsConfiguration.() -> Unit) =
     CharacterDetailsConfiguration().apply(func)
 
-class CharacterDetailsConfiguration() : KoinComponent {
+internal class CharacterDetailsConfiguration() : KoinComponent {
     private lateinit var character: Character
     private val repository: CharactersRepository = mockk(relaxed = true)
     private val viewModel: CharacterDetailsViewModel =
@@ -76,12 +76,12 @@ class CharacterDetailsConfiguration() : KoinComponent {
 
 }
 
-class CharacterDetailsRobot(private val rule: ComposeTestRule) {
+internal class CharacterDetailsRobot(private val rule: ComposeTestRule) {
     infix fun check(func: CharacterDetailsResult.() -> Unit) =
         CharacterDetailsResult(rule).apply(func)
 }
 
-class CharacterDetailsResult(private val rule: ComposeTestRule) {
+internal class CharacterDetailsResult(private val rule: ComposeTestRule) {
 
     fun characterName() {
         rule.onNodeWithTag("name").assert(hasText("some name"))

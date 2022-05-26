@@ -61,5 +61,4 @@ internal class CharactersFragmentTest {
             errorMessageNotAvailable()
         }
     }
-
 }

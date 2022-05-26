@@ -7,7 +7,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.home.HomeViewModel
-import io.mockk.impl.annotations.SpyK
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
