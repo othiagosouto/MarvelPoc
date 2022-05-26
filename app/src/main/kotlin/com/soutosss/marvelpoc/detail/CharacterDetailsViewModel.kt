@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.mappers.ComicsMapper
-import com.soutosss.marvelpoc.data.model.view.Comics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

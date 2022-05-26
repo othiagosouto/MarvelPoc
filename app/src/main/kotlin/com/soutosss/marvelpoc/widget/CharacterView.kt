@@ -19,7 +19,6 @@ class CharacterView @JvmOverloads constructor(
 
     fun updateCharacter(character: Character) {
         this.character = character
-
     }
 
     fun setListeners(favoriteClick: (Character) -> Unit, itemClick: ((Character) -> Unit) = {  }) {

@@ -3,13 +3,15 @@ package com.soutosss.marvelpoc.detail
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.collectAsState
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
@@ -82,7 +84,12 @@ fun LoadedViewState(viewState: DetailsViewState.Loaded, process: (Intent) -> Uni
             elevation = 2.dp
         )
 
-        CharacterDetails(viewState.name, viewState.description, viewState.imageUrl, viewState.comics)
+        CharacterDetails(
+            viewState.name,
+            viewState.description,
+            viewState.imageUrl,
+            viewState.comics
+        )
     }
 }
 
