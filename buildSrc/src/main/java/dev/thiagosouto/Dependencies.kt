@@ -67,6 +67,7 @@ object Libs {
             const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:$version"
             const val activityCompose = "androidx.activity:activity-compose:1.4.0"
             const val coil = "io.coil-kt:coil-compose:1.4.0"
+            const val graphics = "androidx.compose.animation:animation-graphics:$version"
 
 
         }
