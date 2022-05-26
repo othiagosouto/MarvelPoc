@@ -1,23 +1,37 @@
 package com.soutosss.marvelpoc.widget
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
+import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -34,7 +48,11 @@ fun CharacterItem(
     onClick: (Character) -> Unit,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    Column(modifier = modifier.clickable(onClick = { onClick(character) })) {
+    Column(
+        modifier = modifier
+            .animateContentSize()
+            .clickable(onClick = { onClick(character) })
+    ) {
 
         Image(
             modifier = Modifier.fillMaxWidth(),
@@ -67,22 +85,28 @@ fun CharacterItem(
     }
 }
 
+@OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 private fun FavoriteToggle(
     isFavorite: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    val resId =
-        if (isFavorite) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px
-    val painter = rememberVectorPainter(ImageVector.vectorResource(id = resId))
+    var atEnd by remember { mutableStateOf(isFavorite) }
+    val image = AnimatedImageVector.animatedVectorResource(id = R.drawable.heart_animation)
+    val painter = rememberAnimatedVectorPainter(
+        image,
+        atEnd
+    )
     IconToggleButton(
         checked = isFavorite,
-        onCheckedChange = onCheckedChange
+        onCheckedChange = {
+            atEnd = it
+            onCheckedChange(it)
+        }
     ) {
-        Icon(
+        Image(
             painter = painter,
             contentDescription = "",
-            tint = colorResource(id = R.color.colorPrimary)
         )
     }
 }
