@@ -1,7 +1,10 @@
 package com.soutosss.data.data_retrofit.koin
 
 import android.content.Context
-import com.soutosss.data.data_retrofit.*
+import com.soutosss.data.data_retrofit.BuildConfig
+import com.soutosss.data.data_retrofit.CharactersBFFApi
+import com.soutosss.data.data_retrofit.RetrofitCharacterDetailsRemote
+import com.soutosss.data.data_retrofit.RetrofitCharacterRemote
 import com.soutosss.data.data_retrofit.character.Result
 import com.soutosss.data.data_retrofit.interceptors.ConnectionDetectionInterceptor
 import com.soutosss.data.data_retrofit.interceptors.isNetworkNotConnected

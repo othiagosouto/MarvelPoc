@@ -1,7 +1,6 @@
 package com.soutosss.data.data_retrofit.character.details
 
 import com.google.gson.annotations.SerializedName
-import com.soutosss.data.data_retrofit.character.Thumbnail
 
 data class DetailsResponse(
     val id: Long,

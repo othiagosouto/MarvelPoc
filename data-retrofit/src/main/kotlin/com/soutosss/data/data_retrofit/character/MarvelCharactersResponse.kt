@@ -1,6 +1,5 @@
 package com.soutosss.data.data_retrofit.character
 
-
 data class MarvelCharactersResponse(
     val attributionHTML: String,
     val attributionText: String,
