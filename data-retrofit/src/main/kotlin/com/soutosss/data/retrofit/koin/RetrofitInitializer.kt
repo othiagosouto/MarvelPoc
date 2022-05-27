@@ -14,18 +14,20 @@ import com.soutosss.marvelpoc.data.character.CharacterRemoteContract
 import com.soutosss.marvelpoc.shared.koin.KoinInitializer
 import okhttp3.OkHttpClient
 import org.koin.core.module.Module
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitInitializer : KoinInitializer() {
     override fun createKoinModules(): List<Module> = listOf(module {
+        single(named(SERVER_URL)) { BuildConfig.BFF_HOST }
         single { RetrofitCharacterRemote(get()) as CharacterRemoteContract<Result> }
-        single { getRetrofitInstance(get())}
+        single { getRetrofitInstance(get(), get(named(SERVER_URL))) }
         single { RetrofitCharacterDetailsRemote(get()) as CharacterDetailsRemoteContract<CharacterDetails> }
     })
 
-    private fun getRetrofitInstance(context: Context): CharactersBFFApi {
+    private fun getRetrofitInstance(context: Context, bffHost: String): CharactersBFFApi {
         val httpBuilder = OkHttpClient.Builder()
 
         httpBuilder.addInterceptor(
@@ -36,11 +38,15 @@ class RetrofitInitializer : KoinInitializer() {
         )
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.BFF_HOST)
+            .baseUrl(bffHost)
             .client(httpBuilder.build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         return retrofit.create(CharactersBFFApi::class.java)
+    }
+
+    companion object {
+        private const val SERVER_URL = "SERVER_URL"
     }
 }
