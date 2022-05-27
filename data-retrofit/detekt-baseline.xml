@@ -2,53 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>MaxLineLength:CharactersDataSourceTest.kt$CharactersDataSourceTest$fun</ID>
-    <ID>NewLineAtEndOfFile:CharacterDetailsResponse.kt$com.soutosss.data.data_retrofit.character.details.CharacterDetailsResponse.kt</ID>
-    <ID>NewLineAtEndOfFile:Comics.kt$com.soutosss.data.data_retrofit.character.Comics.kt</ID>
-    <ID>NewLineAtEndOfFile:ConnectionDetectionInterceptor.kt$com.soutosss.data.data_retrofit.interceptors.ConnectionDetectionInterceptor.kt</ID>
-    <ID>NewLineAtEndOfFile:ConnectionDetectionInterceptorTest.kt$com.soutosss.data.data_retrofit.ConnectionDetectionInterceptorTest.kt</ID>
-    <ID>NewLineAtEndOfFile:Data.kt$com.soutosss.data.data_retrofit.character.Data.kt</ID>
-    <ID>NewLineAtEndOfFile:Events.kt$com.soutosss.data.data_retrofit.character.Events.kt</ID>
-    <ID>NewLineAtEndOfFile:InternetConnectionException.kt$com.soutosss.data.data_retrofit.interceptors.InternetConnectionException.kt</ID>
-    <ID>NewLineAtEndOfFile:InternetFunctions.kt$com.soutosss.data.data_retrofit.interceptors.InternetFunctions.kt</ID>
-    <ID>NewLineAtEndOfFile:Item.kt$com.soutosss.data.data_retrofit.character.Item.kt</ID>
-    <ID>NewLineAtEndOfFile:Result.kt$com.soutosss.data.data_retrofit.character.Result.kt</ID>
-    <ID>NewLineAtEndOfFile:ResultExt.kt$com.soutosss.data.data_retrofit.ext.ResultExt.kt</ID>
-    <ID>NewLineAtEndOfFile:RetrofitCharacterDetailsRemote.kt$com.soutosss.data.data_retrofit.RetrofitCharacterDetailsRemote.kt</ID>
-    <ID>NewLineAtEndOfFile:RetrofitCharacterRemote.kt$com.soutosss.data.data_retrofit.RetrofitCharacterRemote.kt</ID>
-    <ID>NewLineAtEndOfFile:RetrofitInitializer.kt$com.soutosss.data.data_retrofit.koin.RetrofitInitializer.kt</ID>
-    <ID>NewLineAtEndOfFile:Series.kt$com.soutosss.data.data_retrofit.character.Series.kt</ID>
-    <ID>NewLineAtEndOfFile:Stories.kt$com.soutosss.data.data_retrofit.character.Stories.kt</ID>
-    <ID>NewLineAtEndOfFile:StringExt.kt$com.soutosss.data.data_retrofit.ext.StringExt.kt</ID>
-    <ID>NewLineAtEndOfFile:StringExtKtTest.kt$com.soutosss.data.data_retrofit.ext.StringExtKtTest.kt</ID>
-    <ID>NewLineAtEndOfFile:Thumbnail.kt$com.soutosss.data.data_retrofit.character.Thumbnail.kt</ID>
-    <ID>NewLineAtEndOfFile:Url.kt$com.soutosss.data.data_retrofit.character.Url.kt</ID>
-    <ID>PackageNaming:CharacterDetailsResponse.kt$package com.soutosss.data.data_retrofit.character.details</ID>
-    <ID>PackageNaming:CharactersBFFApi.kt$package com.soutosss.data.data_retrofit</ID>
-    <ID>PackageNaming:CharactersDataSource.kt$package com.soutosss.data.data_retrofit</ID>
-    <ID>PackageNaming:CharactersDataSourceTest.kt$package com.soutosss.data.data_retrofit</ID>
-    <ID>PackageNaming:Comics.kt$package com.soutosss.data.data_retrofit.character</ID>
-    <ID>PackageNaming:ConnectionDetectionInterceptor.kt$package com.soutosss.data.data_retrofit.interceptors</ID>
-    <ID>PackageNaming:ConnectionDetectionInterceptorTest.kt$package com.soutosss.data.data_retrofit</ID>
-    <ID>PackageNaming:Data.kt$package com.soutosss.data.data_retrofit.character</ID>
-    <ID>PackageNaming:Events.kt$package com.soutosss.data.data_retrofit.character</ID>
-    <ID>PackageNaming:InternetConnectionException.kt$package com.soutosss.data.data_retrofit.interceptors</ID>
-    <ID>PackageNaming:InternetFunctions.kt$package com.soutosss.data.data_retrofit.interceptors</ID>
-    <ID>PackageNaming:Item.kt$package com.soutosss.data.data_retrofit.character</ID>
-    <ID>PackageNaming:MarvelCharactersResponse.kt$package com.soutosss.data.data_retrofit.character</ID>
-    <ID>PackageNaming:Result.kt$package com.soutosss.data.data_retrofit.character</ID>
-    <ID>PackageNaming:ResultExt.kt$package com.soutosss.data.data_retrofit.ext</ID>
-    <ID>PackageNaming:RetrofitCharacterDetailsRemote.kt$package com.soutosss.data.data_retrofit</ID>
-    <ID>PackageNaming:RetrofitCharacterRemote.kt$package com.soutosss.data.data_retrofit</ID>
-    <ID>PackageNaming:RetrofitInitializer.kt$package com.soutosss.data.data_retrofit.koin</ID>
-    <ID>PackageNaming:Series.kt$package com.soutosss.data.data_retrofit.character</ID>
-    <ID>PackageNaming:Stories.kt$package com.soutosss.data.data_retrofit.character</ID>
-    <ID>PackageNaming:StringExt.kt$package com.soutosss.data.data_retrofit.ext</ID>
-    <ID>PackageNaming:StringExtKtTest.kt$package com.soutosss.data.data_retrofit.ext</ID>
-    <ID>PackageNaming:Thumbnail.kt$package com.soutosss.data.data_retrofit.character</ID>
-    <ID>PackageNaming:Url.kt$package com.soutosss.data.data_retrofit.character</ID>
     <ID>ReturnCount:InternetFunctions.kt$fun isNetworkNotConnected(context: Context): Boolean</ID>
     <ID>TooGenericExceptionCaught:CharactersDataSource.kt$CharactersDataSource$e: Exception</ID>
-    <ID>WildcardImport:RetrofitInitializer.kt$import com.soutosss.data.data_retrofit.*</ID>
   </CurrentIssues>
 </SmellBaseline>
