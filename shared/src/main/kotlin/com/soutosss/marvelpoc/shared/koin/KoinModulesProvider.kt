@@ -2,7 +2,7 @@ package com.soutosss.marvelpoc.shared.koin
 
 import org.koin.core.module.Module
 
-interface KoinInitializer {
+interface KoinModulesProvider {
 
-    fun createKoinModules(): Module
+    fun provides(): Module
 }

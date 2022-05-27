@@ -11,7 +11,7 @@ import com.soutosss.data.retrofit.interceptors.isNetworkNotConnected
 import com.soutosss.marvelpoc.data.CharacterDetails
 import com.soutosss.marvelpoc.data.character.CharacterDetailsRemoteContract
 import com.soutosss.marvelpoc.data.character.CharacterRemoteContract
-import com.soutosss.marvelpoc.shared.koin.KoinInitializer
+import com.soutosss.marvelpoc.shared.koin.KoinModulesProvider
 import okhttp3.OkHttpClient
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -19,8 +19,8 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitInitializer : KoinInitializer {
-    override fun createKoinModules(): Module =
+class RetrofitInitializer : KoinModulesProvider {
+    override fun provides(): Module =
         module {
             single(named(SERVER_URL)) { BuildConfig.BFF_HOST }
             single { RetrofitCharacterRemote(get()) as CharacterRemoteContract<Result> }

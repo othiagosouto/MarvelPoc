@@ -18,10 +18,10 @@ class MarvelPocApplication : Application() {
         startKoin {
             androidContext(this@MarvelPocApplication)
             modules(
-                appModulesInitializer.createKoinModules(),
-                dataModulesInitializer.createKoinModules(),
-                dataRoomInitializer.createKoinModules(),
-                retrofitInitializer.createKoinModules()
+                appModulesInitializer.provides(),
+                dataModulesInitializer.provides(),
+                dataRoomInitializer.provides(),
+                retrofitInitializer.provides()
             )
         }
     }
