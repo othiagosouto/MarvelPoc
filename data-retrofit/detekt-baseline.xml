@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>ReturnCount:InternetFunctions.kt$fun isNetworkNotConnected(context: Context): Boolean</ID>
     <ID>TooGenericExceptionCaught:CharactersDataSource.kt$CharactersDataSource$e: Exception</ID>
   </CurrentIssues>
 </SmellBaseline>

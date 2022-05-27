@@ -7,6 +7,13 @@ import android.net.NetworkCapabilities
 import android.os.Build
 
 fun isNetworkNotConnected(context: Context): Boolean {
+
+    fun ConnectivityManager?.isConnected(): Boolean {
+        val networkInfo =
+            this?.getNetworkInfo(ConnectivityManager.TYPE_WIFI) ?: return false
+        return networkInfo.isConnected
+    }
+
     val connectivityManager: ConnectivityManager? =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
@@ -18,9 +25,8 @@ fun isNetworkNotConnected(context: Context): Boolean {
             NetworkCapabilities.TRANSPORT_CELLULAR
         ))
     } else {
-        val networkInfo =
-            connectivityManager?.getNetworkInfo(ConnectivityManager.TYPE_WIFI) ?: return false
-        networkInfo.isConnected
+        connectivityManager?.isConnected() ?: false
     }
     return isNetworkConnected.not()
+
 }
