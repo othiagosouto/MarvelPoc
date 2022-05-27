@@ -4,37 +4,36 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.paging.DataSource
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.soutosss.marvelpoc.R
-import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.model.view.Character
-import com.soutosss.marvelpoc.home.HomeViewModel
 import com.soutosss.marvelpoc.test.waitUntilNotVisible
 import com.soutosss.marvelpoc.test.waitUntilVisible
-import io.mockk.every
-import io.mockk.mockk
 import org.hamcrest.Matchers.not
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
-internal fun configureFavorite(composeTestRule: ComposeTestRule, func: FavoriteFragmentConfiguration.() -> Unit) =
+internal fun configureFavorite(
+    composeTestRule: ComposeTestRule,
+    func: FavoriteFragmentConfiguration.() -> Unit
+) =
     FavoriteFragmentConfiguration(composeTestRule).apply(func)
 
-internal class FavoriteFragmentConfiguration(private val composeTestRule: ComposeTestRule) : KoinComponent {
-    private val localSource: CharacterLocalContract<Character> = mockk(relaxed = true)
-    private val repository: CharactersRepository = CharactersRepository(localSource, mockk(), mockk())
-    private val viewModel: HomeViewModel = HomeViewModel(repository)
+internal class FavoriteFragmentConfiguration(private val composeTestRule: ComposeTestRule) :
+    KoinComponent {
+    private lateinit var localSource: CharacterLocalContract<Character>
 
     infix fun launch(func: FavoriteFragmentRobot.() -> Unit): FavoriteFragmentRobot {
         loadKoinModules(
-            module(override = true) {
+            module {
                 single { localSource }
-                single { repository }
-                single { viewModel }
             })
 
         launchFragmentInContainer<FavoriteFragment>()
@@ -43,21 +42,11 @@ internal class FavoriteFragmentConfiguration(private val composeTestRule: Compos
 
 
     fun withNotEmptyList() {
-        every { localSource.favoriteList() } returns FakeHomeDataSource(
-            listOf(
-                Character(
-                    30,
-                    "3-D Test HAHAH",
-                    "http://www.google.com",
-                    "description",
-                    true
-                )
-            )
-        )
+       localSource = FakeCharacterLocalContract(isEmpty = false)
     }
 
     fun withNoFavorites() {
-        every { localSource.favoriteList() } returns FakeHomeDataSource(emptyList())
+        localSource = FakeCharacterLocalContract(isEmpty = true)
     }
 }
 
@@ -96,4 +85,29 @@ internal class FavoriteFragmentResult(private val composeTestRule: ComposeTestRu
 
     fun checkFavoritesEmptyMessage() =
         checkErrorMessage("You don't have favorite marvel character :(")
+}
+
+private class FakeCharacterLocalContract(private val isEmpty: Boolean) : CharacterLocalContract<Character> {
+    override fun favoriteList(): DataSource.Factory<Int, Character> {
+
+        val data = if (isEmpty) emptyList() else listOf(
+            Character(
+                30,
+                "3-D Test HAHAH",
+                "http://www.google.com",
+                "description",
+                true
+            )
+        )
+        return FakeHomeDataSource(data)
+
+    }
+
+    override suspend fun favorite(item: Character): Long = 30L
+
+    override suspend fun favoriteIds(): List<Long> {
+        return if (isEmpty) emptyList() else listOf(30)
+    }
+
+    override suspend fun unFavorite(item: Character): Long = 30L
 }

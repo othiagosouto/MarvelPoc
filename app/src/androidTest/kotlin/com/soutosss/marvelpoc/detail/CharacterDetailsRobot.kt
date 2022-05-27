@@ -24,7 +24,7 @@ import org.koin.dsl.module
 internal fun configureDetail(func: CharacterDetailsConfiguration.() -> Unit) =
     CharacterDetailsConfiguration().apply(func)
 
-internal class CharacterDetailsConfiguration() : KoinComponent {
+internal class CharacterDetailsConfiguration : KoinComponent {
     private lateinit var character: Character
     private val repository: CharactersRepository = mockk(relaxed = true)
     private val viewModel: CharacterDetailsViewModel =
