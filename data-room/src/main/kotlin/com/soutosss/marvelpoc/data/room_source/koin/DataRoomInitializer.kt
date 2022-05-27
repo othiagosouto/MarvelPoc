@@ -9,9 +9,9 @@ import com.soutosss.marvelpoc.shared.koin.KoinInitializer
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-class DataRoomInitializer : KoinInitializer() {
-    override fun createKoinModules(): List<Module> {
-        return listOf(module {
+class DataRoomInitializer : KoinInitializer {
+    override fun createKoinModules(): Module {
+        return module {
             single {
                 Room.databaseBuilder(
                     get(), AppDatabase::class.java, BuildConfig.DATABASE_NAME
@@ -22,6 +22,6 @@ class DataRoomInitializer : KoinInitializer() {
                     get()
                 ) as CharacterLocalContract<Character>
             }
-        })
+        }
     }
 }

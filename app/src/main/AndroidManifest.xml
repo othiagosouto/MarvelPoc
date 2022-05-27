@@ -41,12 +41,5 @@
                 android:name="android.app.default_searchable"
                 android:value=".home.search.SearchableActivity" />
         </activity>
-
-        <provider
-            android:name=".koin.AppModulesInitializer"
-            android:authorities="${applicationId}.app"
-            android:enabled="true"
-            android:exported="false" />
     </application>
-
 </manifest>

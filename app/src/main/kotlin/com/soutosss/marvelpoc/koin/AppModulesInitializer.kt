@@ -7,13 +7,11 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-class AppModulesInitializer : KoinInitializer() {
-    override fun createKoinModules(): List<Module> {
-        return listOf(
-            module {
-                viewModel { HomeViewModel(get()) }
-                viewModel { CharacterDetailsViewModel(get(), get()) }
-                single { context!!.applicationContext }
-            })
+class AppModulesInitializer : KoinInitializer {
+    override fun createKoinModules(): Module {
+        return module {
+            viewModel { HomeViewModel(get()) }
+            viewModel { CharacterDetailsViewModel(get(), get()) }
+        }
     }
 }

@@ -1,12 +1,3 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.soutosss.marvelpoc.data.room_source">
+    package="com.soutosss.marvelpoc.data.room_source" />
 
-    <application>
-        <provider
-            android:name=".koin.DataRoomInitializer"
-            android:authorities="${applicationId}.room_source"
-            android:enabled="true"
-            android:exported="false" />
-    </application>
-
-</manifest>

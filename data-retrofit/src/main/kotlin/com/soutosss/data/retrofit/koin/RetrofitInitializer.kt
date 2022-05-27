@@ -19,13 +19,14 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitInitializer : KoinInitializer() {
-    override fun createKoinModules(): List<Module> = listOf(module {
-        single(named(SERVER_URL)) { BuildConfig.BFF_HOST }
-        single { RetrofitCharacterRemote(get()) as CharacterRemoteContract<Result> }
-        single { getRetrofitInstance(get(), get(named(SERVER_URL))) }
-        single { RetrofitCharacterDetailsRemote(get()) as CharacterDetailsRemoteContract<CharacterDetails> }
-    })
+class RetrofitInitializer : KoinInitializer {
+    override fun createKoinModules(): Module =
+        module {
+            single(named(SERVER_URL)) { BuildConfig.BFF_HOST }
+            single { RetrofitCharacterRemote(get()) as CharacterRemoteContract<Result> }
+            single { getRetrofitInstance(get(), get(named(SERVER_URL))) }
+            single { RetrofitCharacterDetailsRemote(get()) as CharacterDetailsRemoteContract<CharacterDetails> }
+        }
 
     private fun getRetrofitInstance(context: Context, bffHost: String): CharactersBFFApi {
         val httpBuilder = OkHttpClient.Builder()
@@ -47,6 +48,6 @@ class RetrofitInitializer : KoinInitializer() {
     }
 
     companion object {
-        private const val SERVER_URL = "SERVER_URL"
+        const val SERVER_URL = "SERVER_URL"
     }
 }
