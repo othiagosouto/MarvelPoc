@@ -1,94 +1,93 @@
 package com.soutosss.marvelpoc.detail
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToIndex
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
-import com.soutosss.marvelpoc.data.CharacterDetails
-import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.Comics
-import com.soutosss.marvelpoc.data.mappers.ComicsMapper
+import com.soutosss.data.retrofit.koin.RetrofitInitializer
 import com.soutosss.marvelpoc.data.model.view.Character
-import io.mockk.coEvery
-import io.mockk.mockk
+import dev.thiagosouto.webserver.TestWebServer
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 internal fun configureDetail(func: CharacterDetailsConfiguration.() -> Unit) =
     CharacterDetailsConfiguration().apply(func)
 
 internal class CharacterDetailsConfiguration : KoinComponent {
-    private lateinit var character: Character
-    private val repository: CharactersRepository = mockk(relaxed = true)
-    private val viewModel: CharacterDetailsViewModel =
-        CharacterDetailsViewModel(repository, ComicsMapper())
     private lateinit var rule: ComposeTestRule
+    private val webServer = TestWebServer()
+
+    init {
+        webServer.start()
+        val serverUrl = webServer.url()
+        val newtworkModule = module {
+            single(
+                named(RetrofitInitializer.SERVER_URL)
+            ) { serverUrl }
+        }
+        loadKoinModules(newtworkModule)
+    }
 
     fun withComposeTestRule(rule: ComposeTestRule) {
         this.rule = rule
     }
 
     fun withEmptyDescription() {
-        character = Character(30, "some name", "thumbNail", "", false)
-        coEvery { repository.fetchCharacterDetails("30") } returns CharacterDetails(
-            character.id,
-            character.name,
-            character.description,
-            character.thumbnailUrl,
-            emptyList()
-        )
+        webServer.mapping =
+            mapOf(
+                "/characters/details/1011334" to "characters/characters_details_ok_no_desc.json",
+            )
+        webServer.initDispatcher()
     }
 
     fun withSomeDescription() {
-        character = Character(30, "some name", "thumbNail", "Some description", false)
-        coEvery { repository.fetchCharacterDetails("30") } returns CharacterDetails(
-            character.id,
-            character.name,
-            character.description,
-            character.thumbnailUrl,
-            ids().map(::comicsDomain)
-        )
+        webServer.mapping =
+            mapOf(
+                "/characters/details/1011334" to "characters/characters_details_ok.json",
+            )
+        webServer.initDispatcher()
     }
 
     infix fun launch(func: CharacterDetailsRobot.() -> Unit): CharacterDetailsRobot {
-        loadKoinModules(
-            module(override = true) {
-                single { viewModel }
-            })
-
-        val bundle = Bundle().also { it.putSerializable("CHARACTER_KEY", character) }
 
         val intent = Intent(
             InstrumentationRegistry.getInstrumentation().targetContext,
             CharacterDetailsActivity::class.java
         )
+        val character = Character.EMPTY.copy(id = 1011334)
         intent.putExtra("CHARACTER_KEY", character)
         ActivityScenario.launch<CharacterDetailsActivity>(intent)
-        return CharacterDetailsRobot(rule).apply(func)
+        return CharacterDetailsRobot(rule, webServer).apply(func)
     }
-
 }
 
-internal class CharacterDetailsRobot(private val rule: ComposeTestRule) {
+internal class CharacterDetailsRobot(
+    private val rule: ComposeTestRule,
+    private val webServer: TestWebServer
+) {
     infix fun check(func: CharacterDetailsResult.() -> Unit) =
-        CharacterDetailsResult(rule).apply(func)
+        CharacterDetailsResult(rule, webServer).apply(func)
 }
 
-internal class CharacterDetailsResult(private val rule: ComposeTestRule) {
+internal class CharacterDetailsResult(
+    private val rule: ComposeTestRule,
+    private val webServer: TestWebServer
+) {
 
     fun characterName() {
-        rule.onNodeWithTag("name").assert(hasText("some name"))
+        rule.onNodeWithTag("name").assert(hasText("3-D Man"))
     }
 
     fun description() {
-        rule.onNodeWithTag("description").assert(hasText("Some description"))
+        rule.onNodeWithTag("description").assert(hasText("some description"))
     }
 
     fun defaultDescription() {
@@ -97,17 +96,24 @@ internal class CharacterDetailsResult(private val rule: ComposeTestRule) {
     }
 
     fun comics() {
-        ids().map(::titles).forEachIndexed(::comics)
+        titles().forEachIndexed(::comics)
     }
 
     private fun comics(index: Int, title: String) {
-        val item = rule.onNodeWithTag("character-detais-comics").performScrollToIndex(index)
+        rule.onNodeWithTag("character-details-comics").performScrollTo().performScrollToIndex(index)
         rule.onNodeWithTag("comics-title-$index").assert(hasText(title)).assertIsDisplayed()
+    }
+
+    fun stop() {
+        webServer.stop()
     }
 }
 
-private fun ids() = listOf<Long>(0, 1, 3, 4, 5)
-private fun comicsDomain(id: Long) =
-    Comics(id = id, title = "title - $id", imageUrl = "thumb-$id")
-
-private fun titles(id: Long) = "title - $id"
+private fun titles() = listOf(
+    "Avengers: The Initiative (2007) #19",
+    "Avengers: The Initiative (2007) #18 (ZOMBIE VARIANT)",
+    "Avengers: The Initiative (2007) #18",
+    "Avengers: The Initiative (2007) #17",
+    "Avengers: The Initiative (2007) #16",
+    "Avengers: The Initiative (2007) #15"
+)

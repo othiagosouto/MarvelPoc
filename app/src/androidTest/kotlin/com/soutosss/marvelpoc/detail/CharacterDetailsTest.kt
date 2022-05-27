@@ -23,6 +23,7 @@ internal class CharacterDetailsTest {
             characterName()
             description()
             comics()
+            stop()
         }
     }
 
@@ -36,6 +37,7 @@ internal class CharacterDetailsTest {
         } check {
             characterName()
             defaultDescription()
+            stop()
         }
     }
 }
