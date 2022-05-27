@@ -8,9 +8,11 @@ data class Character(
     val thumbnailUrl: String,
     val description: String,
     var favorite: Boolean
-) : Serializable{
+) : Serializable {
 
-    companion object{
+    companion object {
+        const val serialVersionUID = 1L
+
         val EMPTY = Character(
             id = 0L,
             name = "",
