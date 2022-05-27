@@ -5,6 +5,7 @@ import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToIndex
@@ -83,15 +84,30 @@ internal class CharacterDetailsResult(
 ) {
 
     fun characterName() {
-        rule.onNodeWithTag("name").assert(hasText("3-D Man"))
+        rule.waitForIdle()
+        rule.waitUntil {
+            rule.onAllNodesWithTag(NAME).fetchSemanticsNodes().size == 1
+        }
+        rule.onNodeWithTag(NAME).performScrollTo()
+        rule.onNodeWithTag(NAME).assert(hasText("3-D Man"))
     }
 
     fun description() {
-        rule.onNodeWithTag("description").assert(hasText("some description"))
+        rule.waitForIdle()
+        rule.waitUntil {
+            rule.onAllNodesWithTag(DESCRIPTION).fetchSemanticsNodes().size == 1
+        }
+        rule.onNodeWithTag(DESCRIPTION).performScrollTo()
+        rule.onNodeWithTag(DESCRIPTION).assert(hasText("some description"))
     }
 
     fun defaultDescription() {
-        rule.onNodeWithTag("description")
+        rule.waitForIdle()
+        rule.waitUntil {
+            rule.onAllNodesWithTag(DESCRIPTION).fetchSemanticsNodes().size == 1
+        }
+        rule.onNodeWithTag(DESCRIPTION).performScrollTo()
+        rule.onNodeWithTag(DESCRIPTION)
             .assert(hasText("This character doesn't have any description available :("))
     }
 
@@ -100,12 +116,22 @@ internal class CharacterDetailsResult(
     }
 
     private fun comics(index: Int, title: String) {
+        rule.waitForIdle()
         rule.onNodeWithTag("character-details-comics").performScrollTo().performScrollToIndex(index)
+        rule.waitForIdle()
+        rule.waitUntil {
+            rule.onAllNodesWithTag("comics-title-$index").fetchSemanticsNodes().size == 1
+        }
         rule.onNodeWithTag("comics-title-$index").assert(hasText(title)).assertIsDisplayed()
     }
 
     fun stop() {
         webServer.stop()
+    }
+
+    private companion object {
+        const val DESCRIPTION = "description"
+        const val NAME = "name"
     }
 }
 
@@ -113,7 +139,5 @@ private fun titles() = listOf(
     "Avengers: The Initiative (2007) #19",
     "Avengers: The Initiative (2007) #18 (ZOMBIE VARIANT)",
     "Avengers: The Initiative (2007) #18",
-    "Avengers: The Initiative (2007) #17",
-    "Avengers: The Initiative (2007) #16",
-    "Avengers: The Initiative (2007) #15"
+    "Avengers: The Initiative (2007) #17"
 )
