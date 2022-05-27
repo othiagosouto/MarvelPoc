@@ -1,7 +1,7 @@
-package com.soutosss.data.data_retrofit
+package com.soutosss.data.retrofit
 
-import com.soutosss.data.data_retrofit.character.MarvelCharactersResponse
-import com.soutosss.data.data_retrofit.character.details.DetailsResponse
+import com.soutosss.data.retrofit.character.MarvelCharactersResponse
+import com.soutosss.data.retrofit.character.details.DetailsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

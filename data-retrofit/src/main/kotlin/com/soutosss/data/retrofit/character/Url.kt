@@ -1,4 +1,4 @@
-package com.soutosss.data.data_retrofit.character
+package com.soutosss.data.retrofit.character
 
 data class Url(
     val type: String,

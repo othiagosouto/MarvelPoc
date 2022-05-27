@@ -8,9 +8,9 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.gson.Gson
-import com.soutosss.data.data_retrofit.CharactersBFFApi
-import com.soutosss.data.data_retrofit.RetrofitCharacterRemote
-import com.soutosss.data.data_retrofit.character.MarvelCharactersResponse
+import com.soutosss.data.retrofit.CharactersBFFApi
+import com.soutosss.data.retrofit.RetrofitCharacterRemote
+import com.soutosss.data.retrofit.character.MarvelCharactersResponse
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.data.room_source.CharacterLocalDAO

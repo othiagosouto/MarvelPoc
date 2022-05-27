@@ -1,13 +1,12 @@
-package com.soutosss.data.data_retrofit
+package com.soutosss.data.retrofit
 
 import androidx.paging.PositionalDataSource
-import com.soutosss.data.data_retrofit.character.Result
-import com.soutosss.data.data_retrofit.ext.toCharacter
+import com.soutosss.data.retrofit.character.Result
+import com.soutosss.data.retrofit.ext.toCharacter
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.shared.EmptyDataException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlin.reflect.KSuspendFunction0
 
 class CharactersDataSource(
     private val queryText: String?,

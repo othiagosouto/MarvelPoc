@@ -1,10 +1,10 @@
-package com.soutosss.data.data_retrofit
+package com.soutosss.data.retrofit
 
 import androidx.paging.PositionalDataSource
 import com.google.common.truth.Truth
 import com.google.gson.Gson
-import com.soutosss.data.data_retrofit.character.MarvelCharactersResponse
-import com.soutosss.data.data_retrofit.ext.toCharacter
+import com.soutosss.data.retrofit.character.MarvelCharactersResponse
+import com.soutosss.data.retrofit.ext.toCharacter
 import com.soutosss.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.shared.EmptyDataException
 import io.mockk.coEvery

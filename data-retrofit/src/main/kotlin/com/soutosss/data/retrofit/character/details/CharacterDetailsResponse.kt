@@ -1,4 +1,4 @@
-package com.soutosss.data.data_retrofit.character.details
+package com.soutosss.data.retrofit.character.details
 
 import com.google.gson.annotations.SerializedName
 

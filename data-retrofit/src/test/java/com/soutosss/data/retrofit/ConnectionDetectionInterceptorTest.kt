@@ -1,8 +1,8 @@
-package com.soutosss.data.data_retrofit
+package com.soutosss.data.retrofit
 
 import android.content.Context
-import com.soutosss.data.data_retrofit.interceptors.ConnectionDetectionInterceptor
-import com.soutosss.data.data_retrofit.interceptors.InternetConnectionException
+import com.soutosss.data.retrofit.interceptors.ConnectionDetectionInterceptor
+import com.soutosss.data.retrofit.interceptors.InternetConnectionException
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.Interceptor

@@ -1,7 +1,7 @@
-package com.soutosss.data.data_retrofit
+package com.soutosss.data.retrofit
 
-import com.soutosss.data.data_retrofit.character.details.DetailsComics
-import com.soutosss.data.data_retrofit.character.details.DetailsResponse
+import com.soutosss.data.retrofit.character.details.DetailsComics
+import com.soutosss.data.retrofit.character.details.DetailsResponse
 import com.soutosss.marvelpoc.data.CharacterDetails
 import com.soutosss.marvelpoc.data.Comics
 import com.soutosss.marvelpoc.data.character.CharacterDetailsRemoteContract

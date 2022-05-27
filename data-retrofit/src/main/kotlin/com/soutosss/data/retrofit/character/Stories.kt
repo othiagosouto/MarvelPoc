@@ -1,6 +1,6 @@
-package com.soutosss.data.data_retrofit.character
+package com.soutosss.data.retrofit.character
 
-data class Events(
+data class Stories(
     val available: Int,
     val collectionURI: String,
     val items: List<Item>,

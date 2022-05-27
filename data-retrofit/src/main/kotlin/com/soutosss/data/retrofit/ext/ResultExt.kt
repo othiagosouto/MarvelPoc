@@ -1,6 +1,6 @@
-package com.soutosss.data.data_retrofit.ext
+package com.soutosss.data.retrofit.ext
 
-import com.soutosss.data.data_retrofit.character.Result
+import com.soutosss.data.retrofit.character.Result
 import com.soutosss.marvelpoc.data.model.view.Character
 
 fun Result.toCharacter() =

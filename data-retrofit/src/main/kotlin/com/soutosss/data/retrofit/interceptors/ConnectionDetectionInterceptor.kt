@@ -1,4 +1,4 @@
-package com.soutosss.data.data_retrofit.interceptors
+package com.soutosss.data.retrofit.interceptors
 
 import android.content.Context
 import okhttp3.Interceptor

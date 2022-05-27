@@ -1,4 +1,4 @@
-package com.soutosss.data.data_retrofit
+package com.soutosss.data.retrofit
 
 import androidx.paging.PositionalDataSource
 import com.soutosss.marvelpoc.data.character.CharacterRemoteContract
