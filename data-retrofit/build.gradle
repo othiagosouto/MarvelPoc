@@ -24,12 +24,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "SERVICE_HOST", "\"https://gateway.marvel.com/v1/public/\"")
             buildConfigField("String", "BFF_HOST", "\"http://161.35.18.166:8080/\"")
         }
 
         debug {
-            buildConfigField("String", "SERVICE_HOST", "\"https://gateway.marvel.com/v1/public/\"")
             buildConfigField("String", "BFF_HOST", "\"http://161.35.18.166:8080/\"")
         }
     }
