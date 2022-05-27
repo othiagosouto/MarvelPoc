@@ -3,7 +3,7 @@ package com.soutosss.data.retrofit.ext
 import com.soutosss.data.retrofit.character.Result
 import com.soutosss.marvelpoc.data.model.view.Character
 
-fun Result.toCharacter() =
+internal fun Result.toCharacter() =
     Character(
         id = this.id,
         name = this.name,

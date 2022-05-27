@@ -6,7 +6,7 @@ import com.soutosss.marvelpoc.data.CharacterDetails
 import com.soutosss.marvelpoc.data.Comics
 import com.soutosss.marvelpoc.data.character.CharacterDetailsRemoteContract
 
-class RetrofitCharacterDetailsRemote(private val charactersApi: CharactersBFFApi) :
+internal class RetrofitCharacterDetailsRemote(private val charactersApi: CharactersBFFApi) :
     CharacterDetailsRemoteContract<CharacterDetails> {
     override suspend fun fetchCharacterDetails(characterId: String): CharacterDetails =
         charactersApi.listCharacters(characterId).toCharacterDetails()

@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface CharactersBFFApi {
+internal interface CharactersBFFApi {
     @GET("characters/details/{characterId}")
     suspend fun listCharacters(
         @Path("characterId") characterId: String

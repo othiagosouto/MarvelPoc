@@ -1,6 +1,6 @@
 package com.soutosss.data.retrofit.character
 
-data class Result(
+internal data class Result(
     val comics: Comics,
     val description: String,
     val events: Events,

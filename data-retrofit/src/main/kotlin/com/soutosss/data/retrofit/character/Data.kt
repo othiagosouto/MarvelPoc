@@ -1,6 +1,6 @@
 package com.soutosss.data.retrofit.character
 
-data class Data(
+internal data class Data(
     val count: Int,
     val limit: Int,
     val offset: Int,

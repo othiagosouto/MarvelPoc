@@ -8,7 +8,7 @@ import com.soutosss.marvelpoc.shared.EmptyDataException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class CharactersDataSource(
+internal class CharactersDataSource(
     private val queryText: String?,
     private val scope: CoroutineScope,
     private val api: CharactersBFFApi,
@@ -70,5 +70,4 @@ class CharactersDataSource(
             }
         }
     }
-
 }
