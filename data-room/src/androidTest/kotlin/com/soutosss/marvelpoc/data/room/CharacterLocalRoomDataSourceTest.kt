@@ -1,4 +1,4 @@
-package com.soutosss.marvelpoc.data.room_source
+package com.soutosss.marvelpoc.data.room
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -7,7 +7,7 @@ import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.soutosss.marvelpoc.data.model.view.Character
-import com.soutosss.marvelpoc.data.room_source.ext.toCharacter
+import com.soutosss.marvelpoc.data.room.ext.toCharacter
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule

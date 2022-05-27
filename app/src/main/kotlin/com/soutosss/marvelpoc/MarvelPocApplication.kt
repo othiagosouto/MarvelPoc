@@ -3,7 +3,7 @@ package com.soutosss.marvelpoc
 import android.app.Application
 import com.soutosss.data.retrofit.koin.RetrofitInitializer
 import com.soutosss.marvelpoc.data.koin.DataInitializer
-import com.soutosss.marvelpoc.data.room_source.koin.DataRoomInitializer
+import com.soutosss.marvelpoc.data.room.koin.DataRoomInitializer
 import com.soutosss.marvelpoc.koin.AppModulesInitializer
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin

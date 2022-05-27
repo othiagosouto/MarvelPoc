@@ -1,4 +1,4 @@
-package com.soutosss.marvelpoc.data.room_source
+package com.soutosss.marvelpoc.data.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

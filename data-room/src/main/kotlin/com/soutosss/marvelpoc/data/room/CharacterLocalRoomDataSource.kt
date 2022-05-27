@@ -1,10 +1,10 @@
-package com.soutosss.marvelpoc.data.room_source
+package com.soutosss.marvelpoc.data.room
 
 import androidx.paging.DataSource
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.model.view.Character
-import com.soutosss.marvelpoc.data.room_source.ext.toCharacter
-import com.soutosss.marvelpoc.data.room_source.ext.toCharacterLocal
+import com.soutosss.marvelpoc.data.room.ext.toCharacter
+import com.soutosss.marvelpoc.data.room.ext.toCharacterLocal
 
 internal class CharacterLocalRoomDataSource(private val characterDAO: CharacterLocalDAO) :
     CharacterLocalContract<Character> {

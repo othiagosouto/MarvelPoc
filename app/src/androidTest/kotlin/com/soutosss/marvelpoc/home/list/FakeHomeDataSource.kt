@@ -3,7 +3,6 @@ package com.soutosss.marvelpoc.home.list
 import androidx.paging.DataSource
 import androidx.paging.PositionalDataSource
 import com.soutosss.marvelpoc.data.model.view.Character
-import com.soutosss.marvelpoc.data.room_source.CharacterLocal
 
 internal class FakeHomeDataSource(private val items: List<Character>) :
     DataSource.Factory<Int, Character>() {

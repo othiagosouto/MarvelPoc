@@ -1,7 +1,7 @@
-package com.soutosss.marvelpoc.data.room_source.ext
+package com.soutosss.marvelpoc.data.room.ext
 
 import com.soutosss.marvelpoc.data.model.view.Character
-import com.soutosss.marvelpoc.data.room_source.CharacterLocal
+import com.soutosss.marvelpoc.data.room.CharacterLocal
 
 internal fun CharacterLocal.toCharacter() = Character(
     this.id,
