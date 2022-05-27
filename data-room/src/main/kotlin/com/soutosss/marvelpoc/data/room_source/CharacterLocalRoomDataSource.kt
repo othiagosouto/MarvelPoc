@@ -3,9 +3,10 @@ package com.soutosss.marvelpoc.data.room_source
 import androidx.paging.DataSource
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.model.view.Character
+import com.soutosss.marvelpoc.data.room_source.ext.toCharacter
 import com.soutosss.marvelpoc.data.room_source.ext.toCharacterLocal
 
-class CharacterLocalRoomDataSource(private val characterDAO: CharacterLocalDAO) :
+internal class CharacterLocalRoomDataSource(private val characterDAO: CharacterLocalDAO) :
     CharacterLocalContract<Character> {
 
     override fun favoriteList(): DataSource.Factory<Int, Character> =
