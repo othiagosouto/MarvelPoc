@@ -57,6 +57,7 @@ dependencies {
     implementation Libs.DI.koin
     implementation Libs.AndroidX.paging
     implementation Libs.Network.retrofit
+    implementation Libs.Test.okhttp
     implementation Libs.Network.gsonConverter
 
     testImplementation Libs.Coroutines.test

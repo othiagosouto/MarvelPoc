@@ -1,118 +1,103 @@
 package com.soutosss.marvelpoc.home.list
 
 import android.os.Bundle
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onNodeWithText
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
-import com.google.gson.Gson
-import com.soutosss.data.retrofit.CharactersBFFApi
-import com.soutosss.data.retrofit.RetrofitCharacterRemote
-import com.soutosss.data.retrofit.character.MarvelCharactersResponse
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
+import com.soutosss.data.retrofit.koin.RetrofitInitializer
 import com.soutosss.marvelpoc.R
-import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.room_source.CharacterLocalDAO
-import com.soutosss.marvelpoc.data.room_source.CharacterLocalRoomDataSource
-import com.soutosss.marvelpoc.home.HomeViewModel
 import com.soutosss.marvelpoc.test.waitUntilNotVisible
 import com.soutosss.marvelpoc.test.waitUntilVisible
-import io.mockk.coEvery
-import io.mockk.mockk
+import dev.thiagosouto.webserver.TestWebServer
 import org.hamcrest.Matchers.not
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import org.koin.core.context.loadKoinModules
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-internal fun configure(composeTestRule: ComposeTestRule, func: CharactersFragmentConfiguration.() -> Unit) =
+internal fun configure(
+    composeTestRule: ComposeTestRule,
+    func: CharactersFragmentConfiguration.() -> Unit
+) =
     CharactersFragmentConfiguration(composeTestRule).apply(func)
 
 internal class CharactersFragmentConfiguration(private val composeTestRule: ComposeTestRule) :
     KoinComponent {
-    private val api: CharactersBFFApi = mockk(relaxed = true)
-    private val characterLocalDao: CharacterLocalDAO = mockk(relaxed = true)
-    private val repository: CharactersRepository
-    private var homeViewModel: HomeViewModel
+
+    private val webServer = TestWebServer()
 
     init {
-        loadKoinModules(
-            module(override = true) {
-                single { api }
-                single { characterLocalDao }
-                single { CharacterLocalRoomDataSource(characterLocalDao) }
-                single { RetrofitCharacterRemote(api) }
-            })
-        repository = CharactersRepository(get(), get(), mockk())
-        homeViewModel = HomeViewModel(repository)
+        webServer.start()
+        val serverUrl = webServer.url()
+        val newtworkModule = module {
+            single(
+                named(RetrofitInitializer.SERVER_URL)
+            ) { serverUrl }
+        }
+        loadKoinModules(newtworkModule)
     }
 
     infix fun launch(func: CharactersFragmentRobot.() -> Unit): CharactersFragmentRobot {
-        loadKoinModules(
-            module(override = true) {
-                single { api }
-                single { repository }
-                single { characterLocalDao }
-                single { homeViewModel }
-            })
-
         launchFragmentInContainer<CharactersFragment>()
-        return CharactersFragmentRobot(composeTestRule).apply(func)
+        return CharactersFragmentRobot(composeTestRule, webServer).apply(func)
     }
 
     infix fun launchSearch(func: CharactersFragmentRobot.() -> Unit): CharactersFragmentRobot {
-        loadKoinModules(
-            module(override = true) {
-                single { characterLocalDao }
-                single { api }
-                single { repository }
-                single { homeViewModel }
-            })
-
         launchFragmentInContainer<CharactersFragment>(Bundle().apply {
             putString(
                 "QUERY_TEXT_KEY",
                 "searchQuery"
             )
         })
-        return CharactersFragmentRobot(composeTestRule).apply(func)
+        return CharactersFragmentRobot(composeTestRule, webServer).apply(func)
     }
 
     fun withErrorHome() {
-        coEvery { api.listCharacters(null, any(), any()) } throws Exception()
+        webServer.initDispatcher()
     }
 
     fun withHomeCharacters() {
-        val response = parseToJson()
-        val data = parseToJson().data.copy(results = emptyList())
-        coEvery { api.listCharacters(null, any(), any()) } returns response andThen response.copy(
-            data = data
-        )
+        webServer.mapping =
+            mapOf(
+                "/characters/home?offset=0&limit=60" to "characters/characters_response_ok.json",
+                "/characters/home?offset=1&limit=20" to "characters/characters_response_ok_empty.json"
+            )
+        webServer.initDispatcher()
     }
 
     fun withSearchContent() {
-        val response = parseToJson()
-        val data = parseToJson().data.copy(results = emptyList())
-        coEvery { api.listCharacters("searchQuery", any(), any()) } returns parseToJson() andThen response.copy(data = data)
+        webServer.mapping =
+            mapOf(
+                "/characters/home?nameStartsWith=searchQuery&offset=0&limit=60" to "characters/characters_response_ok.json",
+                "/characters/home?nameStartsWith=searchQuery&offset=1&limit=20" to "characters/characters_response_ok_empty.json"
+            )
+        webServer.initDispatcher()
+
     }
 
-    fun withNoFavorites() {
-        coEvery { characterLocalDao.favoriteIds() } returns emptyList()
-    }
+    fun withNoFavorites() = Unit
 
-    fun withMockedViewModelLoading() {
-        homeViewModel = mockk(relaxed = true)
-    }
-
+    fun withMockedViewModelLoading() = Unit
 }
 
-internal class CharactersFragmentRobot(private val composeTestRule: ComposeTestRule) {
+internal class CharactersFragmentRobot(
+    private val composeTestRule: ComposeTestRule,
+    private val webServer: TestWebServer
+) {
     infix fun check(func: CharactersFragmentResult.() -> Unit) =
-        CharactersFragmentResult(composeTestRule).apply(func)
+        CharactersFragmentResult(composeTestRule, webServer).apply(func)
 }
 
-internal class CharactersFragmentResult(private val composeTestRule: ComposeTestRule) {
+internal class CharactersFragmentResult(
+    private val composeTestRule: ComposeTestRule,
+    private val testWebServer: TestWebServer
+) {
 
     fun recyclerViewIsHidden() {
         onView(withId(R.id.recycler)).waitUntilNotVisible().check(matches(not(isDisplayed())))
@@ -155,15 +140,7 @@ internal class CharactersFragmentResult(private val composeTestRule: ComposeTest
         onView(withId(R.id.message)).waitUntilVisible(10_000).check(matches(withText(message)))
     }
 
-}
-
-private fun parseToJson(): MarvelCharactersResponse {
-    return Gson().fromJson(
-        "characters/characters_response_ok.json".toJson(),
-        MarvelCharactersResponse::class.java
-    )
-}
-
-private fun String.toJson(): String {
-    return CharactersFragmentConfiguration::class.java.classLoader!!.getResource(this)!!.readText()
+    fun stop() {
+        testWebServer.stop()
+    }
 }

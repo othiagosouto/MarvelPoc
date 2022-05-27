@@ -19,6 +19,7 @@ internal class CharactersFragmentTest {
         } check {
             loadingIsVisible()
             recyclerViewIsHidden()
+            stop()
         }
     }
 
@@ -32,6 +33,7 @@ internal class CharactersFragmentTest {
             loadingIsNotVisible()
             recyclerViewIsHidden()
             checkErrorHomeTab()
+            stop()
         }
     }
 
@@ -46,6 +48,7 @@ internal class CharactersFragmentTest {
             loadingIsNotVisible()
             checkCharacterName()
             errorMessageNotAvailable()
+            stop()
         }
     }
 
@@ -59,6 +62,7 @@ internal class CharactersFragmentTest {
             loadingIsNotVisible()
             checkCharacterName()
             errorMessageNotAvailable()
+            stop()
         }
     }
 }

@@ -11,6 +11,6 @@ java {
 }
 
 dependencies {
-    implementation(Libs.Test.mockWebserver)
-    implementation(Libs.Test.okhttp)
+    api(Libs.Test.mockWebserver)
+    api(Libs.Test.okhttp)
 }
