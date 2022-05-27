@@ -6,14 +6,14 @@ Marvel characters it's an app built to present info related to marvel charaters 
 
 ## Current objective
 
-  - Refactor the app to use compose
-  - Replace the directs calls to MarvelApi to use a BFF as middle
-  - Refactor the koin usage to Hilt
-  - Create design system structure
+-  Refactor the app to use compose
+-  Replace the directs calls to MarvelApi to use a BFF as middle
+-  Refactor the koin usage to Hilt
+-  Create design system structure
 
 ## Goals
 
-  - Study Kotlin and apply some architecture concepts in this project.
+-  Study Kotlin and apply some architecture concepts in this project.
 
 ## Architecture
 
@@ -23,23 +23,23 @@ This project is built using a MVVM architecture with multi module structure. The
 
 ## Stack
 
-  - MVVM Architecture without databinding
-  - Coroutines
-  - Kotlin
-  - Room
-  - Koin
-  - Retrofit
-  - Paging
-  - Github actions
+-  MVVM Architecture without databinding
+-  Coroutines
+-  Kotlin
+-  Room
+-  Koin
+-  Retrofit
+-  Paging
+-  Github actions
 
 ## Testing
 
-  - AndroidX Test
-  - Mockk
-  - Junit
-  - Espresso
-  - Robot Pattern
-  - Orchestrator
+-  AndroidX Test
+-  Mockk
+-  Junit
+-  Espresso
+-  Robot Pattern
+-  Orchestrator
 
 ## Quick Start
 
@@ -47,13 +47,13 @@ This project is built using a MVVM architecture with multi module structure. The
 
 You need to follow the steps described steps in order to the application doesn't crash during runtime.
 
-  - This app uses a private BFF hosted on digital ocean-
-  - Checkout the code and build the application
+-  This app uses a private BFF hosted on digital ocean-
+-  Checkout the code and build the application
 
 ### Running tests
 
-  - Instrumented: `./gradlew connectedAndroidTest`
-  - Unit: `./gradlew test`
+-  Instrumented: `./gradlew connectedAndroidTest`
+-  Unit: `./gradlew test`
 
 ## Contact
 
