@@ -23,7 +23,7 @@ class TestWebServer {
                 val body = mapping[request.path]?.openFile()
 
                 return body?.let { MockResponse().setBody(body) } ?: MockResponse().setResponseCode(
-                    400
+                    HTTP_BAD_REQUEST
                 )
             }
         }
@@ -33,5 +33,9 @@ class TestWebServer {
 
     private fun String.openFile(): String {
         return TestWebServer::class.java.classLoader!!.getResource(this)!!.readText()
+    }
+
+    companion object {
+        private const val HTTP_BAD_REQUEST = 400
     }
 }
