@@ -117,6 +117,6 @@ object Libs {
     }
 
     object DI {
-        const val koin = "io.insert-koin:koin-androidx-viewmodel:2.2.2"
+        const val koin = "io.insert-koin:koin-android:3.2.0"
     }
 }
