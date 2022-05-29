@@ -31,12 +31,13 @@ fun ErrorScreen(modifier: Modifier = Modifier, @StringRes message: Int, @Drawabl
         Image(
             modifier = Modifier
                 .height(100.dp)
-                .wrapContentWidth(),
+                .wrapContentWidth()
+                .testTag("error-image"),
             painter = painterResource(image),
             contentDescription = ""
         )
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_small)))
-        Text(text = stringResource(id = message))
+        Text(modifier = Modifier.testTag("error-message"), text = stringResource(id = message))
     }
 }
 
