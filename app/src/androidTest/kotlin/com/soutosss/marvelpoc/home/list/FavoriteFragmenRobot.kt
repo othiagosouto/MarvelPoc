@@ -1,7 +1,9 @@
 package com.soutosss.marvelpoc.home.list
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.paging.DataSource
@@ -9,7 +11,6 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.data.character.CharacterLocalContract
 import com.soutosss.marvelpoc.data.model.view.Character
@@ -42,7 +43,7 @@ internal class FavoriteFragmentConfiguration(private val composeTestRule: Compos
 
 
     fun withNotEmptyList() {
-       localSource = FakeCharacterLocalContract(isEmpty = false)
+        localSource = FakeCharacterLocalContract(isEmpty = false)
     }
 
     fun withNoFavorites() {
@@ -70,9 +71,8 @@ internal class FavoriteFragmentResult(private val composeTestRule: ComposeTestRu
 
 
     private fun checkErrorMessage(message: String) {
-        onView(withId(R.id.message)).check(matches(isDisplayed()))
-        onView(withId(R.id.erroIcon)).check(matches(isDisplayed()))
-        onView(withId(R.id.message)).check(matches(withText(message)))
+        composeTestRule.onNodeWithTag("error-image").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("error-message").assertIsDisplayed().assertTextEquals(message)
     }
 
     fun recyclerViewIsHidden() {
@@ -87,7 +87,8 @@ internal class FavoriteFragmentResult(private val composeTestRule: ComposeTestRu
         checkErrorMessage("You don't have favorite marvel character :(")
 }
 
-private class FakeCharacterLocalContract(private val isEmpty: Boolean) : CharacterLocalContract<Character> {
+private class FakeCharacterLocalContract(private val isEmpty: Boolean) :
+    CharacterLocalContract<Character> {
     override fun favoriteList(): DataSource.Factory<Int, Character> {
 
         val data = if (isEmpty) emptyList() else listOf(

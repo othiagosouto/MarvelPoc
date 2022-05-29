@@ -2,14 +2,15 @@ package com.soutosss.marvelpoc.home.list
 
 import android.os.Bundle
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.soutosss.data.retrofit.koin.RetrofitInitializer
 import com.soutosss.marvelpoc.R
 import com.soutosss.marvelpoc.test.waitUntilNotVisible
@@ -130,14 +131,13 @@ internal class CharactersFragmentResult(
     }
 
     fun errorMessageNotAvailable() {
-        onView(withId(R.id.message)).waitUntilNotVisible(10_000).check(matches(not(isDisplayed())))
-        onView(withId(R.id.erroIcon)).waitUntilNotVisible(10_000).check(matches(not(isDisplayed())))
+        composeTestRule.onNodeWithTag("error-image").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("error-message").assertDoesNotExist()
     }
 
     private fun checkErrorMessage(message: String) {
-        onView(withId(R.id.message)).waitUntilVisible(10_000).check(matches(isDisplayed()))
-        onView(withId(R.id.erroIcon)).waitUntilVisible(10_000).check(matches(isDisplayed()))
-        onView(withId(R.id.message)).waitUntilVisible(10_000).check(matches(withText(message)))
+        composeTestRule.onNodeWithTag("error-image").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("error-message").assertIsDisplayed().assertTextEquals(message)
     }
 
     fun stop() {
