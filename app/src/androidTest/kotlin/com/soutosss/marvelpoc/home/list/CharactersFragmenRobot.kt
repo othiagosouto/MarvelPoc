@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -113,6 +114,11 @@ internal class CharactersFragmentResult(
     }
 
     private fun checkCharacterName(characterName: String) {
+        composeTestRule.waitUntil {
+            composeTestRule.onAllNodesWithText(characterName)
+                .fetchSemanticsNodes().size == 1
+        }
+
         composeTestRule
             .onNodeWithText(characterName)
             .assertIsDisplayed()
