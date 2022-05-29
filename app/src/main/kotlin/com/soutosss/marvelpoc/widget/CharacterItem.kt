@@ -42,7 +42,7 @@ fun CharacterItem(
             .clickable(onClick = { onClick(character) })
     ) {
 
-        Image(
+        ImageLoading(
             modifier = Modifier.fillMaxWidth(),
             url = character.thumbnailUrl,
             height = 150.dp
@@ -74,7 +74,7 @@ fun CharacterItem(
 }
 
 @Composable
-private fun Image(modifier: Modifier = Modifier, url: String, height: Dp) {
+private fun ImageLoading(modifier: Modifier = Modifier, url: String, height: Dp) {
     val painterImage = rememberImagePainter(url)
 
     if (painterImage.state is ImagePainter.State.Loading) {

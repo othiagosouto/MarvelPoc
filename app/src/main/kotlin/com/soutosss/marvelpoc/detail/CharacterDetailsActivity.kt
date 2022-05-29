@@ -92,4 +92,3 @@ fun LoadedViewState(viewState: DetailsViewState.Loaded, process: (Intent) -> Uni
         )
     }
 }
-
