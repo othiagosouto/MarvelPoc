@@ -4,7 +4,7 @@ import androidx.paging.PositionalDataSource
 import dev.thiagosouto.data.retrofit.character.Result
 import dev.thiagosouto.data.retrofit.ext.toCharacter
 import dev.thiagosouto.marvelpoc.data.model.view.Character
-import com.soutosss.marvelpoc.shared.EmptyDataException
+import dev.thiagosouto.marvelpoc.shared.EmptyDataException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

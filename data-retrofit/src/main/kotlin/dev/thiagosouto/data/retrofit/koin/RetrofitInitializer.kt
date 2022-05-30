@@ -11,7 +11,7 @@ import dev.thiagosouto.data.retrofit.interceptors.isNetworkNotConnected
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.character.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
-import com.soutosss.marvelpoc.shared.koin.KoinModulesProvider
+import dev.thiagosouto.marvelpoc.shared.koin.KoinModulesProvider
 import okhttp3.OkHttpClient
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named

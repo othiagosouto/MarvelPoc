@@ -1,4 +1,4 @@
-package com.soutosss.marvelpoc.shared.koin
+package dev.thiagosouto.marvelpoc.shared.koin
 
 import org.koin.core.module.Module
 

@@ -2,7 +2,7 @@ package dev.thiagosouto.marvelpoc.data.koin
 
 import dev.thiagosouto.marvelpoc.data.CharactersRepository
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
-import com.soutosss.marvelpoc.shared.koin.KoinModulesProvider
+import dev.thiagosouto.marvelpoc.shared.koin.KoinModulesProvider
 import org.koin.core.module.Module
 import org.koin.dsl.module
 

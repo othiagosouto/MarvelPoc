@@ -10,8 +10,8 @@ import dev.thiagosouto.marvelpoc.data.CharactersRepository
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
 import dev.thiagosouto.marvelpoc.data.model.view.Character
-import com.soutosss.marvelpoc.shared.EmptyDataException
-import com.soutosss.marvelpoc.shared.livedata.Result
+import dev.thiagosouto.marvelpoc.shared.EmptyDataException
+import dev.thiagosouto.marvelpoc.shared.livedata.Result
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

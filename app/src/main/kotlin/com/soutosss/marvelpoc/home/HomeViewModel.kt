@@ -12,8 +12,8 @@ import androidx.paging.toLiveData
 import com.soutosss.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.CharactersRepository
 import dev.thiagosouto.marvelpoc.data.model.view.Character
-import com.soutosss.marvelpoc.shared.EmptyDataException
-import com.soutosss.marvelpoc.shared.livedata.Result
+import dev.thiagosouto.marvelpoc.shared.EmptyDataException
+import dev.thiagosouto.marvelpoc.shared.livedata.Result
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: CharactersRepository) : ViewModel() {

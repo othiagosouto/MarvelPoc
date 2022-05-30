@@ -5,7 +5,7 @@ import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.room.AppDatabase
 import dev.thiagosouto.marvelpoc.data.room.BuildConfig
 import dev.thiagosouto.marvelpoc.data.room.CharacterLocalRoomDataSource
-import com.soutosss.marvelpoc.shared.koin.KoinModulesProvider
+import dev.thiagosouto.marvelpoc.shared.koin.KoinModulesProvider
 import org.koin.core.module.Module
 import org.koin.dsl.module
 

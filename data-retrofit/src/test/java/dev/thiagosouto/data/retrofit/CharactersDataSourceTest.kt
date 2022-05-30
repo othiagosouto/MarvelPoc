@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import dev.thiagosouto.data.retrofit.character.MarvelCharactersResponse
 import dev.thiagosouto.data.retrofit.ext.toCharacter
 import dev.thiagosouto.marvelpoc.data.model.view.Character
-import com.soutosss.marvelpoc.shared.EmptyDataException
+import dev.thiagosouto.marvelpoc.shared.EmptyDataException
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

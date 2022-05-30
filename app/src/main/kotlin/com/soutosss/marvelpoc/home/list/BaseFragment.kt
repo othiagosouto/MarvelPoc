@@ -13,7 +13,7 @@ import com.soutosss.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.detail.CharacterDetailsActivity
 import com.soutosss.marvelpoc.home.HomeViewModel
-import com.soutosss.marvelpoc.shared.livedata.Result
+import dev.thiagosouto.marvelpoc.shared.livedata.Result
 import com.soutosss.marvelpoc.widget.ErrorData
 import com.soutosss.marvelpoc.widget.ErrorView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
