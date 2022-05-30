@@ -1,7 +1,7 @@
 package com.soutosss.marvelpoc
 
 import android.app.Application
-import com.soutosss.data.retrofit.koin.RetrofitInitializer
+import dev.thiagosouto.data.retrofit.koin.RetrofitInitializer
 import dev.thiagosouto.marvelpoc.data.koin.DataInitializer
 import dev.thiagosouto.marvelpoc.data.room.koin.DataRoomInitializer
 import com.soutosss.marvelpoc.koin.AppModulesInitializer
