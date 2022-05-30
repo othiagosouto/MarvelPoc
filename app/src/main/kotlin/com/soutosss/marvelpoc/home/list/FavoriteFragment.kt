@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.soutosss.marvelpoc.R
-import com.soutosss.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.shared.livedata.Result
 
 class FavoriteFragment : BaseFragment() {

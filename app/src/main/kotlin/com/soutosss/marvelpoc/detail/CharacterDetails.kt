@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.soutosss.marvelpoc.R
-import com.soutosss.marvelpoc.data.model.view.Comics
+import dev.thiagosouto.marvelpoc.data.model.view.Comics
 import dev.thiagosouto.marvelpoc.design.components.Loading
 import dev.thiagosouto.marvelpoc.design.components.LoadingPage
 import dev.thiagosouto.marvelpoc.design.R as RDesign

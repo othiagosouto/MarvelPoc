@@ -1,6 +1,6 @@
 package com.soutosss.marvelpoc.detail
 
-import com.soutosss.marvelpoc.data.model.view.Comics
+import dev.thiagosouto.marvelpoc.data.model.view.Comics
 import kotlinx.coroutines.flow.StateFlow
 
 interface MviView<S> {

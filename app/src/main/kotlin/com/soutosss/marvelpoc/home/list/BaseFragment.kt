@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.soutosss.marvelpoc.R
-import com.soutosss.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.detail.CharacterDetailsActivity
 import com.soutosss.marvelpoc.home.HomeViewModel
 import com.soutosss.marvelpoc.shared.livedata.Result

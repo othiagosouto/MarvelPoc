@@ -2,9 +2,9 @@ package com.soutosss.data.retrofit
 
 import com.soutosss.data.retrofit.character.details.DetailsComics
 import com.soutosss.data.retrofit.character.details.DetailsResponse
-import com.soutosss.marvelpoc.data.CharacterDetails
-import com.soutosss.marvelpoc.data.Comics
-import com.soutosss.marvelpoc.data.character.CharacterDetailsRemoteContract
+import dev.thiagosouto.marvelpoc.data.CharacterDetails
+import dev.thiagosouto.marvelpoc.data.Comics
+import dev.thiagosouto.marvelpoc.data.character.CharacterDetailsRemoteContract
 
 internal class RetrofitCharacterDetailsRemote(private val charactersApi: CharactersBFFApi) :
     CharacterDetailsRemoteContract<CharacterDetails> {

@@ -1,8 +1,8 @@
 package com.soutosss.data.retrofit
 
 import androidx.paging.PositionalDataSource
-import com.soutosss.marvelpoc.data.character.CharacterRemoteContract
-import com.soutosss.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
+import dev.thiagosouto.marvelpoc.data.model.view.Character
 import kotlinx.coroutines.CoroutineScope
 
 internal class RetrofitCharacterRemote(private val charactersApi: CharactersBFFApi) :

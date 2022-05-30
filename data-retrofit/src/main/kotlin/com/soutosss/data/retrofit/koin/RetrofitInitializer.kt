@@ -8,9 +8,9 @@ import com.soutosss.data.retrofit.RetrofitCharacterRemote
 import com.soutosss.data.retrofit.character.Result
 import com.soutosss.data.retrofit.interceptors.ConnectionDetectionInterceptor
 import com.soutosss.data.retrofit.interceptors.isNetworkNotConnected
-import com.soutosss.marvelpoc.data.CharacterDetails
-import com.soutosss.marvelpoc.data.character.CharacterDetailsRemoteContract
-import com.soutosss.marvelpoc.data.character.CharacterRemoteContract
+import dev.thiagosouto.marvelpoc.data.CharacterDetails
+import dev.thiagosouto.marvelpoc.data.character.CharacterDetailsRemoteContract
+import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
 import com.soutosss.marvelpoc.shared.koin.KoinModulesProvider
 import okhttp3.OkHttpClient
 import org.koin.core.module.Module

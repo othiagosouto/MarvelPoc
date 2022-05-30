@@ -2,8 +2,8 @@ package com.soutosss.marvelpoc.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.mappers.ComicsMapper
+import dev.thiagosouto.marvelpoc.data.CharactersRepository
+import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

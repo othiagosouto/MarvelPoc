@@ -12,8 +12,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.soutosss.marvelpoc.R
-import com.soutosss.marvelpoc.data.character.CharacterLocalContract
-import com.soutosss.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
+import dev.thiagosouto.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.test.waitUntilNotVisible
 import com.soutosss.marvelpoc.test.waitUntilVisible
 import org.hamcrest.Matchers.not

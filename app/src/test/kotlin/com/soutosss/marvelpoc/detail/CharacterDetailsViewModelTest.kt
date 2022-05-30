@@ -1,10 +1,10 @@
 package com.soutosss.marvelpoc.detail
 
 import app.cash.turbine.test
-import com.soutosss.marvelpoc.data.CharacterDetails
-import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.Comics
-import com.soutosss.marvelpoc.data.mappers.ComicsMapper
+import dev.thiagosouto.marvelpoc.data.CharacterDetails
+import dev.thiagosouto.marvelpoc.data.CharactersRepository
+import dev.thiagosouto.marvelpoc.data.Comics
+import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -56,7 +56,7 @@ class CharacterDetailsViewModelTest {
     private fun comicsDomain(id: Long) =
         Comics(id = id, title = "title - $id", imageUrl = "thumb-$id")
 
-    private fun comicsView(id: Long) = com.soutosss.marvelpoc.data.model.view.Comics(
+    private fun comicsView(id: Long) = dev.thiagosouto.marvelpoc.data.model.view.Comics(
         title = "title - $id",
         thumbnailUrl = "thumb-$id"
     )

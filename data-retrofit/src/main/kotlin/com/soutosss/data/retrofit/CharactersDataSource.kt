@@ -3,7 +3,7 @@ package com.soutosss.data.retrofit
 import androidx.paging.PositionalDataSource
 import com.soutosss.data.retrofit.character.Result
 import com.soutosss.data.retrofit.ext.toCharacter
-import com.soutosss.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.shared.EmptyDataException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

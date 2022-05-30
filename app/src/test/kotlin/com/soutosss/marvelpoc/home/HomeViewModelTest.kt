@@ -6,10 +6,10 @@ import androidx.lifecycle.Observer
 import androidx.paging.PositionalDataSource
 import com.google.common.truth.Truth.assertThat
 import com.soutosss.marvelpoc.R
-import com.soutosss.marvelpoc.data.CharactersRepository
-import com.soutosss.marvelpoc.data.character.CharacterLocalContract
-import com.soutosss.marvelpoc.data.character.CharacterRemoteContract
-import com.soutosss.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.data.CharactersRepository
+import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
+import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
+import dev.thiagosouto.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.shared.EmptyDataException
 import com.soutosss.marvelpoc.shared.livedata.Result
 import io.mockk.coEvery

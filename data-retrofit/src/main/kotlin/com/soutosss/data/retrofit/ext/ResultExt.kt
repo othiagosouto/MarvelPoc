@@ -1,7 +1,7 @@
 package com.soutosss.data.retrofit.ext
 
 import com.soutosss.data.retrofit.character.Result
-import com.soutosss.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.data.model.view.Character
 
 internal fun Result.toCharacter() =
     Character(

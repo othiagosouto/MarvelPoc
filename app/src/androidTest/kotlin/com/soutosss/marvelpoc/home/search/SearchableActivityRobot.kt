@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
-import com.soutosss.marvelpoc.data.CharactersRepository
+import dev.thiagosouto.marvelpoc.data.CharactersRepository
 import com.soutosss.marvelpoc.home.HomeViewModel
 import io.mockk.coEvery
 import io.mockk.every

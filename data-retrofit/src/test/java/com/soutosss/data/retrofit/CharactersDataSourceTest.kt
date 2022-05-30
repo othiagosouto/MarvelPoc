@@ -5,7 +5,7 @@ import com.google.common.truth.Truth
 import com.google.gson.Gson
 import com.soutosss.data.retrofit.character.MarvelCharactersResponse
 import com.soutosss.data.retrofit.ext.toCharacter
-import com.soutosss.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.data.model.view.Character
 import com.soutosss.marvelpoc.shared.EmptyDataException
 import io.mockk.coEvery
 import io.mockk.every
