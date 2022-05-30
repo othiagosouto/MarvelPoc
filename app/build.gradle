@@ -11,7 +11,7 @@ android {
     buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
 
     defaultConfig {
-        applicationId "com.soutosss.marvelpoc"
+        applicationId "dev.thiagosouto.marvelpoc"
         minSdkVersion Libs.Config.Android.minSdkVersion
         targetSdkVersion Libs.Config.Android.targetSdkVersion
         versionCode 1
