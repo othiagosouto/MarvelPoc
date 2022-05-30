@@ -11,7 +11,7 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToIndex
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
-import dev.thiagosouto.data.retrofit.koin.RetrofitInitializer
+import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.webserver.TestWebServer
 import org.koin.core.component.KoinComponent
