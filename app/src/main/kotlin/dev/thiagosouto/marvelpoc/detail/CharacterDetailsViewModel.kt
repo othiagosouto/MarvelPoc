@@ -4,51 +4,47 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.thiagosouto.marvelpoc.data.CharactersRepository
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
+import dev.thiagosouto.marvelpoc.shared.mvi.MviView
+import dev.thiagosouto.marvelpoc.shared.mvi.Presenter
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class CharacterDetailsViewModel(
     private val repository: CharactersRepository,
     private val comicsMapper: ComicsMapper
 ) : ViewModel(),
-    Presenter<Intent, DetailsViewState, Effect> {
+    Presenter<Intent, DetailsViewState> {
 
-    private val _state: MutableStateFlow<DetailsViewState> = MutableStateFlow(DetailsViewState.Idle)
-    override val state: StateFlow<DetailsViewState> = _state
-
-    private val _effects: MutableStateFlow<Effect> = MutableStateFlow(Effect.Idle)
-    override val effects: StateFlow<Effect> = _effects
-
+    private lateinit var view: MviView<DetailsViewState>
     override fun process(intent: Intent) {
-        processIntent(intent)?.let {
-            processToEffect(intent)
-        }
+        processIntent(intent)
     }
 
-    private fun processToEffect(intent: Intent) {
-        if (intent is Intent.CloseScreen) _effects.value = Effect.CloseScreen
-    }
-
-    private fun processIntent(intent: Intent): Intent? = when (intent) {
-        is Intent.OpenScreen -> {
-            process(Intent.Internal.LoadScreen(intent.characterId))
-            null
-        }
-        is Intent.Internal.LoadScreen -> {
-            viewModelScope.launch(Dispatchers.IO) {
-                _state.value = DetailsViewState.Loading
-                val details = repository.fetchCharacterDetails(intent.characterId.toString())
-                _state.value = DetailsViewState.Loaded(
-                    details.name,
-                    details.description,
-                    details.imageUrl,
-                    comics = comicsMapper.apply(details.comics)
-                )
+    private fun processIntent(intent: Intent) {
+        when (intent) {
+            is Intent.OpenScreen -> {
+                process(Intent.Internal.LoadScreen(intent.characterId))
             }
-            null
+            is Intent.Internal.LoadScreen -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    view.render(DetailsViewState.Loading)
+                    val details = repository.fetchCharacterDetails(intent.characterId.toString())
+                    view.render(
+                        DetailsViewState.Loaded(
+                            details.name,
+                            details.description,
+                            details.imageUrl,
+                            comics = comicsMapper.apply(details.comics)
+                        )
+                    )
+                }
+            }
+            is Intent.CloseScreen -> view.render(DetailsViewState.Closed)
         }
-        else -> intent
+    }
+
+    override fun bind(view: MviView<DetailsViewState>) {
+        this.view = view
+        this.view.render(DetailsViewState.Idle)
     }
 }

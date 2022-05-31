@@ -10,41 +10,36 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
 import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.design.components.LoadingPage
+import dev.thiagosouto.marvelpoc.shared.mvi.MviView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CharacterDetailsActivity : ComponentActivity() {
+class CharacterDetailsActivity : ComponentActivity(), MviView<DetailsViewState> {
 
+    private var state by mutableStateOf<DetailsViewState>(DetailsViewState.Idle)
     private val characterDetailsViewModel: CharacterDetailsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        characterDetailsViewModel.bind(this)
 
         if (savedInstanceState == null) {
             val character: Character = intent.extras!!.getSerializable(CHARACTER_KEY) as Character
             characterDetailsViewModel.process(Intent.OpenScreen(character.id))
         }
 
-        lifecycleScope.launchWhenCreated {
-            characterDetailsViewModel.effects.collect {
-                if (it is Effect.CloseScreen) {
-                    finish()
-                }
-            }
-        }
-
         setContent {
             CharacterDetailsScreen(
                 characterDetailsViewModel::process,
-                characterDetailsViewModel.state.collectAsState()
+                state
             )
         }
     }
@@ -53,16 +48,20 @@ class CharacterDetailsActivity : ComponentActivity() {
         const val CHARACTER_KEY = "CHARACTER_KEY"
         const val TAG = "CharacterDetailsFragment"
     }
+
+    override fun render(state: DetailsViewState) {
+        this.state = state
+    }
 }
 
 @Composable
 fun CharacterDetailsScreen(
     process: (Intent) -> Unit,
-    viewState: State<DetailsViewState>
+    viewState: DetailsViewState
 ) {
-    when (val content = viewState.value) {
+    when (viewState) {
         is DetailsViewState.Loading -> LoadingPage()
-        is DetailsViewState.Loaded -> LoadedViewState(content as DetailsViewState.Loaded, process)
+        is DetailsViewState.Loaded -> LoadedViewState(viewState, process)
     }
 }
 

@@ -1,21 +1,27 @@
 package dev.thiagosouto.marvelpoc.detail
 
-import app.cash.turbine.test
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.CharactersRepository
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
+import dev.thiagosouto.marvelpoc.home.CoroutineTestRule
+import dev.thiagosouto.marvelpoc.shared.mvi.MviView
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
+import io.mockk.verifySequence
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class CharacterDetailsViewModelTest {
+    @get:Rule
+    var coroutineTestRule = CoroutineTestRule()
+
     private val comicsMapper = ComicsMapper()
     private lateinit var viewModel: CharacterDetailsViewModel
     private lateinit var repository: CharactersRepository
+    private val mviView = mockk<MviView<DetailsViewState>>(relaxed = true)
 
     @Before
     fun setup() {
@@ -24,7 +30,7 @@ class CharacterDetailsViewModelTest {
     }
 
     @Test
-    fun `favoriteClick should favorite item when favorite flag is true`() = runBlocking {
+    fun `should publish expected states`() =  runTest  {
         val ids = listOf<Long>(1, 2, 3, 4)
         val characterDetails = CharacterDetails(
             id = 300L,
@@ -35,23 +41,22 @@ class CharacterDetailsViewModelTest {
         )
         coEvery { repository.fetchCharacterDetails("300") } returns characterDetails
 
-        viewModel.run {
-            this.state.test {
-                process(Intent.OpenScreen(300L))
-                assertEquals(DetailsViewState.Idle, awaitItem())
-                assertEquals(DetailsViewState.Loading, awaitItem())
-                assertEquals(
-                    DetailsViewState.Loaded(
-                        name = characterDetails.name,
-                        description = characterDetails.description,
-                        imageUrl = characterDetails.imageUrl,
-                        comics = ids.map(::comicsView)
-                    ), awaitItem()
+        viewModel.bind(mviView)
+        viewModel.process(Intent.OpenScreen(300L))
+
+        verifySequence {
+            mviView.render(DetailsViewState.Idle)
+            mviView.render(DetailsViewState.Loading)
+            mviView.render(
+                DetailsViewState.Loaded(
+                    name = characterDetails.name,
+                    description = characterDetails.description,
+                    imageUrl = characterDetails.imageUrl,
+                    comics = ids.map(::comicsView)
                 )
-            }
+            )
         }
     }
-
 
     private fun comicsDomain(id: Long) =
         Comics(id = id, title = "title - $id", imageUrl = "thumb-$id")
