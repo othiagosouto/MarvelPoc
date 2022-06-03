@@ -114,7 +114,6 @@ dependencies {
     allTestsConfigs Libs.AndroidX.Test.rules
     allTestsConfigs Libs.AndroidX.Test.core
 
-
     androidTestImplementation Libs.AndroidX.Compose.uiTest
     androidTestImplementation Libs.AndroidX.Test.runner
     androidTestImplementation Libs.AndroidX.Test.Ext.junit

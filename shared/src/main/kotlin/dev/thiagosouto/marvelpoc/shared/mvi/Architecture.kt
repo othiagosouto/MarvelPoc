@@ -5,6 +5,5 @@ interface MviView<S> {
 }
 
 interface Presenter<I, S> {
-    fun bind(view: MviView<S>)
     fun process(intent: I)
 }

@@ -1,27 +1,32 @@
 package dev.thiagosouto.marvelpoc.detail
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
+import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.CharactersRepository
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.home.CoroutineTestRule
-import dev.thiagosouto.marvelpoc.shared.mvi.MviView
 import io.mockk.coEvery
 import io.mockk.mockk
-import io.mockk.verifySequence
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class CharacterDetailsViewModelTest {
-    @get:Rule
-    var coroutineTestRule = CoroutineTestRule()
-
+@OptIn(ExperimentalCoroutinesApi::class)
+internal class CharacterDetailsViewModelTest {
     private val comicsMapper = ComicsMapper()
     private lateinit var viewModel: CharacterDetailsViewModel
     private lateinit var repository: CharactersRepository
-    private val mviView = mockk<MviView<DetailsViewState>>(relaxed = true)
+
+    @get:Rule
+    val rule = InstantTaskExecutorRule()
+
+    @get:Rule
+    var coroutineTestRule = CoroutineTestRule()
 
     @Before
     fun setup() {
@@ -30,7 +35,7 @@ class CharacterDetailsViewModelTest {
     }
 
     @Test
-    fun `should publish expected states`() =  runTest  {
+    fun `should publish expected states`() = runBlocking {
         val ids = listOf<Long>(1, 2, 3, 4)
         val characterDetails = CharacterDetails(
             id = 300L,
@@ -41,28 +46,49 @@ class CharacterDetailsViewModelTest {
         )
         coEvery { repository.fetchCharacterDetails("300") } returns characterDetails
 
-        viewModel.bind(mviView)
-        viewModel.process(Intent.OpenScreen(300L))
-
-        verifySequence {
-            mviView.render(DetailsViewState.Idle)
-            mviView.render(DetailsViewState.Loading)
-            mviView.render(
-                DetailsViewState.Loaded(
-                    name = characterDetails.name,
-                    description = characterDetails.description,
-                    imageUrl = characterDetails.imageUrl,
-                    comics = ids.map(::comicsView)
+        viewModel.run {
+            state.test {
+                viewModel.process(Intent.OpenScreen(300L))
+                val emissions = listOf(awaitItem(), awaitItem(), awaitItem())
+                val viewStates = listOf(
+                    DetailsViewState.Idle,
+                    DetailsViewState.Loading,
+                    DetailsViewState.Loaded(
+                        name = characterDetails.name,
+                        description = characterDetails.description,
+                        imageUrl = characterDetails.imageUrl,
+                        comics = ids.map(::comicsView)
+                    )
                 )
-            )
+
+                assertThat(emissions).isEqualTo(viewStates)
+            }
         }
     }
 
-    private fun comicsDomain(id: Long) =
-        Comics(id = id, title = "title - $id", imageUrl = "thumb-$id")
+    @Test
+    fun `should emit closed state`() = runBlocking {
 
-    private fun comicsView(id: Long) = dev.thiagosouto.marvelpoc.data.model.view.Comics(
-        title = "title - $id",
-        thumbnailUrl = "thumb-$id"
-    )
+        viewModel.run {
+            state.test {
+                viewModel.process(Intent.CloseScreen)
+                val emissions = listOf(awaitItem(), awaitItem())
+                val viewStates = listOf(
+                    DetailsViewState.Idle,
+                    DetailsViewState.Closed
+                )
+
+                assertThat(emissions).isEqualTo(viewStates)
+            }
+        }
+    }
+
 }
+
+private fun comicsDomain(id: Long) =
+    Comics(id = id, title = "title - $id", imageUrl = "thumb-$id")
+
+private fun comicsView(id: Long) = dev.thiagosouto.marvelpoc.data.model.view.Comics(
+    title = "title - $id",
+    thumbnailUrl = "thumb-$id"
+)
