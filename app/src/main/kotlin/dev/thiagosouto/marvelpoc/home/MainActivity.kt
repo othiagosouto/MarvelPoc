@@ -8,7 +8,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dev.thiagosouto.marvelpoc.R
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+internal class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val viewPager: ViewPager2
         get() = findViewById(R.id.viewPager)

@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import dev.thiagosouto.marvelpoc.home.list.CharactersFragment
 import dev.thiagosouto.marvelpoc.home.list.FavoriteFragment
 
-class ViewPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle) :
+internal class ViewPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fm, lifecycle) {
     override fun getItemCount(): Int = 2
 
