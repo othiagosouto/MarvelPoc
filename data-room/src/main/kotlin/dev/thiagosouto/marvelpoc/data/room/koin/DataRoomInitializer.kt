@@ -9,6 +9,9 @@ import dev.thiagosouto.marvelpoc.shared.koin.KoinModulesProvider
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
+/**
+ * Provides room module
+ */
 class DataRoomInitializer : KoinModulesProvider {
     override fun provides(): Module {
         return module {

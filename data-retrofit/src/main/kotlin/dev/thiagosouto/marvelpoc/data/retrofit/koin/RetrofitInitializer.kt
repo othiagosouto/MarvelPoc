@@ -19,6 +19,9 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Provides retrofit module
+ */
 class RetrofitInitializer : KoinModulesProvider {
     override fun provides(): Module =
         module {

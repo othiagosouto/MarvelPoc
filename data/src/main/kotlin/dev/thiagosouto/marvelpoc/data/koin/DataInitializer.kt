@@ -6,6 +6,9 @@ import dev.thiagosouto.marvelpoc.shared.koin.KoinModulesProvider
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
+/**
+ * Provides data module
+ */
 class DataInitializer : KoinModulesProvider {
     override fun provides(): Module = module {
 

@@ -7,7 +7,11 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
+/**
+ * Provides app module
+ */
 class AppModulesInitializer : KoinModulesProvider {
+
     override fun provides(): Module {
         return module {
             viewModel { HomeViewModel(get()) }
