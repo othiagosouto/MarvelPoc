@@ -8,7 +8,7 @@ import dev.thiagosouto.marvelpoc.koin.AppModulesInitializer
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class MarvelPocApplication : Application() {
+internal class MarvelPocApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         val appModulesInitializer = AppModulesInitializer()
