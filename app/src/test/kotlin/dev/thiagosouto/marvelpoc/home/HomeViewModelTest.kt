@@ -64,59 +64,60 @@ internal class HomeViewModelTest {
     @Test
     fun `charactersPageListContent should post the characters from datasource`() = runTest {
 
-            val successSlot = slot<() -> Unit>()
-            every {
-                repository.charactersDataSource(
-                    null,
-                    any(),
-                    any(),
-                    capture(successSlot)
-                )
-            } returns remotePageSource
+        val successSlot = slot<() -> Unit>()
+        every {
+            repository.charactersDataSource(
+                null,
+                any(),
+                any(),
+                capture(successSlot)
+            )
+        } returns remotePageSource
 
-            val item = viewModel.charactersPageListContent()
+        val item = viewModel.charactersPageListContent()
 
-            var list: List<Character>? = null
-            item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
-                list = it.snapshot()
-            })
-            successSlot.captured.invoke()
-            assertThat(list).isEqualTo(charactersList)
-            assertThat(viewModel.characters.value!!).isEqualTo(Result.Loaded)
-        }
+        var list: List<Character>? = null
+        item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+            list = it.snapshot()
+        })
+        successSlot.captured.invoke()
+        assertThat(list).isEqualTo(charactersList)
+        assertThat(viewModel.characters.value!!).isEqualTo(Result.Loaded)
+    }
 
     @Test
     fun `charactersPageListContent should post an expected message for Exception`() = runTest {
-            remotePageSource = FakeDataSource(emptyList(), Exception())
-            val errorSlot = slot<(java.lang.Exception) -> Unit>()
+        remotePageSource = FakeDataSource(emptyList(), Exception())
+        val errorSlot = slot<(java.lang.Exception) -> Unit>()
 
-            every {
-                repository.charactersDataSource(
-                    null,
-                    any(),
-                    capture(errorSlot),
-                    any()
-                )
-            } returns remotePageSource
-            var list: List<Character>? = null
-            viewModel.charactersPageListContent()
-                .observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
-                    list = it.snapshot()
-                })
-
-            errorSlot.captured.invoke(Exception())
-            assertThat(list).isEqualTo(emptyList<Character>())
-
-            assertThat(viewModel.characters.value!!).isEqualTo(
-                Result.Error(
-                    R.string.home_error_loading,
-                    R.drawable.thanos
-                )
+        every {
+            repository.charactersDataSource(
+                null,
+                any(),
+                capture(errorSlot),
+                any()
             )
-        }
+        } returns remotePageSource
+        var list: List<Character>? = null
+        viewModel.charactersPageListContent()
+            .observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+                list = it.snapshot()
+            })
+
+        errorSlot.captured.invoke(Exception())
+        assertThat(list).isEqualTo(emptyList<Character>())
+
+        assertThat(viewModel.characters.value!!).isEqualTo(
+            Result.Error(
+                R.string.home_error_loading,
+                R.drawable.thanos
+            )
+        )
+    }
 
     @Test
-    fun `charactersPageListContent should post error when there is no characters available`() = runTest {
+    fun `charactersPageListContent should post error when there is no characters available`() =
+        runTest {
             remotePageSource = FakeDataSource(emptyList(), EmptyDataException())
             val errorSlot = slot<(java.lang.Exception) -> Unit>()
             every {
@@ -152,14 +153,14 @@ internal class HomeViewModelTest {
             val errorSlot = slot<(java.lang.Exception) -> Unit>()
             every {
                 repository.charactersDataSource(
-                    "content",
+                    content,
                     any(),
                     capture(errorSlot),
                     any()
                 )
             } returns remotePageSource
 
-            viewModel.searchedQuery = "content"
+            viewModel.searchedQuery = content
             val item = viewModel.charactersPageListContent()
 
             var list: List<Character>? = null
@@ -184,14 +185,14 @@ internal class HomeViewModelTest {
             val errorSlot = slot<(Exception) -> Unit>()
             every {
                 repository.charactersDataSource(
-                    "content",
+                    content,
                     any(),
                     capture(errorSlot),
                     any()
                 )
             } returns remotePageSource
 
-            viewModel.searchedQuery = "content"
+            viewModel.searchedQuery = content
             val item = viewModel.charactersPageListContent()
 
             var list: List<Character>? = null
@@ -212,20 +213,20 @@ internal class HomeViewModelTest {
 
     @Test
     fun `charactersFavorite should post all favorite characters available`() = runTest {
-            val favoriteCharacters = listOf(characterFavorite)
+        val favoriteCharacters = listOf(characterFavorite)
 
-            coEvery { characterLocalContract.favoriteList() } returns FakeCharacterDataSource(
-                favoriteCharacters,
-                null
-            )
+        coEvery { characterLocalContract.favoriteList() } returns FakeCharacterDataSource(
+            favoriteCharacters,
+            null
+        )
 
-            val item = viewModel.charactersFavorite()
-            var list: List<Character>? = null
-            item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
-                list = it.snapshot()
-            })
-            assertThat(list).isEqualTo(favoriteCharacters)
-        }
+        val item = viewModel.charactersFavorite()
+        var list: List<Character>? = null
+        item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+            list = it.snapshot()
+        })
+        assertThat(list).isEqualTo(favoriteCharacters)
+    }
 
     @Test
     fun `charactersFavorite should post error with expected content when there's no favorite characters available`() =
@@ -252,36 +253,36 @@ internal class HomeViewModelTest {
     @Test
     fun `favoriteClick should favorite item when favorite flag is true`() = runTest {
 
-            coEvery { repository.favoriteCharacter(characterFavorite) } returns Unit
+        coEvery { repository.favoriteCharacter(characterFavorite) } returns Unit
 
-            viewModel.favoriteClick(characterFavorite)
+        viewModel.favoriteClick(characterFavorite)
 
-            coVerify { repository.favoriteCharacter(characterFavorite) }
-        }
+        coVerify { repository.favoriteCharacter(characterFavorite) }
+    }
 
     @Test
     fun `favoriteClick should post the position of the item that was unfavorited`() = runTest {
 
-            every {
-                repository.charactersDataSource(
-                    any(),
-                    any(),
-                    any(),
-                    any()
-                )
-            } returns FakeDataSource(listOf(character.copy(id = 33), character))
+        every {
+            repository.charactersDataSource(
+                any(),
+                any(),
+                any(),
+                any()
+            )
+        } returns FakeDataSource(listOf(character.copy(id = 33), character))
 
-            coEvery { characterLocalContract.favoriteIds() } returns listOf(1011334)
-            coEvery { characterLocalContract.unFavorite(character) } returns character.id
+        coEvery { characterLocalContract.favoriteIds() } returns listOf(1011334)
+        coEvery { characterLocalContract.unFavorite(character) } returns character.id
 
-            viewModel.charactersPageListContent()
-                .observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
-                })
+        viewModel.charactersPageListContent()
+            .observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
+            })
 
-            viewModel.favoriteClick(character)
+        viewModel.favoriteClick(character)
 
-            assertThat(viewModel.changeAdapter.value).isEqualTo(1)
-        }
+        assertThat(viewModel.changeAdapter.value).isEqualTo(1)
+    }
 
     @Test
     fun `updating searchedQuery should init searchContent and do search for characters starting expected name`() =
@@ -291,7 +292,7 @@ internal class HomeViewModelTest {
 
             every {
                 repository.charactersDataSource(
-                    "Ops",
+                    ops,
                     any(),
                     any(),
                     any()
@@ -300,7 +301,7 @@ internal class HomeViewModelTest {
 
             val item = viewModel.charactersPageListContent()
 
-            viewModel.searchedQuery = "Ops"
+            viewModel.searchedQuery = ops
             var characters: List<Character>? = null
 
             item.observe(provideLifecycleState(Lifecycle.State.RESUMED), Observer {
@@ -313,7 +314,7 @@ internal class HomeViewModelTest {
     @Test
     fun `isCharacterFavorite returns true for favorite recipe id`() =
         runTest {
-            coEvery { characterLocalContract.favoriteIds() } returns listOf(1,2,3)
+            coEvery { characterLocalContract.favoriteIds() } returns listOf(1, 2, 3)
             val viewModel = spyk(HomeViewModel(repository))
 
 
@@ -323,9 +324,14 @@ internal class HomeViewModelTest {
     @Test
     fun `isCharacterFavorite returns false for non favorite recipe id`() =
         runTest {
-            coEvery { characterLocalContract.favoriteIds() } returns listOf(1,2,3)
+            coEvery { characterLocalContract.favoriteIds() } returns listOf(1, 2, 3)
             val viewModel = spyk(HomeViewModel(repository))
 
             assertThat(viewModel.isCharacterFavorite(6)).isFalse()
         }
+
+    private companion object Mock {
+        const val content = "content"
+        const val ops = "Ops"
+    }
 }

@@ -35,4 +35,4 @@ internal class ErrorView @JvmOverloads constructor(
     }
 }
 
-data class ErrorData(@StringRes val message: Int, @DrawableRes val image: Int)
+internal data class ErrorData(@StringRes val message: Int, @DrawableRes val image: Int)

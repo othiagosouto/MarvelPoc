@@ -1,5 +1,8 @@
 package dev.thiagosouto.marvelpoc.data
 
+/**
+ * Character details domain model
+ */
 class CharacterDetails(
     val id: Long,
     val name: String,
@@ -8,6 +11,9 @@ class CharacterDetails(
     val comics: List<Comics>
 )
 
+/**
+ * Comics domain model
+ */
 data class Comics(
     val id: Long,
     val title: String,
