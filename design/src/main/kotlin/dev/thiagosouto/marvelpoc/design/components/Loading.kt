@@ -14,6 +14,9 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.Dp
 import dev.thiagosouto.marvelpoc.design.R
 
+/**
+ * Component for loading from the design system
+ */
 @Composable
 fun Loading(modifier: Modifier = Modifier, heightIn: Dp) {
     Box(
@@ -25,6 +28,9 @@ fun Loading(modifier: Modifier = Modifier, heightIn: Dp) {
     }
 }
 
+/**
+ * Component for loading page from the design system
+ */
 @Composable
 fun LoadingPage() {
     Row(

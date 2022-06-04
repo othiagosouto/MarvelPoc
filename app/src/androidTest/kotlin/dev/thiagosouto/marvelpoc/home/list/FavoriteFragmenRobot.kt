@@ -96,7 +96,7 @@ private class FakeCharacterLocalContract(private val isEmpty: Boolean) :
                 30,
                 "3-D Test HAHAH",
                 "http://www.google.com",
-                "description",
+                DESCRIPTION,
                 true
             )
         )
@@ -111,4 +111,8 @@ private class FakeCharacterLocalContract(private val isEmpty: Boolean) :
     }
 
     override suspend fun unFavorite(item: Character): Long = 30L
+
+    private companion object Mock{
+        const val DESCRIPTION = "description"
+    }
 }

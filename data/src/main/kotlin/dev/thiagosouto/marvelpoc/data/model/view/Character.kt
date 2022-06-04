@@ -2,6 +2,9 @@ package dev.thiagosouto.marvelpoc.data.model.view
 
 import java.io.Serializable
 
+/**
+ * Ui model that represent Character
+ */
 data class Character(
     val id: Long,
     val name: String,

@@ -1,5 +1,9 @@
 package dev.thiagosouto.marvelpoc.shared.livedata
 
+/**
+ * Result sealed class
+ */
+@Deprecated("Use view state instead of result wrapper")
 sealed class Result {
 
     /**

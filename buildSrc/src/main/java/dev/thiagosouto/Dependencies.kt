@@ -1,5 +1,8 @@
 package dev.thiagosouto
 
+/**
+ * App dependencies
+ */
 object Libs {
 
     /**

@@ -1,9 +1,14 @@
 package dev.thiagosouto.marvelpoc.shared.mvi
 
-interface MviView<S> {
-    fun render(state: S)
-}
-
+/**
+ * Mvi presenter
+ * @param I is the intent
+ * @param S is the state
+ */
 interface Presenter<I, S> {
+
+    /**
+     * Process the intent
+     */
     fun process(intent: I)
 }

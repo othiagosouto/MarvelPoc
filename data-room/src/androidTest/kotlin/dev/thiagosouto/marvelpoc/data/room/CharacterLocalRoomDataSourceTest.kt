@@ -22,18 +22,18 @@ internal class CharacterLocalRoomDataSourceTest {
     private val characterLocal =
         CharacterLocal(
             30,
-            "name",
-            "url",
-            "description",
+            NAME,
+            URL,
+            DESCRIPTION,
             true
         )
 
     private val character =
         Character(
             30,
-            "name",
-            "url",
-            "description",
+            NAME,
+            URL,
+            DESCRIPTION,
             true
         )
 
@@ -57,9 +57,9 @@ internal class CharacterLocalRoomDataSourceTest {
             val character =
                 Character(
                     30,
-                    "name",
-                    "url",
-                    "description",
+                    NAME,
+                    URL,
+                    DESCRIPTION,
                     true
                 )
             assertThat(dataSource.favorite(character)).isEqualTo(30)
@@ -111,4 +111,10 @@ internal class CharacterLocalRoomDataSourceTest {
                 )
             )
         }
+
+    private companion object Mock{
+        const val DESCRIPTION = "description"
+        const val NAME = "name"
+        const val URL = "url"
+    }
 }
