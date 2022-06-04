@@ -1,13 +1,14 @@
 package dev.thiagosouto
 
-
-object Versions {
-    const val ktlint = "0.43.0"
-}
-
 object Libs {
 
+    /**
+     * Constants related to configs
+     */
     object Config {
+        /**
+         * Constants related to android properties from the gradle project
+         */
         object Android {
             const val androidCompileSdkVersion = 32
             const val androidBuildToolsVersion = "32.0.0"
@@ -20,6 +21,9 @@ object Libs {
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.4"
 
+    /**
+     * Dependencies related to kotlin
+     */
     object Kotlin {
         private const val version = "1.6.10"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
@@ -28,6 +32,9 @@ object Libs {
         const val detektPlugin = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.20.0"
     }
 
+    /**
+     * Dependencies related to coroutines
+     */
     object Coroutines {
         private const val version = "1.6.0"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
@@ -36,6 +43,9 @@ object Libs {
         const val turbine = "app.cash.turbine:turbine:0.7.0"
     }
 
+    /**
+     * Dependencies related to androix
+     */
     object AndroidX {
         private const val lifecycleVersion = "2.2.0"
         private const val roomVersion = "2.4.0"
@@ -50,6 +60,9 @@ object Libs {
         const val room = "androidx.room:room-ktx:$roomVersion"
         const val roomCompiler = "androidx.room:room-compiler:$roomVersion"
 
+        /**
+         * Dependencies related to jetpack compose
+         */
         object Compose {
             const val version = "1.1.0"
 
@@ -72,15 +85,9 @@ object Libs {
 
         }
 
-        object Lifecycle {
-            const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
-        }
-
-        object ConstraintLayout {
-            const val constraintLayoutCompose =
-                "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02"
-        }
-
+        /**
+         * Dependencies related to test
+         */
         object Test {
             private const val version = "1.4.0"
             const val core = "androidx.test:core:$version"
@@ -98,6 +105,9 @@ object Libs {
         }
     }
 
+    /**
+     * Dependencies related to network
+     */
     object Network {
         const val gsonConverter = "com.squareup.retrofit2:converter-gson:2.8.1"
         const val glide = "com.github.bumptech.glide:glide:4.11.0"
@@ -106,6 +116,9 @@ object Libs {
         const val retrofit = "com.squareup.retrofit2:retrofit:2.6.1"
     }
 
+    /**
+     * Dependencies related to test
+     */
     object Test {
         private const val version = "4.13"
         const val junit = "junit:junit:$version"
@@ -116,6 +129,9 @@ object Libs {
         const val okhttp = "com.squareup.okhttp3:okhttp:4.9.3"
     }
 
+    /**
+     * Dependencies related to DI
+     */
     object DI {
         const val koin = "io.insert-koin:koin-android:3.2.0"
     }
