@@ -30,7 +30,7 @@ import dev.thiagosouto.marvelpoc.design.components.FavoriteToggle
 import dev.thiagosouto.marvelpoc.design.components.Loading
 
 @Composable
-fun CharacterItem(
+internal fun CharacterItem(
     modifier: Modifier = Modifier,
     character: Character,
     onClick: (Character) -> Unit,

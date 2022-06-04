@@ -18,5 +18,4 @@ internal interface CharactersBFFApi {
         @Query("offset") offset: Int? = null,
         @Query("limit") limit: Int? = 30
     ): MarvelCharactersResponse
-
 }

@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.home.list.CharactersFragment
 
-class SearchableActivity : AppCompatActivity() {
+internal class SearchableActivity : AppCompatActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +21,5 @@ class SearchableActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 }

@@ -12,7 +12,7 @@ internal class RetrofitCharacterDetailsRemote(private val charactersApi: Charact
         charactersApi.listCharacters(characterId).toCharacterDetails()
 }
 
-fun DetailsResponse.toCharacterDetails(): CharacterDetails = CharacterDetails(
+internal fun DetailsResponse.toCharacterDetails(): CharacterDetails = CharacterDetails(
     id = this.id,
     name = this.name,
     description = this.description,
@@ -20,7 +20,7 @@ fun DetailsResponse.toCharacterDetails(): CharacterDetails = CharacterDetails(
     comics = this.comics.map(::toComics)
 )
 
-fun toComics(item: DetailsComics) = Comics(
+internal fun toComics(item: DetailsComics) = Comics(
     id = item.id,
     imageUrl = item.imageUrl,
     title = item.title

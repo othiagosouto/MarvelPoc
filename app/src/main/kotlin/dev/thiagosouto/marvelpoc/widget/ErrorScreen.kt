@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import dev.thiagosouto.marvelpoc.R
 
 @Composable
-fun ErrorScreen(modifier: Modifier = Modifier, @StringRes message: Int, @DrawableRes image: Int) {
+internal fun ErrorScreen(modifier: Modifier = Modifier, @StringRes message: Int, @DrawableRes image: Int) {
     Column(
         modifier = modifier.testTag("error-container"),
         horizontalAlignment = Alignment.CenterHorizontally,

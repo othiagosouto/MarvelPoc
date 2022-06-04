@@ -9,7 +9,7 @@ import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.home.list.CharactersAdapter.CharacterHomeViewHolder
 import dev.thiagosouto.marvelpoc.widget.CharacterView
 
-class CharactersAdapter(
+internal class CharactersAdapter(
     private val favoriteClick: (Character) -> Unit,
     private val itemClick: (Character) -> Unit,
     private val isFavorite: (Long) -> Boolean
@@ -43,7 +43,7 @@ class CharactersAdapter(
         }
     }
 
-    class CharacterDiff : DiffUtil.ItemCallback<Character>() {
+    internal class CharacterDiff : DiffUtil.ItemCallback<Character>() {
         override fun areItemsTheSame(oldItem: Character, newItem: Character) =
             oldItem.id == newItem.id
 

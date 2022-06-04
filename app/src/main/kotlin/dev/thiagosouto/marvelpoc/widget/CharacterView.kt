@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.AbstractComposeView
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 
-class CharacterView @JvmOverloads constructor(
+internal class CharacterView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : AbstractComposeView(context, attrs, defStyleAttr) {
     private var character: Character by mutableStateOf(Character.EMPTY)

@@ -6,7 +6,7 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
 
-fun isNetworkNotConnected(context: Context): Boolean {
+internal fun isNetworkNotConnected(context: Context): Boolean {
 
     fun ConnectivityManager?.isConnected(): Boolean {
         val networkInfo =
