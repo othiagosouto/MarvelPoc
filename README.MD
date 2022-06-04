@@ -2,7 +2,8 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1cf3763119e849af8a12f681635b76f1)](https://www.codacy.com/gh/othiagosouto/MarvelPoc/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=othiagosouto/MarvelPoc&amp;utm_campaign=Badge_Grade)
 ![Main Workflow](https://github.com/othiagosouto/marvelpoc/workflows/Main/badge.svg)
-Marvel characters it's an app built to present info related to marvel charaters available at [Marvel website](https://developer.marvel.com/docs).
+
+Marvel characters it's an app built to present info related to marvel characters available at [Marvel website](https://developer.marvel.com/docs).
 
 ## Current objective
 
@@ -58,5 +59,7 @@ You need to follow the steps described steps in order to the application doesn't
 ## Contact
 
 [Email: thiagosouto@duck.com](mailto:thiagosouto@duck.com)
+
 [Twitter](https://twitter.com/othiagosouto)
+
 [Medium](https://othiagosouto.medium.com/)
