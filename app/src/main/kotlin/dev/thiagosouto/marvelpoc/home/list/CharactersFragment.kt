@@ -7,7 +7,7 @@ import androidx.paging.PagedList
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.shared.livedata.Result
 
-class CharactersFragment : BaseFragment() {
+internal class CharactersFragment : BaseFragment() {
     override fun paginatedContent(): LiveData<PagedList<Character>> =
         homeViewModel.charactersPageListContent()
 

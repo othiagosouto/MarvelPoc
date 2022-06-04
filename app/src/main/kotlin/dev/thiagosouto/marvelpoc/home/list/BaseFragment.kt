@@ -18,7 +18,7 @@ import dev.thiagosouto.marvelpoc.widget.ErrorData
 import dev.thiagosouto.marvelpoc.widget.ErrorView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-abstract class BaseFragment : Fragment(R.layout.fragment_characters) {
+internal abstract class BaseFragment : Fragment(R.layout.fragment_characters) {
     protected val homeViewModel: HomeViewModel by sharedViewModel()
     private val recycler: RecyclerView
         get() = requireView().findViewById(R.id.recycler)

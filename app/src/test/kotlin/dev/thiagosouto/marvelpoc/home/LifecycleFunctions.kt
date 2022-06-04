@@ -6,7 +6,7 @@ import androidx.lifecycle.LifecycleRegistry
 import io.mockk.every
 import io.mockk.mockk
 
-fun provideLifecycleState(state: Lifecycle.State): LifecycleOwner {
+internal fun provideLifecycleState(state: Lifecycle.State): LifecycleOwner {
     val owner = mockk<LifecycleOwner>(relaxed = true)
     val lifecycle = LifecycleRegistry(owner)
     lifecycle.currentState = state

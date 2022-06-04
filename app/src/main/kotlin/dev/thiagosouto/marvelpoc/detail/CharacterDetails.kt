@@ -35,7 +35,7 @@ import dev.thiagosouto.marvelpoc.design.components.LoadingPage
 import dev.thiagosouto.marvelpoc.design.R as RDesign
 
 @Composable
-fun CharacterDetails(name: String, description: String, imageUrl: String, comics: List<Comics>) {
+internal fun CharacterDetails(name: String, description: String, imageUrl: String, comics: List<Comics>) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -54,7 +54,7 @@ fun CharacterDetails(name: String, description: String, imageUrl: String, comics
 }
 
 @Composable
-fun ScrollableArea(
+internal fun ScrollableArea(
     painterImage: ImagePainter,
     name: String,
     description: String,
@@ -100,7 +100,7 @@ fun ScrollableArea(
 }
 
 @Composable
-fun ComicsView(comics: Comics, index: Int) {
+internal fun ComicsView(comics: Comics, index: Int) {
     val painterImage = rememberImagePainter(comics.thumbnailUrl)
     if (painterImage.state is ImagePainter.State.Loading) {
         val loadingSize = dimensionResource(id = RDesign.dimen.loading_page_size)

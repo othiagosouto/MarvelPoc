@@ -16,7 +16,7 @@ import dev.thiagosouto.marvelpoc.shared.EmptyDataException
 import dev.thiagosouto.marvelpoc.shared.livedata.Result
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: CharactersRepository) : ViewModel() {
+internal class HomeViewModel(private val repository: CharactersRepository) : ViewModel() {
 
     private lateinit var charactersPagedLiveData: LiveData<PagedList<Character>>
 

@@ -48,7 +48,7 @@ internal class CharacterDetailsActivity : ComponentActivity() {
 }
 
 @Composable
-fun CharacterDetailsScreen(
+private fun CharacterDetailsScreen(
     process: (Intent) -> Unit,
     viewState: DetailsViewState
 ) {
@@ -59,7 +59,7 @@ fun CharacterDetailsScreen(
 }
 
 @Composable
-fun LoadedViewState(viewState: DetailsViewState.Loaded, process: (Intent) -> Unit) {
+private fun LoadedViewState(viewState: DetailsViewState.Loaded, process: (Intent) -> Unit) {
     Column {
         TopAppBar(
             title = {},

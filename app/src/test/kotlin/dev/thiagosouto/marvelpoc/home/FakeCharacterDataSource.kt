@@ -4,7 +4,7 @@ import androidx.paging.DataSource
 import androidx.paging.PositionalDataSource
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 
-class FakeCharacterDataSource(
+internal class FakeCharacterDataSource(
     private val items: List<Character>,
     private val exception: Exception? = null
 ) :
@@ -12,7 +12,7 @@ class FakeCharacterDataSource(
     override fun create(): DataSource<Int, Character> = FakeDataSource(items, exception)
 }
 
-class FakeDataSource<T : Any>(var items: List<T>, private val exception: Exception? = null) :
+internal class FakeDataSource<T : Any>(var items: List<T>, private val exception: Exception? = null) :
     PositionalDataSource<T>() {
     override fun loadRange(
         params: LoadRangeParams,
