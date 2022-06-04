@@ -13,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import dev.thiagosouto.marvelpoc.design.R
 
-
 @OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 fun FavoriteToggle(
