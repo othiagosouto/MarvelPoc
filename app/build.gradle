@@ -120,7 +120,7 @@ dependencies {
     androidTestImplementation Libs.Test.mockkAndroid
     androidTestImplementation project(path: ':webserver')
 
-    debugImplementation "androidx.fragment:fragment-testing:1.4.0"
+    debugImplementation Libs.AndroidX.Test.fragmentTesting
 
-    androidTestUtil "androidx.test:orchestrator:1.4.1"
+    androidTestUtil Libs.AndroidX.Test.orchestrator
 }

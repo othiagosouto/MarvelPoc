@@ -22,7 +22,7 @@ object Libs {
         }
     }
 
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.4"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.2.1"
 
     /**
      * Dependencies related to kotlin
@@ -67,7 +67,7 @@ object Libs {
          * Dependencies related to jetpack compose
          */
         object Compose {
-            const val version = "1.1.0"
+            const val version = "1.1.1"
 
             const val foundation = "androidx.compose.foundation:foundation:${version}"
             const val layout = "androidx.compose.foundation:foundation-layout:${version}"
@@ -97,7 +97,8 @@ object Libs {
             const val runner = "androidx.test:runner:$version"
             const val rules = "androidx.test:rules:$version"
             const val archRules = "androidx.arch.core:core-testing:2.1.0"
-
+            const val fragmentTesting = "androidx.fragment:fragment-testing:1.4.1"
+            const val orchestrator = "androidx.test:orchestrator:1.4.1"
 
             object Ext {
                 private const val version = "1.1.2"
