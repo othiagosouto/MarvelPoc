@@ -99,6 +99,7 @@ dependencies {
     implementation Libs.AndroidX.Compose.runtime
     implementation Libs.AndroidX.Compose.animation
     implementation Libs.AndroidX.Compose.graphics
+    implementation Libs.AndroidX.Compose.pager
     debugImplementation Libs.AndroidX.Compose.tooling
 
 

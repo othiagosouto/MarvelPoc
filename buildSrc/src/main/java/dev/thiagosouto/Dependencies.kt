@@ -84,7 +84,7 @@ object Libs {
             const val activityCompose = "androidx.activity:activity-compose:1.4.0"
             const val coil = "io.coil-kt:coil-compose:1.4.0"
             const val graphics = "androidx.compose.animation:animation-graphics:$version"
-
+            const val pager = "com.google.accompanist:accompanist-pager:0.23.1"
 
         }
 
