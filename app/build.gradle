@@ -100,6 +100,7 @@ dependencies {
     implementation Libs.AndroidX.Compose.animation
     implementation Libs.AndroidX.Compose.graphics
     implementation Libs.AndroidX.Compose.pager
+    implementation Libs.AndroidX.Compose.indicator
     debugImplementation Libs.AndroidX.Compose.tooling
 
 

@@ -85,6 +85,8 @@ object Libs {
             const val coil = "io.coil-kt:coil-compose:1.4.0"
             const val graphics = "androidx.compose.animation:animation-graphics:$version"
             const val pager = "com.google.accompanist:accompanist-pager:0.23.1"
+            const val indicator = "com.google.accompanist:accompanist-pager-indicators:0.23.1"
+
 
         }
 
