@@ -26,16 +26,21 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.rememberAsyncImagePainter
 import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.model.view.Comics
+import dev.thiagosouto.marvelpoc.design.components.ImageLoading
 import dev.thiagosouto.marvelpoc.design.components.Loading
-import dev.thiagosouto.marvelpoc.design.components.LoadingPage
 import dev.thiagosouto.marvelpoc.design.R as RDesign
 
 @Composable
-internal fun CharacterDetails(name: String, description: String, imageUrl: String, comics: List<Comics>) {
+internal fun CharacterDetails(
+    name: String,
+    description: String,
+    imageUrl: String,
+    comics: List<Comics>
+) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -44,28 +49,25 @@ internal fun CharacterDetails(name: String, description: String, imageUrl: Strin
                 state = scrollState
             )
     ) {
-        val painterImage = rememberImagePainter(imageUrl)
-        if (painterImage.state is ImagePainter.State.Loading) {
-            LoadingPage()
-        } else {
-            ScrollableArea(painterImage, name, description, comics)
-        }
+        ScrollableArea(imageUrl, name, description, comics)
     }
+
 }
 
 @Composable
 internal fun ScrollableArea(
-    painterImage: ImagePainter,
+    imageUrl: String,
     name: String,
     description: String,
     comics: List<Comics>
 ) {
-    Image(
-        painter = painterImage,
-        contentDescription = null,
+    ImageLoading(
+        url = imageUrl,
+        contentDescription = "",
         modifier = Modifier
             .heightIn(max = 400.dp)
             .fillMaxWidth(),
+        height = 400.dp,
         contentScale = ContentScale.FillWidth,
     )
     Box(
@@ -101,32 +103,40 @@ internal fun ScrollableArea(
 
 @Composable
 internal fun ComicsView(comics: Comics, index: Int) {
-    val painterImage = rememberImagePainter(comics.thumbnailUrl)
-    if (painterImage.state is ImagePainter.State.Loading) {
-        val loadingSize = dimensionResource(id = RDesign.dimen.loading_page_size)
-        Loading(modifier = Modifier.width(220.dp).height(200.dp), loadingSize)
-    } else {
-        Column(modifier = Modifier.padding(dimensionResource(id = RDesign.dimen.spacing_small))) {
-            Image(
-                painter = painterImage,
-                contentDescription = comics.title,
-                Modifier
-                    .height(220.dp)
-                    .width(150.dp),
-                contentScale = ContentScale.FillWidth,
-            )
+    val painterImage = rememberAsyncImagePainter(comics.thumbnailUrl)
 
-            Text(
-                text = comics.title,
-                modifier = Modifier
-                    .width(150.dp)
-                    .heightIn(48.dp)
-                    .background(color = Color(android.graphics.Color.parseColor("#25000000")))
-                    .padding(2.dp)
-                    .testTag("comics-title-$index"),
-                maxLines = 2,
-                textAlign = TextAlign.Center
-            )
+    SubcomposeAsyncImage(
+        model = comics.thumbnailUrl,
+        loading = {
+            val loadingSize = dimensionResource(id = RDesign.dimen.loading_page_size)
+            Loading(modifier = Modifier
+                .width(220.dp)
+                .height(200.dp), loadingSize)
+                  },
+        contentDescription = "",
+        success = {
+            Column(modifier = Modifier.padding(dimensionResource(id = RDesign.dimen.spacing_small))) {
+                Image(
+                    painter = painterImage,
+                    contentDescription = comics.title,
+                    Modifier
+                        .height(220.dp)
+                        .width(150.dp),
+                    contentScale = ContentScale.FillWidth,
+                )
+
+                Text(
+                    text = comics.title,
+                    modifier = Modifier
+                        .width(150.dp)
+                        .heightIn(48.dp)
+                        .background(color = Color(android.graphics.Color.parseColor("#25000000")))
+                        .padding(2.dp)
+                        .testTag("comics-title-$index"),
+                    maxLines = 2,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
-    }
+    )
 }

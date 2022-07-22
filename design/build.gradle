@@ -39,4 +39,6 @@ dependencies {
     implementation Libs.Kotlin.stdlib
     implementation Libs.AndroidX.Compose.graphics
     implementation Libs.AndroidX.Compose.material
+    implementation Libs.AndroidX.Compose.coil
+
 }

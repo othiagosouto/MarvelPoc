@@ -1,7 +1,6 @@
 package dev.thiagosouto.marvelpoc.widget
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,14 +19,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.design.R
 import dev.thiagosouto.marvelpoc.design.components.FavoriteToggle
-import dev.thiagosouto.marvelpoc.design.components.Loading
+import dev.thiagosouto.marvelpoc.design.components.ImageLoading
 
 @Composable
 internal fun CharacterItem(
@@ -45,7 +41,8 @@ internal fun CharacterItem(
         ImageLoading(
             modifier = Modifier.fillMaxWidth(),
             url = character.thumbnailUrl,
-            height = 150.dp
+            height = 150.dp,
+            contentScale = ContentScale.Crop
         )
 
         Row(
@@ -70,23 +67,6 @@ internal fun CharacterItem(
                 onCheckedChange = onCheckedChange
             )
         }
-    }
-}
-
-@Composable
-private fun ImageLoading(modifier: Modifier = Modifier, url: String, height: Dp) {
-    val painterImage = rememberImagePainter(url)
-
-    if (painterImage.state is ImagePainter.State.Loading) {
-        Loading(modifier = modifier, heightIn = height)
-    } else {
-        Image(
-            painter = painterImage,
-            modifier = modifier
-                .height(height),
-            contentDescription = "",
-            contentScale = ContentScale.Crop,
-        )
     }
 }
 
