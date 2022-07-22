@@ -28,7 +28,7 @@ object Libs {
      * Dependencies related to kotlin
      */
     object Kotlin {
-        private const val version = "1.6.10"
+        private const val version = "1.7.0"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
@@ -39,11 +39,11 @@ object Libs {
      * Dependencies related to coroutines
      */
     object Coroutines {
-        private const val version = "1.6.0"
+        private const val version = "1.6.4"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
-        const val turbine = "app.cash.turbine:turbine:0.7.0"
+        const val turbine = "app.cash.turbine:turbine:0.8.0"
     }
 
     /**
@@ -51,15 +51,15 @@ object Libs {
      */
     object AndroidX {
         private const val lifecycleVersion = "2.2.0"
-        private const val roomVersion = "2.4.0"
-        const val coreKtx = "androidx.core:core-ktx:1.7.0"
+        private const val roomVersion = "2.5.0-alpha02"
+        const val coreKtx = "androidx.core:core-ktx:1.8.0"
         const val paging = "androidx.paging:paging-runtime-ktx:3.1.1"
-        const val androidxAppCompat = "androidx.appcompat:appcompat:1.4.0"
+        const val androidxAppCompat = "androidx.appcompat:appcompat:1.4.2"
         const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
         const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
-        const val androidxConstraintLayout = "androidx.constraintlayout:constraintlayout:2.1.2"
-        const val material = "com.google.android.material:material:1.4.0"
+        const val androidxConstraintLayout = "androidx.constraintlayout:constraintlayout:2.1.4"
+        const val material = "com.google.android.material:material:1.6.1"
         const val room = "androidx.room:room-ktx:$roomVersion"
         const val roomCompiler = "androidx.room:room-compiler:$roomVersion"
 
@@ -67,23 +67,24 @@ object Libs {
          * Dependencies related to jetpack compose
          */
         object Compose {
-            const val version = "1.1.1"
+            const val version = "1.2.0"
+            private const val candidateVersion = "1.2.0-rc03"
 
-            const val foundation = "androidx.compose.foundation:foundation:${version}"
-            const val layout = "androidx.compose.foundation:foundation-layout:${version}"
-            const val ui = "androidx.compose.ui:ui:${version}"
-            const val uiUtil = "androidx.compose.ui:ui-util:${version}"
-            const val runtime = "androidx.compose.runtime:runtime:${version}"
-            const val material = "androidx.compose.material:material:${version}"
-            const val animation = "androidx.compose.animation:animation:${version}"
-            const val tooling = "androidx.compose.ui:ui-tooling:${version}"
-            const val iconsExtended = "androidx.compose.material:material-icons-extended:$version"
-            const val uiTest = "androidx.compose.ui:ui-test-junit4:$version"
-            const val toolingPreview = "androidx.compose.ui:ui-tooling-preview:$version"
-            const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:$version"
-            const val activityCompose = "androidx.activity:activity-compose:1.4.0"
+            const val foundation = "androidx.compose.foundation:foundation:${candidateVersion}"
+            const val layout = "androidx.compose.foundation:foundation-layout:${candidateVersion}"
+            const val ui = "androidx.compose.ui:ui:${candidateVersion}"
+            const val uiUtil = "androidx.compose.ui:ui-util:${candidateVersion}"
+            const val runtime = "androidx.compose.runtime:runtime:${candidateVersion}"
+            const val material = "androidx.compose.material:material:${candidateVersion}"
+            const val animation = "androidx.compose.animation:animation:${candidateVersion}"
+            const val tooling = "androidx.compose.ui:ui-tooling:${candidateVersion}"
+            const val iconsExtended = "androidx.compose.material:material-icons-extended:$candidateVersion"
+            const val uiTest = "androidx.compose.ui:ui-test-junit4:$candidateVersion"
+            const val toolingPreview = "androidx.compose.ui:ui-tooling-preview:$candidateVersion"
+            const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:$candidateVersion"
+            const val activityCompose = "androidx.activity:activity-compose:1.5.0"
             const val coil = "io.coil-kt:coil-compose:1.4.0"
-            const val graphics = "androidx.compose.animation:animation-graphics:$version"
+            const val graphics = "androidx.compose.animation:animation-graphics:$candidateVersion"
             const val pager = "com.google.accompanist:accompanist-pager:0.23.1"
 
         }

@@ -55,6 +55,7 @@ private fun CharacterDetailsScreen(
     when (viewState) {
         is DetailsViewState.Loading -> LoadingPage()
         is DetailsViewState.Loaded -> LoadedViewState(viewState, process)
+        else -> Unit
     }
 }
 
