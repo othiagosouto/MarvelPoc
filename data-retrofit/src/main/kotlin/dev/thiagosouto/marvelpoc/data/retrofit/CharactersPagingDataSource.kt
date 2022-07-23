@@ -6,6 +6,8 @@ import dev.thiagosouto.marvelpoc.data.retrofit.character.Result
 import dev.thiagosouto.marvelpoc.data.retrofit.ext.toCharacter
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.shared.EmptyDataException
+import retrofit2.HttpException
+import java.io.IOException
 
 internal class CharactersPagingDataSource(
     private val queryText: String?,
@@ -33,17 +35,20 @@ internal class CharactersPagingDataSource(
             ).data.results.map { mapToFavoriteCharacter(it, favoriteIds) }
 
             if (response.isEmpty()) {
-                return LoadResult.Error(EmptyDataException())
+                LoadResult.Error(EmptyDataException())
+            } else {
+                val prevKey = if (pageNumber > 0) pageNumber - pageSize else null
+                val nextKey = if (response.isNotEmpty()) pageNumber + pageSize else null
+                LoadResult.Page(
+                    data = response,
+                    prevKey = prevKey,
+                    nextKey = nextKey
+                )
             }
-            val prevKey = if (pageNumber > 0) pageNumber - pageSize else null
-            val nextKey = if (response.isNotEmpty()) pageNumber + pageSize else null
-            LoadResult.Page(
-                data = response,
-                prevKey = prevKey,
-                nextKey = nextKey
-            )
-        } catch (e: Exception) {
-            return LoadResult.Error(e)
+        } catch (e: HttpException) {
+            LoadResult.Error(e)
+        } catch (e: IOException) {
+            LoadResult.Error(e)
         }
     }
 
