@@ -72,6 +72,7 @@ object Libs {
             private const val activityComposeVersion = "1.5.0"
             private const val coilComposeVersion = "2.1.0"
             private const val accompanistPagerVersion = "0.23.1"
+            private const val pagingComposeVersion = "1.0.0-alpha15"
 
             const val foundation = "androidx.compose.foundation:foundation:${candidateVersion}"
             const val layout = "androidx.compose.foundation:foundation-layout:${candidateVersion}"
@@ -89,6 +90,7 @@ object Libs {
             const val coil = "io.coil-kt:coil-compose:$coilComposeVersion"
             const val graphics = "androidx.compose.animation:animation-graphics:$candidateVersion"
             const val pager = "com.google.accompanist:accompanist-pager:$accompanistPagerVersion"
+            const val pagerCompose = "androidx.paging:paging-compose:$pagingComposeVersion"
 
         }
 
