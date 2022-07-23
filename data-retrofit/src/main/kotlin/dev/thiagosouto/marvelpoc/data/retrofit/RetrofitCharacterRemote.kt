@@ -1,5 +1,6 @@
 package dev.thiagosouto.marvelpoc.data.retrofit
 
+import androidx.paging.PagingSource
 import androidx.paging.PositionalDataSource
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
 import dev.thiagosouto.marvelpoc.data.model.view.Character
@@ -14,6 +15,26 @@ internal class RetrofitCharacterRemote(private val charactersApi: CharactersBFFA
         loadFinished: () -> Unit,
         provideFavoriteIds: suspend () -> List<Long>
     ): PositionalDataSource<Character> {
-        return CharactersDataSource(queryText, scope, charactersApi, exceptionHandler, loadFinished, provideFavoriteIds)
+        return CharactersDataSource(
+            queryText,
+            scope,
+            charactersApi,
+            exceptionHandler,
+            loadFinished,
+            provideFavoriteIds
+        )
+    }
+
+    override fun listPagingCharacters(
+        queryText: String?,
+        pageSize: Int,
+        provideFavoriteIds: suspend () -> List<Long>
+    ): PagingSource<Int, Character> {
+        return CharactersPagingDataSource(
+            queryText,
+            pageSize,
+            charactersApi,
+            provideFavoriteIds
+        )
     }
 }
