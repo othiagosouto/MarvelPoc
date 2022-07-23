@@ -59,6 +59,15 @@ class CharactersRepository(
         localDataSource::favoriteIds
     )
 
+    fun charactersPagingDataSource(
+        queryText: String?,
+        pageSize: Int
+    ) = remoteDataSource.listPagingCharacters(
+        queryText,
+        pageSize,
+        localDataSource::favoriteIds
+    )
+
     /**
      * Fetch character details
      */
