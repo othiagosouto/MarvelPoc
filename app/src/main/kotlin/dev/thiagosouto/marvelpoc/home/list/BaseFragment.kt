@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.detail.CharacterDetailsActivity
-import dev.thiagosouto.marvelpoc.home.HomeViewModel
+import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.shared.livedata.Result
 import dev.thiagosouto.marvelpoc.widget.ErrorData
 import dev.thiagosouto.marvelpoc.widget.ErrorView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 internal abstract class BaseFragment : Fragment(R.layout.fragment_characters) {
-    protected val homeViewModel: HomeViewModel by sharedViewModel()
+    protected val favoritesViewModel: FavoritesViewModel by sharedViewModel()
     private val recycler: RecyclerView
         get() = requireView().findViewById(R.id.recycler)
 
@@ -33,9 +33,8 @@ internal abstract class BaseFragment : Fragment(R.layout.fragment_characters) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val adapter = CharactersAdapter(
-            homeViewModel::favoriteClick,
-            ::startDetails,
-            homeViewModel::isCharacterFavorite
+            favoritesViewModel::favoriteClick,
+            ::startDetails
         )
 
         recycler.adapter = adapter

@@ -18,13 +18,13 @@ internal class FavoriteFragment : BaseFragment() {
         get() = requireView().findViewById(R.id.progress)
 
     override fun paginatedContent(): LiveData<PagedList<Character>> =
-        homeViewModel.charactersFavorite()
+        favoritesViewModel.charactersFavorite()
 
     override fun observeNotCommonContent(adapter: CharactersAdapter) {
         progress.visibility = View.GONE
         recycler.visibility = View.VISIBLE
     }
 
-    override fun resultContent(): LiveData<Result>  = homeViewModel.favoriteCharacters
+    override fun resultContent(): LiveData<Result>  = favoritesViewModel.favoriteCharacters
 
 }

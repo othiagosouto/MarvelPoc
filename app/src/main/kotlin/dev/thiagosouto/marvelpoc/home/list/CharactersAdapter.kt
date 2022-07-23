@@ -11,8 +11,7 @@ import dev.thiagosouto.marvelpoc.widget.CharacterView
 
 internal class CharactersAdapter(
     private val favoriteClick: (Character) -> Unit,
-    private val itemClick: (Character) -> Unit,
-    private val isFavorite: (Long) -> Boolean
+    private val itemClick: (Character) -> Unit
 ) : PagedListAdapter<Character, CharacterHomeViewHolder>(CharacterDiff()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterHomeViewHolder {
@@ -34,8 +33,7 @@ internal class CharactersAdapter(
         RecyclerView.ViewHolder(characterView) {
 
         fun bind(character: Character) {
-            val isFavorite = isFavorite(character.id)
-            characterView.updateCharacter(character.copy(favorite = isFavorite))
+            characterView.updateCharacter(character)
         }
 
         init {

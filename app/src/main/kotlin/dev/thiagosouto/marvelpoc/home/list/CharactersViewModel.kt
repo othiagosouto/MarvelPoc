@@ -9,7 +9,7 @@ import androidx.paging.PagingConfig
 import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.CharactersRepository
 import dev.thiagosouto.marvelpoc.data.model.view.Character
-import dev.thiagosouto.marvelpoc.home.HomeViewModel
+import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.shared.EmptyDataException
 import kotlinx.coroutines.launch
 
@@ -87,12 +87,12 @@ class CharactersViewModel(private val repository: CharactersRepository) : ViewMo
     fun createPager(): Pager<Int, Character> {
         return Pager<Int, Character>(
             PagingConfig(
-                pageSize = HomeViewModel.PAGE_SIZE,
+                pageSize = FavoritesViewModel.PAGE_SIZE,
                 enablePlaceholders = true,
                 maxSize = 200
             )
         ) {
-            repository.charactersPagingDataSource(searchedQuery, HomeViewModel.PAGE_SIZE)
+            repository.charactersPagingDataSource(searchedQuery, FavoritesViewModel.PAGE_SIZE)
         }
     }
 
