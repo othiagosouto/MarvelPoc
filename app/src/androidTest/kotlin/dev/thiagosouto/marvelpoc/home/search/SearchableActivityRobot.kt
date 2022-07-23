@@ -6,7 +6,6 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.CharactersRepository
-import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.home.list.CharactersViewModel
 import io.mockk.coEvery
 import io.mockk.every
