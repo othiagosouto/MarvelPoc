@@ -32,9 +32,9 @@ fun Loading(modifier: Modifier = Modifier, heightIn: Dp) {
  * Component for loading page from the design system
  */
 @Composable
-fun LoadingPage() {
+fun LoadingPage(modifier: Modifier = Modifier) {
     Row(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {

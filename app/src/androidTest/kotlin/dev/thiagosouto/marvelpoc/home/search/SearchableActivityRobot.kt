@@ -7,6 +7,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.CharactersRepository
 import dev.thiagosouto.marvelpoc.home.HomeViewModel
+import dev.thiagosouto.marvelpoc.home.list.CharactersViewModel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -21,12 +22,12 @@ internal fun configure(func: SearchableActivityConfiguration.() -> Unit) =
 
 internal class SearchableActivityConfiguration : KoinComponent {
     private val mockRepository: CharactersRepository = mockk(relaxed = true)
-    private val homeViewModel: HomeViewModel = spyk(HomeViewModel(mockRepository))
+    private val charactersViewModel: CharactersViewModel = spyk(CharactersViewModel(mockRepository))
     private lateinit var intent: Intent
 
     init {
         coEvery { mockRepository.fetchFavoriteIds() } returns emptyList()
-        every { homeViewModel.charactersPageListContent() } returns mockk(relaxed = true)
+        every { mockRepository.charactersPagingDataSource("ops", 20) } returns mockk(relaxed = true)
     }
 
     fun withSearchableIntent() {
@@ -49,7 +50,7 @@ internal class SearchableActivityConfiguration : KoinComponent {
         loadKoinModules(
             module(override = true) {
                 single { mockRepository }
-                single { homeViewModel }
+                single { charactersViewModel }
             })
 
         ActivityScenario.launch<SearchableActivity>(intent)
@@ -63,7 +64,7 @@ internal class SearchableActivityRobot {
 }
 
 internal class SearchableActivityResult : KoinComponent {
-    private val viewModel: HomeViewModel by inject()
+    private val viewModel: CharactersViewModel by inject()
 
     fun callViewModelWithExpectedContent() {
         assertThat(viewModel.searchedQuery).isEqualTo("ops")

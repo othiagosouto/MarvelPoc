@@ -37,6 +37,15 @@ class CharactersRepository(
     }
 
     /**
+     * Execute action to unfavorite character
+     */
+    suspend fun unFavoriteCharacter(
+        item: Character
+    ){
+      localDataSource.unFavorite(item)
+    }
+
+    /**
      * Execute action to favorite character
      */
     suspend fun favoriteCharacter(character: Character) {

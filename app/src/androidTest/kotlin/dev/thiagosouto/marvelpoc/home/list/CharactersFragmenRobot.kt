@@ -2,8 +2,10 @@ package dev.thiagosouto.marvelpoc.home.list
 
 import android.os.Bundle
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -67,7 +69,7 @@ internal class CharactersFragmentConfiguration(private val composeTestRule: Comp
     fun withHomeCharacters() {
         webServer.mapping =
             mapOf(
-                "/characters/home?offset=0&limit=60" to "characters/characters_response_ok.json",
+                "/characters/home?offset=0&limit=20" to "characters/characters_response_ok.json",
                 "/characters/home?offset=1&limit=20" to "characters/characters_response_ok_empty.json"
             )
         webServer.initDispatcher()
@@ -76,7 +78,7 @@ internal class CharactersFragmentConfiguration(private val composeTestRule: Comp
     fun withSearchContent() {
         webServer.mapping =
             mapOf(
-                "/characters/home?nameStartsWith=searchQuery&offset=0&limit=60" to "characters/characters_response_ok.json",
+                "/characters/home?nameStartsWith=searchQuery&offset=0&limit=20" to "characters/characters_response_ok.json",
                 "/characters/home?nameStartsWith=searchQuery&offset=1&limit=20" to "characters/characters_response_ok_empty.json"
             )
         webServer.initDispatcher()
@@ -102,11 +104,24 @@ internal class CharactersFragmentResult(
 ) {
 
     fun recyclerViewIsHidden() {
-        onView(withId(R.id.recycler)).waitUntilNotVisible().check(matches(not(isDisplayed())))
+        composeTestRule.onNodeWithTag("characters-list").assertDoesNotExist()
     }
 
     fun recyclerViewVisible() {
-        onView(withId(R.id.recycler)).waitUntilVisible().check(matches(isDisplayed()))
+        waitUntilNodeWithTagVisible("characters-list")
+        composeTestRule.onNodeWithTag("characters-list").assertIsDisplayed()
+    }
+
+    private fun waitUntilNodeWithTagVisible(tag: String) {
+        composeTestRule.waitUntil {
+            composeTestRule.onAllNodesWithTag(tag).fetchSemanticsNodes().size == 1
+        }
+    }
+
+    private fun waitUntilNodeWithTagNotVisible(tag: String) {
+        composeTestRule.waitUntil {
+            composeTestRule.onAllNodesWithTag(tag).fetchSemanticsNodes().isEmpty()
+        }
     }
 
     fun checkCharacterName() {
@@ -125,11 +140,13 @@ internal class CharactersFragmentResult(
     }
 
     fun loadingIsVisible() {
-        onView(withId(R.id.progress)).waitUntilVisible().check(matches(isDisplayed()))
+        composeTestRule.onNodeWithTag("loading-characters").assertIsDisplayed()
     }
 
     fun loadingIsNotVisible() {
-        onView(withId(R.id.progress)).waitUntilNotVisible().check(matches(not(isDisplayed())))
+        composeTestRule.waitUntil {
+            composeTestRule.onAllNodesWithTag("loading-characters").fetchSemanticsNodes().isEmpty()
+        }
     }
 
     fun checkErrorHomeTab() {
@@ -142,8 +159,15 @@ internal class CharactersFragmentResult(
     }
 
     private fun checkErrorMessage(message: String) {
-        composeTestRule.onNodeWithTag("error-image").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("error-message").assertIsDisplayed().assertTextEquals(message)
+
+        composeTestRule.waitUntil {
+            composeTestRule.onAllNodesWithTag("error-image")
+                .fetchSemanticsNodes().size == 1
+        }
+
+        composeTestRule.onNodeWithTag("error-image", useUnmergedTree = true).assertIsDisplayed()
+        composeTestRule.onNodeWithTag("error-message", useUnmergedTree = true).assertIsDisplayed()
+            .assertTextEquals(message)
     }
 
     fun stop() {
