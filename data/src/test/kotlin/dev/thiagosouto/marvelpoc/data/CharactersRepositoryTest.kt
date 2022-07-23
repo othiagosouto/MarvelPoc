@@ -48,14 +48,11 @@ internal class CharactersRepositoryTest {
 
     @Test
     fun `unFavoriteCharacter should call dao to delete item`() = runBlockingTest {
-        val unFavoriteItem = item.copy(id = 300L)
-        val parameter = unFavoriteItem.copy(favorite = false)
-
+        val parameter = item.copy(favorite = false)
         coEvery { localSourceMock.unFavorite(parameter) } returns parameter.id
-        val result = repository.unFavoriteCharacter(parameter, listOf(item, unFavoriteItem))
 
-        assertThat(result).isEqualTo(1)
-        assertThat(unFavoriteItem.favorite).isFalse()
+        repository.unFavoriteCharacter(parameter)
+
         coVerify(exactly = 1) { localSourceMock.unFavorite(parameter) }
     }
 

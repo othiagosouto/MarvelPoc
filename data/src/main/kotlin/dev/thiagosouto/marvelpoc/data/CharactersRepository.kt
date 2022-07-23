@@ -28,18 +28,6 @@ class CharactersRepository(
      * Execute action to unfavorite character
      */
     suspend fun unFavoriteCharacter(
-        item: Character,
-        list: List<Character>?
-    ): Int? {
-        val id = localDataSource.unFavorite(item)
-        list?.firstOrNull { it.id == id }?.favorite = false
-        return list?.indexOf(item)
-    }
-
-    /**
-     * Execute action to unfavorite character
-     */
-    suspend fun unFavoriteCharacter(
         item: Character
     ){
       localDataSource.unFavorite(item)
