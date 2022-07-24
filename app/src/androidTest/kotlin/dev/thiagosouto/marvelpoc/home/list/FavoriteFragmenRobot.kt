@@ -7,6 +7,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.paging.DataSource
+import androidx.paging.PagingData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -16,6 +17,7 @@ import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.test.waitUntilNotVisible
 import dev.thiagosouto.marvelpoc.test.waitUntilVisible
+import kotlinx.coroutines.flow.Flow
 import org.hamcrest.Matchers.not
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
@@ -114,5 +116,9 @@ private class FakeCharacterLocalContract(private val isEmpty: Boolean) :
 
     private companion object Mock{
         const val DESCRIPTION = "description"
+    }
+
+    override fun favoritesList(pageSize: Int, maxSize: Int): Flow<PagingData<Character>> {
+        TODO("Not yet implemented")
     }
 }

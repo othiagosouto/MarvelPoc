@@ -1,10 +1,16 @@
 package dev.thiagosouto.marvelpoc.data.room
 
 import androidx.paging.DataSource
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.data.room.ext.toCharacter
 import dev.thiagosouto.marvelpoc.data.room.ext.toCharacterLocal
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 internal class CharacterLocalRoomDataSource(private val characterDAO: CharacterLocalDAO) :
     CharacterLocalContract<Character> {
@@ -26,4 +32,17 @@ internal class CharacterLocalRoomDataSource(private val characterDAO: CharacterL
         mutableListOf<Character>().apply {
             addAll(list.map { it.toCharacter() })
         }
+
+    override fun favoritesList(pageSize: Int, maxSize: Int): Flow<PagingData<Character>> {
+        return Pager(
+            PagingConfig(
+                pageSize = pageSize,
+                enablePlaceholders = true,
+                maxSize = maxSize
+            )
+        ) { characterDAO.favoritesList() }
+            .flow
+            .map { pagingData -> pagingData.map { characterLocal -> characterLocal.toCharacter() } }
+    }
+
 }
