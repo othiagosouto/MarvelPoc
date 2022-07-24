@@ -17,6 +17,12 @@ class CharactersRepository(
     /**
      * return a list of favorite characters
      */
+    fun fetchFavoritesCharacters(pageSize: Int, maxPageSize: Int) =
+        localDataSource.favoritesList(pageSize, maxPageSize)
+
+    /**
+     * return a list of favorite characters
+     */
     fun fetchFavoriteCharacters() = localDataSource.favoriteList()
 
     /**
@@ -29,8 +35,8 @@ class CharactersRepository(
      */
     suspend fun unFavoriteCharacter(
         item: Character
-    ){
-      localDataSource.unFavorite(item)
+    ) {
+        localDataSource.unFavorite(item)
     }
 
     /**
