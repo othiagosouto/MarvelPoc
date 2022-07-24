@@ -54,6 +54,7 @@ dependencies {
     implementation Libs.DI.koin
 
     implementation Libs.AndroidX.paging
+    implementation Libs.AndroidX.Compose.pagerCompose
 
     implementation Libs.Network.gsonConverter
 
