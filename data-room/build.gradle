@@ -58,6 +58,7 @@ dependencies {
     implementation Libs.Coroutines.android
     implementation Libs.DI.koin
     implementation Libs.AndroidX.paging
+    implementation Libs.AndroidX.Compose.roomPaging
     implementation Libs.AndroidX.room
     kapt Libs.AndroidX.roomCompiler
 

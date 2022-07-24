@@ -91,6 +91,7 @@ object Libs {
             const val graphics = "androidx.compose.animation:animation-graphics:$candidateVersion"
             const val pager = "com.google.accompanist:accompanist-pager:$accompanistPagerVersion"
             const val pagerCompose = "androidx.paging:paging-compose:$pagingComposeVersion"
+            const val roomPaging = "androidx.room:room-paging:${AndroidX.roomVersion}"
 
         }
 
