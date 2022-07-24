@@ -42,14 +42,14 @@ internal class FavoriteFragment : Fragment() {
                 when {
                     result is LoadState.Loading -> LoadingPage(Modifier.testTag("loading-characters"))
                     result is LoadState.Error -> {
-                        val (message, image) = favoritesViewModel.handleException(result.error)
+                        val (message, image) = favoritesViewModel.handleException()
                         ErrorScreen(
                             message = message,
                             image = image
                         )
                     }
                     lazyPagingItems.itemCount == 0 -> {
-                        val (message, image) = favoritesViewModel.handleException(Exception())
+                        val (message, image) = favoritesViewModel.handleException()
                         ErrorScreen(
                             message = message,
                             image = image

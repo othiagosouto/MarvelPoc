@@ -9,9 +9,9 @@ import kotlinx.coroutines.launch
 
 internal class FavoritesViewModel(private val repository: CharactersRepository) : ViewModel() {
 
-    fun createPager() = repository.fetchFavoritesCharacters(PAGE_SIZE, 200)
+    fun createPager() = repository.fetchFavoritesCharacters(PAGE_SIZE, MAX_PAGE_SIZE)
 
-    fun handleException(throwable: Throwable): Pair<Int, Int> {
+    fun handleException(): Pair<Int, Int> {
         return Pair(
             R.string.empty_characters_favorites,
             R.drawable.ic_favorites
@@ -38,5 +38,6 @@ internal class FavoritesViewModel(private val repository: CharactersRepository) 
 
     companion object {
         const val PAGE_SIZE = 20
+        const val MAX_PAGE_SIZE = 200
     }
 }

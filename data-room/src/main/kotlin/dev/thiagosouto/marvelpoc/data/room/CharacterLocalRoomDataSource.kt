@@ -44,5 +44,4 @@ internal class CharacterLocalRoomDataSource(private val characterDAO: CharacterL
             .flow
             .map { pagingData -> pagingData.map { characterLocal -> characterLocal.toCharacter() } }
     }
-
 }
