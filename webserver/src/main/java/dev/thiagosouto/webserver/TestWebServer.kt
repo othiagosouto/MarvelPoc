@@ -52,7 +52,7 @@ class TestWebServer {
         }
     }
 
-    private fun String.isImage() = this.contains("jpeg")
+    private fun String.isImage() = IMAGES_EXTENSIONS.any { this.contains(it) }
 
     private fun imageResponse(path: String): MockResponse {
         val responseBody = path.getBinaryFileAsBuffer()
@@ -80,6 +80,7 @@ class TestWebServer {
     }
 
     companion object {
+        private val IMAGES_EXTENSIONS = arrayOf(".jpeg", ".jpg")
         private const val HTTP_SUCCESS = 200
         private const val HTTP_BAD_REQUEST = 400
         private const val DEFAULT_PORT = 53863
