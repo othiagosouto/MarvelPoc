@@ -2,17 +2,20 @@ package dev.thiagosouto.marvelpoc.detail
 
 import android.content.Intent
 import androidx.compose.ui.test.assert
-import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToIndex
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeUp
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
-import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
+import dev.thiagosouto.marvelpoc.base.BaseRobot
 import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
 import dev.thiagosouto.webserver.TestWebServer
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
@@ -45,6 +48,11 @@ internal class CharacterDetailsConfiguration : KoinComponent {
         webServer.mapping =
             mapOf(
                 "/characters/details/1011334" to "characters/characters_details_ok_no_desc.json",
+                "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpeg" to "characters/images/image.jpeg",
+                "/u/prod/marvel/i/mg/d/03/58dd080719806.jpeg" to "characters/images/image.jpeg",
+                "/u/prod/marvel/i/mg/6/20/58dd057d304d1.jpeg" to "characters/images/image.jpeg",
+                "/u/prod/marvel/i/mg/1/10/4e94a23255996.jpeg" to "characters/images/image.jpeg",
+                "/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg" to "characters/images/image.jpeg"
             )
         webServer.initDispatcher()
     }
@@ -53,6 +61,11 @@ internal class CharacterDetailsConfiguration : KoinComponent {
         webServer.mapping =
             mapOf(
                 "/characters/details/1011334" to "characters/characters_details_ok.json",
+                "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpeg" to "characters/images/image.jpeg",
+                "/u/prod/marvel/i/mg/d/03/58dd080719806.jpeg" to "characters/images/image.jpeg",
+                "/u/prod/marvel/i/mg/6/20/58dd057d304d1.jpeg" to "characters/images/image.jpeg",
+                "/u/prod/marvel/i/mg/1/10/4e94a23255996.jpeg" to "characters/images/image.jpeg",
+                "/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg" to "characters/images/image.jpeg"
             )
         webServer.initDispatcher()
     }
@@ -79,12 +92,11 @@ internal class CharacterDetailsRobot(
 }
 
 internal class CharacterDetailsResult(
-    private val rule: ComposeTestRule,
+    rule: ComposeTestRule,
     private val webServer: TestWebServer
-) {
+) : BaseRobot(rule) {
 
     fun characterName() {
-        rule.waitForIdle()
         rule.waitUntil {
             rule.onAllNodesWithTag(NAME).fetchSemanticsNodes().size == 1
         }
@@ -93,36 +105,34 @@ internal class CharacterDetailsResult(
     }
 
     fun description() {
-        rule.waitForIdle()
-        rule.waitUntil {
-            rule.onAllNodesWithTag(DESCRIPTION).fetchSemanticsNodes().size == 1
-        }
+        rule.onNodeWithTag(DESCRIPTION).waitUntilVisible()
         rule.onNodeWithTag(DESCRIPTION).performScrollTo()
         rule.onNodeWithTag(DESCRIPTION).assert(hasText("some description"))
     }
 
     fun defaultDescription() {
-        rule.waitForIdle()
-        rule.waitUntil {
-            rule.onAllNodesWithTag(DESCRIPTION).fetchSemanticsNodes().size == 1
-        }
+        rule.onNodeWithTag(DESCRIPTION).waitUntilVisible()
         rule.onNodeWithTag(DESCRIPTION).performScrollTo()
         rule.onNodeWithTag(DESCRIPTION)
             .assert(hasText("This character doesn't have any description available :("))
     }
 
     fun comics() {
+        rule.onNodeWithTag("character-details-comics")
+            .performTouchInput { this.swipeUp() }
+            .waitUntilVisible()
         titles().forEachIndexed(::comics)
     }
 
     private fun comics(index: Int, title: String) {
-        rule.waitForIdle()
-        rule.onNodeWithTag("character-details-comics").performScrollTo().performScrollToIndex(index)
-        rule.waitForIdle()
-        rule.waitUntil {
-            rule.onAllNodesWithTag("comics-title-$index").fetchSemanticsNodes().size == 1
-        }
-        rule.onNodeWithTag("comics-title-$index").assert(hasText(title)).assertIsDisplayed()
+        rule
+            .onNodeWithTag("character-details-comics")
+            .performScrollToIndex(index)
+            .waitUntilVisible()
+
+        rule.onNodeWithTag("comics-title-$index")
+            .assertTextEquals(title)
+            .waitUntilVisible()
     }
 
     fun stop() {
@@ -139,5 +149,16 @@ private fun titles() = listOf(
     "Avengers: The Initiative (2007) #19",
     "Avengers: The Initiative (2007) #18 (ZOMBIE VARIANT)",
     "Avengers: The Initiative (2007) #18",
-    "Avengers: The Initiative (2007) #17"
+    "Avengers: The Initiative (2007) #17",
+    "Avengers: The Initiative (20071)",
+    "Avengers: The Initiative (20072)",
+    "Avengers: The Initiative (20073)",
+    "Avengers: The Initiative (20074)",
+    "Avengers: The Initiative (20075)",
+    "Avengers: The Initiative (20076)",
+    "Avengers: The Initiative (20077)",
+    "Avengers: The Initiative (20078)",
+    "Avengers: The Initiative (20079)",
+    "Avengers: The Initiative (20080)",
+    "Avengers: The Initiative (20081)"
 )

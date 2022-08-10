@@ -1,28 +1,83 @@
 {
-  "id":1011334,
-  "name":"3-D Man",
-  "description":"some description",
-  "image_url":"http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg",
-  "comics":[
+  "id": 1011334,
+  "name": "3-D Man",
+  "description": "some description",
+  "image_url": "http://localhost:53863/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpeg",
+  "comics": [
     {
-      "id":22506,
-      "title":"Avengers: The Initiative (2007) #19",
-      "image_url":"http://i.annihil.us/u/prod/marvel/i/mg/d/03/58dd080719806.jpg"
+      "id": 22506,
+      "title": "Avengers: The Initiative (2007) #19",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/d/03/58dd080719806.jpeg"
     },
     {
-      "id":22300,
-      "title":"Avengers: The Initiative (2007) #18 (ZOMBIE VARIANT)",
-      "image_url":"http://i.annihil.us/u/prod/marvel/i/mg/1/10/4e94a23255996.jpg"
+      "id": 22300,
+      "title": "Avengers: The Initiative (2007) #18 (ZOMBIE VARIANT)",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/1/10/4e94a23255996.jpeg"
     },
     {
-      "id":22299,
-      "title":"Avengers: The Initiative (2007) #18",
-      "image_url":"http://i.annihil.us/u/prod/marvel/i/mg/6/20/58dd057d304d1.jpg"
+      "id": 22299,
+      "title": "Avengers: The Initiative (2007) #18",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/6/20/58dd057d304d1.jpeg"
     },
     {
-      "id":21975,
-      "title":"Avengers: The Initiative (2007) #17",
-      "image_url":"http://i.annihil.us/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpg"
+      "id": 21975,
+      "title": "Avengers: The Initiative (2007) #17",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg"
+    },
+    {
+      "id": 219575,
+      "title": "Avengers: The Initiative (20071)",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg"
+    },
+    {
+      "id": 211976,
+      "title": "Avengers: The Initiative (20072)",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg"
+    },
+    {
+      "id": 211977,
+      "title": "Avengers: The Initiative (20073)",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg"
+    },
+    {
+      "id": 211978,
+      "title": "Avengers: The Initiative (20074)",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg"
+    },
+    {
+      "id": 211978,
+      "title": "Avengers: The Initiative (20075)",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg"
+    },
+    {
+      "id": 211978,
+      "title": "Avengers: The Initiative (20076)",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg"
+    },
+    {
+      "id": 211978,
+      "title": "Avengers: The Initiative (20077)",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg"
+    },
+    {
+      "id": 211978,
+      "title": "Avengers: The Initiative (20078)",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg"
+    },
+    {
+      "id": 211978,
+      "title": "Avengers: The Initiative (20079)",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg"
+    },
+    {
+      "id": 211978,
+      "title": "Avengers: The Initiative (20080)",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg"
+    },
+    {
+      "id": 211978,
+      "title": "Avengers: The Initiative (20081)",
+      "image_url": "http://localhost:53863/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg"
     }
   ]
 }
