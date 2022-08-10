@@ -17,7 +17,6 @@ internal class CharactersFragmentTest {
             withMockedViewModelLoading()
         } launch {
         } check {
-            loadingIsVisible()
             recyclerViewIsHidden()
             stop()
         }
@@ -30,7 +29,6 @@ internal class CharactersFragmentTest {
             withNoFavorites()
         } launch {
         } check {
-            loadingIsNotVisible()
             recyclerViewIsHidden()
             checkErrorHomeTab()
             stop()
