@@ -56,7 +56,7 @@ class TestWebServer {
 
     private fun imageResponse(path: String): MockResponse {
         val responseBody = path.getBinaryFileAsBuffer()
-        return MockResponse().setResponseCode(HTTP_SUCCESS).addHeader("Content-Type:image/jpeg")
+        return MockResponse().setResponseCode(HTTP_SUCCESS).addHeader(path.getContentType())
             .setBody(responseBody)
     }
 
@@ -77,6 +77,13 @@ class TestWebServer {
 
     private fun String.openFile(): String {
         return TestWebServer::class.java.classLoader!!.getResource(this)!!.readText()
+    }
+
+    private fun String.getContentType(): String {
+        return when {
+            this.contains(".jpg") -> "Content-Type:image/jpg"
+            else -> "Content-Type:image/jpeg"
+        }
     }
 
     companion object {
