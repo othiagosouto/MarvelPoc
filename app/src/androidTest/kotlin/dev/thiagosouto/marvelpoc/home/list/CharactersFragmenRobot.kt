@@ -16,6 +16,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
 import dev.thiagosouto.marvelpoc.R
+import dev.thiagosouto.marvelpoc.base.BaseRobot
 import dev.thiagosouto.marvelpoc.test.waitUntilNotVisible
 import dev.thiagosouto.marvelpoc.test.waitUntilVisible
 import dev.thiagosouto.webserver.TestWebServer
@@ -70,7 +71,8 @@ internal class CharactersFragmentConfiguration(private val composeTestRule: Comp
         webServer.mapping =
             mapOf(
                 "/characters/home?offset=0&limit=20" to "characters/characters_response_ok.json",
-                "/characters/home?offset=1&limit=20" to "characters/characters_response_ok_empty.json"
+                "/characters/home?offset=1&limit=20" to "characters/characters_response_ok_empty.json",
+                "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg" to "characters/images/image.jpeg"
             )
         webServer.initDispatcher()
     }
@@ -79,7 +81,8 @@ internal class CharactersFragmentConfiguration(private val composeTestRule: Comp
         webServer.mapping =
             mapOf(
                 "/characters/home?nameStartsWith=searchQuery&offset=0&limit=20" to "characters/characters_response_ok.json",
-                "/characters/home?nameStartsWith=searchQuery&offset=1&limit=20" to "characters/characters_response_ok_empty.json"
+                "/characters/home?nameStartsWith=searchQuery&offset=1&limit=20" to "characters/characters_response_ok_empty.json",
+                "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg" to "characters/images/image.jpeg"
             )
         webServer.initDispatcher()
 
@@ -99,28 +102,28 @@ internal class CharactersFragmentRobot(
 }
 
 internal class CharactersFragmentResult(
-    private val composeTestRule: ComposeTestRule,
+    rule: ComposeTestRule,
     private val testWebServer: TestWebServer
-) {
+) : BaseRobot(rule) {
 
     fun recyclerViewIsHidden() {
-        composeTestRule.onNodeWithTag("characters-list").assertDoesNotExist()
+        rule.onNodeWithTag("characters-list").assertDoesNotExist()
     }
 
     fun recyclerViewVisible() {
         waitUntilNodeWithTagVisible("characters-list")
-        composeTestRule.onNodeWithTag("characters-list").assertIsDisplayed()
+        rule.onNodeWithTag("characters-list").assertIsDisplayed()
     }
 
     private fun waitUntilNodeWithTagVisible(tag: String) {
-        composeTestRule.waitUntil {
-            composeTestRule.onAllNodesWithTag(tag).fetchSemanticsNodes().size == 1
+        rule.waitUntil {
+            rule.onAllNodesWithTag(tag).fetchSemanticsNodes().size == 1
         }
     }
 
     private fun waitUntilNodeWithTagNotVisible(tag: String) {
-        composeTestRule.waitUntil {
-            composeTestRule.onAllNodesWithTag(tag).fetchSemanticsNodes().isEmpty()
+        rule.waitUntil {
+            rule.onAllNodesWithTag(tag).fetchSemanticsNodes().isEmpty()
         }
     }
 
@@ -129,24 +132,22 @@ internal class CharactersFragmentResult(
     }
 
     private fun checkCharacterName(characterName: String) {
-        composeTestRule.waitUntil {
-            composeTestRule.onAllNodesWithText(characterName)
+        rule.waitUntil {
+            rule.onAllNodesWithText(characterName)
                 .fetchSemanticsNodes().size == 1
         }
 
-        composeTestRule
+        rule
             .onNodeWithText(characterName)
             .assertIsDisplayed()
     }
 
     fun loadingIsVisible() {
-        composeTestRule.onNodeWithTag("loading-characters").assertIsDisplayed()
+        rule.onNodeWithTag("loading-characters").assertIsDisplayed()
     }
 
     fun loadingIsNotVisible() {
-        composeTestRule.waitUntil {
-            composeTestRule.onAllNodesWithTag("loading-characters").fetchSemanticsNodes().isEmpty()
-        }
+        rule.onNodeWithTag("loading-characters").waitUntilDoesNotExist()
     }
 
     fun checkErrorHomeTab() {
@@ -154,19 +155,19 @@ internal class CharactersFragmentResult(
     }
 
     fun errorMessageNotAvailable() {
-        composeTestRule.onNodeWithTag("error-image").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("error-message").assertDoesNotExist()
+        rule.onNodeWithTag("error-image").assertDoesNotExist()
+        rule.onNodeWithTag("error-message").assertDoesNotExist()
     }
 
     private fun checkErrorMessage(message: String) {
 
-        composeTestRule.waitUntil {
-            composeTestRule.onAllNodesWithTag("error-image")
+        rule.waitUntil {
+            rule.onAllNodesWithTag("error-image")
                 .fetchSemanticsNodes().size == 1
         }
 
-        composeTestRule.onNodeWithTag("error-image", useUnmergedTree = true).assertIsDisplayed()
-        composeTestRule.onNodeWithTag("error-message", useUnmergedTree = true).assertIsDisplayed()
+        rule.onNodeWithTag("error-image", useUnmergedTree = true).assertIsDisplayed()
+        rule.onNodeWithTag("error-message", useUnmergedTree = true).assertIsDisplayed()
             .assertTextEquals(message)
     }
 
