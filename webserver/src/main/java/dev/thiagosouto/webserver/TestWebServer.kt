@@ -4,12 +4,14 @@ import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
+import okio.Buffer
 
 /**
  * Webserver for supporting tests with http calls
  */
 class TestWebServer {
     private val server = MockWebServer()
+
     /**
      * map with Relative path to json path to mock the http responses
      */
@@ -19,7 +21,7 @@ class TestWebServer {
      * Start the webserver
      */
     fun start() {
-        server.start()
+        server.start(53863)
     }
 
     /**
@@ -35,13 +37,35 @@ class TestWebServer {
     fun initDispatcher() {
         server.dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
-                val body = mapping[request.path]?.openFile()
-
-                return body?.let { MockResponse().setBody(body) } ?: MockResponse().setResponseCode(
-                    HTTP_BAD_REQUEST
-                )
+                println(request.path)
+                val path = mapping[request.path]
+                return if (path?.isImage() == true) {
+                    imageResponse(path)
+                } else {
+                    val body = path?.openFile()
+                    body?.let { MockResponse().setBody(body) }
+                        ?: MockResponse().setResponseCode(
+                            HTTP_BAD_REQUEST
+                        )
+                }
             }
         }
+    }
+
+    private fun String.isImage() = this.contains("jpeg")
+
+    private fun imageResponse(path: String): MockResponse {
+        val responseBody = path.getBinaryFileAsBuffer()
+        return MockResponse().setResponseCode(200).addHeader("Content-Type:image/jpeg")
+            .setBody(responseBody)
+    }
+
+    private fun String.getBinaryFileAsBuffer(): Buffer {
+        val file = TestWebServer::class.java.classLoader!!.getResource(this) ?: throw Exception()
+        val fileData: ByteArray = file.readBytes()
+        val buf = Buffer()
+        buf.write(fileData)
+        return buf
     }
 
     /**
