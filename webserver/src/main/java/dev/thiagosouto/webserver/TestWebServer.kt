@@ -20,8 +20,8 @@ class TestWebServer {
     /**
      * Start the webserver
      */
-    fun start() {
-        server.start(53863)
+    fun start(port: Int = DEFAULT_PORT) {
+        server.start(port)
     }
 
     /**
@@ -56,12 +56,12 @@ class TestWebServer {
 
     private fun imageResponse(path: String): MockResponse {
         val responseBody = path.getBinaryFileAsBuffer()
-        return MockResponse().setResponseCode(200).addHeader("Content-Type:image/jpeg")
+        return MockResponse().setResponseCode(HTTP_SUCCESS).addHeader("Content-Type:image/jpeg")
             .setBody(responseBody)
     }
 
     private fun String.getBinaryFileAsBuffer(): Buffer {
-        val file = TestWebServer::class.java.classLoader!!.getResource(this) ?: throw Exception()
+        val file = TestWebServer::class.java.classLoader!!.getResource(this)
         val fileData: ByteArray = file.readBytes()
         val buf = Buffer()
         buf.write(fileData)
@@ -80,6 +80,8 @@ class TestWebServer {
     }
 
     companion object {
+        private const val HTTP_SUCCESS = 200
         private const val HTTP_BAD_REQUEST = 400
+        private const val DEFAULT_PORT = 53863
     }
 }
