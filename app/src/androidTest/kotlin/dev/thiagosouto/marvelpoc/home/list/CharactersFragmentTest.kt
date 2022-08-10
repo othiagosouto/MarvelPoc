@@ -43,7 +43,6 @@ internal class CharactersFragmentTest {
         } launch {
         } check {
             recyclerViewVisible()
-            loadingIsNotVisible()
             checkCharacterName()
             errorMessageNotAvailable()
             stop()
@@ -57,7 +56,6 @@ internal class CharactersFragmentTest {
             withSearchContent()
         } launchSearch  {
         } check {
-            loadingIsNotVisible()
             checkCharacterName()
             errorMessageNotAvailable()
             stop()
