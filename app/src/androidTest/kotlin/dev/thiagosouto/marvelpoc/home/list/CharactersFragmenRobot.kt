@@ -2,7 +2,6 @@ package dev.thiagosouto.marvelpoc.home.list
 
 import android.os.Bundle
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onAllNodesWithTag
@@ -10,17 +9,9 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
-import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.base.BaseRobot
-import dev.thiagosouto.marvelpoc.test.waitUntilNotVisible
-import dev.thiagosouto.marvelpoc.test.waitUntilVisible
+import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
 import dev.thiagosouto.webserver.TestWebServer
-import org.hamcrest.Matchers.not
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
 import org.koin.core.qualifier.named
