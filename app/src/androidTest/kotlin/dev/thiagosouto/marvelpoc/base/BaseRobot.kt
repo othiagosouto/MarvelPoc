@@ -30,5 +30,7 @@ abstract class BaseRobot(protected val rule: ComposeTestRule) {
             true
         } catch (ex1: ComposeTimeoutException) {
             false
+        } catch (e: java.lang.AssertionError) {
+            false
         }
 }
