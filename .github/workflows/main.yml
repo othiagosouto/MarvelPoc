@@ -45,7 +45,7 @@ jobs:
   instrumented_testing:
     name: instrumented testing
     runs-on: macos-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
