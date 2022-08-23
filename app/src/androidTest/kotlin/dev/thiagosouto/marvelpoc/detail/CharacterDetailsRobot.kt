@@ -1,6 +1,7 @@
 package dev.thiagosouto.marvelpoc.detail
 
 import android.content.Intent
+import androidx.compose.ui.test.ComposeTimeoutException
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasText
@@ -118,10 +119,15 @@ internal class CharacterDetailsResult(
     }
 
     fun comics() {
+        swipeUpDetailsComics()
+        titles().forEachIndexed(::comics)
+    }
+
+
+    private fun swipeUpDetailsComics() {
         rule.onNodeWithTag("character-details-comics")
             .performTouchInput { this.swipeUp() }
             .waitUntilVisible()
-        titles().forEachIndexed(::comics)
     }
 
     private fun comics(index: Int, title: String) {
@@ -130,9 +136,21 @@ internal class CharacterDetailsResult(
             .performScrollToIndex(index)
             .waitUntilVisible()
 
-        rule.onNodeWithTag("comics-title-$index")
-            .assertTextEquals(title)
-            .waitUntilVisible()
+        checkColumnIndex(title, index, 0)
+    }
+
+    private fun checkColumnIndex(title: String, index: Int, count: Int) {
+        try {
+            rule.onNodeWithTag("comics-title-$index")
+                .assertTextEquals(title)
+                .waitUntilVisible()
+        } catch (e: ComposeTimeoutException) {
+            swipeUpDetailsComics()
+            if (count > 4) {
+                throw e
+            }
+            checkColumnIndex(title, index, count)
+        }
     }
 
     fun stop() {
