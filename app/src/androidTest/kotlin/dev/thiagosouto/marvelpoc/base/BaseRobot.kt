@@ -33,4 +33,15 @@ abstract class BaseRobot(protected val rule: ComposeTestRule) {
         } catch (e: java.lang.AssertionError) {
             false
         }
+
+    protected fun retry(count: Int = 0, max: Int = 5, func: () -> Unit) {
+        try {
+            func()
+        } catch (e: ComposeTimeoutException) {
+            if (count == max) {
+                throw e
+            }
+            retry(count + 1, max, func)
+        }
+    }
 }

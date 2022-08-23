@@ -123,9 +123,11 @@ internal class CharactersFragmentResult(
     }
 
     private fun checkCharacterName(characterName: String) {
-        rule.waitUntil {
-            rule.onAllNodesWithText(characterName)
-                .fetchSemanticsNodes().size == 1
+        retry {
+            rule.waitUntil {
+                rule.onAllNodesWithText(characterName)
+                    .fetchSemanticsNodes().size == 1
+            }
         }
 
         rule
