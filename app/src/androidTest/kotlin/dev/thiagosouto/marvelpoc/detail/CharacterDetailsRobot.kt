@@ -1,7 +1,6 @@
 package dev.thiagosouto.marvelpoc.detail
 
 import android.content.Intent
-import androidx.compose.ui.test.ComposeTimeoutException
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
@@ -132,32 +131,14 @@ internal class CharacterDetailsResult(
 
     private fun comics(index: Int, title: String) = retry {
         scrollTo(index)
-        swipeUpDetailsComics()
         onNodeWithTag("comics-title-$index")
             .assertTextEquals(title)
             .assertIsDisplayed()
     }
 
-
     private fun ComposeTestRule.scrollTo(index: Int) {
         onNodeWithTag("character-details-comics")
             .performScrollToIndex(index)
-            .waitUntilVisible()
-    }
-
-    private fun checkColumnIndex(title: String, index: Int, count: Int) {
-        try {
-            rule.onNodeWithTag("comics-title-$index")
-                .assertTextEquals(title)
-                .assertIsDisplayed()
-        } catch (e: ComposeTimeoutException) {
-            rule.scrollTo(index)
-            rule.swipeUpDetailsComics()
-            if (count > 4) {
-                throw e
-            }
-            checkColumnIndex(title, index, count)
-        }
     }
 
     fun stop() {

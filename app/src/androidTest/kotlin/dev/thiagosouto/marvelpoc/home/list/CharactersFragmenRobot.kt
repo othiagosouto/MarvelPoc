@@ -97,26 +97,27 @@ internal class CharactersFragmentResult(
     private val testWebServer: TestWebServer
 ) : BaseRobot(rule) {
 
-    fun recyclerViewIsHidden() {
-        rule.onNodeWithTag("characters-list").assertDoesNotExist()
+    fun recyclerViewIsHidden() = applyComposable {
+        onNodeWithTag("characters-list").assertDoesNotExist()
     }
 
-    fun recyclerViewVisible() {
+    fun recyclerViewVisible() = applyComposable {
         waitUntilNodeWithTagVisible("characters-list")
-        rule.onNodeWithTag("characters-list").assertIsDisplayed()
+        onNodeWithTag("characters-list")
+            .assertIsDisplayed()
     }
 
     private fun waitUntilNodeWithTagVisible(tag: String) {
         retryWithDelay {
             waitUntil {
-                rule.onAllNodesWithTag(tag).fetchSemanticsNodes().size == 1
+                onAllNodesWithTag(tag).fetchSemanticsNodes().size == 1
             }
         }
     }
 
-    private fun waitUntilNodeWithTagNotVisible(tag: String) {
-        rule.waitUntil {
-            rule.onAllNodesWithTag(tag).fetchSemanticsNodes().isEmpty()
+    private fun waitUntilNodeWithTagNotVisible(tag: String) = applyComposable {
+        waitUntil {
+            onAllNodesWithTag(tag).fetchSemanticsNodes().isEmpty()
         }
     }
 
@@ -124,7 +125,7 @@ internal class CharactersFragmentResult(
         checkCharacterName("3-D Man")
     }
 
-    private fun checkCharacterName(characterName: String) {
+    private fun checkCharacterName(characterName: String) = applyComposable {
         retry {
             waitUntil {
                 onAllNodesWithText(characterName)
@@ -132,29 +133,30 @@ internal class CharactersFragmentResult(
             }
         }
 
-        rule
-            .onNodeWithText(characterName)
+        onNodeWithText(characterName)
             .assertIsDisplayed()
     }
 
-    fun loadingIsVisible() {
-        rule.onNodeWithTag("loading-characters").assertIsDisplayed()
+    fun loadingIsVisible() = applyComposable {
+        onNodeWithTag("loading-characters")
+            .assertIsDisplayed()
     }
 
-    fun loadingIsNotVisible() {
-        rule.onNodeWithTag("loading-characters").waitUntilDoesNotExist()
+    fun loadingIsNotVisible() = applyComposable {
+        onNodeWithTag("loading-characters")
+            .waitUntilDoesNotExist()
     }
 
     fun checkErrorHomeTab() {
         checkErrorMessage("Looks like thanos didn't like you")
     }
 
-    fun errorMessageNotAvailable() {
-        rule.onNodeWithTag("error-image").assertDoesNotExist()
-        rule.onNodeWithTag("error-message").assertDoesNotExist()
+    fun errorMessageNotAvailable() = applyComposable {
+        assertTagDoesNotExist("error-image")
+        assertTagDoesNotExist("error-message")
     }
 
-    private fun checkErrorMessage(message: String) {
+    private fun checkErrorMessage(message: String) = applyComposable {
         retry {
             waitUntil {
                 onAllNodesWithTag("error-image")
@@ -162,8 +164,10 @@ internal class CharactersFragmentResult(
             }
         }
 
-        rule.onNodeWithTag("error-image", useUnmergedTree = true).assertIsDisplayed()
-        rule.onNodeWithTag("error-message", useUnmergedTree = true).assertIsDisplayed()
+        onNodeWithTag("error-image", useUnmergedTree = true)
+            .assertIsDisplayed()
+        onNodeWithTag("error-message", useUnmergedTree = true)
+            .assertIsDisplayed()
             .assertTextEquals(message)
     }
 

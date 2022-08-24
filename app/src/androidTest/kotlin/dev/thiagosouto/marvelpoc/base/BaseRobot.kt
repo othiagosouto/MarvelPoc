@@ -7,6 +7,7 @@ import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onNodeWithTag
 
 abstract class BaseRobot(protected val rule: ComposeTestRule) {
 
@@ -34,7 +35,7 @@ abstract class BaseRobot(protected val rule: ComposeTestRule) {
             false
         }
 
-    protected fun retry(count: Int = 0, max: Int = 5,  func: ComposeTestRule.() -> Unit) {
+    protected fun retry(count: Int = 0, max: Int = 5, func: ComposeTestRule.() -> Unit) {
         try {
             rule.func()
         } catch (e: ComposeTimeoutException) {
@@ -52,13 +53,23 @@ abstract class BaseRobot(protected val rule: ComposeTestRule) {
         func: ComposeTestRule.() -> Unit
     ) {
         try {
-           rule.func()
+            rule.func()
         } catch (e: ComposeTimeoutException) {
             if (count == max) {
                 throw e
             }
             Thread.sleep(delay)
-            retryWithDelay(count + 1, max,delay, func)
+            retryWithDelay(count + 1, max, delay, func)
         }
+    }
+
+    fun applyComposable(func: ComposeTestRule.() -> Unit) = apply {
+        rule.func()
+    }
+
+    fun assertTagDoesNotExist(tag: String){
+        rule
+            .onNodeWithTag(tag)
+            .assertDoesNotExist()
     }
 }
