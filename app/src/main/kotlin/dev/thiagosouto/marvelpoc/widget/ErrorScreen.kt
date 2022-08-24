@@ -22,7 +22,11 @@ import androidx.compose.ui.unit.dp
 import dev.thiagosouto.marvelpoc.R
 
 @Composable
-internal fun ErrorScreen(modifier: Modifier = Modifier, @StringRes message: Int, @DrawableRes image: Int) {
+internal fun ErrorScreen(
+    modifier: Modifier = Modifier,
+    @StringRes message: Int,
+    @DrawableRes image: Int
+) {
     Column(
         modifier = modifier.testTag("error-container"),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -32,12 +36,12 @@ internal fun ErrorScreen(modifier: Modifier = Modifier, @StringRes message: Int,
             modifier = Modifier
                 .height(100.dp)
                 .wrapContentWidth()
-                .testTag("error-image"),
+                .testTag(ErrorScreenTestTags.IMAGE),
             painter = painterResource(image),
             contentDescription = ""
         )
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_small)))
-        Text(modifier = Modifier.testTag("error-message"), text = stringResource(id = message))
+        Text(modifier = Modifier.testTag(ErrorScreenTestTags.MESSAGE), text = stringResource(id = message))
     }
 }
 
@@ -49,4 +53,9 @@ private fun ErrorScreenPreview() {
         message = R.string.home_error_loading,
         image = R.drawable.thanos
     )
+}
+
+internal object ErrorScreenTestTags {
+    const val IMAGE = "error-image"
+    const val MESSAGE = "error-message"
 }

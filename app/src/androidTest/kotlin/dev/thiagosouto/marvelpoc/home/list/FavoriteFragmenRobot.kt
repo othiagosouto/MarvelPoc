@@ -14,6 +14,7 @@ import androidx.paging.PagingState
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
+import dev.thiagosouto.marvelpoc.widget.ErrorScreenTestTags
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
@@ -70,8 +71,8 @@ internal class FavoriteFragmentResult(private val composeTestRule: ComposeTestRu
 
 
     private fun checkErrorMessage(message: String) {
-        composeTestRule.onNodeWithTag("error-image").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("error-message").assertIsDisplayed().assertTextEquals(message)
+        composeTestRule.onNodeWithTag(ErrorScreenTestTags.IMAGE).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(ErrorScreenTestTags.MESSAGE).assertIsDisplayed().assertTextEquals(message)
     }
 
     fun recyclerViewIsHidden() {

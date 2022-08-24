@@ -129,7 +129,7 @@ internal class CharacterDetailsResult(
             .waitUntilVisible()
     }
 
-    private fun comics(index: Int, title: String) = retryWithDelay(delay = 100L) {
+    private fun comics(index: Int, title: String) = retryWithDelay(delay = 500L) {
         scrollTo(index)
         onNodeWithTag("comics-title-$index")
             .assertTextEquals(title)

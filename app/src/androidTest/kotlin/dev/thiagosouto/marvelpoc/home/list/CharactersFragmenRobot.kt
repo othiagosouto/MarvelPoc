@@ -11,6 +11,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.fragment.app.testing.launchFragmentInContainer
 import dev.thiagosouto.marvelpoc.base.BaseRobot
 import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
+import dev.thiagosouto.marvelpoc.widget.ErrorScreenTestTags
 import dev.thiagosouto.webserver.TestWebServer
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
@@ -152,21 +153,21 @@ internal class CharactersFragmentResult(
     }
 
     fun errorMessageNotAvailable() = applyComposable {
-        assertTagDoesNotExist("error-image")
-        assertTagDoesNotExist("error-message")
+        assertTagDoesNotExist(ErrorScreenTestTags.IMAGE)
+        assertTagDoesNotExist(ErrorScreenTestTags.MESSAGE)
     }
 
     private fun checkErrorMessage(message: String) = applyComposable {
         retry {
             waitUntil {
-                onAllNodesWithTag("error-image")
+                onAllNodesWithTag(ErrorScreenTestTags.IMAGE)
                     .fetchSemanticsNodes().size == 1
             }
         }
 
-        onNodeWithTag("error-image", useUnmergedTree = true)
+        onNodeWithTag(ErrorScreenTestTags.IMAGE, useUnmergedTree = true)
             .assertIsDisplayed()
-        onNodeWithTag("error-message", useUnmergedTree = true)
+        onNodeWithTag(ErrorScreenTestTags.MESSAGE, useUnmergedTree = true)
             .assertIsDisplayed()
             .assertTextEquals(message)
     }
