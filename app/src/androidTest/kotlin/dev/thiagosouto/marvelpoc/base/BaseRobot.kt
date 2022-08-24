@@ -9,7 +9,7 @@ import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
 
-abstract class BaseRobot(protected val rule: ComposeTestRule) {
+internal abstract class BaseRobot(protected val rule: ComposeTestRule) {
 
     private fun ancestor(tag: String) = hasAnyAncestor(hasTestTag(tag))
 
@@ -39,11 +39,22 @@ abstract class BaseRobot(protected val rule: ComposeTestRule) {
         try {
             rule.func()
         } catch (e: ComposeTimeoutException) {
-            if (count == max) {
-                throw e
-            }
-            retry(count + 1, max, func)
+            retryException(e, count, max, func)
+        } catch (e: AssertionError) {
+            retryException(e, count, max, func)
         }
+    }
+
+    private fun retryException(
+        e: Throwable,
+        count: Int = 0,
+        max: Int = 5,
+        func: ComposeTestRule.() -> Unit
+    ) {
+        if (count == max) {
+            throw e
+        }
+        retry(count + 1, max, func)
     }
 
     protected fun retryWithDelay(
@@ -55,19 +66,34 @@ abstract class BaseRobot(protected val rule: ComposeTestRule) {
         try {
             rule.func()
         } catch (e: ComposeTimeoutException) {
-            if (count == max) {
-                throw e
-            }
-            Thread.sleep(delay)
-            retryWithDelay(count + 1, max, delay, func)
+            retryException(delay, e, count + 1, max, func)
+        } catch (e: AssertionError) {
+            retryException(delay, e, count + 1, max, func)
         }
+    }
+
+    private fun retryException(
+        delay: Long,
+        e: Throwable,
+        count: Int = 0,
+        max: Int = 5,
+        func: ComposeTestRule.() -> Unit
+    ) {
+        if (count == max) {
+            throw e
+        }
+
+        if (delay != 0L) {
+            Thread.sleep(delay)
+        }
+        retryWithDelay(count + 1, max, delay, func)
     }
 
     fun applyComposable(func: ComposeTestRule.() -> Unit) = apply {
         rule.func()
     }
 
-    fun assertTagDoesNotExist(tag: String){
+    fun assertTagDoesNotExist(tag: String) {
         rule
             .onNodeWithTag(tag)
             .assertDoesNotExist()
