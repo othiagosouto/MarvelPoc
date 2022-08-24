@@ -147,7 +147,6 @@ internal class CharacterDetailsResult(
         try {
             rule.onNodeWithTag("comics-title-$index")
                 .assertTextEquals(title)
-                .waitUntilVisible()
         } catch (e: ComposeTimeoutException) {
             scrollTo(index)
             swipeUpDetailsComics()
