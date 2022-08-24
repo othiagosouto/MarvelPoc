@@ -40,7 +40,7 @@ internal class FavoriteFragment : Fragment() {
 
                 val result = lazyPagingItems.loadState.refresh
                 when {
-                    result is LoadState.Loading -> LoadingPage(Modifier.testTag("loading-characters"))
+                    result is LoadState.Loading -> LoadingPage(Modifier.testTag(CharactersListTestTags.LOADING))
                     result is LoadState.Error -> {
                         val (message, image) = favoritesViewModel.handleException()
                         ErrorScreen(
@@ -56,7 +56,7 @@ internal class FavoriteFragment : Fragment() {
                         )
                     }
                     else -> LazyVerticalGrid(
-                        modifier = Modifier.testTag("characters-list"),
+                        modifier = Modifier.testTag(CharactersListTestTags.LIST),
                         columns = GridCells.Fixed(2),
                         verticalArrangement = Arrangement.spacedBy(1.dp),
                         horizontalArrangement = Arrangement.spacedBy(1.dp)

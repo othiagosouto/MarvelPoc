@@ -99,12 +99,12 @@ internal class CharactersFragmentResult(
 ) : BaseRobot(rule) {
 
     fun recyclerViewIsHidden() = applyComposable {
-        onNodeWithTag("characters-list").assertDoesNotExist()
+        onNodeWithTag(CharactersListTestTags.LIST).assertDoesNotExist()
     }
 
     fun recyclerViewVisible() = applyComposable {
-        waitUntilNodeWithTagVisible("characters-list")
-        onNodeWithTag("characters-list")
+        waitUntilNodeWithTagVisible(CharactersListTestTags.LIST)
+        onNodeWithTag(CharactersListTestTags.LIST)
             .assertIsDisplayed()
     }
 
@@ -139,12 +139,12 @@ internal class CharactersFragmentResult(
     }
 
     fun loadingIsVisible() = applyComposable {
-        onNodeWithTag("loading-characters")
+        onNodeWithTag(CharactersListTestTags.LOADING)
             .assertIsDisplayed()
     }
 
     fun loadingIsNotVisible() = applyComposable {
-        onNodeWithTag("loading-characters")
+        onNodeWithTag(CharactersListTestTags.LOADING)
             .waitUntilDoesNotExist()
     }
 
