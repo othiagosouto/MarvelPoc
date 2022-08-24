@@ -107,8 +107,10 @@ internal class CharactersFragmentResult(
     }
 
     private fun waitUntilNodeWithTagVisible(tag: String) {
-        rule.waitUntil {
-            rule.onAllNodesWithTag(tag).fetchSemanticsNodes().size == 1
+        retry {
+            rule.waitUntil {
+                rule.onAllNodesWithTag(tag).fetchSemanticsNodes().size == 1
+            }
         }
     }
 
@@ -153,10 +155,11 @@ internal class CharactersFragmentResult(
     }
 
     private fun checkErrorMessage(message: String) {
-
-        rule.waitUntil {
-            rule.onAllNodesWithTag("error-image")
-                .fetchSemanticsNodes().size == 1
+        retry {
+            rule.waitUntil {
+                rule.onAllNodesWithTag("error-image")
+                    .fetchSemanticsNodes().size == 1
+            }
         }
 
         rule.onNodeWithTag("error-image", useUnmergedTree = true).assertIsDisplayed()

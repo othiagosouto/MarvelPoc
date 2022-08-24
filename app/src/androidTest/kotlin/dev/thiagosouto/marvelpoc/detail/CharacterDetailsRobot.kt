@@ -131,12 +131,16 @@ internal class CharacterDetailsResult(
     }
 
     private fun comics(index: Int, title: String) {
+        scrollTo(index)
+
+        checkColumnIndex(title, index, 0)
+    }
+
+    private fun scrollTo(index: Int) {
         rule
             .onNodeWithTag("character-details-comics")
             .performScrollToIndex(index)
             .waitUntilVisible()
-
-        checkColumnIndex(title, index, 0)
     }
 
     private fun checkColumnIndex(title: String, index: Int, count: Int) {
@@ -145,6 +149,7 @@ internal class CharacterDetailsResult(
                 .assertTextEquals(title)
                 .waitUntilVisible()
         } catch (e: ComposeTimeoutException) {
+            scrollTo(index)
             swipeUpDetailsComics()
             if (count > 4) {
                 throw e
