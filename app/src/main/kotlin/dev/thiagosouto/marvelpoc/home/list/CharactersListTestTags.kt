@@ -1,6 +1,6 @@
 package dev.thiagosouto.marvelpoc.home.list
 
-object CharactersListTestTags {
+internal object CharactersListTestTags {
     const val LOADING = "loading-characters"
     const val LIST = "characters-list"
 }
