@@ -15,15 +15,15 @@ internal abstract class BaseRobot(protected val rule: ComposeTestRule) :
     private fun ancestor(tag: String) = hasAnyAncestor(hasTestTag(tag))
 
     protected fun SemanticsNodeInteraction.waitUntilVisible() = apply {
-        rule.waitUntil(LONG_TIMEOUT) { isValid { this@waitUntilVisible.assertIsDisplayed() } }
+        rule.waitUntil(LONG_TIMEOUT) { isValid { this.assertIsDisplayed() } }
     }
 
     protected fun SemanticsNodeInteraction.waitUntilDoesNotExist() = apply {
-        rule.waitUntil(LONG_TIMEOUT) { isValid { this@waitUntilDoesNotExist.assertDoesNotExist() } }
+        rule.waitUntil(LONG_TIMEOUT) { isValid { this.assertDoesNotExist() } }
     }
 
     protected fun SemanticsNodeInteraction.waitUntilIsNotDisplayed() = apply {
-        rule.waitUntil(LONG_TIMEOUT) { isValid { this@waitUntilIsNotDisplayed.assertIsNotDisplayed() } }
+        rule.waitUntil(LONG_TIMEOUT) { isValid { this.assertIsNotDisplayed() } }
     }
 
     private fun isValid(passedFunction: () -> Unit): Boolean =
