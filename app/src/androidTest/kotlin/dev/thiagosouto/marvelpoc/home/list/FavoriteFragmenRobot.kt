@@ -76,11 +76,11 @@ internal class FavoriteFragmentResult(private val composeTestRule: ComposeTestRu
     }
 
     fun recyclerViewIsHidden() {
-        composeTestRule.onNodeWithTag("characters-list").assertDoesNotExist()
+        composeTestRule.onNodeWithTag(CharactersListTestTags.LIST).assertDoesNotExist()
     }
 
     fun recyclerViewVisible() {
-        composeTestRule.onNodeWithTag("characters-list").assertIsDisplayed()
+        composeTestRule.onNodeWithTag(CharactersListTestTags.LIST).assertIsDisplayed()
     }
 
     fun checkFavoritesEmptyMessage() =
