@@ -34,14 +34,31 @@ abstract class BaseRobot(protected val rule: ComposeTestRule) {
             false
         }
 
-    protected fun retry(count: Int = 0, max: Int = 5, func: () -> Unit) {
+    protected fun retry(count: Int = 0, max: Int = 5,  func: ComposeTestRule.() -> Unit) {
         try {
-            func()
+            rule.func()
         } catch (e: ComposeTimeoutException) {
             if (count == max) {
                 throw e
             }
             retry(count + 1, max, func)
+        }
+    }
+
+    protected fun retryWithDelay(
+        count: Int = 0,
+        max: Int = 5,
+        delay: Long = 50L,
+        func: ComposeTestRule.() -> Unit
+    ) {
+        try {
+           rule.func()
+        } catch (e: ComposeTimeoutException) {
+            if (count == max) {
+                throw e
+            }
+            Thread.sleep(delay)
+            retryWithDelay(count + 1, max,delay, func)
         }
     }
 }

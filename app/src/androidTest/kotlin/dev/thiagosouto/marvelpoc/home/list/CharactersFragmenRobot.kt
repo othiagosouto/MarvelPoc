@@ -107,8 +107,8 @@ internal class CharactersFragmentResult(
     }
 
     private fun waitUntilNodeWithTagVisible(tag: String) {
-        retry {
-            rule.waitUntil {
+        retryWithDelay {
+            waitUntil {
                 rule.onAllNodesWithTag(tag).fetchSemanticsNodes().size == 1
             }
         }
@@ -126,8 +126,8 @@ internal class CharactersFragmentResult(
 
     private fun checkCharacterName(characterName: String) {
         retry {
-            rule.waitUntil {
-                rule.onAllNodesWithText(characterName)
+            waitUntil {
+                onAllNodesWithText(characterName)
                     .fetchSemanticsNodes().size == 1
             }
         }
@@ -156,8 +156,8 @@ internal class CharactersFragmentResult(
 
     private fun checkErrorMessage(message: String) {
         retry {
-            rule.waitUntil {
-                rule.onAllNodesWithTag("error-image")
+            waitUntil {
+                onAllNodesWithTag("error-image")
                     .fetchSemanticsNodes().size == 1
             }
         }

@@ -3,6 +3,7 @@ package dev.thiagosouto.marvelpoc.detail
 import android.content.Intent
 import androidx.compose.ui.test.ComposeTimeoutException
 import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeTestRule
@@ -119,26 +120,27 @@ internal class CharacterDetailsResult(
     }
 
     fun comics() {
-        swipeUpDetailsComics()
+        rule.swipeUpDetailsComics()
         titles().forEachIndexed(::comics)
     }
 
-
-    private fun swipeUpDetailsComics() {
-        rule.onNodeWithTag("character-details-comics")
+    private fun ComposeTestRule.swipeUpDetailsComics() {
+        onNodeWithTag("character-details-comics")
             .performTouchInput { this.swipeUp() }
             .waitUntilVisible()
     }
 
-    private fun comics(index: Int, title: String) {
+    private fun comics(index: Int, title: String) = retry {
         scrollTo(index)
-
-        checkColumnIndex(title, index, 0)
+        swipeUpDetailsComics()
+        onNodeWithTag("comics-title-$index")
+            .assertTextEquals(title)
+            .assertIsDisplayed()
     }
 
-    private fun scrollTo(index: Int) {
-        rule
-            .onNodeWithTag("character-details-comics")
+
+    private fun ComposeTestRule.scrollTo(index: Int) {
+        onNodeWithTag("character-details-comics")
             .performScrollToIndex(index)
             .waitUntilVisible()
     }
@@ -147,9 +149,10 @@ internal class CharacterDetailsResult(
         try {
             rule.onNodeWithTag("comics-title-$index")
                 .assertTextEquals(title)
+                .assertIsDisplayed()
         } catch (e: ComposeTimeoutException) {
-            scrollTo(index)
-            swipeUpDetailsComics()
+            rule.scrollTo(index)
+            rule.swipeUpDetailsComics()
             if (count > 4) {
                 throw e
             }
