@@ -63,7 +63,7 @@ jobs:
           api-level: 30
           arch: x86_64
           script:
-            ./gradlew --profile connectedCheck
+            ./gradlew connectedCheck
 
       - name: Upload emulator tests artifacts
         if: always()
