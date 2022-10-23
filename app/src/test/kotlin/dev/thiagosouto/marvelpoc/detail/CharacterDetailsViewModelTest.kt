@@ -6,6 +6,7 @@ import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.CharactersRepository
 import dev.thiagosouto.marvelpoc.data.Comics
+import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.detail.domain.DetailsViewStateMapper
 import dev.thiagosouto.marvelpoc.home.CoroutineTestRule
@@ -32,7 +33,7 @@ internal class CharacterDetailsViewModelTest {
     @Before
     fun setup() {
         repository = mockk(relaxed = true)
-        viewModel = CharacterDetailsViewModel(repository, mapper)
+        viewModel = CharacterDetailsViewModel(repository, mapper, Dispatchers())
     }
 
     @Test
