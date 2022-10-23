@@ -109,11 +109,11 @@ internal class CharactersFragmentResult(
     }
 
     private fun waitUntilNodeWithTagVisible(tag: String) {
-        retryWithDelay {
+        retryWithDelay(func= {
             waitUntil {
                 onAllNodesWithTag(tag).fetchSemanticsNodes().size == 1
             }
-        }
+        })
     }
 
     private fun waitUntilNodeWithTagNotVisible(tag: String) = applyComposable {

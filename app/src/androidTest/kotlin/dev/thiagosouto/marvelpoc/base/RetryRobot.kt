@@ -30,14 +30,17 @@ internal class RetryRobot(private val rule: ComposeTestRule) : Retryable {
         count: Int,
         max: Int,
         delay: Long,
-        func: ComposeTestRule.() -> Unit
+        errorHandling: ComposeTestRule.() -> Unit,
+        func: ComposeTestRule.() -> Unit,
     ) {
         try {
             rule.func()
         } catch (e: ComposeTimeoutException) {
-            retryException(delay, e, count + 1, max, func)
+            errorHandling(rule)
+            retryException(delay, e, count + 1, max, func, errorHandling)
         } catch (e: AssertionError) {
-            retryException(delay, e, count + 1, max, func)
+            errorHandling(rule)
+            retryException(delay, e, count + 1, max, func, errorHandling)
         }
     }
 
@@ -46,15 +49,16 @@ internal class RetryRobot(private val rule: ComposeTestRule) : Retryable {
         e: Throwable,
         count: Int = 0,
         max: Int = 5,
-        func: ComposeTestRule.() -> Unit
+        func: ComposeTestRule.() -> Unit,
+        errorHandling: ComposeTestRule.() -> Unit
     ) {
         if (count == max) {
-            throw e
+            throw Throwable("Reached $count", e)
         }
 
         if (delay != 0L) {
             Thread.sleep(delay)
         }
-        retryWithDelay(count + 1, max, delay, func)
+        retryWithDelay(count + 1, max, delay, func, errorHandling)
     }
 }

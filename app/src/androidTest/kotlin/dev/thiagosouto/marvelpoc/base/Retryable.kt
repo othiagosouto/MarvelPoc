@@ -10,6 +10,7 @@ internal interface Retryable {
         count: Int = 0,
         max: Int = 5,
         delay: Long = 50L,
+        errorHandling: ComposeTestRule.() -> Unit = { },
         func: ComposeTestRule.() -> Unit
     )
 }

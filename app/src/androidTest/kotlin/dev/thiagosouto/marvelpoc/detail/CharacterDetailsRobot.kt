@@ -129,12 +129,17 @@ internal class CharacterDetailsResult(
             .waitUntilVisible()
     }
 
-    private fun comics(index: Int, title: String) = retryWithDelay(delay = 500L) {
-        scrollTo(index)
-        onNodeWithTag("comics-title-$index")
-            .assertTextEquals(title)
-            .assertIsDisplayed()
-    }
+    private fun comics(index: Int, title: String) =
+        retryWithDelay(
+            delay = 500L,
+            errorHandling = {swipeUpDetailsComics() },
+            func = {
+                scrollTo(index)
+                onNodeWithTag("comics-title-$index")
+                    .assertTextEquals(title)
+                    .assertIsDisplayed()
+            }
+        )
 
     private fun ComposeTestRule.scrollTo(index: Int) {
         onNodeWithTag("character-details-comics")
