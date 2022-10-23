@@ -1,6 +1,7 @@
 package dev.thiagosouto.marvelpoc.koin
 
 import dev.thiagosouto.marvelpoc.detail.CharacterDetailsViewModel
+import dev.thiagosouto.marvelpoc.detail.domain.DetailsViewStateMapper
 import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.home.list.CharactersViewModel
 import dev.thiagosouto.marvelpoc.shared.koin.KoinModulesProvider
@@ -18,6 +19,7 @@ class AppModulesInitializer : KoinModulesProvider {
             viewModel { FavoritesViewModel(get()) }
             viewModel { CharactersViewModel(get()) }
             viewModel { CharacterDetailsViewModel(get(), get()) }
+            factory { DetailsViewStateMapper(get()) }
         }
     }
 }
