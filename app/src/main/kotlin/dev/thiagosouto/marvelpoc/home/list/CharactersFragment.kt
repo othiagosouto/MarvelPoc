@@ -40,7 +40,7 @@ internal class CharactersFragment : Fragment() {
                     .collectAsLazyPagingItems()
 
                 when (val result = lazyPagingItems.loadState.refresh) {
-                    is LoadState.Loading -> LoadingPage(Modifier.testTag("loading-characters"))
+                    is LoadState.Loading -> LoadingPage(Modifier.testTag(CharactersListTestTags.LOADING))
                     is LoadState.Error -> {
                         val (message, image) = charactersViewModel.handleException(result.error)
                         ErrorScreen(
@@ -49,7 +49,7 @@ internal class CharactersFragment : Fragment() {
                         )
                     }
                     else -> LazyVerticalGrid(
-                        modifier = Modifier.testTag("characters-list"),
+                        modifier = Modifier.testTag(CharactersListTestTags.LIST),
                         columns = GridCells.Fixed(2),
                         verticalArrangement = Arrangement.spacedBy(1.dp),
                         horizontalArrangement = Arrangement.spacedBy(1.dp)

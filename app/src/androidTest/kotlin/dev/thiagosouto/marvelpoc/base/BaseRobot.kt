@@ -7,21 +7,23 @@ import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onNodeWithTag
 
-abstract class BaseRobot(protected val rule: ComposeTestRule) {
+internal abstract class BaseRobot(protected val rule: ComposeTestRule) :
+    Retryable by RetryRobot(rule) {
 
     private fun ancestor(tag: String) = hasAnyAncestor(hasTestTag(tag))
 
     protected fun SemanticsNodeInteraction.waitUntilVisible() = apply {
-        rule.waitUntil(1000L) { isValid { this@waitUntilVisible.assertIsDisplayed() } }
+        rule.waitUntil(LONG_TIMEOUT) { isValid { this.assertIsDisplayed() } }
     }
 
     protected fun SemanticsNodeInteraction.waitUntilDoesNotExist() = apply {
-        rule.waitUntil(1000L) { isValid { this@waitUntilDoesNotExist.assertDoesNotExist() } }
+        rule.waitUntil(LONG_TIMEOUT) { isValid { this.assertDoesNotExist() } }
     }
 
     protected fun SemanticsNodeInteraction.waitUntilIsNotDisplayed() = apply {
-        rule.waitUntil(1000L) { isValid { this@waitUntilIsNotDisplayed.assertIsNotDisplayed() } }
+        rule.waitUntil(LONG_TIMEOUT) { isValid { this.assertIsNotDisplayed() } }
     }
 
     private fun isValid(passedFunction: () -> Unit): Boolean =
@@ -34,14 +36,17 @@ abstract class BaseRobot(protected val rule: ComposeTestRule) {
             false
         }
 
-    protected fun retry(count: Int = 0, max: Int = 5, func: () -> Unit) {
-        try {
-            func()
-        } catch (e: ComposeTimeoutException) {
-            if (count == max) {
-                throw e
-            }
-            retry(count + 1, max, func)
-        }
+    fun applyComposable(func: ComposeTestRule.() -> Unit) = apply {
+        rule.func()
+    }
+
+    fun assertTagDoesNotExist(tag: String) {
+        rule
+            .onNodeWithTag(tag)
+            .assertDoesNotExist()
+    }
+
+    private companion object {
+        const val LONG_TIMEOUT = 1000L
     }
 }

@@ -1,8 +1,8 @@
 package dev.thiagosouto.marvelpoc.detail
 
 import android.content.Intent
-import androidx.compose.ui.test.ComposeTimeoutException
 import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeTestRule
@@ -97,65 +97,53 @@ internal class CharacterDetailsResult(
     private val webServer: TestWebServer
 ) : BaseRobot(rule) {
 
-    fun characterName() {
-        rule.waitUntil {
-            rule.onAllNodesWithTag(NAME).fetchSemanticsNodes().size == 1
+    fun characterName() = applyComposable {
+        waitUntil {
+            onAllNodesWithTag(NAME).fetchSemanticsNodes().size == 1
         }
-        rule.onNodeWithTag(NAME).performScrollTo()
-        rule.onNodeWithTag(NAME).assert(hasText("3-D Man"))
+        onNodeWithTag(NAME).performScrollTo()
+        onNodeWithTag(NAME).assert(hasText("3-D Man"))
     }
 
-    fun description() {
-        rule.onNodeWithTag(DESCRIPTION).waitUntilVisible()
-        rule.onNodeWithTag(DESCRIPTION).performScrollTo()
-        rule.onNodeWithTag(DESCRIPTION).assert(hasText("some description"))
+    fun description() = applyComposable {
+        onNodeWithTag(DESCRIPTION).waitUntilVisible()
+        onNodeWithTag(DESCRIPTION).performScrollTo()
+        onNodeWithTag(DESCRIPTION).assert(hasText("some description"))
     }
 
-    fun defaultDescription() {
-        rule.onNodeWithTag(DESCRIPTION).waitUntilVisible()
-        rule.onNodeWithTag(DESCRIPTION).performScrollTo()
-        rule.onNodeWithTag(DESCRIPTION)
+    fun defaultDescription() = applyComposable {
+        onNodeWithTag(DESCRIPTION).waitUntilVisible()
+        onNodeWithTag(DESCRIPTION).performScrollTo()
+        onNodeWithTag(DESCRIPTION)
             .assert(hasText("This character doesn't have any description available :("))
     }
 
-    fun comics() {
+    fun comics() = applyComposable {
         swipeUpDetailsComics()
-        titles().forEachIndexed(::comics)
+        titles().forEachIndexed { index, title -> comics(index, title) }
     }
 
-
-    private fun swipeUpDetailsComics() {
-        rule.onNodeWithTag("character-details-comics")
+    private fun ComposeTestRule.swipeUpDetailsComics() {
+        onNodeWithTag("character-details-comics")
             .performTouchInput { this.swipeUp() }
             .waitUntilVisible()
     }
 
-    private fun comics(index: Int, title: String) {
-        scrollTo(index)
-
-        checkColumnIndex(title, index, 0)
-    }
-
-    private fun scrollTo(index: Int) {
-        rule
-            .onNodeWithTag("character-details-comics")
-            .performScrollToIndex(index)
-            .waitUntilVisible()
-    }
-
-    private fun checkColumnIndex(title: String, index: Int, count: Int) {
-        try {
-            rule.onNodeWithTag("comics-title-$index")
-                .assertTextEquals(title)
-                .waitUntilVisible()
-        } catch (e: ComposeTimeoutException) {
-            scrollTo(index)
-            swipeUpDetailsComics()
-            if (count > 4) {
-                throw e
+    private fun comics(index: Int, title: String) =
+        retryWithDelay(
+            delay = 500L,
+            errorHandling = {swipeUpDetailsComics() },
+            func = {
+                scrollTo(index)
+                onNodeWithTag("comics-title-$index")
+                    .assertTextEquals(title)
+                    .assertIsDisplayed()
             }
-            checkColumnIndex(title, index, count)
-        }
+        )
+
+    private fun ComposeTestRule.scrollTo(index: Int) {
+        onNodeWithTag("character-details-comics")
+            .performScrollToIndex(index)
     }
 
     fun stop() {
