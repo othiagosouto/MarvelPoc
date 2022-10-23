@@ -1,6 +1,7 @@
 package dev.thiagosouto.marvelpoc.data.koin
 
 import dev.thiagosouto.marvelpoc.data.CharactersRepository
+import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.shared.koin.KoinModulesProvider
 import org.koin.core.module.Module
@@ -19,6 +20,8 @@ class DataInitializer : KoinModulesProvider {
                 get()
             )
         }
+
+        single { Dispatchers() }
         factory { ComicsMapper() }
     }
 }
