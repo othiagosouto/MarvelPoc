@@ -7,6 +7,7 @@ import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.CharactersRepository
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
+import dev.thiagosouto.marvelpoc.detail.domain.DetailsViewStateMapper
 import dev.thiagosouto.marvelpoc.home.CoroutineTestRule
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -18,7 +19,7 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class CharacterDetailsViewModelTest {
-    private val comicsMapper = ComicsMapper()
+    private val mapper = DetailsViewStateMapper(ComicsMapper())
     private lateinit var viewModel: CharacterDetailsViewModel
     private lateinit var repository: CharactersRepository
 
@@ -31,7 +32,7 @@ internal class CharacterDetailsViewModelTest {
     @Before
     fun setup() {
         repository = mockk(relaxed = true)
-        viewModel = CharacterDetailsViewModel(repository, comicsMapper)
+        viewModel = CharacterDetailsViewModel(repository, mapper)
     }
 
     @Test

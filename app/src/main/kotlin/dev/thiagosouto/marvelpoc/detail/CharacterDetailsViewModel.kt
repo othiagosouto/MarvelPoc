@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.thiagosouto.marvelpoc.data.CharactersRepository
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
+import dev.thiagosouto.marvelpoc.detail.domain.DetailsViewStateMapper
 import dev.thiagosouto.marvelpoc.shared.mvi.Presenter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 
 internal class CharacterDetailsViewModel(
     private val repository: CharactersRepository,
-    private val comicsMapper: ComicsMapper
+    private val detailsViewStateMapper: DetailsViewStateMapper
 ) : ViewModel(),
     Presenter<Intent, DetailsViewState> {
 
@@ -34,11 +35,13 @@ internal class CharacterDetailsViewModel(
                     _state.tryEmit(DetailsViewState.Loading)
                     val details = repository.fetchCharacterDetails(intent.characterId.toString())
                     _state.tryEmit(
-                        DetailsViewState.Loaded(
-                            details.name,
-                            details.description,
-                            details.imageUrl,
-                            comics = comicsMapper.apply(details.comics)
+                        detailsViewStateMapper.apply(
+                            DetailsViewStateMapper.Input(
+                                name = details.name,
+                                description = details.description,
+                                imageUrl = details.imageUrl,
+                                comics = details.comics
+                            )
                         )
                     )
                 }
