@@ -61,6 +61,14 @@ android {
         // https://github.com/bumptech/glide/issues/4940
         lintConfig = file("$rootDir/android_glide_lint.xml")
     }
+
+
+    packaging {
+        resources {
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/LICENSE-notice.md"
+        }
+    }
 }
 
 def allTestsConfigs(dependency) {
