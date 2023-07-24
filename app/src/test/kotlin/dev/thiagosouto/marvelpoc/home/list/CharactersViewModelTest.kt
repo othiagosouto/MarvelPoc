@@ -39,7 +39,7 @@ internal class CharactersViewModelTest {
     fun `handleException Given no search and exception EmptyDataException Then returns no data content`() {
         val result = viewModel.handleException(EmptyDataException())
 
-        val expectedResult = Pair(R.string.empty_characters_home, R.drawable.ic_deadpool)
+        val expectedResult = Pair(R.string.empty_characters_home, dev.thiagosouto.marvelpoc.design.R.drawable.ic_deadpool)
         assertThat(result).isEqualTo(expectedResult)
     }
 
@@ -47,7 +47,7 @@ internal class CharactersViewModelTest {
     fun `handleException Given no search and exception Exception Then returns generic content`() {
         val result = viewModel.handleException(Exception())
 
-        val expectedResult = Pair(R.string.home_error_loading, R.drawable.thanos)
+        val expectedResult = Pair(R.string.home_error_loading, dev.thiagosouto.marvelpoc.design.R.drawable.thanos)
         assertThat(result).isEqualTo(expectedResult)
     }
 
@@ -66,7 +66,7 @@ internal class CharactersViewModelTest {
         viewModel.searchedQuery = "eita"
         val result = viewModel.handleException(Exception())
 
-        val expectedResult = Pair(R.string.search_error_loading, R.drawable.thanos)
+        val expectedResult = Pair(R.string.search_error_loading, dev.thiagosouto.marvelpoc.design.R.drawable.thanos)
         assertThat(result).isEqualTo(expectedResult)
     }
 

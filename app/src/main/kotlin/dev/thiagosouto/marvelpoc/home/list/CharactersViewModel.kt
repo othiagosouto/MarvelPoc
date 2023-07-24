@@ -47,7 +47,7 @@ class CharactersViewModel(private val repository: CharactersRepository) : ViewMo
 
             else -> Pair(
                 R.string.home_error_loading,
-                dev.thiagosouto.marvelpoc.design. R.drawable.thanos
+                dev.thiagosouto.marvelpoc.design.R.drawable.thanos
             )
         }
     }
