@@ -28,7 +28,7 @@ subprojects {
             jvmTarget = "17"
 
             // Use experimental APIs
-            freeCompilerArgs += '-Xopt-in=kotlin.RequiresOptIn'
+            freeCompilerArgs += '-opt-in=kotlin.RequiresOptIn'
         }
     }
 }
