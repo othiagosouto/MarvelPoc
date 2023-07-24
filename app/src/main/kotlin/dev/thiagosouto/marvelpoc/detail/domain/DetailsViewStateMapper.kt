@@ -4,6 +4,10 @@ import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.detail.DetailsViewState
 
+
+/**
+ * Mapper domain to DetailsViewState
+ */
 internal class DetailsViewStateMapper(
     private val comicsMapper: ComicsMapper
 ) {

@@ -42,12 +42,12 @@ class CharactersViewModel(private val repository: CharactersRepository) : ViewMo
         return when (e) {
             is EmptyDataException -> Pair(
                 R.string.empty_characters_home,
-                R.drawable.ic_deadpool
+                dev.thiagosouto.marvelpoc.design.R.drawable.ic_deadpool
             )
 
             else -> Pair(
                 R.string.home_error_loading,
-                R.drawable.thanos
+                dev.thiagosouto.marvelpoc.design. R.drawable.thanos
             )
         }
     }
@@ -60,7 +60,7 @@ class CharactersViewModel(private val repository: CharactersRepository) : ViewMo
             )
             else -> Pair(
                 R.string.search_error_loading,
-                R.drawable.thanos
+                dev.thiagosouto.marvelpoc.design.R.drawable.thanos
             )
         }
     }

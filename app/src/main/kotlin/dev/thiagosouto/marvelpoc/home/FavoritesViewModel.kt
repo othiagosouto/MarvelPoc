@@ -14,7 +14,7 @@ internal class FavoritesViewModel(private val repository: CharactersRepository) 
     fun handleException(): Pair<Int, Int> {
         return Pair(
             R.string.empty_characters_favorites,
-            R.drawable.ic_favorites
+            dev.thiagosouto.marvelpoc.design.R.drawable.ic_favorites
         )
     }
 

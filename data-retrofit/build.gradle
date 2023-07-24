@@ -5,8 +5,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-
-    compileSdkVersion Libs.Config.Android.androidCompileSdkVersion
+    namespace 'dev.thiagosouto.marvelpoc.data.retrofit'
+    compileSdk Libs.Config.Android.androidCompileSdkVersion
     buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
 
     defaultConfig {
@@ -18,6 +18,10 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -33,12 +37,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     sourceSets {
@@ -52,6 +56,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':shared')
     implementation project(path: ':data')
+    implementation platform(Libs.AndroidX.Compose.composeBom)
 
     implementation Libs.Coroutines.android
     implementation Libs.DI.koin

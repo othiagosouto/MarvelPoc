@@ -40,7 +40,7 @@ internal fun ErrorScreen(
             painter = painterResource(image),
             contentDescription = ""
         )
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_small)))
+        Spacer(modifier = Modifier.height(dimensionResource(id = dev.thiagosouto.marvelpoc.design.R.dimen.spacing_small)))
         Text(modifier = Modifier.testTag(ErrorScreenTestTags.MESSAGE), text = stringResource(id = message))
     }
 }
@@ -51,7 +51,7 @@ private fun ErrorScreenPreview() {
     ErrorScreen(
         modifier = Modifier.fillMaxSize(),
         message = R.string.home_error_loading,
-        image = R.drawable.thanos
+        image = dev.thiagosouto.marvelpoc.design.R.drawable.thanos
     )
 }
 

@@ -4,7 +4,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion Libs.Config.Android.androidCompileSdkVersion
+    namespace 'dev.thiagosouto.marvelpoc.data'
+    compileSdk Libs.Config.Android.androidCompileSdkVersion
     buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
 
     defaultConfig {
@@ -24,12 +25,12 @@ android {
 
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     sourceSets {

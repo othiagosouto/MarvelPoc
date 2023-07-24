@@ -73,7 +73,7 @@ private fun LoadedViewState(viewState: DetailsViewState.Loaded, process: (Intent
                     )
                 }
             },
-            backgroundColor = colorResource(id = R.color.colorPrimary),
+            backgroundColor = colorResource(id = dev.thiagosouto.marvelpoc.design.R.color.colorPrimary),
             elevation = 2.dp
         )
 

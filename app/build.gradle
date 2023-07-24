@@ -7,7 +7,8 @@ plugins {
 }
 
 android {
-    compileSdkVersion Libs.Config.Android.androidCompileSdkVersion
+    namespace 'dev.thiagosouto.marvelpoc'
+    compileSdk Libs.Config.Android.androidCompileSdkVersion
     buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
 
     defaultConfig {
@@ -40,12 +41,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     buildFeatures {
@@ -70,6 +71,8 @@ dependencies {
     implementation project(path: ':data')
     implementation project(path: ':design')
     implementation project(path: ':shared')
+    implementation platform(Libs.AndroidX.Compose.composeBom)
+    androidTestImplementation enforcedPlatform(Libs.AndroidX.Compose.composeBom)
 
     implementation Libs.Kotlin.stdlib
     implementation Libs.Coroutines.android

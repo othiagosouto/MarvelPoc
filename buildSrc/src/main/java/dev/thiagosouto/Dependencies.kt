@@ -13,16 +13,16 @@ object Libs {
          * Constants related to android properties from the gradle project
          */
         object Android {
-            const val androidCompileSdkVersion = 32
-            const val androidBuildToolsVersion = "32.0.0"
+            const val androidCompileSdkVersion = 34
+            const val androidBuildToolsVersion = "34.0.0"
             const val minSdkVersion = 21
-            const val targetSdkVersion = 32
+            const val targetSdkVersion = 34
             const val versionCode = 1
             const val versionName = "1.0"
         }
     }
 
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.2.1"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:8.0.2"
 
     /**
      * Dependencies related to kotlin
@@ -51,7 +51,7 @@ object Libs {
      */
     object AndroidX {
         private const val lifecycleVersion = "2.2.0"
-        private const val roomVersion = "2.5.0-alpha02"
+        private const val roomVersion = "2.5.2"
         const val coreKtx = "androidx.core:core-ktx:1.8.0"
         const val paging = "androidx.paging:paging-runtime-ktx:3.1.1"
         const val androidxAppCompat = "androidx.appcompat:appcompat:1.4.2"
@@ -68,27 +68,28 @@ object Libs {
          */
         object Compose {
             const val version = "1.2.0"
-            private const val candidateVersion = "1.2.0-rc03"
-            private const val activityComposeVersion = "1.5.0"
-            private const val coilComposeVersion = "2.1.0"
-            private const val accompanistPagerVersion = "0.23.1"
-            private const val pagingComposeVersion = "1.0.0-alpha15"
+            private const val activityComposeVersion = "1.7.2"
+            private const val coilComposeVersion = "2.4.0"
+            private const val accompanistPagerVersion = "0.30.1"
+            private const val pagingComposeVersion = "3.2.0-rc01"
 
-            const val foundation = "androidx.compose.foundation:foundation:${candidateVersion}"
-            const val layout = "androidx.compose.foundation:foundation-layout:${candidateVersion}"
-            const val ui = "androidx.compose.ui:ui:${candidateVersion}"
-            const val uiUtil = "androidx.compose.ui:ui-util:${candidateVersion}"
-            const val runtime = "androidx.compose.runtime:runtime:${candidateVersion}"
-            const val material = "androidx.compose.material:material:${candidateVersion}"
-            const val animation = "androidx.compose.animation:animation:${candidateVersion}"
-            const val tooling = "androidx.compose.ui:ui-tooling:${candidateVersion}"
-            const val iconsExtended = "androidx.compose.material:material-icons-extended:$candidateVersion"
-            const val uiTest = "androidx.compose.ui:ui-test-junit4:$candidateVersion"
-            const val toolingPreview = "androidx.compose.ui:ui-tooling-preview:$candidateVersion"
-            const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:$candidateVersion"
+
+            const val composeBom = "androidx.compose:compose-bom:2023.06.01"
+            const val foundation = "androidx.compose.foundation:foundation"
+            const val layout = "androidx.compose.foundation:foundation-layout"
+            const val ui = "androidx.compose.ui:ui"
+            const val uiUtil = "androidx.compose.ui:ui-util"
+            const val runtime = "androidx.compose.runtime:runtime"
+            const val material = "androidx.compose.material:material"
+            const val animation = "androidx.compose.animation:animation"
+            const val tooling = "androidx.compose.ui:ui-tooling"
+            const val iconsExtended = "androidx.compose.material:material-icons-extended"
+            const val uiTest = "androidx.compose.ui:ui-test-junit4"
+            const val toolingPreview = "androidx.compose.ui:ui-tooling-preview"
+            const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata"
             const val activityCompose = "androidx.activity:activity-compose:$activityComposeVersion"
             const val coil = "io.coil-kt:coil-compose:$coilComposeVersion"
-            const val graphics = "androidx.compose.animation:animation-graphics:$candidateVersion"
+            const val graphics = "androidx.compose.animation:animation-graphics"
             const val pager = "com.google.accompanist:accompanist-pager:$accompanistPagerVersion"
             const val pagerCompose = "androidx.paging:paging-compose:$pagingComposeVersion"
             const val roomPaging = "androidx.room:room-paging:${AndroidX.roomVersion}"
