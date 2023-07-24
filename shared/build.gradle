@@ -2,7 +2,6 @@ import dev.thiagosouto.Libs
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     namespace 'dev.thiagosouto.marvelpoc.shared'
