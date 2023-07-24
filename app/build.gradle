@@ -138,7 +138,9 @@ dependencies {
     androidTestImplementation Libs.Test.mockkAndroid
     androidTestImplementation project(path: ':webserver')
 
-    debugImplementation Libs.AndroidX.Test.fragmentTesting
+    debugImplementation Libs.AndroidX.Test.testingManfest
+    androidTestImplementation Libs.AndroidX.Test.fragmentTesting
+
 
     androidTestUtil Libs.AndroidX.Test.orchestrator
 }

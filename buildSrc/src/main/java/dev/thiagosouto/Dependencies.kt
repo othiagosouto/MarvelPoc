@@ -105,7 +105,8 @@ object Libs {
             const val runner = "androidx.test:runner:$version"
             const val rules = "androidx.test:rules:$version"
             const val archRules = "androidx.arch.core:core-testing:2.1.0"
-            const val fragmentTesting = "androidx.fragment:fragment-testing:1.4.1"
+            const val fragmentTesting = "androidx.fragment:fragment-testing:1.6.0"
+            const val testingManfest = "androidx.fragment:fragment-testing-manifest:1.6.0"
             const val orchestrator = "androidx.test:orchestrator:1.4.1"
 
             object Ext {
