@@ -134,8 +134,8 @@ object Libs {
     object Test {
         private const val version = "4.13"
         const val junit = "junit:junit:$version"
-        const val mockk = "io.mockk:mockk:1.10.0"
-        const val mockkAndroid = "io.mockk:mockk-android:1.12.2"
+        const val mockk = "io.mockk:mockk:1.13.5"
+        const val mockkAndroid = "io.mockk:mockk-android:1.13.1"
         const val truth = "com.google.truth:truth:1.1.3"
         const val mockWebserver = "com.squareup.okhttp3:mockwebserver:4.9.3"
         const val okhttp = "com.squareup.okhttp3:okhttp:4.9.3"
