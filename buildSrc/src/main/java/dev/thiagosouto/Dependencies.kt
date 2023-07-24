@@ -28,7 +28,7 @@ object Libs {
      * Dependencies related to kotlin
      */
     object Kotlin {
-        private const val version = "1.7.0"
+        private const val version = "1.8.10"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
@@ -67,7 +67,7 @@ object Libs {
          * Dependencies related to jetpack compose
          */
         object Compose {
-            const val version = "1.2.0"
+            const val version = "1.4.3"
             private const val activityComposeVersion = "1.7.2"
             private const val coilComposeVersion = "2.4.0"
             private const val accompanistPagerVersion = "0.30.1"
