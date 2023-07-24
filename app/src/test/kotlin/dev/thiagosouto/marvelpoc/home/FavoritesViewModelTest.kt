@@ -44,8 +44,8 @@ internal class FavoritesViewModelTest {
         charactersList = listOf(character)
         remotePageSource = FakeDataSource(charactersList)
 
-        characterRemoteContract = mockk()
-        characterLocalContract = mockk()
+        characterRemoteContract = mockk(relaxed = true)
+        characterLocalContract = mockk(relaxed = true)
 
         repository =
             spyk(CharactersRepository(characterLocalContract, characterRemoteContract, mockk()))
