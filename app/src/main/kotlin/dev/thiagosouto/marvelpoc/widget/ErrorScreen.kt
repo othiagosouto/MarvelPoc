@@ -40,8 +40,15 @@ internal fun ErrorScreen(
             painter = painterResource(image),
             contentDescription = ""
         )
-        Spacer(modifier = Modifier.height(dimensionResource(id = dev.thiagosouto.marvelpoc.design.R.dimen.spacing_small)))
-        Text(modifier = Modifier.testTag(ErrorScreenTestTags.MESSAGE), text = stringResource(id = message))
+        Spacer(
+            modifier = Modifier.height(
+                dimensionResource(id = dev.thiagosouto.marvelpoc.design.R.dimen.spacing_small)
+            )
+        )
+        Text(
+            modifier = Modifier.testTag(ErrorScreenTestTags.MESSAGE),
+            text = stringResource(id = message)
+        )
     }
 }
 
