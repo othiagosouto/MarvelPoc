@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * Interface accountable to enable favorites functionality for [T]
  */
-interface Favorites<T: Any> {
+interface FavoritesRepository<T: Any> {
 
     /**
      * return a list of the ids from the favorite [T]

@@ -15,7 +15,7 @@ class CharactersRepositoryImpl(
     private val localDataSource: CharacterLocalContract<Character>,
     private val remoteDataSource: CharacterRemoteContract<Character>,
     private val remoteCharacterDetailsSource: CharacterDetailsRemoteContract<CharacterDetails>
-) : Favorites<Character>{
+) : FavoritesRepository<Character>{
 
     /**
      * return a list of favorite characters
