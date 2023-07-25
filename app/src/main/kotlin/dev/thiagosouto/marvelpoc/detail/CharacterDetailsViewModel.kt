@@ -2,9 +2,8 @@ package dev.thiagosouto.marvelpoc.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.thiagosouto.marvelpoc.data.CharactersRepository
+import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.Dispatchers
-import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.detail.domain.DetailsViewStateMapper
 import dev.thiagosouto.marvelpoc.shared.mvi.Presenter
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 internal class CharacterDetailsViewModel(
-    private val repository: CharactersRepository,
+    private val repository: CharactersRepositoryImpl,
     private val detailsViewStateMapper: DetailsViewStateMapper,
     private val dispatchers: Dispatchers
 ) : ViewModel(),

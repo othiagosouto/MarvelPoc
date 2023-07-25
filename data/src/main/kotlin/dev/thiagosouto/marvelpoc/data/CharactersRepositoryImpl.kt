@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 /**
  * Fetch data related from character between remote and local source
  */
-class CharactersRepository(
+class CharactersRepositoryImpl(
     private val localDataSource: CharacterLocalContract<Character>,
     private val remoteDataSource: CharacterRemoteContract<Character>,
     private val remoteCharacterDetailsSource: CharacterDetailsRemoteContract<CharacterDetails>

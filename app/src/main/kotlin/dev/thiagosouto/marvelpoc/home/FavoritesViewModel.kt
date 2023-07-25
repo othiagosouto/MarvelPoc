@@ -3,11 +3,11 @@ package dev.thiagosouto.marvelpoc.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.thiagosouto.marvelpoc.R
-import dev.thiagosouto.marvelpoc.data.CharactersRepository
+import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import kotlinx.coroutines.launch
 
-internal class FavoritesViewModel(private val repository: CharactersRepository) : ViewModel() {
+internal class FavoritesViewModel(private val repository: CharactersRepositoryImpl) : ViewModel() {
 
     fun createPager() = repository.fetchFavoritesCharacters(PAGE_SIZE, MAX_PAGE_SIZE)
 

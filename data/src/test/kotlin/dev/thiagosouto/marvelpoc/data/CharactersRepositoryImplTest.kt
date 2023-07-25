@@ -13,12 +13,12 @@ import org.junit.Before
 import org.junit.Test
 import java.lang.Exception
 
-internal class CharactersRepositoryTest {
+internal class CharactersRepositoryImplTest {
 
     private lateinit var remoteSourceMock: CharacterRemoteContract<Character>
     private lateinit var localSourceMock: CharacterLocalContract<Character>
     private lateinit var characterDetailsRemoteContract: CharacterDetailsRemoteContract<CharacterDetails>
-    private lateinit var repository: CharactersRepository
+    private lateinit var repository: CharactersRepositoryImpl
     private lateinit var item: Character
 
     @Before
@@ -27,7 +27,7 @@ internal class CharactersRepositoryTest {
         localSourceMock = mockk(relaxed = true)
         characterDetailsRemoteContract = mockk()
         repository =
-            CharactersRepository(localSourceMock, remoteSourceMock, characterDetailsRemoteContract)
+            CharactersRepositoryImpl(localSourceMock, remoteSourceMock, characterDetailsRemoteContract)
         item = Character(1011334, "some name", "some url", "description", true)
     }
 

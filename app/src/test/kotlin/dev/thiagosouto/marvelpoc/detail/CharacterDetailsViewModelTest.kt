@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
-import dev.thiagosouto.marvelpoc.data.CharactersRepository
+import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
@@ -22,7 +22,7 @@ import org.junit.Test
 internal class CharacterDetailsViewModelTest {
     private val mapper = DetailsViewStateMapper(ComicsMapper())
     private lateinit var viewModel: CharacterDetailsViewModel
-    private lateinit var repository: CharactersRepository
+    private lateinit var repository: CharactersRepositoryImpl
 
     @get:Rule
     val rule = InstantTaskExecutorRule()

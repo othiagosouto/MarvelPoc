@@ -2,7 +2,7 @@ package dev.thiagosouto.marvelpoc.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PositionalDataSource
-import dev.thiagosouto.marvelpoc.data.CharactersRepository
+import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
 import dev.thiagosouto.marvelpoc.data.model.view.Character
@@ -24,7 +24,7 @@ internal class FavoritesViewModelTest {
     @get:Rule
     var coroutineTestRule = CoroutineTestRule()
 
-    private lateinit var repository: CharactersRepository
+    private lateinit var repository: CharactersRepositoryImpl
     private lateinit var viewModel: FavoritesViewModel
     private lateinit var remotePageSource: PositionalDataSource<Character>
     private lateinit var charactersList: List<Character>
@@ -43,7 +43,7 @@ internal class FavoritesViewModelTest {
         characterLocalContract = mockk(relaxed = true)
 
         repository =
-            spyk(CharactersRepository(characterLocalContract, characterRemoteContract, mockk()))
+            spyk(CharactersRepositoryImpl(characterLocalContract, characterRemoteContract, mockk()))
         viewModel = spyk(FavoritesViewModel(repository))
     }
 

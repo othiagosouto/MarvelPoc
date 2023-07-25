@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
-import dev.thiagosouto.marvelpoc.data.CharactersRepository
+import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.home.list.CharactersViewModel
 import io.mockk.coEvery
 import io.mockk.every
@@ -20,7 +20,7 @@ internal fun configure(func: SearchableActivityConfiguration.() -> Unit) =
     SearchableActivityConfiguration().apply(func)
 
 internal class SearchableActivityConfiguration : KoinComponent {
-    private val mockRepository: CharactersRepository = mockk(relaxed = true)
+    private val mockRepository: CharactersRepositoryImpl = mockk(relaxed = true)
     private val charactersViewModel: CharactersViewModel = spyk(CharactersViewModel(mockRepository))
     private lateinit var intent: Intent
 

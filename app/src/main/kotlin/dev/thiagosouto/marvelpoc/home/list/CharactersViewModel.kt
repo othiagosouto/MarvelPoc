@@ -7,13 +7,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import dev.thiagosouto.marvelpoc.R
-import dev.thiagosouto.marvelpoc.data.CharactersRepository
+import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.shared.EmptyDataException
 import kotlinx.coroutines.launch
 
-class CharactersViewModel(private val repository: CharactersRepository) : ViewModel() {
+class CharactersViewModel(private val repository: CharactersRepositoryImpl) : ViewModel() {
 
     var searchedQuery: String? = null
 

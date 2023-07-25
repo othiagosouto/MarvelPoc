@@ -2,14 +2,13 @@ package dev.thiagosouto.marvelpoc.home.list
 
 import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.R
-import dev.thiagosouto.marvelpoc.data.CharactersRepository
+import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.home.CoroutineTestRule
 import dev.thiagosouto.marvelpoc.shared.EmptyDataException
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -18,7 +17,7 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class CharactersViewModelTest {
-    private val repository: CharactersRepository = mockk(relaxed = true)
+    private val repository: CharactersRepositoryImpl = mockk(relaxed = true)
     private lateinit var viewModel: CharactersViewModel
 
     @get:Rule
