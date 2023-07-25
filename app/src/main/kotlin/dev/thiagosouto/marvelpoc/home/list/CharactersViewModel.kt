@@ -8,16 +8,20 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
+import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.shared.EmptyDataException
 import kotlinx.coroutines.launch
 
-class CharactersViewModel(private val repository: CharactersRepositoryImpl) : ViewModel() {
+class CharactersViewModel(
+    private val repository: CharactersRepositoryImpl,
+    private val favoritesRepository: FavoritesRepository<Character>
+) : ViewModel() {
 
     var searchedQuery: String? = null
 
-    val favoritesIds: SnapshotStateList<Long> = mutableStateListOf<Long>()
+    val favoritesIds: SnapshotStateList<Long> = mutableStateListOf()
 
     init {
         viewModelScope.launch {
@@ -27,7 +31,7 @@ class CharactersViewModel(private val repository: CharactersRepositoryImpl) : Vi
 
     private suspend fun fetchFavoriteIds() {
         favoritesIds.clear()
-        favoritesIds.addAll(repository.fetchFavoriteIds())
+        favoritesIds.addAll(favoritesRepository.fetchFavoriteIds())
     }
 
     fun handleException(e: Throwable): Pair<Int, Int> {
@@ -58,6 +62,7 @@ class CharactersViewModel(private val repository: CharactersRepositoryImpl) : Vi
                 R.string.empty_characters_searched,
                 R.drawable.search_not_found
             )
+
             else -> Pair(
                 R.string.search_error_loading,
                 dev.thiagosouto.marvelpoc.design.R.drawable.thanos
@@ -77,11 +82,11 @@ class CharactersViewModel(private val repository: CharactersRepositoryImpl) : Vi
     }
 
     private suspend fun favorite(item: Character) {
-        repository.favorite(item)
+        favoritesRepository.favorite(item)
     }
 
     private suspend fun unFavorite(character: Character): Unit {
-        repository.unFavorite(character)
+        favoritesRepository.unFavorite(character)
     }
 
     fun createPager(): Pager<Int, Character> {

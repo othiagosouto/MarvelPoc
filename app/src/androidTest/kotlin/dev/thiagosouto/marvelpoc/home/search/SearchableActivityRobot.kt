@@ -21,7 +21,7 @@ internal fun configure(func: SearchableActivityConfiguration.() -> Unit) =
 
 internal class SearchableActivityConfiguration : KoinComponent {
     private val mockRepository: CharactersRepositoryImpl = mockk(relaxed = true)
-    private val charactersViewModel: CharactersViewModel = spyk(CharactersViewModel(mockRepository))
+    private val charactersViewModel: CharactersViewModel = spyk(CharactersViewModel(mockRepository, mockRepository))
     private lateinit var intent: Intent
 
     init {

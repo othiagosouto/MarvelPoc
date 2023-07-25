@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class FavoritesRepositoryFake(
-    private val favorites: MutableList<Character>
+    val favorites: MutableList<Character>
 ) : FavoritesRepository<Character> {
 
     override suspend fun fetchFavoriteIds(): List<Long> = favorites.map { it.id }

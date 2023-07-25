@@ -5,9 +5,8 @@ import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.home.CoroutineTestRule
+import dev.thiagosouto.marvelpoc.home.fakes.FavoritesRepositoryFake
 import dev.thiagosouto.marvelpoc.shared.EmptyDataException
-import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -19,14 +18,27 @@ import org.junit.Test
 internal class CharactersViewModelTest {
     private val repository: CharactersRepositoryImpl = mockk(relaxed = true)
     private lateinit var viewModel: CharactersViewModel
+    private lateinit var favoritesRepositoryFake: FavoritesRepositoryFake
 
     @get:Rule
     var coroutineTestRule = CoroutineTestRule()
 
     @Before
     fun setup() {
-        coEvery { repository.fetchFavoriteIds() } returns listOf(1L)
-        viewModel = CharactersViewModel(repository)
+        favoritesRepositoryFake = FavoritesRepositoryFake(
+            mutableListOf(
+                Character(
+                    id = 1L,
+                    name = "",
+                    thumbnailUrl = "",
+                    description = "",
+                    favorite = true
+                )
+            )
+        )
+        viewModel = CharactersViewModel(
+            repository, favoritesRepositoryFake
+        )
     }
 
     @Test
@@ -74,23 +86,22 @@ internal class CharactersViewModelTest {
     }
 
     @Test
-    fun `favoriteClick Given no favorite Then should unfavorite`() = runTest {
+    fun `favoriteClick Given no favorite Then should unFavorite`() = runTest {
         val character = Character.EMPTY
 
         viewModel.favoriteClick(character)
 
-        coVerify { repository.unFavorite(character) }
+        assertThat(favoritesRepositoryFake.favorites).doesNotContain(character)
     }
 
     @Test
-    fun `favoriteClick Given favorite Then should favorte`() = runTest {
-        val character = Character.EMPTY.copy(favorite = true)
+    fun `favoriteClick Given favorite Then should favorite`() = runTest {
+        val character = Character.EMPTY.copy(id = 2L, favorite = true)
         val ids = listOf(1L, 2L)
-        coEvery { repository.fetchFavoriteIds() } returns ids
 
         viewModel.favoriteClick(character)
 
         assertThat(viewModel.favoritesIds).isEqualTo(ids)
-        coVerify { repository.favorite(character) }
+        assertThat(favoritesRepositoryFake.favorites).contains(character)
     }
 }

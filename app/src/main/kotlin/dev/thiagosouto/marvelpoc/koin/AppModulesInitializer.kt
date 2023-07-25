@@ -17,7 +17,7 @@ class AppModulesInitializer : KoinModulesProvider {
     override fun provides(): Module {
         return module {
             viewModel { FavoritesViewModel(get()) }
-            viewModel { CharactersViewModel(get()) }
+            viewModel { CharactersViewModel(get(), get()) }
             viewModel { CharacterDetailsViewModel(get(), get(), get()) }
             factory { DetailsViewStateMapper(get()) }
         }
