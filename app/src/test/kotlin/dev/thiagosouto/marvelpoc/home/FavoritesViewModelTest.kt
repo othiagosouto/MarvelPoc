@@ -26,8 +26,6 @@ internal class FavoritesViewModelTest {
 
     private lateinit var repository: CharactersRepository
     private lateinit var viewModel: FavoritesViewModel
-    private lateinit var exceptionHandler: (Exception) -> Unit
-    private lateinit var successHandler: () -> Unit
     private lateinit var remotePageSource: PositionalDataSource<Character>
     private lateinit var charactersList: List<Character>
     private val character = Character(1011334, "name", "thumbnail", "description", false)
@@ -38,9 +36,6 @@ internal class FavoritesViewModelTest {
 
     @Before
     fun setup() {
-        exceptionHandler = mockk(relaxed = true)
-        successHandler = mockk(relaxed = true)
-
         charactersList = listOf(character)
         remotePageSource = FakeDataSource(charactersList)
 
