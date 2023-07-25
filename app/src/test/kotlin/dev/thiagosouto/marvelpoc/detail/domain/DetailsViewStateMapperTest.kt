@@ -6,7 +6,7 @@ import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.detail.DetailsViewState
 import org.junit.Test
 
-class DetailsViewStateMapperTest {
+internal class DetailsViewStateMapperTest {
 
     @Test
     fun `returns DetailsViewState`() {

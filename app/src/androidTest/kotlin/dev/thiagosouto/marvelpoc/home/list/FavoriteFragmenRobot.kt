@@ -59,7 +59,7 @@ internal class FavoriteFragmentRobot(private val composeTestRule: ComposeTestRul
 internal class FavoriteFragmentResult(private val composeTestRule: ComposeTestRule) {
 
     fun characterFavoriteName() {
-        checkCharacterName("3-D Test HAHAH")
+        checkCharacterName(HERO_NAME)
     }
 
     private fun checkCharacterName(characterName: String) {
@@ -94,7 +94,7 @@ private class FakeCharacterLocalContract(private val isEmpty: Boolean) :
         val data = if (isEmpty) emptyList() else listOf(
             Character(
                 30,
-                "3-D Test HAHAH",
+                HERO_NAME,
                 "http://www.google.com",
                 DESCRIPTION,
                 true
@@ -132,7 +132,7 @@ private class FakeCharacterLocalContract(private val isEmpty: Boolean) :
                     listOf(
                         Character(
                             30,
-                            "3-D Test HAHAH",
+                            HERO_NAME,
                             "http://www.google.com",
                             DESCRIPTION,
                             true
@@ -169,4 +169,6 @@ private class PagingSourceCharacter(
         )
     }
 }
+
+private const val HERO_NAME = "3-D Test HAHAH"
 

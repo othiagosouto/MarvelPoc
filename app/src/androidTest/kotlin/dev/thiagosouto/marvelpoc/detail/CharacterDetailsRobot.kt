@@ -46,30 +46,23 @@ internal class CharacterDetailsConfiguration : KoinComponent {
     }
 
     fun withEmptyDescription() {
-        webServer.mapping =
-            mapOf(
-                "/characters/details/1011334" to "characters/characters_details_ok_no_desc.json",
-                "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpeg" to "characters/images/image.jpeg",
-                "/u/prod/marvel/i/mg/d/03/58dd080719806.jpeg" to "characters/images/image.jpeg",
-                "/u/prod/marvel/i/mg/6/20/58dd057d304d1.jpeg" to "characters/images/image.jpeg",
-                "/u/prod/marvel/i/mg/1/10/4e94a23255996.jpeg" to "characters/images/image.jpeg",
-                "/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg" to "characters/images/image.jpeg"
-            )
+        webServer.mapping =mapOfJson("characters/characters_details_ok_no_desc.json")
         webServer.initDispatcher()
     }
 
     fun withSomeDescription() {
-        webServer.mapping =
-            mapOf(
-                "/characters/details/1011334" to "characters/characters_details_ok.json",
-                "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpeg" to "characters/images/image.jpeg",
-                "/u/prod/marvel/i/mg/d/03/58dd080719806.jpeg" to "characters/images/image.jpeg",
-                "/u/prod/marvel/i/mg/6/20/58dd057d304d1.jpeg" to "characters/images/image.jpeg",
-                "/u/prod/marvel/i/mg/1/10/4e94a23255996.jpeg" to "characters/images/image.jpeg",
-                "/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg" to "characters/images/image.jpeg"
-            )
+        webServer.mapping = mapOfJson("characters/characters_details_ok.json")
         webServer.initDispatcher()
     }
+
+    private fun mapOfJson(json: String) = mapOf(
+        "/characters/details/1011334" to json,
+        "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpeg" to "characters/images/image.jpeg",
+        "/u/prod/marvel/i/mg/d/03/58dd080719806.jpeg" to "characters/images/image.jpeg",
+        "/u/prod/marvel/i/mg/6/20/58dd057d304d1.jpeg" to "characters/images/image.jpeg",
+        "/u/prod/marvel/i/mg/1/10/4e94a23255996.jpeg" to "characters/images/image.jpeg",
+        "/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg" to "characters/images/image.jpeg"
+    )
 
     infix fun launch(func: CharacterDetailsRobot.() -> Unit): CharacterDetailsRobot {
 
@@ -132,7 +125,7 @@ internal class CharacterDetailsResult(
     private fun comics(index: Int, title: String) =
         retryWithDelay(
             delay = 500L,
-            errorHandling = {swipeUpDetailsComics() },
+            errorHandling = { swipeUpDetailsComics() },
             func = {
                 scrollTo(index)
                 onNodeWithTag("comics-title-$index")

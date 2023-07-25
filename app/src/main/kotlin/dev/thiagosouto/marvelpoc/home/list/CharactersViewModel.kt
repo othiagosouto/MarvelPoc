@@ -14,7 +14,7 @@ import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.shared.EmptyDataException
 import kotlinx.coroutines.launch
 
-class CharactersViewModel(
+internal class CharactersViewModel(
     private val repository: CharactersRepositoryImpl,
     private val favoritesRepository: FavoritesRepository<Character>
 ) : ViewModel() {
@@ -106,6 +106,6 @@ class CharactersViewModel(
     }
 }
 
-fun SnapshotStateList<Long>.isCharacterFavorite(id: Long): Boolean {
+internal fun SnapshotStateList<Long>.isCharacterFavorite(id: Long): Boolean {
     return this.contains(id)
 }

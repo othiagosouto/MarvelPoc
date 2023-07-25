@@ -6,7 +6,7 @@ import dev.thiagosouto.marvelpoc.data.model.view.Character
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class FavoritesRepositoryFake(
+internal class FavoritesRepositoryFake(
     val favorites: MutableList<Character>
 ) : FavoritesRepository<Character> {
 
