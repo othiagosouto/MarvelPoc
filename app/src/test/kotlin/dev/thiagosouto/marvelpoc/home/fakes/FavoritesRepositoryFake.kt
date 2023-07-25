@@ -12,10 +12,7 @@ class FavoritesRepositoryFake(
 
     override suspend fun fetchFavoriteIds(): List<Long> = favorites.map { it.id }
 
-    override fun favorites(pageSize: Int, maxPageSize: Int): Flow<PagingData<Character>> {
-
-        return flow<PagingData<Character>> { }
-    }
+    override fun favorites(pageSize: Int, maxPageSize: Int): Flow<PagingData<Character>> = flow { }
 
     override suspend fun favorite(item: Character) {
         favorites.add(item)

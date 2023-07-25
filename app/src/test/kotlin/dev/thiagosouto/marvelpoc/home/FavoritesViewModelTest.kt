@@ -20,16 +20,14 @@ internal class FavoritesViewModelTest {
     @get:Rule
     var coroutineTestRule = CoroutineTestRule()
 
-    private lateinit var repository: FavoritesRepository<Character>
+    private lateinit var repository: FavoritesRepositoryFake
     private lateinit var viewModel: FavoritesViewModel
-    private lateinit var charactersList: MutableList<Character>
     private val character = Character(1011334, "name", "thumbnail", "description", false)
     private val characterFavorite = Character(1011334, "name", "thumbnail", "description", true)
 
     @Before
     fun setup() {
-        charactersList = mutableListOf(character)
-        repository = FavoritesRepositoryFake(charactersList)
+        repository = FavoritesRepositoryFake(mutableListOf(character))
         viewModel = FavoritesViewModel(repository)
     }
 
@@ -38,14 +36,14 @@ internal class FavoritesViewModelTest {
 
         viewModel.favoriteClick(characterFavorite)
 
-        assertThat(charactersList).contains(characterFavorite)
+        assertThat(repository.favorites).contains(characterFavorite)
     }
 
     @Test
     fun `favoriteClick should post the position of the item that was unfavorited`() = runTest {
         viewModel.favoriteClick(character)
 
-        assertThat(charactersList).doesNotContain(character)
+        assertThat(repository.favorites).doesNotContain(character)
     }
 
     private companion object Mock {
