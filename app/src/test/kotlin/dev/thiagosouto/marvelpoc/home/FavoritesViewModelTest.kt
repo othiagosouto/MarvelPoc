@@ -1,13 +1,11 @@
 package dev.thiagosouto.marvelpoc.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.paging.PagingData
 import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.home.fakes.FavoritesRepositoryFake
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -56,22 +54,3 @@ internal class FavoritesViewModelTest {
     }
 }
 
-private class FavoritesRepositoryFake(
-    private val favorites: MutableList<Character>
-) : FavoritesRepository<Character> {
-
-    override suspend fun fetchFavoriteIds(): List<Long> = favorites.map { it.id }
-
-    override fun favorites(pageSize: Int, maxPageSize: Int): Flow<PagingData<Character>> {
-
-        return flow<PagingData<Character>> { }
-    }
-
-    override suspend fun favorite(item: Character) {
-        favorites.add(item)
-    }
-
-    override suspend fun unFavorite(item: Character) {
-        favorites.remove(item)
-    }
-}
