@@ -13,7 +13,7 @@ class CharactersRepositoryImpl(
     private val localDataSource: CharacterLocalContract<Character>,
     private val remoteDataSource: CharacterRemoteContract<Character>,
     private val remoteCharacterDetailsSource: CharacterDetailsRemoteContract<CharacterDetails>
-) {
+) : Favorites<Character>{
     /**
      * return a list of favorite characters
      */
@@ -28,12 +28,12 @@ class CharactersRepositoryImpl(
     /**
      * return a list of the ids from the favorite characters
      */
-    suspend fun fetchFavoriteIds(): List<Long> = localDataSource.favoriteIds()
+    override suspend fun fetchFavoriteIds(): List<Long> = localDataSource.favoriteIds()
 
     /**
      * Execute action to unfavorite character
      */
-    suspend fun unFavorite(
+    override suspend fun unFavorite(
         item: Character
     ) {
         localDataSource.unFavorite(item)
@@ -42,8 +42,8 @@ class CharactersRepositoryImpl(
     /**
      * Execute action to favorite character
      */
-    suspend fun favorite(character: Character) {
-        localDataSource.favorite(character)
+    override suspend fun favorite(item: Character) {
+        localDataSource.favorite(item)
     }
 
     /**
