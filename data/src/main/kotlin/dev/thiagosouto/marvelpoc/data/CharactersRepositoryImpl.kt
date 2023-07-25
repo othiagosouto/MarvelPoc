@@ -2,10 +2,9 @@ package dev.thiagosouto.marvelpoc.data
 
 import androidx.paging.PagingData
 import dev.thiagosouto.marvelpoc.data.character.CharacterDetailsRemoteContract
-import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
-import kotlinx.coroutines.CoroutineScope
+import dev.thiagosouto.marvelpoc.data.model.view.Character
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -52,19 +51,6 @@ class CharactersRepositoryImpl(
     /**
      * return paged data source for characters
      */
-    fun charactersDataSource(
-        queryText: String?,
-        scope: CoroutineScope,
-        exceptionHandler: (Exception) -> Unit,
-        loadFinished: () -> Unit
-    ) = remoteDataSource.listCharacters(
-        scope,
-        queryText,
-        exceptionHandler,
-        loadFinished,
-        localDataSource::favoriteIds
-    )
-
     fun charactersPagingDataSource(
         queryText: String?,
         pageSize: Int

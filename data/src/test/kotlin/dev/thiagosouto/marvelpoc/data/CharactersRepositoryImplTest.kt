@@ -62,13 +62,11 @@ internal class CharactersRepositoryImplTest {
             val exceptionHandler: (Exception) -> Unit = mockk(relaxed = true)
             val sucessCallback: () -> Unit = mockk(relaxed = true)
 
-            repository.charactersDataSource(null, this, exceptionHandler, sucessCallback)
+            repository.charactersPagingDataSource(null, 10)
             coVerify {
-                remoteSourceMock.listCharacters(
-                    this@runBlockingTest,
+                remoteSourceMock.listPagingCharacters(
                     null,
-                    exceptionHandler,
-                    sucessCallback,
+                    10,
                     localSourceMock::favoriteIds
                 )
             }
