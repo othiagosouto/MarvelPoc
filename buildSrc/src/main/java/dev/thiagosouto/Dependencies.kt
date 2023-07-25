@@ -108,6 +108,7 @@ object Libs {
             const val fragmentTesting = "androidx.fragment:fragment-testing:1.6.0"
             const val testingManfest = "androidx.fragment:fragment-testing-manifest:1.6.0"
             const val orchestrator = "androidx.test:orchestrator:1.4.1"
+            const val paging = "androidx.paging:paging-testing:3.2.0-rc01"
 
             object Ext {
                 private const val version = "1.1.2"

@@ -65,6 +65,7 @@ dependencies {
     implementation Libs.Network.retrofit
     implementation Libs.Test.okhttp
     implementation Libs.Network.gsonConverter
+    implementation Libs.AndroidX.Test.paging
 
     testImplementation Libs.Coroutines.test
     testImplementation Libs.Test.truth
