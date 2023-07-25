@@ -81,7 +81,7 @@ class CharactersViewModel(private val repository: CharactersRepositoryImpl) : Vi
     }
 
     private suspend fun unFavorite(character: Character): Unit {
-        repository.unFavoriteCharacter(character)
+        repository.unFavorite(character)
     }
 
     fun createPager(): Pager<Int, Character> {

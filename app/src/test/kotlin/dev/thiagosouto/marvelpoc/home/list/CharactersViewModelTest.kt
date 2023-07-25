@@ -79,7 +79,7 @@ internal class CharactersViewModelTest {
 
         viewModel.favoriteClick(character)
 
-        coVerify { repository.unFavoriteCharacter(character) }
+        coVerify { repository.unFavorite(character) }
     }
 
     @Test

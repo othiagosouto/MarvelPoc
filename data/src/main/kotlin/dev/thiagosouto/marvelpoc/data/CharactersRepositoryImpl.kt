@@ -33,7 +33,7 @@ class CharactersRepositoryImpl(
     /**
      * Execute action to unfavorite character
      */
-    suspend fun unFavoriteCharacter(
+    suspend fun unFavorite(
         item: Character
     ) {
         localDataSource.unFavorite(item)

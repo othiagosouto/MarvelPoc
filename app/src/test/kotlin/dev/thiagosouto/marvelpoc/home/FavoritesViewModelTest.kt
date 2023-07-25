@@ -59,7 +59,7 @@ internal class FavoritesViewModelTest {
     fun `favoriteClick should post the position of the item that was unfavorited`() = runTest {
         viewModel.favoriteClick(character)
 
-        coVerify { repository.unFavoriteCharacter(character) }
+        coVerify { repository.unFavorite(character) }
     }
 
     private companion object Mock {

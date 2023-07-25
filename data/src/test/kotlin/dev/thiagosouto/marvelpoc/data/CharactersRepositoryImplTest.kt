@@ -51,7 +51,7 @@ internal class CharactersRepositoryImplTest {
         val parameter = item.copy(favorite = false)
         coEvery { localSourceMock.unFavorite(parameter) } returns parameter.id
 
-        repository.unFavoriteCharacter(parameter)
+        repository.unFavorite(parameter)
 
         coVerify(exactly = 1) { localSourceMock.unFavorite(parameter) }
     }

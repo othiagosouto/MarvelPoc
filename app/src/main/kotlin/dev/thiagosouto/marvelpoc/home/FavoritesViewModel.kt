@@ -33,7 +33,7 @@ internal class FavoritesViewModel(private val repository: CharactersRepositoryIm
     }
 
     private suspend fun unFavorite(item: Character) {
-        repository.unFavoriteCharacter(item)
+        repository.unFavorite(item)
     }
 
     companion object {
