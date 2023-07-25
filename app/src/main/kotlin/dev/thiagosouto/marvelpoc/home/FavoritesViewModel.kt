@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 internal class FavoritesViewModel(private val repository: CharactersRepositoryImpl) : ViewModel() {
 
-    fun createPager() = repository.fetchFavoritesCharacters(PAGE_SIZE, MAX_PAGE_SIZE)
+    fun createPager() = repository.favorites(PAGE_SIZE, MAX_PAGE_SIZE)
 
     fun handleException(): Pair<Int, Int> {
         return Pair(

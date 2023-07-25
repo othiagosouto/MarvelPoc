@@ -1,10 +1,12 @@
 package dev.thiagosouto.marvelpoc.data
 
+import androidx.paging.PagingData
 import dev.thiagosouto.marvelpoc.data.character.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Fetch data related from character between remote and local source
@@ -14,10 +16,11 @@ class CharactersRepositoryImpl(
     private val remoteDataSource: CharacterRemoteContract<Character>,
     private val remoteCharacterDetailsSource: CharacterDetailsRemoteContract<CharacterDetails>
 ) : Favorites<Character>{
+
     /**
      * return a list of favorite characters
      */
-    fun fetchFavoritesCharacters(pageSize: Int, maxPageSize: Int) =
+    override fun favorites(pageSize: Int, maxPageSize: Int): Flow<PagingData<Character>> =
         localDataSource.favoritesList(pageSize, maxPageSize)
 
     /**

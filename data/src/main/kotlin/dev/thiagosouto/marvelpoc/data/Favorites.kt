@@ -1,5 +1,8 @@
 package dev.thiagosouto.marvelpoc.data
 
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+
 /**
  * Interface accountable to enable favorites functionality for [T]
  */
@@ -19,4 +22,9 @@ interface Favorites<T: Any> {
      * Execute action to favorite [T]
      */
     suspend fun favorite(item: T)
+
+    /**
+     * returns a paged source of favorite [T]
+     */
+    fun favorites(pageSize: Int, maxPageSize: Int): Flow<PagingData<T>>
 }
