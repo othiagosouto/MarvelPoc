@@ -1,15 +1,13 @@
 package dev.thiagosouto.marvelpoc.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.paging.PositionalDataSource
-import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
-import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
-import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
+import androidx.paging.PagingData
+import com.google.common.truth.Truth.assertThat
+import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.model.view.Character
-import io.mockk.coVerify
-import io.mockk.mockk
-import io.mockk.spyk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -24,27 +22,17 @@ internal class FavoritesViewModelTest {
     @get:Rule
     var coroutineTestRule = CoroutineTestRule()
 
-    private lateinit var repository: CharactersRepositoryImpl
+    private lateinit var repository: FavoritesRepository<Character>
     private lateinit var viewModel: FavoritesViewModel
-    private lateinit var remotePageSource: PositionalDataSource<Character>
-    private lateinit var charactersList: List<Character>
+    private lateinit var charactersList: MutableList<Character>
     private val character = Character(1011334, "name", "thumbnail", "description", false)
     private val characterFavorite = Character(1011334, "name", "thumbnail", "description", true)
 
-    private lateinit var characterRemoteContract: CharacterRemoteContract<Character>
-    private lateinit var characterLocalContract: CharacterLocalContract<Character>
-
     @Before
     fun setup() {
-        charactersList = listOf(character)
-        remotePageSource = FakeDataSource(charactersList)
-
-        characterRemoteContract = mockk(relaxed = true)
-        characterLocalContract = mockk(relaxed = true)
-
-        repository =
-            spyk(CharactersRepositoryImpl(characterLocalContract, characterRemoteContract, mockk()))
-        viewModel = spyk(FavoritesViewModel(repository))
+        charactersList = mutableListOf(character)
+        repository = FavoritesRepositoryFake(charactersList)
+        viewModel = FavoritesViewModel(repository)
     }
 
     @Test
@@ -52,18 +40,38 @@ internal class FavoritesViewModelTest {
 
         viewModel.favoriteClick(characterFavorite)
 
-        coVerify { repository.favorite(characterFavorite) }
+        assertThat(charactersList).contains(characterFavorite)
     }
 
     @Test
     fun `favoriteClick should post the position of the item that was unfavorited`() = runTest {
         viewModel.favoriteClick(character)
 
-        coVerify { repository.unFavorite(character) }
+        assertThat(charactersList).doesNotContain(character)
     }
 
     private companion object Mock {
         const val content = "content"
         const val ops = "Ops"
+    }
+}
+
+private class FavoritesRepositoryFake(
+    private val favorites: MutableList<Character>
+) : FavoritesRepository<Character> {
+
+    override suspend fun fetchFavoriteIds(): List<Long> = favorites.map { it.id }
+
+    override fun favorites(pageSize: Int, maxPageSize: Int): Flow<PagingData<Character>> {
+
+        return flow<PagingData<Character>> { }
+    }
+
+    override suspend fun favorite(item: Character) {
+        favorites.add(item)
+    }
+
+    override suspend fun unFavorite(item: Character) {
+        favorites.remove(item)
     }
 }
