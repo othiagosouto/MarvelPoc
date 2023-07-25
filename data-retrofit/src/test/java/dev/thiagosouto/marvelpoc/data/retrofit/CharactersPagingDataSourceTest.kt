@@ -68,7 +68,6 @@ internal class CharactersPagingDataSourceTest {
 
     @Test
     fun `refresh should call callback with expected transformed list with favorite and position`() {
-        val loadFinishMock: () -> Unit = mockk(relaxed = true)
         coEvery { provideFavoriteIds.invoke() } returns listOf(1011334L)
         coEvery { api.listCharacters(null, 0, 5) } returns parseToJson()
 
@@ -92,7 +91,12 @@ internal class CharactersPagingDataSourceTest {
 
     @Test
     fun `refresh should call error callback when an HttpException occurs`()  {
-        val httException =  HttpException(Response.error<ResponseBody>(500 , "some content".toResponseBody("plain/text".toMediaTypeOrNull())))
+        val httException = HttpException(
+            Response.error<ResponseBody>(
+                500,
+                "some content".toResponseBody("plain/text".toMediaTypeOrNull())
+            )
+        )
         coEvery { api.listCharacters(null, 0, 5) } throws httException
 
         val source = CharactersPagingDataSource(
