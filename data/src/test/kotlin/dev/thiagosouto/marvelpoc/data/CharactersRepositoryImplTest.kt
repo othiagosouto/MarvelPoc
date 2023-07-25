@@ -41,7 +41,7 @@ internal class CharactersRepositoryImplTest {
 
     @Test
     fun `favoriteCharacter should call dao to insert favorite item`() = runBlockingTest {
-        repository.favoriteCharacter(item)
+        repository.favorite(item)
 
         coVerify(exactly = 1) { localSourceMock.favorite(item) }
     }

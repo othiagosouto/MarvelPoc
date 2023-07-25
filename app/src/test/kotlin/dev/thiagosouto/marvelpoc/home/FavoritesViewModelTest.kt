@@ -52,7 +52,7 @@ internal class FavoritesViewModelTest {
 
         viewModel.favoriteClick(characterFavorite)
 
-        coVerify { repository.favoriteCharacter(characterFavorite) }
+        coVerify { repository.favorite(characterFavorite) }
     }
 
     @Test

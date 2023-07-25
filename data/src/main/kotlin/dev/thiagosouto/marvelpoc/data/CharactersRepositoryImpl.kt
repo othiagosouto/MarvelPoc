@@ -42,7 +42,7 @@ class CharactersRepositoryImpl(
     /**
      * Execute action to favorite character
      */
-    suspend fun favoriteCharacter(character: Character) {
+    suspend fun favorite(character: Character) {
         localDataSource.favorite(character)
     }
 

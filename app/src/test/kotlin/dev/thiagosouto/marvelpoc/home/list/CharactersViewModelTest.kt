@@ -91,6 +91,6 @@ internal class CharactersViewModelTest {
         viewModel.favoriteClick(character)
 
         assertThat(viewModel.favoritesIds).isEqualTo(ids)
-        coVerify { repository.favoriteCharacter(character) }
+        coVerify { repository.favorite(character) }
     }
 }

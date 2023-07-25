@@ -77,7 +77,7 @@ class CharactersViewModel(private val repository: CharactersRepositoryImpl) : Vi
     }
 
     private suspend fun favorite(item: Character) {
-        repository.favoriteCharacter(item)
+        repository.favorite(item)
     }
 
     private suspend fun unFavorite(character: Character): Unit {
