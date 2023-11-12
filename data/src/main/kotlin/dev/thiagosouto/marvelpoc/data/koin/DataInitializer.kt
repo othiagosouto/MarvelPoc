@@ -1,6 +1,8 @@
 package dev.thiagosouto.marvelpoc.data.koin
 
 import androidx.paging.PagingSource
+import dev.thiagosouto.marvelpoc.data.CharacterDetails
+import dev.thiagosouto.marvelpoc.data.CharacterDetailsService
 import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
@@ -39,6 +41,14 @@ class DataInitializer : KoinModulesProvider {
                 get(),
                 get()
             ) as PagingService<Character>
+        }
+
+        factory {
+            CharactersRepositoryImpl(
+                get(),
+                get(),
+                get()
+            ) as CharacterDetailsService<CharacterDetails>
         }
 
         single { Dispatchers() }
