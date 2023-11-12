@@ -9,7 +9,8 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.fragment.app.testing.launchFragmentInContainer
-import dev.thiagosouto.marvelpoc.base.BaseRobot
+import dev.thiagosouto.compose.robots.BaseRobot
+import dev.thiagosouto.compose.robots.Retryable
 import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
 import dev.thiagosouto.marvelpoc.widget.ErrorScreenTestTags
 import dev.thiagosouto.webserver.TestWebServer
@@ -127,7 +128,7 @@ internal class CharactersFragmentResult(
     }
 
     private fun checkCharacterName(characterName: String) = applyComposable {
-        retry {
+        retry (Retryable.RetryConfig()){
             waitUntil {
                 onAllNodesWithText(characterName)
                     .fetchSemanticsNodes().size == 1
@@ -158,7 +159,7 @@ internal class CharactersFragmentResult(
     }
 
     private fun checkErrorMessage(message: String) = applyComposable {
-        retry {
+        retry(Retryable.RetryConfig()) {
             waitUntil {
                 onAllNodesWithTag(ErrorScreenTestTags.IMAGE)
                     .fetchSemanticsNodes().size == 1

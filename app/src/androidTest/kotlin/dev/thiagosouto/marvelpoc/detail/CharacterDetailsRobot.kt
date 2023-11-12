@@ -14,7 +14,7 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeUp
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
-import dev.thiagosouto.marvelpoc.base.BaseRobot
+import dev.thiagosouto.compose.robots.BaseRobot
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
 import dev.thiagosouto.webserver.TestWebServer

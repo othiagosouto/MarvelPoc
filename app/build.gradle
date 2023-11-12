@@ -137,6 +137,7 @@ dependencies {
     androidTestImplementation Libs.AndroidX.Test.Ext.junit
     androidTestImplementation Libs.Test.mockkAndroid
     androidTestImplementation "dev.thiagosouto:webserver:0.1.13-SNAPSHOT"
+    androidTestImplementation "dev.thiagosouto:compose-robots:0.1.19-SNAPSHOT"
 
 
     debugImplementation Libs.AndroidX.Test.testingManfest
