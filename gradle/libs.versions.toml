@@ -11,6 +11,7 @@ accompanistPagerVersion = "0.30.1"
 roomVersion = "2.5.2"
 detekt = "1.23.3"
 glide = "4.11.0"
+
 [libraries]
 gson = "com.google.code.gson:gson:2.8.5"
 gson-converter = "com.squareup.retrofit2:converter-gson:2.8.1"
@@ -29,6 +30,7 @@ kotlin-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
 kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlin-std = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 okhttp = "com.squareup.okhttp3:okhttp:4.9.3"
+android-compose-coil = "io.coil-kt:coil-compose:2.4.0"
 android-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 android-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 android-compose-material = { group = "androidx.compose.material", name = "material" }
@@ -37,19 +39,19 @@ android-compose-uiutil = { group = "androidx.compose.ui", name = "ui-util" }
 android-compose-layout = { group = "androidx.compose.foundation", name = "foundation-layout" }
 android-compose-animation = { group = "androidx.compose.animation", name = "animation" }
 android-compose-graphics = { group = "androidx.compose.animation", name = "animation-graphics" }
-android-paging = "androidx.paging:paging-runtime-ktx:3.1.1"
 android-compose-activity = "androidx.activity:activity-compose:1.7.2"
 android-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 android-compose-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPagerVersion" }
 android-compose-paging = "androidx.paging:paging-compose:3.2.0-rc01"
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
 room-paging = { module = "androidx.room:room-paging", version.ref = "roomVersion" }
+android-paging = "androidx.paging:paging-runtime-ktx:3.1.1"
 room = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
-
+koin = "io.insert-koin:koin-android:3.2.0"
 android-lifecycle = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycleVersion" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
-coil = "io.coil-kt:coil-compose:2.4.0"
+
 #tests
 test-junit = "junit:junit:4.13.2"
 test-android-junit = "androidx.test.ext:junit:1.1.5"
@@ -63,15 +65,14 @@ test-core-android = "androidx.arch.core:core-testing:2.2.0"
 test-hilt = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 test-mockk = "io.mockk:mockk:1.13.5"
 test-truth = "com.google.truth:truth:1.1.3"
-test-rules = "androidx.test:rules:1.4.0"
-koin = "io.insert-koin:koin-android:3.2.0"
-test-core = "androidx.test:core:1.4.0"
-test-runner = "androidx.test:runner:1.4.0"
+test-rules = "androidx.test:rules:1.5.0"
+test-core = "androidx.test:core:1.5.0"
+test-runner = "androidx.test:runner:1.5.2"
 test-junit-ktx = "androidx.test.ext:junit-ktx:1.1.2"
 test-android-mockk = "io.mockk:mockk-android:1.13.1"
-test-fragment = "androidx.fragment:fragment-testing-manifest:1.6.0"
-test-android-manifest = "androidx.fragment:fragment-testing-manifest:1.6.0"
-test-orchestrator = "androidx.test:orchestrator:1.4.1"
+test-fragment = "androidx.fragment:fragment-testing:1.6.2"
+test-android-manifest = "androidx.fragment:fragment-testing-manifest:1.6.2"
+test-orchestrator = "androidx.test:orchestrator:1.4.2"
 test-android-paging = "androidx.paging:paging-testing:3.2.0-rc01"
 [bundles]
 

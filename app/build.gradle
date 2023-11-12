@@ -103,7 +103,7 @@ dependencies {
 
     //Compose
     implementation libs.android.compose.activity
-    implementation libs.coil
+    implementation libs.android.compose.coil
     implementation libs.android.compose.layout
     implementation libs.android.compose.material
     implementation libs.android.compose.preview

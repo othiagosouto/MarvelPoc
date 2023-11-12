@@ -38,5 +38,5 @@ dependencies {
     implementation libs.kotlin.std
     implementation libs.android.compose.graphics
     implementation libs.android.compose.material
-    implementation libs.coil
+    implementation libs.android.compose.coil
 }
