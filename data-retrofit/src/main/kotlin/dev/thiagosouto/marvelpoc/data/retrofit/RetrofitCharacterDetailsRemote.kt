@@ -9,6 +9,7 @@ import dev.thiagosouto.marvelpoc.data.retrofit.interceptors.InternetConnectionEx
 import java.net.ConnectException
 import java.net.UnknownHostException
 
+@Suppress("SwallowedException")
 internal class RetrofitCharacterDetailsRemote(private val charactersApi: CharactersBFFApi) :
     CharacterDetailsRemoteContract<CharacterDetails> {
     override suspend fun fetchCharacterDetails(characterId: String): CharacterDetails = try {

@@ -12,6 +12,7 @@ import java.io.IOException
 import java.net.ConnectException
 import java.net.UnknownHostException
 
+@Suppress("SwallowedException")
 internal class CharactersPagingDataSource(
     private val queryText: String?,
     private val pageSize: Int,
