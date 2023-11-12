@@ -1,8 +1,10 @@
 package dev.thiagosouto.marvelpoc.data.koin
 
+import androidx.paging.PagingSource
 import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
+import dev.thiagosouto.marvelpoc.data.PagingService
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.shared.koin.KoinModulesProvider
@@ -15,7 +17,7 @@ import org.koin.dsl.module
 class DataInitializer : KoinModulesProvider {
     override fun provides(): Module = module {
 
-        factory {
+        single {
             CharactersRepositoryImpl(
                 get(),
                 get(),
@@ -29,6 +31,14 @@ class DataInitializer : KoinModulesProvider {
                 get(),
                 get()
             ) as FavoritesRepository<Character>
+        }
+
+        factory {
+            CharactersRepositoryImpl(
+                get(),
+                get(),
+                get()
+            ) as PagingService<Character>
         }
 
         single { Dispatchers() }

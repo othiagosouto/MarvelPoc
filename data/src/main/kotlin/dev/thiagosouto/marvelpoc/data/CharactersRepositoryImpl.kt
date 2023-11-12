@@ -14,7 +14,7 @@ class CharactersRepositoryImpl(
     private val localDataSource: CharacterLocalContract<Character>,
     private val remoteDataSource: CharacterRemoteContract<Character>,
     private val remoteCharacterDetailsSource: CharacterDetailsRemoteContract<CharacterDetails>
-) : FavoritesRepository<Character>{
+) : FavoritesRepository<Character>, PagingService<Character> {
 
     /**
      * return a list of favorite characters
@@ -51,7 +51,7 @@ class CharactersRepositoryImpl(
     /**
      * return paged data source for characters
      */
-    fun charactersPagingDataSource(
+    override fun charactersPagingDataSource(
         queryText: String?,
         pageSize: Int
     ) = remoteDataSource.listPagingCharacters(

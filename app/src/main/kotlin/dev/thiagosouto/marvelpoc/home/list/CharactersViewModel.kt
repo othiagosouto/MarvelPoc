@@ -9,13 +9,14 @@ import androidx.paging.PagingConfig
 import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
+import dev.thiagosouto.marvelpoc.data.PagingService
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.shared.EmptyDataException
 import kotlinx.coroutines.launch
 
 internal class CharactersViewModel(
-    private val repository: CharactersRepositoryImpl,
+    private val repository: PagingService<Character>,
     private val favoritesRepository: FavoritesRepository<Character>
 ) : ViewModel() {
 

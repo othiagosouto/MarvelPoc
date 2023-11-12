@@ -2,32 +2,44 @@ package dev.thiagosouto.marvelpoc.home.search
 
 import android.app.SearchManager
 import android.content.Intent
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onNodeWithText
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
-import com.google.common.truth.Truth.assertThat
-import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
+import dev.thiagosouto.compose.robots.BaseRobot
+import dev.thiagosouto.compose.robots.Retryable
+import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
 import dev.thiagosouto.marvelpoc.home.list.CharactersViewModel
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.spyk
+import dev.thiagosouto.webserver.TestWebServer
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.loadKoinModules
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-internal fun configure(func: SearchableActivityConfiguration.() -> Unit) =
-    SearchableActivityConfiguration().apply(func)
+internal fun configure(
+    composeRule: ComposeTestRule,
+    func: SearchableActivityConfiguration.() -> Unit
+) =
+    SearchableActivityConfiguration(composeRule).apply(func)
 
-internal class SearchableActivityConfiguration : KoinComponent {
-    private val mockRepository: CharactersRepositoryImpl = mockk(relaxed = true)
-    private val charactersViewModel: CharactersViewModel = spyk(CharactersViewModel(mockRepository, mockRepository))
-    private lateinit var intent: Intent
+internal class SearchableActivityConfiguration(private val composeRule: ComposeTestRule) : KoinComponent {
+    private val webServer = TestWebServer()
 
     init {
-        coEvery { mockRepository.fetchFavoriteIds() } returns emptyList()
-        every { mockRepository.charactersPagingDataSource("ops", 20) } returns mockk(relaxed = true)
+        webServer.start()
+        val serverUrl = webServer.url()
+        val newtworkModule = module {
+            single(
+                named(RetrofitInitializer.SERVER_URL)
+            ) { serverUrl }
+        }
+        loadKoinModules(newtworkModule)
     }
+
+    private lateinit var intent: Intent
 
     fun withSearchableIntent() {
         intent = Intent(
@@ -46,30 +58,43 @@ internal class SearchableActivityConfiguration : KoinComponent {
     }
 
     infix fun launch(func: SearchableActivityRobot.() -> Unit): SearchableActivityRobot {
-        loadKoinModules(
-            module(override = true) {
-                single { mockRepository }
-                single { charactersViewModel }
-            })
+        webServer.mapping =
+            mapOf(
+                "/characters/home?nameStartsWith=ops&offset=0&limit=20" to TestWebServer.Response("characters/characters_response_ok.json"),
+                "/characters/home?offset=0&limit=20" to TestWebServer.Response("characters_response_ok_empty.json")
+
+            )
+        webServer.initDispatcher()
 
         ActivityScenario.launch<SearchableActivity>(intent)
-        return SearchableActivityRobot().apply(func)
+        return SearchableActivityRobot(composeRule).apply(func)
     }
 }
 
-internal class SearchableActivityRobot {
+internal class SearchableActivityRobot(rule: ComposeTestRule) : BaseRobot(rule) {
     infix fun check(func: SearchableActivityResult.() -> Unit) =
-        SearchableActivityResult().apply(func)
+        SearchableActivityResult(rule).apply(func)
 }
 
-internal class SearchableActivityResult : KoinComponent {
+internal class SearchableActivityResult(rule: ComposeTestRule) : BaseRobot(rule), KoinComponent {
     private val viewModel: CharactersViewModel by inject()
 
-    fun callViewModelWithExpectedContent() {
-        assertThat(viewModel.searchedQuery).isEqualTo("ops")
+    fun callViewModelWithExpectedContent() = applyComposable {
+        val characterName = "3-D Man"
+        retry(Retryable.RetryConfig()) {
+            waitUntil {
+                onAllNodesWithText(characterName)
+                    .fetchSemanticsNodes().size == 1
+            }
+        }
+
+        onNodeWithText(characterName)
+            .assertIsDisplayed()
     }
 
-    fun notCallViewModel() {
-        assertThat(viewModel.searchedQuery).isNull()
+
+    fun notCallViewModel() = applyComposable {
+        onNodeWithText("3-D Man")
+            .assertDoesNotExist()
     }
 }
