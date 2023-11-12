@@ -63,9 +63,9 @@ internal class CharactersFragmentConfiguration(private val composeTestRule: Comp
     fun withHomeCharacters() {
         webServer.mapping =
             mapOf(
-                "/characters/home?offset=0&limit=20" to "characters/characters_response_ok.json",
-                "/characters/home?offset=1&limit=20" to "characters/characters_response_ok_empty.json",
-                "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg" to "characters/images/image.jpeg"
+                "/characters/home?offset=0&limit=20" to TestWebServer.Response("characters/characters_response_ok.json"),
+                "/characters/home?offset=1&limit=20" to TestWebServer.Response("characters/characters_response_ok_empty.json"),
+                "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg" to TestWebServer.Response("characters/images/image.jpeg")
             )
         webServer.initDispatcher()
     }
@@ -73,9 +73,9 @@ internal class CharactersFragmentConfiguration(private val composeTestRule: Comp
     fun withSearchContent() {
         webServer.mapping =
             mapOf(
-                "/characters/home?nameStartsWith=searchQuery&offset=0&limit=20" to "characters/characters_response_ok.json",
-                "/characters/home?nameStartsWith=searchQuery&offset=1&limit=20" to "characters/characters_response_ok_empty.json",
-                "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg" to "characters/images/image.jpeg"
+                "/characters/home?nameStartsWith=searchQuery&offset=0&limit=20" to TestWebServer.Response("characters/characters_response_ok.json"),
+                "/characters/home?nameStartsWith=searchQuery&offset=1&limit=20" to TestWebServer.Response("characters/characters_response_ok_empty.json"),
+                "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg" to TestWebServer.Response("characters/images/image.jpeg")
             )
         webServer.initDispatcher()
 

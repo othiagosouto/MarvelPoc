@@ -46,7 +46,7 @@ internal class CharacterDetailsConfiguration : KoinComponent {
     }
 
     fun withEmptyDescription() {
-        webServer.mapping =mapOfJson("characters/characters_details_ok_no_desc.json")
+        webServer.mapping = mapOfJson("characters/characters_details_ok_no_desc.json")
         webServer.initDispatcher()
     }
 
@@ -56,12 +56,12 @@ internal class CharacterDetailsConfiguration : KoinComponent {
     }
 
     private fun mapOfJson(json: String) = mapOf(
-        "/characters/details/1011334" to json,
-        "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpeg" to "characters/images/image.jpeg",
-        "/u/prod/marvel/i/mg/d/03/58dd080719806.jpeg" to "characters/images/image.jpeg",
-        "/u/prod/marvel/i/mg/6/20/58dd057d304d1.jpeg" to "characters/images/image.jpeg",
-        "/u/prod/marvel/i/mg/1/10/4e94a23255996.jpeg" to "characters/images/image.jpeg",
-        "/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg" to "characters/images/image.jpeg"
+        "/characters/details/1011334" to TestWebServer.Response(json),
+        "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpeg" to TestWebServer.Response("characters/images/image.jpeg"),
+        "/u/prod/marvel/i/mg/d/03/58dd080719806.jpeg" to TestWebServer.Response("characters/images/image.jpeg"),
+        "/u/prod/marvel/i/mg/6/20/58dd057d304d1.jpeg" to TestWebServer.Response("characters/images/image.jpeg"),
+        "/u/prod/marvel/i/mg/1/10/4e94a23255996.jpeg" to TestWebServer.Response("characters/images/image.jpeg"),
+        "/u/prod/marvel/i/mg/b/a0/58dd03dc2ec00.jpeg" to TestWebServer.Response("characters/images/image.jpeg")
     )
 
     infix fun launch(func: CharacterDetailsRobot.() -> Unit): CharacterDetailsRobot {
