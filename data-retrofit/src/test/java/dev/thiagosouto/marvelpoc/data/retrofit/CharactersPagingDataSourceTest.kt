@@ -7,15 +7,15 @@ import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.data.retrofit.character.MarvelCharactersResponse
+import dev.thiagosouto.marvelpoc.data.retrofit.character.details.DetailsResponse
 import dev.thiagosouto.marvelpoc.data.retrofit.ext.toCharacter
-import io.mockk.coEvery
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import retrofit2.HttpException
@@ -26,22 +26,25 @@ import java.io.IOException
 internal class CharactersPagingDataSourceTest {
 
     private val charactersList = parseToJson()
-    private lateinit var api: CharactersBFFApi
-    private val exception = Exception()
-    private lateinit var errorCallback: (Exception) -> Unit
+    private val api = FakeBff()
     private lateinit var characterList: List<Character>
     private lateinit var characterFavoredList: List<Character>
-    private lateinit var provideFavoriteIds: suspend () -> List<Long>
+    private val ids = mutableListOf<Long>()
+    private val provideFavoriteIds: suspend () -> List<Long> = { ids }
 
     @Before
     fun setup() {
-        api = mockk()
         val character = charactersList.data.results.first().toCharacter()
         characterList = listOf(character)
         characterFavoredList = listOf(character.copy(favorite = true))
-        errorCallback = mockk(relaxed = true)
-        provideFavoriteIds = mockk()
-        coEvery { provideFavoriteIds.invoke() } returns emptyList()
+    }
+
+    @After
+    fun tearDown() {
+        api.exception = null
+        api.detailsResponse = null
+        api.marvelCharactersResponse = null
+        ids.clear()
     }
 
     @Test
@@ -52,7 +55,7 @@ internal class CharactersPagingDataSourceTest {
             api,
             provideFavoriteIds
         )
-        coEvery { api.listCharacters(null, 0, 5) } returns parseToJson()
+        api.marvelCharactersResponse = parseToJson()
 
         val pager = TestPager(PagingConfig(5), source)
 
@@ -68,8 +71,8 @@ internal class CharactersPagingDataSourceTest {
 
     @Test
     fun `refresh should call callback with expected transformed list with favorite and position`() {
-        coEvery { provideFavoriteIds.invoke() } returns listOf(1011334L)
-        coEvery { api.listCharacters(null, 0, 5) } returns parseToJson()
+        ids.add(1011334L)
+        api.marvelCharactersResponse = parseToJson()
 
         val source = CharactersPagingDataSource(
             null,
@@ -90,14 +93,14 @@ internal class CharactersPagingDataSourceTest {
     }
 
     @Test
-    fun `refresh should call error callback when an HttpException occurs`()  {
+    fun `refresh should call error callback when an HttpException occurs`() {
         val httException = HttpException(
             Response.error<ResponseBody>(
                 500,
                 "some content".toResponseBody("plain/text".toMediaTypeOrNull())
             )
         )
-        coEvery { api.listCharacters(null, 0, 5) } throws httException
+        api.exception = httException
 
         val source = CharactersPagingDataSource(
             null,
@@ -115,9 +118,9 @@ internal class CharactersPagingDataSourceTest {
     }
 
     @Test
-    fun `refresh should call error callback when an IOException occurs`()  {
-        val exception =  IOException()
-        coEvery { api.listCharacters(null, 0, 5) } throws exception
+    fun `refresh should call error callback when an IOException occurs`() {
+        val exception = IOException()
+        api.exception = exception
 
         val source = CharactersPagingDataSource(
             null,
@@ -140,5 +143,28 @@ internal class CharactersPagingDataSourceTest {
             ClassLoader.getSystemResource("characters/characters_response_ok.json").readText(),
             MarvelCharactersResponse::class.java
         )
+    }
+}
+
+internal class FakeBff : CharactersBFFApi {
+    var detailsResponse: DetailsResponse? = null
+    var marvelCharactersResponse: MarvelCharactersResponse? = null
+    var exception: Exception? = null
+    override suspend fun listCharacters(characterId: String): DetailsResponse {
+        if (exception != null) {
+            throw exception!!
+        }
+        return detailsResponse!!.copy(id = characterId.toLong())
+    }
+
+    override suspend fun listCharacters(
+        name: String?,
+        offset: Int?,
+        limit: Int?
+    ): MarvelCharactersResponse {
+        if (exception != null) {
+            throw exception!!
+        }
+        return marvelCharactersResponse!!
     }
 }
