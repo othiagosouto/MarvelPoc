@@ -130,7 +130,6 @@ dependencies {
     androidTestImplementation libs.test.android.compose
     androidTestImplementation libs.test.runner
     androidTestImplementation libs.test.junit.ktx
-    androidTestImplementation libs.test.android.mockk
     androidTestImplementation libs.test.webserver
     androidTestImplementation libs.test.android.compose.robots
 
