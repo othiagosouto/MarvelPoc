@@ -14,7 +14,7 @@ data class Character(
 ) : Serializable {
 
     companion object {
-        const val serialVersionUID = 1L
+        private const val serialVersionUID = 1L
 
         val EMPTY = Character(
             id = 0L,
