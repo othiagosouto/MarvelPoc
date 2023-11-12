@@ -60,7 +60,6 @@ dependencies {
     implementation libs.gson.converter
 
     allTestsConfigs libs.test.junit
-    testImplementation libs.test.mockk
     allTestsConfigs libs.test.kotlin.coroutines
     allTestsConfigs libs.test.truth
 }

@@ -115,7 +115,6 @@ dependencies {
 
     debugImplementation libs.android.compose.preview
 
-    testImplementation libs.test.mockk
     testImplementation libs.test.core.android
     testImplementation libs.test.turbine
 
