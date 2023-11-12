@@ -5,9 +5,12 @@ import androidx.paging.PagingState
 import dev.thiagosouto.marvelpoc.data.retrofit.character.Result
 import dev.thiagosouto.marvelpoc.data.retrofit.ext.toCharacter
 import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.data.retrofit.interceptors.InternetConnectionException
 import dev.thiagosouto.marvelpoc.shared.EmptyDataException
 import retrofit2.HttpException
 import java.io.IOException
+import java.net.ConnectException
+import java.net.UnknownHostException
 
 internal class CharactersPagingDataSource(
     private val queryText: String?,
@@ -38,7 +41,7 @@ internal class CharactersPagingDataSource(
                 LoadResult.Error(EmptyDataException())
             } else {
                 val prevKey = if (pageNumber > 0) pageNumber - pageSize else null
-                val nextKey = if (response.isNotEmpty()) pageNumber + pageSize else null
+                val nextKey = pageNumber + pageSize
                 LoadResult.Page(
                     data = response,
                     prevKey = prevKey,
@@ -47,6 +50,10 @@ internal class CharactersPagingDataSource(
             }
         } catch (e: HttpException) {
             LoadResult.Error(e)
+        } catch (e: ConnectException) {
+            LoadResult.Error(InternetConnectionException())
+        } catch (e: UnknownHostException) {
+            LoadResult.Error(InternetConnectionException())
         } catch (e: IOException) {
             LoadResult.Error(e)
         }
