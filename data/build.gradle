@@ -1,16 +1,16 @@
-import dev.thiagosouto.Libs
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.android
+}
 
 android {
     namespace 'dev.thiagosouto.marvelpoc.data'
-    compileSdk Libs.Config.Android.androidCompileSdkVersion
-    buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
+    compileSdk 34
+    buildToolsVersion '34.0.0'
 
     defaultConfig {
-        minSdkVersion Libs.Config.Android.minSdkVersion
-        targetSdkVersion Libs.Config.Android.targetSdkVersion
+        minSdkVersion 21
+        targetSdkVersion 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,18 +49,18 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':shared')
 
-    implementation Libs.Kotlin.stdlib
-    implementation Libs.Coroutines.android
+    implementation libs.kotlin.std
+    implementation libs.kotlin.coroutines.android
 
-    implementation Libs.DI.koin
+    implementation libs.koin
 
-    implementation Libs.AndroidX.paging
-    implementation Libs.AndroidX.Compose.pagerCompose
+    implementation libs.android.paging
+    implementation libs.android.compose.accompanist.pager
 
-    implementation Libs.Network.gsonConverter
+    implementation libs.gson.converter
 
-    allTestsConfigs Libs.Test.junit
-    testImplementation Libs.Test.mockk
-    allTestsConfigs Libs.Coroutines.test
-    allTestsConfigs Libs.Test.truth
+    allTestsConfigs libs.test.junit
+    testImplementation libs.test.mockk
+    allTestsConfigs libs.test.kotlin.coroutines
+    allTestsConfigs libs.test.truth
 }

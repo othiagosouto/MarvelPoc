@@ -1,18 +1,16 @@
-import dev.thiagosouto.Libs
-
 plugins {
-    id "com.android.library"
-    id "kotlin-android"
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.android
 }
 
 android {
     namespace 'dev.thiagosouto.marvelpoc.design'
-    compileSdk Libs.Config.Android.androidCompileSdkVersion
-    buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
+    compileSdk 34
+    buildToolsVersion "34.0.0"
 
     defaultConfig {
-        minSdkVersion Libs.Config.Android.minSdkVersion
-        targetSdkVersion Libs.Config.Android.targetSdkVersion
+        minSdkVersion 21
+        targetSdkVersion 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -31,15 +29,14 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.version
+        kotlinCompilerExtensionVersion "1.4.3"
     }
 }
 
 dependencies {
-    implementation enforcedPlatform(Libs.AndroidX.Compose.composeBom)
-    implementation Libs.Kotlin.stdlib
-    implementation Libs.AndroidX.Compose.graphics
-    implementation Libs.AndroidX.Compose.material
-    implementation Libs.AndroidX.Compose.coil
-
+    implementation enforcedPlatform(libs.android.compose.bom)
+    implementation libs.kotlin.std
+    implementation libs.android.compose.graphics
+    implementation libs.android.compose.material
+    implementation libs.coil
 }

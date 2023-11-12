@@ -1,21 +1,14 @@
-import dev.thiagosouto.Libs
-
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        maven {
-            url "https://oss.sonatype.org/content/repositories/snapshots"
-        }
-    }
-    dependencies {
-        classpath Libs.androidGradlePlugin
-        classpath Libs.Kotlin.gradlePlugin
-        classpath Libs.Kotlin.detektPlugin
-
-    }
+plugins {
+    alias libs.plugins.android.application apply false
+    alias libs.plugins.android.library apply false
+    alias libs.plugins.kotlin.android apply false
+    alias libs.plugins.kotlin.kapt apply false
+    alias libs.plugins.detekt apply false
 }
 
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
 
 subprojects {
     repositories {
@@ -28,13 +21,11 @@ subprojects {
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         kotlinOptions {
-            // Treat all Kotlin warnings as errors (disabled by default)
-            allWarningsAsErrors = project.hasProperty("warningsAsErrors") ? project.warningsAsErrors : false
+            freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+            freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+            freeCompilerArgs += "-Xopt-in=androidx.paging.ExperimentalPagingApi"
 
-            jvmTarget = "17"
-
-            // Use experimental APIs
-            freeCompilerArgs += '-opt-in=kotlin.RequiresOptIn'
+            jvmTarget = JavaVersion.VERSION_17
         }
     }
 }

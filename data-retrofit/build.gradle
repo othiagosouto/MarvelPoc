@@ -1,18 +1,18 @@
-import dev.thiagosouto.Libs
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.android
+}
 
 android {
     namespace 'dev.thiagosouto.marvelpoc.data.retrofit'
-    compileSdk Libs.Config.Android.androidCompileSdkVersion
-    buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
+    compileSdk 34
+    buildToolsVersion "34.0.0"
 
     defaultConfig {
-        minSdkVersion Libs.Config.Android.minSdkVersion
-        targetSdkVersion Libs.Config.Android.targetSdkVersion
-        versionCode Libs.Config.Android.versionCode
-        versionName Libs.Config.Android.versionName
+        minSdkVersion 21
+        targetSdkVersion 34
+        versionCode 1
+        versionName "1.0.0"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -55,23 +55,23 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':shared')
     implementation project(path: ':data')
-    implementation platform(Libs.AndroidX.Compose.composeBom)
+    implementation platform(libs.android.compose.bom)
 
-    implementation Libs.Coroutines.android
-    implementation Libs.DI.koin
-    implementation Libs.AndroidX.paging
-    implementation Libs.AndroidX.Compose.pagerCompose
+    implementation libs.kotlin.coroutines.android
+    implementation libs.koin
+    implementation libs.android.paging
+    implementation libs.android.compose.paging
 
-    implementation Libs.Network.retrofit
-    implementation Libs.Test.okhttp
-    implementation Libs.Network.gsonConverter
-    implementation Libs.AndroidX.Test.paging
+    implementation libs.retrofit
+    implementation libs.okhttp
+    implementation libs.gson.converter
+    implementation libs.test.android.paging
 
-    testImplementation Libs.Coroutines.test
-    testImplementation Libs.Test.truth
+    testImplementation libs.test.kotlin.coroutines
+    testImplementation libs.test.truth
 
-    testImplementation Libs.Test.mockk
-    testImplementation Libs.AndroidX.Test.core
-    testImplementation Libs.AndroidX.Test.runner
-    testImplementation Libs.AndroidX.Test.Ext.junit
+    testImplementation libs.test.mockk
+    testImplementation libs.test.core
+    testImplementation libs.test.runner
+    testImplementation libs.test.junit.ktx
 }

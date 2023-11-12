@@ -1,20 +1,18 @@
-import dev.thiagosouto.Libs
-
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.kotlin.kapt
 }
 
 android {
     namespace 'dev.thiagosouto.marvelpoc'
-    compileSdk Libs.Config.Android.androidCompileSdkVersion
-    buildToolsVersion Libs.Config.Android.androidBuildToolsVersion
+    compileSdk 34
+    buildToolsVersion '34.0.0'
 
     defaultConfig {
         applicationId "dev.thiagosouto.marvelpoc"
-        minSdkVersion Libs.Config.Android.minSdkVersion
-        targetSdkVersion Libs.Config.Android.targetSdkVersion
+        minSdkVersion 21
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -54,7 +52,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.version
+        kotlinCompilerExtensionVersion "1.4.3"
     }
 
     lint {
@@ -84,65 +82,61 @@ dependencies {
     implementation project(path: ':data')
     implementation project(path: ':design')
     implementation project(path: ':shared')
-    implementation platform(Libs.AndroidX.Compose.composeBom)
-    androidTestImplementation enforcedPlatform(Libs.AndroidX.Compose.composeBom)
+    implementation platform(libs.android.compose.bom)
+    androidTestImplementation enforcedPlatform(libs.android.compose.bom)
 
-    implementation Libs.Kotlin.stdlib
-    implementation Libs.Coroutines.android
-    implementation Libs.AndroidX.androidxAppCompat
-    implementation Libs.AndroidX.lifecycleExtensions
-    implementation Libs.AndroidX.androidxConstraintLayout
-    implementation Libs.AndroidX.material
+    implementation libs.kotlin.std
+    implementation libs.kotlin.coroutines.android
+    implementation libs.android.appcompat
+    implementation libs.android.lifecycle
+    implementation libs.android.constraintlayout
+    implementation libs.android.material
 
-    implementation Libs.Network.glide
-    annotationProcessor Libs.Network.glideCompiler
+    implementation libs.glide
+    annotationProcessor libs.glide.compiler
 
-    implementation Libs.DI.koin
+    implementation libs.koin
 
-    implementation Libs.AndroidX.coreKtx
-    implementation Libs.AndroidX.paging
-    implementation Libs.AndroidX.viewModel
-    implementation Libs.AndroidX.liveData
+    implementation libs.android.core
+    implementation libs.android.paging
+    implementation libs.android.lifecycle.viewmodel
 
     //Compose
-    implementation Libs.AndroidX.Compose.activityCompose
-    implementation Libs.AndroidX.Compose.coil
-    implementation Libs.AndroidX.Compose.runtimeLivedata
-    implementation Libs.AndroidX.Compose.layout
-    implementation Libs.AndroidX.Compose.material
-    implementation Libs.AndroidX.Compose.toolingPreview
-    implementation Libs.AndroidX.Compose.uiUtil
-    implementation Libs.AndroidX.Compose.runtime
-    implementation Libs.AndroidX.Compose.animation
-    implementation Libs.AndroidX.Compose.graphics
-    implementation Libs.AndroidX.Compose.pager
-    implementation Libs.AndroidX.Compose.pagerCompose
-    debugImplementation Libs.AndroidX.Compose.tooling
+    implementation libs.android.compose.activity
+    implementation libs.coil
+    implementation libs.android.compose.layout
+    implementation libs.android.compose.material
+    implementation libs.android.compose.preview
+    implementation libs.android.compose.runtime
+    implementation libs.android.compose.animation
+    implementation libs.android.compose.graphics
+    implementation libs.android.compose.accompanist.pager
+    implementation libs.android.compose.paging
+
+    debugImplementation libs.android.compose.preview
+
+    testImplementation libs.test.mockk
+    testImplementation libs.test.core.android
+    testImplementation libs.test.turbine
+
+    allTestsConfigs libs.gson
+    allTestsConfigs libs.test.android.espresso
+    allTestsConfigs libs.test.junit
+    allTestsConfigs libs.test.kotlin.coroutines
+    allTestsConfigs libs.test.truth
+    allTestsConfigs libs.test.core
+    allTestsConfigs libs.test.core
+
+    androidTestImplementation libs.test.android.compose
+    androidTestImplementation libs.test.runner
+    androidTestImplementation libs.test.junit.ktx
+    androidTestImplementation libs.test.android.mockk
+    androidTestImplementation libs.test.webserver
+    androidTestImplementation libs.test.android.compose.robots
 
 
-    testImplementation Libs.Test.mockk
-    testImplementation Libs.AndroidX.Test.archRules
-    testImplementation Libs.Coroutines.turbine
+    debugImplementation libs.test.android.manifest
+    androidTestImplementation libs.test.fragment
 
-    allTestsConfigs Libs.Network.gson
-    allTestsConfigs Libs.AndroidX.Test.espressoCore
-    allTestsConfigs Libs.Test.junit
-    allTestsConfigs Libs.Coroutines.test
-    allTestsConfigs Libs.Test.truth
-    allTestsConfigs Libs.AndroidX.Test.rules
-    allTestsConfigs Libs.AndroidX.Test.core
-
-    androidTestImplementation Libs.AndroidX.Compose.uiTest
-    androidTestImplementation Libs.AndroidX.Test.runner
-    androidTestImplementation Libs.AndroidX.Test.Ext.junit
-    androidTestImplementation Libs.Test.mockkAndroid
-    androidTestImplementation "dev.thiagosouto:webserver:0.1.13-SNAPSHOT"
-    androidTestImplementation "dev.thiagosouto:compose-robots:0.1.19-SNAPSHOT"
-
-
-    debugImplementation Libs.AndroidX.Test.testingManfest
-    androidTestImplementation Libs.AndroidX.Test.fragmentTesting
-
-
-    androidTestUtil Libs.AndroidX.Test.orchestrator
+    androidTestUtil libs.test.orchestrator
 }
