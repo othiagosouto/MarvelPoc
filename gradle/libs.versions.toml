@@ -1,6 +1,6 @@
 [versions]
 gradleplugin = "8.0.2"
-kotlin = "1.8.10"
+kotlin = "1.9.21"
 hilt = "2.44"
 lifecycle = "2.6.1"
 coroutines = "1.7.3"
@@ -72,6 +72,7 @@ test-fragment = "androidx.fragment:fragment-testing:1.6.2"
 test-android-manifest = "androidx.fragment:fragment-testing-manifest:1.6.2"
 test-orchestrator = "androidx.test:orchestrator:1.4.2"
 test-android-paging = "androidx.paging:paging-testing:3.2.0-rc01"
+kotlin-test= { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin"}
 [bundles]
 
 [plugins]
@@ -82,3 +83,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
