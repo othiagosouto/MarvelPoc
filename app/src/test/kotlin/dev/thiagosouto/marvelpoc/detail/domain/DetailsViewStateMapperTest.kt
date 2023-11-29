@@ -4,13 +4,15 @@ import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.detail.DetailsViewState
+import dev.thiagosouto.marvelpoc.shared.Mapper
 import org.junit.Test
 
 internal class DetailsViewStateMapperTest {
 
     @Test
     fun `returns DetailsViewState`() {
-        val mapper = DetailsViewStateMapper(ComicsMapper())
+        val mapper: Mapper<DetailsViewStateMapper.Input, DetailsViewState> =
+            DetailsViewStateMapper(ComicsMapper())
         val input =
             DetailsViewStateMapper.Input(
                 name = "some-name",

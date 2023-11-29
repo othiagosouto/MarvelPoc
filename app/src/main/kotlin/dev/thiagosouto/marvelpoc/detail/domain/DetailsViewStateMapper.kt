@@ -3,6 +3,7 @@ package dev.thiagosouto.marvelpoc.detail.domain
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.detail.DetailsViewState
+import dev.thiagosouto.marvelpoc.shared.Mapper
 
 
 /**
@@ -10,8 +11,8 @@ import dev.thiagosouto.marvelpoc.detail.DetailsViewState
  */
 internal class DetailsViewStateMapper(
     private val comicsMapper: ComicsMapper
-) {
-    fun apply(
+): Mapper<DetailsViewStateMapper.Input, DetailsViewState> {
+    override fun apply(
         input: Input
     ): DetailsViewState {
         return DetailsViewState.Loaded(
