@@ -4,7 +4,7 @@ it
 
 
 ##Credential propertie
-data-retrofit/src/main/resources/api.properties
+data-remote/src/main/resources/api.properties
 ### Android ###
 # Built application files
 *.apk
