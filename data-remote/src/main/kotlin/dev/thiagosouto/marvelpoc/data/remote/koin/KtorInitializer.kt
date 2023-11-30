@@ -5,11 +5,10 @@ import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
 import dev.thiagosouto.marvelpoc.data.remote.BuildConfig
 import dev.thiagosouto.marvelpoc.data.remote.CharactersBFFApi
-import dev.thiagosouto.marvelpoc.data.remote.DefaultCharactersBFFApi
 import dev.thiagosouto.marvelpoc.data.remote.DefaultCharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.remote.DefaultCharacterRemoteContract
+import dev.thiagosouto.marvelpoc.data.remote.DefaultCharactersBFFApi
 import dev.thiagosouto.marvelpoc.data.remote.character.Result
-import dev.thiagosouto.marvelpoc.shared.koin.KoinModulesProvider
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -22,8 +21,8 @@ import org.koin.dsl.module
 /**
  * Provides Ktor module
  */
-class KtorInitializer : KoinModulesProvider {
-    override fun provides(): Module =
+class KtorInitializer {
+    fun provides(): Module =
         module {
             single(named(SERVER_URL)) { BuildConfig.BFF_HOST }
             single {
