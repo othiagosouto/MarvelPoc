@@ -1,7 +1,7 @@
 package dev.thiagosouto.marvelpoc.data.mappers
 
+import dev.thiagosouto.domain.Mapper
 import dev.thiagosouto.marvelpoc.data.Comics
-import dev.thiagosouto.marvelpoc.shared.Mapper
 
 /**
  * Mapper to comics domain to ui model

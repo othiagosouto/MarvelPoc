@@ -1,4 +1,4 @@
-package dev.thiagosouto.marvelpoc.shared
+package dev.thiagosouto.domain
 
 fun interface Mapper<I, O> {
 

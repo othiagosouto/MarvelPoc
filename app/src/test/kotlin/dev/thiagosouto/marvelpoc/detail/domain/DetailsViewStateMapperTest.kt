@@ -1,10 +1,10 @@
 package dev.thiagosouto.marvelpoc.detail.domain
 
 import com.google.common.truth.Truth.assertThat
+import dev.thiagosouto.domain.Mapper
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.detail.DetailsViewState
-import dev.thiagosouto.marvelpoc.shared.Mapper
 import org.junit.Test
 
 internal class DetailsViewStateMapperTest {
