@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.CharacterDetailsService
-import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.detail.domain.DetailsViewStateMapper
 import dev.thiagosouto.marvelpoc.shared.mvi.Presenter

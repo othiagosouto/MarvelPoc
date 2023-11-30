@@ -52,6 +52,6 @@ class DataInitializer {
         }
 
         single { Dispatchers() }
-        factory { ComicsMapper() }
+        factory { ComicsMapper() as Mapper<List<Comics>, List<dev.thiagosouto.marvelpoc.data.model.view.Comics>> }
     }
 }

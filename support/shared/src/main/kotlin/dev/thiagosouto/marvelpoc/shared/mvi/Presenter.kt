@@ -5,7 +5,7 @@ package dev.thiagosouto.marvelpoc.shared.mvi
  * @param I is the intent
  * @param S is the state
  */
-interface Presenter<I, S> {
+fun interface Presenter<I, S> {
 
     /**
      * Process the intent

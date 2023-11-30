@@ -21,7 +21,7 @@ dependencyResolutionManagement {
 rootProject.name='MarvelPoc'
 include ':app'
 include ':data'
-include ':shared'
+include ':support:shared'
 include ':data-room'
 include ':data-remote'
 include ':design'
