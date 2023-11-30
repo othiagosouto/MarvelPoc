@@ -3,6 +3,7 @@ package dev.thiagosouto.marvelpoc.data.remote.koin
 import dev.thiagosouto.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
+import dev.thiagosouto.marvelpoc.data.remote.BuildConfig
 import dev.thiagosouto.marvelpoc.data.remote.CharactersBFFApi
 import dev.thiagosouto.marvelpoc.data.remote.DefaultCharactersBFFApi
 import dev.thiagosouto.marvelpoc.data.remote.DefaultCharacterDetailsRemoteContract
@@ -14,7 +15,6 @@ import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.android.BuildConfig
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
