@@ -29,7 +29,7 @@ This project is built using a MVVM architecture with multi module structure. The
 -   Kotlin
 -   Room
 -   Koin
--   Retrofit
+-   Ktor
 -   Paging
 -   Github actions
 

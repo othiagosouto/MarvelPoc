@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 
-internal class RetrofitCharacterRemote(private val charactersApi: CharactersBFFApi) :
+internal class DefaultCharacterRemoteContract(private val charactersApi: CharactersBFFApi) :
     CharacterRemoteContract<Character> {
 
     override fun listPagingCharacters(

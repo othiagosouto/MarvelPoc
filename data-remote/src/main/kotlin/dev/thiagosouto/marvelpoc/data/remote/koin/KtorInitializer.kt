@@ -3,11 +3,10 @@ package dev.thiagosouto.marvelpoc.data.remote.koin
 import dev.thiagosouto.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
-import dev.thiagosouto.marvelpoc.data.remote.BuildConfig
 import dev.thiagosouto.marvelpoc.data.remote.CharactersBFFApi
 import dev.thiagosouto.marvelpoc.data.remote.DefaultCharactersBFFApi
-import dev.thiagosouto.marvelpoc.data.remote.RetrofitCharacterDetailsRemote
-import dev.thiagosouto.marvelpoc.data.remote.RetrofitCharacterRemote
+import dev.thiagosouto.marvelpoc.data.remote.DefaultCharacterDetailsRemoteContract
+import dev.thiagosouto.marvelpoc.data.remote.DefaultCharacterRemoteContract
 import dev.thiagosouto.marvelpoc.data.remote.character.Result
 import dev.thiagosouto.marvelpoc.shared.koin.KoinModulesProvider
 import io.ktor.client.HttpClient
@@ -21,7 +20,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 /**
- * Provides retrofit module
+ * Provides Ktor module
  */
 class KtorInitializer : KoinModulesProvider {
     override fun provides(): Module =
@@ -40,8 +39,8 @@ class KtorInitializer : KoinModulesProvider {
             single {
                 DefaultCharactersBFFApi(get(), get(named(SERVER_URL))) as CharactersBFFApi
             }
-            single { RetrofitCharacterDetailsRemote(get()) as CharacterDetailsRemoteContract<CharacterDetails> }
-            single { RetrofitCharacterRemote(get()) as CharacterRemoteContract<Result> }
+            single { DefaultCharacterDetailsRemoteContract(get()) as CharacterDetailsRemoteContract<CharacterDetails> }
+            single { DefaultCharacterRemoteContract(get()) as CharacterRemoteContract<Result> }
         }
 
     companion object {
