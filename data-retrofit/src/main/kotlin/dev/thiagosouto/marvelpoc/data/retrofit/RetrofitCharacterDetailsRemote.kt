@@ -1,10 +1,10 @@
 package dev.thiagosouto.marvelpoc.data.retrofit
 
+import dev.thiagosouto.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.retrofit.character.details.DetailsComics
 import dev.thiagosouto.marvelpoc.data.retrofit.character.details.DetailsResponse
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.Comics
-import dev.thiagosouto.marvelpoc.data.character.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.retrofit.interceptors.InternetConnectionException
 import java.net.ConnectException
 import java.net.UnknownHostException

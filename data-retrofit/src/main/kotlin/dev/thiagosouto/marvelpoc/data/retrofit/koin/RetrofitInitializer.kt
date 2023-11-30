@@ -1,7 +1,7 @@
 package dev.thiagosouto.marvelpoc.data.retrofit.koin
 
+import dev.thiagosouto.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
-import dev.thiagosouto.marvelpoc.data.character.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
 import dev.thiagosouto.marvelpoc.data.retrofit.BuildConfig
 import dev.thiagosouto.marvelpoc.data.retrofit.CharactersBFFApi

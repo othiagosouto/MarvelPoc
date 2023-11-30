@@ -4,7 +4,7 @@ import androidx.paging.DataSource
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.google.common.truth.Truth.assertThat
-import dev.thiagosouto.marvelpoc.data.character.CharacterDetailsRemoteContract
+import dev.thiagosouto.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
 import dev.thiagosouto.marvelpoc.data.model.view.Character
