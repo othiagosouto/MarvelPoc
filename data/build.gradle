@@ -9,7 +9,7 @@ android {
     buildToolsVersion '34.0.0'
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
