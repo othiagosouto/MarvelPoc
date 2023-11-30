@@ -16,7 +16,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import dev.thiagosouto.compose.robots.BaseRobot
 import dev.thiagosouto.marvelpoc.data.model.view.Character
-import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
+import dev.thiagosouto.marvelpoc.data.retrofit.koin.KtorInitializer
 import dev.thiagosouto.webserver.TestWebServer
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
@@ -35,7 +35,7 @@ internal class CharacterDetailsConfiguration : KoinComponent {
         val serverUrl = webServer.url()
         val newtworkModule = module {
             single(
-                named(RetrofitInitializer.SERVER_URL)
+                named(KtorInitializer.SERVER_URL)
             ) { serverUrl }
         }
         loadKoinModules(newtworkModule)
@@ -46,13 +46,11 @@ internal class CharacterDetailsConfiguration : KoinComponent {
     }
 
     fun withEmptyDescription() {
-        webServer.mapping = mapOfJson("characters/characters_details_ok_no_desc.json")
-        webServer.initDispatcher()
+        webServer.init(mapOfJson("characters/characters_details_ok_no_desc.json"))
     }
 
     fun withSomeDescription() {
-        webServer.mapping = mapOfJson("characters/characters_details_ok.json")
-        webServer.initDispatcher()
+        webServer.init(mapOfJson("characters/characters_details_ok.json"))
     }
 
     private fun mapOfJson(json: String) = mapOf(

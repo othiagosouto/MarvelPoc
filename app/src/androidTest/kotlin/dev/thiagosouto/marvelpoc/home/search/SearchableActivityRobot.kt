@@ -10,7 +10,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import dev.thiagosouto.compose.robots.BaseRobot
 import dev.thiagosouto.compose.robots.Retryable
-import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
+import dev.thiagosouto.marvelpoc.data.retrofit.koin.KtorInitializer
 import dev.thiagosouto.marvelpoc.home.list.CharactersViewModel
 import dev.thiagosouto.webserver.TestWebServer
 import org.koin.core.component.KoinComponent
@@ -33,7 +33,7 @@ internal class SearchableActivityConfiguration(private val composeRule: ComposeT
         val serverUrl = webServer.url()
         val newtworkModule = module {
             single(
-                named(RetrofitInitializer.SERVER_URL)
+                named(KtorInitializer.SERVER_URL)
             ) { serverUrl }
         }
         loadKoinModules(newtworkModule)
@@ -58,13 +58,12 @@ internal class SearchableActivityConfiguration(private val composeRule: ComposeT
     }
 
     infix fun launch(func: SearchableActivityRobot.() -> Unit): SearchableActivityRobot {
-        webServer.mapping =
+        webServer.init(
             mapOf(
                 "/characters/home?nameStartsWith=ops&offset=0&limit=20" to TestWebServer.Response("characters/characters_response_ok.json"),
                 "/characters/home?offset=0&limit=20" to TestWebServer.Response("characters_response_ok_empty.json")
 
-            )
-        webServer.initDispatcher()
+            ))
 
         ActivityScenario.launch<SearchableActivity>(intent)
         return SearchableActivityRobot(composeRule).apply(func)

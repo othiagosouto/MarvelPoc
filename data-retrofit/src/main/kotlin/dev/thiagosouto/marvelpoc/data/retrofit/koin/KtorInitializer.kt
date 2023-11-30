@@ -37,7 +37,7 @@ class KtorInitializer : KoinModulesProvider {
                 }
             }
             single {
-                DefaultCharactersBFFApi(get(), BuildConfig.BFF_HOST) as CharactersBFFApi
+                DefaultCharactersBFFApi(get(), get(named(SERVER_URL))) as CharactersBFFApi
             }
             single { RetrofitCharacterDetailsRemote(get()) as CharacterDetailsRemoteContract<CharacterDetails> }
             single { RetrofitCharacterRemote(get()) as CharacterRemoteContract<Result> }

@@ -11,7 +11,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.fragment.app.testing.launchFragmentInContainer
 import dev.thiagosouto.compose.robots.BaseRobot
 import dev.thiagosouto.compose.robots.Retryable
-import dev.thiagosouto.marvelpoc.data.retrofit.koin.RetrofitInitializer
+import dev.thiagosouto.marvelpoc.data.retrofit.koin.KtorInitializer
 import dev.thiagosouto.marvelpoc.widget.ErrorScreenTestTags
 import dev.thiagosouto.webserver.TestWebServer
 import org.koin.core.component.KoinComponent
@@ -35,7 +35,7 @@ internal class CharactersFragmentConfiguration(private val composeTestRule: Comp
         val serverUrl = webServer.url()
         val newtworkModule = module {
             single(
-                named(RetrofitInitializer.SERVER_URL)
+                named(KtorInitializer.SERVER_URL)
             ) { serverUrl }
         }
         loadKoinModules(newtworkModule)
@@ -57,27 +57,26 @@ internal class CharactersFragmentConfiguration(private val composeTestRule: Comp
     }
 
     fun withErrorHome() {
-        webServer.initDispatcher()
+        webServer.init(emptyMap())
     }
 
     fun withHomeCharacters() {
-        webServer.mapping =
+        webServer.init(
             mapOf(
                 "/characters/home?offset=0&limit=20" to TestWebServer.Response("characters/characters_response_ok.json"),
                 "/characters/home?offset=1&limit=20" to TestWebServer.Response("characters/characters_response_ok_empty.json"),
                 "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg" to TestWebServer.Response("characters/images/image.jpeg")
-            )
-        webServer.initDispatcher()
+            ))
     }
 
     fun withSearchContent() {
-        webServer.mapping =
+        webServer.init(
             mapOf(
                 "/characters/home?nameStartsWith=searchQuery&offset=0&limit=20" to TestWebServer.Response("characters/characters_response_ok.json"),
                 "/characters/home?nameStartsWith=searchQuery&offset=1&limit=20" to TestWebServer.Response("characters/characters_response_ok_empty.json"),
                 "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg" to TestWebServer.Response("characters/images/image.jpeg")
             )
-        webServer.initDispatcher()
+        )
 
     }
 
