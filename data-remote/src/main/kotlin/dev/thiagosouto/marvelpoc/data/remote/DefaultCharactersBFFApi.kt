@@ -1,8 +1,8 @@
-package dev.thiagosouto.marvelpoc.data.retrofit
+package dev.thiagosouto.marvelpoc.data.remote
 
-import dev.thiagosouto.marvelpoc.data.retrofit.character.MarvelCharactersResponse
-import dev.thiagosouto.marvelpoc.data.retrofit.character.details.DetailsResponse
-import dev.thiagosouto.marvelpoc.data.retrofit.interceptors.HttpException
+import dev.thiagosouto.marvelpoc.data.remote.character.MarvelCharactersResponse
+import dev.thiagosouto.marvelpoc.data.remote.character.details.DetailsResponse
+import dev.thiagosouto.marvelpoc.data.remote.interceptors.HttpException
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

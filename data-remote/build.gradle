@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'dev.thiagosouto.marvelpoc.data.retrofit'
+    namespace 'dev.thiagosouto.marvelpoc.data.remote'
     compileSdk 34
     buildToolsVersion "34.0.0"
 

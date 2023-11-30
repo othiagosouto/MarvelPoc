@@ -1,14 +1,14 @@
-package dev.thiagosouto.marvelpoc.data.retrofit
+package dev.thiagosouto.marvelpoc.data.remote
 
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.testing.TestPager
 import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.model.view.Character
-import dev.thiagosouto.marvelpoc.data.retrofit.character.MarvelCharactersResponse
-import dev.thiagosouto.marvelpoc.data.retrofit.character.details.DetailsResponse
-import dev.thiagosouto.marvelpoc.data.retrofit.ext.toCharacter
-import dev.thiagosouto.marvelpoc.data.retrofit.interceptors.HttpException
+import dev.thiagosouto.marvelpoc.data.remote.character.MarvelCharactersResponse
+import dev.thiagosouto.marvelpoc.data.remote.character.details.DetailsResponse
+import dev.thiagosouto.marvelpoc.data.remote.ext.toCharacter
+import dev.thiagosouto.marvelpoc.data.remote.interceptors.HttpException
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json

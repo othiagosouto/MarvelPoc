@@ -1,4 +1,4 @@
-package dev.thiagosouto.marvelpoc.data.retrofit.interceptors
+package dev.thiagosouto.marvelpoc.data.remote.interceptors
 
 import java.io.IOException
 

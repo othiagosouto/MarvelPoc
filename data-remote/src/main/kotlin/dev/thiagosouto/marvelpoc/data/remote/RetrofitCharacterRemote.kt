@@ -1,4 +1,4 @@
-package dev.thiagosouto.marvelpoc.data.retrofit
+package dev.thiagosouto.marvelpoc.data.remote
 
 import androidx.paging.PagingSource
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract

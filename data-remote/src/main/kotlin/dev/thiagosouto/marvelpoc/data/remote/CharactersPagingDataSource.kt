@@ -1,12 +1,12 @@
-package dev.thiagosouto.marvelpoc.data.retrofit
+package dev.thiagosouto.marvelpoc.data.remote
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import dev.thiagosouto.marvelpoc.data.model.view.Character
-import dev.thiagosouto.marvelpoc.data.retrofit.character.Result
-import dev.thiagosouto.marvelpoc.data.retrofit.ext.toCharacter
-import dev.thiagosouto.marvelpoc.data.retrofit.interceptors.HttpException
-import dev.thiagosouto.marvelpoc.data.retrofit.interceptors.InternetConnectionException
+import dev.thiagosouto.marvelpoc.data.remote.character.Result
+import dev.thiagosouto.marvelpoc.data.remote.ext.toCharacter
+import dev.thiagosouto.marvelpoc.data.remote.interceptors.HttpException
+import dev.thiagosouto.marvelpoc.data.remote.interceptors.InternetConnectionException
 import dev.thiagosouto.marvelpoc.shared.EmptyDataException
 import java.io.IOException
 import java.net.ConnectException

@@ -2,7 +2,7 @@ package dev.thiagosouto.marvelpoc
 
 import android.app.Application
 import dev.thiagosouto.marvelpoc.data.koin.DataInitializer
-import dev.thiagosouto.marvelpoc.data.retrofit.koin.KtorInitializer
+import dev.thiagosouto.marvelpoc.data.remote.koin.KtorInitializer
 import dev.thiagosouto.marvelpoc.data.room.koin.DataRoomInitializer
 import dev.thiagosouto.marvelpoc.koin.AppModulesInitializer
 import org.koin.android.ext.koin.androidContext

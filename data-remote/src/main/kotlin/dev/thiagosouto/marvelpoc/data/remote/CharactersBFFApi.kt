@@ -1,7 +1,7 @@
-package dev.thiagosouto.marvelpoc.data.retrofit
+package dev.thiagosouto.marvelpoc.data.remote
 
-import dev.thiagosouto.marvelpoc.data.retrofit.character.MarvelCharactersResponse
-import dev.thiagosouto.marvelpoc.data.retrofit.character.details.DetailsResponse
+import dev.thiagosouto.marvelpoc.data.remote.character.MarvelCharactersResponse
+import dev.thiagosouto.marvelpoc.data.remote.character.details.DetailsResponse
 
 internal interface CharactersBFFApi {
     suspend fun listCharacters(

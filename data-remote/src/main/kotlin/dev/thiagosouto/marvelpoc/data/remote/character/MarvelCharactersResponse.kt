@@ -1,4 +1,4 @@
-package dev.thiagosouto.marvelpoc.data.retrofit.character
+package dev.thiagosouto.marvelpoc.data.remote.character
 
 import kotlinx.serialization.Serializable
 

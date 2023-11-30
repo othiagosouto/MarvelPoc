@@ -11,7 +11,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.fragment.app.testing.launchFragmentInContainer
 import dev.thiagosouto.compose.robots.BaseRobot
 import dev.thiagosouto.compose.robots.Retryable
-import dev.thiagosouto.marvelpoc.data.retrofit.koin.KtorInitializer
+import dev.thiagosouto.marvelpoc.data.remote.koin.KtorInitializer
 import dev.thiagosouto.marvelpoc.widget.ErrorScreenTestTags
 import dev.thiagosouto.webserver.TestWebServer
 import org.koin.core.component.KoinComponent

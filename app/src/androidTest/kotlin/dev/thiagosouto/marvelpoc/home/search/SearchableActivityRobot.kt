@@ -10,7 +10,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import dev.thiagosouto.compose.robots.BaseRobot
 import dev.thiagosouto.compose.robots.Retryable
-import dev.thiagosouto.marvelpoc.data.retrofit.koin.KtorInitializer
+import dev.thiagosouto.marvelpoc.data.remote.koin.KtorInitializer
 import dev.thiagosouto.marvelpoc.home.list.CharactersViewModel
 import dev.thiagosouto.webserver.TestWebServer
 import org.koin.core.component.KoinComponent

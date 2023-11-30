@@ -1,6 +1,6 @@
-package dev.thiagosouto.marvelpoc.data.retrofit.ext
+package dev.thiagosouto.marvelpoc.data.remote.ext
 
-import dev.thiagosouto.marvelpoc.data.retrofit.character.Result
+import dev.thiagosouto.marvelpoc.data.remote.character.Result
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 
 internal fun Result.toCharacter() =
