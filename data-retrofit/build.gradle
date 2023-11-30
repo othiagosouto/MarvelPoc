@@ -1,6 +1,7 @@
 plugins {
     alias libs.plugins.android.library
     alias libs.plugins.kotlin.android
+    alias libs.plugins.kotlin.serialization
 }
 
 android {
@@ -61,9 +62,10 @@ dependencies {
     implementation libs.android.paging
     implementation libs.android.compose.paging
 
+    implementation libs.retrofit.serialization
+    implementation libs.kotlin.serialization
     implementation libs.retrofit
     implementation libs.okhttp
-    implementation libs.gson.converter
     implementation libs.test.android.paging
 
     testImplementation libs.test.kotlin.coroutines

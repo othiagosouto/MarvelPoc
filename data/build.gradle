@@ -58,8 +58,6 @@ dependencies {
     implementation libs.android.paging
     implementation libs.android.compose.accompanist.pager
 
-    implementation libs.gson.converter
-
     allTestsConfigs libs.test.junit
     allTestsConfigs libs.test.kotlin.coroutines
     allTestsConfigs libs.test.truth

@@ -4,7 +4,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.testing.TestPager
 import com.google.common.truth.Truth.assertThat
-import com.google.gson.Gson
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.data.retrofit.character.MarvelCharactersResponse
 import dev.thiagosouto.marvelpoc.data.retrofit.character.details.DetailsResponse
@@ -12,6 +11,7 @@ import dev.thiagosouto.marvelpoc.data.retrofit.ext.toCharacter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -139,9 +139,8 @@ internal class CharactersPagingDataSourceTest {
 
 
     private fun parseToJson(): MarvelCharactersResponse {
-        return Gson().fromJson(
-            ClassLoader.getSystemResource("characters/characters_response_ok.json").readText(),
-            MarvelCharactersResponse::class.java
+        return Json.decodeFromString<MarvelCharactersResponse>(
+            ClassLoader.getSystemResource("characters/characters_response_ok.json").readText()
         )
     }
 }

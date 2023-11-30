@@ -1,5 +1,8 @@
 package dev.thiagosouto.marvelpoc.data.retrofit.character
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 internal data class MarvelCharactersResponse(
     val attributionHTML: String,
     val attributionText: String,

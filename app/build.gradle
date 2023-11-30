@@ -119,7 +119,6 @@ dependencies {
     testImplementation libs.test.core.android
     testImplementation libs.test.turbine
 
-    allTestsConfigs libs.gson
     allTestsConfigs libs.test.android.espresso
     allTestsConfigs libs.test.junit
     allTestsConfigs libs.test.kotlin.coroutines
