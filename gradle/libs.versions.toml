@@ -26,8 +26,6 @@ android-material = { module = "com.google.android.material:material", version.re
 android-constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4"
 android-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 android-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
-retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
-retrofit-serialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0"
 kotlin-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
 kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlin-std = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }

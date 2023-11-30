@@ -62,9 +62,7 @@ dependencies {
     implementation libs.android.paging
     implementation libs.android.compose.paging
 
-    implementation libs.retrofit.serialization
     implementation libs.kotlin.serialization
-    implementation libs.retrofit
     implementation libs.okhttp
     implementation libs.ktor.core
     implementation libs.ktor.cio
