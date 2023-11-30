@@ -66,6 +66,10 @@ dependencies {
     implementation libs.kotlin.serialization
     implementation libs.retrofit
     implementation libs.okhttp
+    implementation libs.ktor.core
+    implementation libs.ktor.cio
+    implementation libs.ktor.serialization
+    implementation libs.ktor.negotiation
     implementation libs.test.android.paging
 
     testImplementation libs.test.kotlin.coroutines

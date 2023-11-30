@@ -2,12 +2,12 @@ package dev.thiagosouto.marvelpoc.data.retrofit
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.data.retrofit.character.Result
 import dev.thiagosouto.marvelpoc.data.retrofit.ext.toCharacter
-import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.marvelpoc.data.retrofit.interceptors.HttpException
 import dev.thiagosouto.marvelpoc.data.retrofit.interceptors.InternetConnectionException
 import dev.thiagosouto.marvelpoc.shared.EmptyDataException
-import retrofit2.HttpException
 import java.io.IOException
 import java.net.ConnectException
 import java.net.UnknownHostException

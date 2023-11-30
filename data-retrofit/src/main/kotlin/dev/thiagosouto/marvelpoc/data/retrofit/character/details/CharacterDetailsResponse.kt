@@ -2,6 +2,7 @@ package dev.thiagosouto.marvelpoc.data.retrofit.character.details
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.serializer
 
 @Serializable
 internal data class DetailsResponse(

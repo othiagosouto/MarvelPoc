@@ -8,21 +8,15 @@ import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.data.retrofit.character.MarvelCharactersResponse
 import dev.thiagosouto.marvelpoc.data.retrofit.character.details.DetailsResponse
 import dev.thiagosouto.marvelpoc.data.retrofit.ext.toCharacter
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.thiagosouto.marvelpoc.data.retrofit.interceptors.HttpException
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.ResponseBody
-import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import retrofit2.HttpException
-import retrofit2.Response
 import java.io.IOException
 
-@OptIn(ExperimentalCoroutinesApi::class)
 internal class CharactersPagingDataSourceTest {
 
     private val charactersList = parseToJson()
@@ -94,12 +88,7 @@ internal class CharactersPagingDataSourceTest {
 
     @Test
     fun `refresh should call error callback when an HttpException occurs`() {
-        val httException = HttpException(
-            Response.error<ResponseBody>(
-                500,
-                "some content".toResponseBody("plain/text".toMediaTypeOrNull())
-            )
-        )
+        val httException = HttpException(500)
         api.exception = httException
 
         val source = CharactersPagingDataSource(
