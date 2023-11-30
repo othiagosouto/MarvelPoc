@@ -14,6 +14,7 @@ glide = "4.11.0"
 okhttp = "4.9.3"
 materialVersion = "1.10.0"
 ktorVersion = "2.3.6"
+testButlerVersion = "0.2.2-SNAPSHOT"
 
 [libraries]
 android-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycle" }
@@ -54,18 +55,18 @@ glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorVersion" }
 ktor-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktorVersion" }
-ktor-serialization = {module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion"}
-ktor-negotiation = {module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorVersion"}
+ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
+ktor-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorVersion" }
 
 #tests
 test-junit = "junit:junit:4.13.2"
 test-android-junit = "androidx.test.ext:junit:1.1.5"
 test-android-espresso = "androidx.test.espresso:espresso-core:3.5.1"
 test-android-compose = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-test-webserver = "dev.thiagosouto:webserver:0.1.14-SNAPSHOT"
+test-webserver = { module = "dev.thiagosouto:webserver", version.ref = "testButlerVersion" }
+test-android-compose-robots = { module = "dev.thiagosouto:compose-robots", version.ref = "testButlerVersion" }
 test-turbine = "app.cash.turbine:turbine:1.0.0"
 test-kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
-test-android-compose-robots = "dev.thiagosouto:compose-robots:0.1.19-SNAPSHOT"
 test-core-android = "androidx.arch.core:core-testing:2.2.0"
 test-hilt = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 test-truth = "com.google.truth:truth:1.1.3"
