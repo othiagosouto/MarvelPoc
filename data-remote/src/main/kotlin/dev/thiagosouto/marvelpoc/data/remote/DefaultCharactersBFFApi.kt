@@ -29,7 +29,13 @@ internal class DefaultCharactersBFFApi(
     }.result()
 
     private suspend inline fun <reified T> HttpResponse.result(): T = when (this.status.value) {
-        in 201..510 -> throw HttpException(this.status.value)
+        in SUCCESS_START..ERROR_END -> throw HttpException(this.status.value)
         else -> this.body<T>()
+    }
+
+
+    private companion object{
+        const val SUCCESS_START = 201
+        const val ERROR_END = 510
     }
 }
