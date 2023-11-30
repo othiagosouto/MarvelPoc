@@ -6,7 +6,7 @@ import dev.thiagosouto.marvelpoc.data.PagingService
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.home.CoroutineTestRule
 import dev.thiagosouto.marvelpoc.home.fakes.FavoritesRepositoryFake
-import dev.thiagosouto.marvelpoc.shared.EmptyDataException
+import dev.thiagosouto.domain.exception.EmptyDataException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

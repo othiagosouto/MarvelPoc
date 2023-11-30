@@ -7,7 +7,7 @@ import dev.thiagosouto.marvelpoc.data.remote.character.Result
 import dev.thiagosouto.marvelpoc.data.remote.ext.toCharacter
 import dev.thiagosouto.marvelpoc.data.remote.interceptors.HttpException
 import dev.thiagosouto.marvelpoc.data.remote.interceptors.InternetConnectionException
-import dev.thiagosouto.marvelpoc.shared.EmptyDataException
+import dev.thiagosouto.domain.exception.EmptyDataException
 import java.io.IOException
 import java.net.ConnectException
 import java.net.UnknownHostException

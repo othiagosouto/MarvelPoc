@@ -1,6 +1,4 @@
-package dev.thiagosouto.marvelpoc.shared
-
-import java.lang.Exception
+package dev.thiagosouto.domain.exception
 
 /**
  * Exception to represent empty data

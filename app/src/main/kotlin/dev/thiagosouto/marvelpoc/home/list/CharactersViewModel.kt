@@ -11,7 +11,7 @@ import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.PagingService
 import dev.thiagosouto.marvelpoc.data.model.view.Character
 import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
-import dev.thiagosouto.marvelpoc.shared.EmptyDataException
+import dev.thiagosouto.domain.exception.EmptyDataException
 import kotlinx.coroutines.launch
 
 internal class CharactersViewModel(
