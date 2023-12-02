@@ -34,9 +34,7 @@ internal class CharacterDetailsConfiguration : KoinComponent {
         webServer.start()
         val serverUrl = webServer.url()
         val newtworkModule = module {
-            single(
-                named(KtorInitializer.SERVER_URL)
-            ) { serverUrl }
+            single(named(KtorInitializer.SERVER_URL)) { serverUrl }
         }
         loadKoinModules(newtworkModule)
     }
