@@ -1,6 +1,7 @@
 package dev.thiagosouto.marvelpoc.data.koin
 
 import dev.thiagosouto.domain.Mapper
+import dev.thiagosouto.domain.MapperList
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.CharacterDetailsService
 import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
@@ -52,6 +53,6 @@ class DataInitializer {
         }
 
         single { Dispatchers() }
-        factory { ComicsMapper() as Mapper<List<Comics>, List<dev.thiagosouto.marvelpoc.data.model.view.Comics>> }
+        factory { ComicsMapper() as MapperList<Comics, dev.thiagosouto.marvelpoc.data.model.view.Comics> }
     }
 }

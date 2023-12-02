@@ -1,12 +1,13 @@
 package dev.thiagosouto.marvelpoc.data.mappers
 
 import dev.thiagosouto.domain.Mapper
+import dev.thiagosouto.domain.MapperList
 import dev.thiagosouto.marvelpoc.data.Comics
 
 /**
  * Mapper to comics domain to ui model
  */
-class ComicsMapper: Mapper<List<Comics>, List<dev.thiagosouto.marvelpoc.data.model.view.Comics>> {
+class ComicsMapper: MapperList<Comics, dev.thiagosouto.marvelpoc.data.model.view.Comics> {
 
     /**
      * Mapper to comics domain to ui model

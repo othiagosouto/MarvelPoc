@@ -2,6 +2,7 @@ package dev.thiagosouto.marvelpoc.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.thiagosouto.domain.Mapper
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.CharacterDetailsService
 import dev.thiagosouto.marvelpoc.data.Dispatchers
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 
 internal class CharacterDetailsViewModel(
     private val repository: CharacterDetailsService<CharacterDetails>,
-    private val detailsViewStateMapper: DetailsViewStateMapper,
+    private val detailsViewStateMapper: Mapper<DetailsViewStateMapper.Input, DetailsViewState>,
     private val dispatchers: Dispatchers
 ) : ViewModel(),
     Presenter<Intent, DetailsViewState> {
