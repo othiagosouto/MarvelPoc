@@ -6,7 +6,7 @@ import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.CharacterDetailsService
 import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.detail.domain.DetailsViewStateMapper
-import dev.thiagosouto.marvelpoc.shared.mvi.Presenter
+import dev.thiagosouto.marvelpoc.support.presentation.Presenter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
