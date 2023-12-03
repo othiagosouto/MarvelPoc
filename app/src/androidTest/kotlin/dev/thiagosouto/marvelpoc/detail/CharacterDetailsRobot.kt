@@ -67,7 +67,7 @@ internal class CharacterDetailsConfiguration : KoinComponent {
             CharacterDetailsActivity::class.java
         )
         val character = Character.EMPTY.copy(id = 1011334)
-        intent.putExtra("CHARACTER_KEY", character)
+        intent.putExtra("CHARACTER_KEY", character.id)
         ActivityScenario.launch<CharacterDetailsActivity>(intent)
         return CharacterDetailsRobot(rule, webServer).apply(func)
     }
