@@ -15,7 +15,7 @@ class CharactersRepositoryImpl(
     private val remoteDataSource: CharacterRemoteContract<Character>,
     private val remoteCharacterDetailsSource: CharacterDetailsRemoteContract<CharacterDetails>
 ) : FavoritesRepository<Character>, PagingService<Character>,
-    CharacterDetailsService<CharacterDetails> {
+    CharacterDetailsService {
 
     /**
      * return a list of favorite characters
@@ -64,7 +64,8 @@ class CharactersRepositoryImpl(
     /**
      * Fetch character details
      */
-    override suspend fun fetchCharacterDetails(characterId: String) =
-        remoteCharacterDetailsSource.fetchCharacterDetails(characterId)
+    override suspend fun fetch(input: String): CharacterDetails =
+        remoteCharacterDetailsSource.fetchCharacterDetails(input)
+
 }
 

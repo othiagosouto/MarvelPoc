@@ -1,8 +1,6 @@
 package dev.thiagosouto.marvelpoc.data.koin
 
-import dev.thiagosouto.domain.Mapper
 import dev.thiagosouto.domain.MapperList
-import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.CharacterDetailsService
 import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.Comics
@@ -49,7 +47,7 @@ class DataInitializer {
                 get(),
                 get(),
                 get()
-            ) as CharacterDetailsService<CharacterDetails>
+            ) as CharacterDetailsService
         }
 
         single { Dispatchers() }

@@ -1,9 +1,8 @@
 package dev.thiagosouto.marvelpoc.data
 
+import dev.thiagosouto.domain.service.Service
+
 /**
  * Interface to delivery [T]
  */
-fun interface CharacterDetailsService<T : Any> {
-
-    suspend fun fetchCharacterDetails(characterId: String): T
-}
+fun interface CharacterDetailsService : Service<String, CharacterDetails>

@@ -36,7 +36,7 @@ internal class CharacterDetailsViewModelTest {
             imageUrl = "image-url",
             comics = ids.map(::comicsDomain)
         )
-        viewModel = CharacterDetailsViewModel({characterDetails }, mapper, Dispatchers())
+        viewModel = CharacterDetailsViewModel({ characterDetails }, mapper, Dispatchers())
 
 
         viewModel.run {
@@ -61,7 +61,7 @@ internal class CharacterDetailsViewModelTest {
 
     @Test
     fun `should emit closed state`() = runBlocking {
-        viewModel = CharacterDetailsViewModel({throw IOException() }, mapper, Dispatchers())
+        viewModel = CharacterDetailsViewModel({ throw IOException() }, mapper, Dispatchers())
 
         viewModel.run {
             state.test {
