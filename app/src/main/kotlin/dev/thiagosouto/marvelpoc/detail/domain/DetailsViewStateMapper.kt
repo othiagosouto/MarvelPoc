@@ -1,16 +1,16 @@
 package dev.thiagosouto.marvelpoc.detail.domain
 
-import dev.thiagosouto.domain.Mapper
 import dev.thiagosouto.domain.MapperList
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.detail.DetailsViewState
+import dev.thiagosouto.marvelpoc.support.presentation.PresentationMapper
 
 /**
  * Mapper domain to DetailsViewState
  */
 internal class DetailsViewStateMapper(
     private val comicsMapper: MapperList<Comics, dev.thiagosouto.marvelpoc.data.model.view.Comics>
-) : Mapper<DetailsViewStateMapper.Input, DetailsViewState> {
+) : PresentationMapper<DetailsViewStateMapper.Input, DetailsViewState> {
     override fun apply(
         input: Input
     ): DetailsViewState {
