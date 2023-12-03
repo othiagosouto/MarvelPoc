@@ -13,6 +13,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
+import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -35,11 +36,9 @@ class KtorInitializer {
                     }
                 }
             }
-            single {
-                DefaultCharactersBFFApi(get(), get(named(SERVER_URL))) as CharactersBFFApi
-            }
-            single { DefaultCharacterDetailsRemoteContract(get()) as CharacterDetailsRemoteContract<CharacterDetails> }
-            single { DefaultCharacterRemoteContract(get()) as CharacterRemoteContract<Result> }
+            single<CharactersBFFApi> { DefaultCharactersBFFApi(get(), get(named(SERVER_URL))) }
+            single <CharacterDetailsRemoteContract<CharacterDetails>>{ DefaultCharacterDetailsRemoteContract(get()) }
+            single <CharacterRemoteContract<Character>>{ DefaultCharacterRemoteContract(get()) }
         }
 
     companion object {

@@ -5,6 +5,7 @@ import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.room.AppDatabase
 import dev.thiagosouto.marvelpoc.data.room.BuildConfig
 import dev.thiagosouto.marvelpoc.data.room.CharacterLocalRoomDataSource
+import dev.thiagosouto.marvelpoc.domain.model.Character
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -20,11 +21,7 @@ class DataRoomInitializer {
                 ).build()
             }
             single { get<AppDatabase>().charactersLocalDao() }
-            single {
-                CharacterLocalRoomDataSource(
-                    get()
-                ) as CharacterLocalContract<Character>
-            }
+            single<CharacterLocalContract<Character>> { CharacterLocalRoomDataSource(get()) }
         }
     }
 }
