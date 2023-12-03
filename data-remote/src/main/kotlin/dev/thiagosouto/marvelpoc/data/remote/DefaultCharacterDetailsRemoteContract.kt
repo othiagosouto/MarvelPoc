@@ -1,6 +1,6 @@
 package dev.thiagosouto.marvelpoc.data.remote
 
-import dev.thiagosouto.domain.data.remote.CharacterDetailsRemoteContract
+import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.remote.character.details.DetailsComics
 import dev.thiagosouto.marvelpoc.data.remote.character.details.DetailsResponse
 import dev.thiagosouto.marvelpoc.data.CharacterDetails

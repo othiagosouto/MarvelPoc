@@ -2,12 +2,12 @@ package dev.thiagosouto.marvelpoc.data.remote
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import dev.thiagosouto.domain.model.Character
+import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.data.remote.character.Result
 import dev.thiagosouto.marvelpoc.data.remote.ext.toCharacter
 import dev.thiagosouto.marvelpoc.data.remote.interceptors.HttpException
 import dev.thiagosouto.marvelpoc.data.remote.interceptors.InternetConnectionException
-import dev.thiagosouto.domain.exception.EmptyDataException
+import dev.thiagosouto.marvelpoc.domain.exception.EmptyDataException
 import java.io.IOException
 import java.net.ConnectException
 import java.net.UnknownHostException

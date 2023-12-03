@@ -12,7 +12,7 @@ import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
-import dev.thiagosouto.domain.model.Character
+import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.widget.ErrorScreenTestTags
 import kotlinx.coroutines.flow.Flow

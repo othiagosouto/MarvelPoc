@@ -4,10 +4,10 @@ import androidx.paging.DataSource
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.google.common.truth.Truth.assertThat
-import dev.thiagosouto.domain.data.remote.CharacterDetailsRemoteContract
+import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
-import dev.thiagosouto.domain.model.Character
+import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest

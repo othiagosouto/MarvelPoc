@@ -1,4 +1,4 @@
-package dev.thiagosouto.domain.exception
+package dev.thiagosouto.marvelpoc.domain.exception
 
 /**
  * Exception to represent empty data

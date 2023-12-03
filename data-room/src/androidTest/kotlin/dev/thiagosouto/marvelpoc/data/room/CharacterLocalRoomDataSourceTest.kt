@@ -6,7 +6,7 @@ import androidx.paging.PositionalDataSource
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
-import dev.thiagosouto.domain.model.Character
+import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.data.room.ext.toCharacter
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -29,7 +29,7 @@ internal class CharacterLocalRoomDataSourceTest {
         )
 
     private val character =
-        dev.thiagosouto.domain.model.Character(
+        Character(
             30,
             NAME,
             URL,
@@ -55,7 +55,7 @@ internal class CharacterLocalRoomDataSourceTest {
     fun favorite_shouldInsertTheExpectedItemToFavoriteAndReturnItsId() =
         coroutineTestRule.testDispatcher.runBlockingTest {
             val character =
-                dev.thiagosouto.domain.model.Character(
+                Character(
                     30,
                     NAME,
                     URL,
@@ -95,9 +95,9 @@ internal class CharacterLocalRoomDataSourceTest {
             val favorites = dataSource.favoriteList()
 
             val params = PositionalDataSource.LoadRangeParams(0, 10)
-            var characters: List<dev.thiagosouto.domain.model.Character>? = null
-            val teste = object : PositionalDataSource.LoadRangeCallback<dev.thiagosouto.domain.model.Character>() {
-                override fun onResult(data: List<dev.thiagosouto.domain.model.Character>) {
+            var characters: List<Character>? = null
+            val teste = object : PositionalDataSource.LoadRangeCallback<Character>() {
+                override fun onResult(data: List<Character>) {
                     characters = data
                 }
 

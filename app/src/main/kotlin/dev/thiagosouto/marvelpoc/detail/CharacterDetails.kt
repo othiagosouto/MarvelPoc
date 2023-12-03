@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.rememberAsyncImagePainter
 import dev.thiagosouto.marvelpoc.R
-import dev.thiagosouto.domain.model.Comics
+import dev.thiagosouto.marvelpoc.domain.model.Comics
 import dev.thiagosouto.marvelpoc.design.components.ImageLoading
 import dev.thiagosouto.marvelpoc.design.components.Loading
 import dev.thiagosouto.marvelpoc.design.R as RDesign

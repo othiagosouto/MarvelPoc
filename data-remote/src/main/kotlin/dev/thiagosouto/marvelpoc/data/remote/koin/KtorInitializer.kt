@@ -1,6 +1,6 @@
 package dev.thiagosouto.marvelpoc.data.remote.koin
 
-import dev.thiagosouto.domain.data.remote.CharacterDetailsRemoteContract
+import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
 import dev.thiagosouto.marvelpoc.data.remote.BuildConfig

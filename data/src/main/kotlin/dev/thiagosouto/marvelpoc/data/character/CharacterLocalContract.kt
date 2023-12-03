@@ -2,7 +2,7 @@ package dev.thiagosouto.marvelpoc.data.character
 
 import androidx.paging.DataSource
 import androidx.paging.PagingData
-import dev.thiagosouto.domain.model.Character
+import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.flow.Flow
 
 /**

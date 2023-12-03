@@ -1,4 +1,4 @@
-package dev.thiagosouto.domain.model
+package dev.thiagosouto.marvelpoc.domain.model
 
 /**
  * Ui model that represent Character

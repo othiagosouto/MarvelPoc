@@ -2,7 +2,7 @@ package dev.thiagosouto.marvelpoc.home.fakes
 
 import androidx.paging.PagingData
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
-import dev.thiagosouto.domain.model.Character
+import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

@@ -1,6 +1,6 @@
 package dev.thiagosouto.marvelpoc.data
 
-import dev.thiagosouto.domain.service.Service
+import dev.thiagosouto.marvelpoc.domain.service.Service
 
 /**
  * Interface to delivery [T]

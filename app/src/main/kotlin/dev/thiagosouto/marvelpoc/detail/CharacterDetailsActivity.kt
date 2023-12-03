@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
-import dev.thiagosouto.domain.model.Character
 import dev.thiagosouto.marvelpoc.design.components.LoadingPage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

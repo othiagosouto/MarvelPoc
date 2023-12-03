@@ -9,9 +9,9 @@ import androidx.paging.PagingConfig
 import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.PagingService
-import dev.thiagosouto.domain.model.Character
+import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
-import dev.thiagosouto.domain.exception.EmptyDataException
+import dev.thiagosouto.marvelpoc.domain.exception.EmptyDataException
 import kotlinx.coroutines.launch
 
 internal class CharactersViewModel(

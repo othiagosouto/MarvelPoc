@@ -2,7 +2,7 @@ package dev.thiagosouto.marvelpoc.home
 
 import androidx.paging.DataSource
 import androidx.paging.PositionalDataSource
-import dev.thiagosouto.domain.model.Character
+import dev.thiagosouto.marvelpoc.domain.model.Character
 
 internal class FakeCharacterDataSource(
     private val items: List<Character>,

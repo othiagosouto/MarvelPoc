@@ -1,7 +1,7 @@
 package dev.thiagosouto.marvelpoc.data.remote.ext
 
 import dev.thiagosouto.marvelpoc.data.remote.character.Result
-import dev.thiagosouto.domain.model.Character
+import dev.thiagosouto.marvelpoc.domain.model.Character
 
 internal fun Result.toCharacter() =
     Character(

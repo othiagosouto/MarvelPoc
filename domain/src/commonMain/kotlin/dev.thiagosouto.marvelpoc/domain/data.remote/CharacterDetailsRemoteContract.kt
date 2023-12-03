@@ -1,4 +1,4 @@
-package dev.thiagosouto.domain.data.remote
+package dev.thiagosouto.marvelpoc.domain.data.remote
 
 /**
  * Remote source contract that fetch character details response

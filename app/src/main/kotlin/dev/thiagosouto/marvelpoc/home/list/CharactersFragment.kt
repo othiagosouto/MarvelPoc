@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import dev.thiagosouto.domain.model.Character
+import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.design.components.LoadingPage
 import dev.thiagosouto.marvelpoc.detail.CharacterDetailsActivity
 import dev.thiagosouto.marvelpoc.widget.CharacterItem
