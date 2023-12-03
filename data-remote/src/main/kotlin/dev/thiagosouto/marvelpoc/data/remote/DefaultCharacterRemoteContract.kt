@@ -2,7 +2,7 @@ package dev.thiagosouto.marvelpoc.data.remote
 
 import androidx.paging.PagingSource
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
-import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.domain.model.Character
 
 internal class DefaultCharacterRemoteContract(private val charactersApi: CharactersBFFApi) :
     CharacterRemoteContract<Character> {

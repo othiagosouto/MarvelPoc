@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import dev.thiagosouto.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
-import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.domain.model.Character
 import kotlinx.coroutines.flow.Flow
 
 /**

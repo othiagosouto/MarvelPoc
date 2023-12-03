@@ -2,7 +2,7 @@ package dev.thiagosouto.marvelpoc.data.remote
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.domain.model.Character
 import dev.thiagosouto.marvelpoc.data.remote.character.Result
 import dev.thiagosouto.marvelpoc.data.remote.ext.toCharacter
 import dev.thiagosouto.marvelpoc.data.remote.interceptors.HttpException

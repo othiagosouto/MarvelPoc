@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
-import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.domain.model.Character
 import kotlinx.coroutines.launch
 
 internal class FavoritesViewModel(private val repository: FavoritesRepository<Character>) : ViewModel() {

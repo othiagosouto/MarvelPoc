@@ -3,7 +3,7 @@ package dev.thiagosouto.marvelpoc.home.list
 import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.PagingService
-import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.domain.model.Character
 import dev.thiagosouto.marvelpoc.home.CoroutineTestRule
 import dev.thiagosouto.marvelpoc.home.fakes.FavoritesRepositoryFake
 import dev.thiagosouto.domain.exception.EmptyDataException

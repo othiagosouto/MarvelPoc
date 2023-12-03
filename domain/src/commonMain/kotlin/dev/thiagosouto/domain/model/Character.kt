@@ -1,6 +1,4 @@
-package dev.thiagosouto.marvelpoc.data.model.view
-
-import java.io.Serializable
+package dev.thiagosouto.domain.model
 
 /**
  * Ui model that represent Character
@@ -11,7 +9,7 @@ data class Character(
     val thumbnailUrl: String,
     val description: String,
     var favorite: Boolean
-) : Serializable {
+) {
 
     companion object {
         private const val serialVersionUID = 1L

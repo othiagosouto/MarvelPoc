@@ -32,7 +32,7 @@ internal class DetailsViewStateMapperTest {
             description = input.description,
             imageUrl = input.imageUrl,
             comics = listOf(
-                dev.thiagosouto.marvelpoc.data.model.view.Comics(
+                dev.thiagosouto.domain.model.Comics(
                     title = input.comics.first().title,
                     thumbnailUrl = input.comics.first().imageUrl
                 )

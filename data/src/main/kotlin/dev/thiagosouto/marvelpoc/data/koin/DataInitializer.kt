@@ -8,7 +8,7 @@ import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.PagingService
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
-import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.domain.model.Character
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -51,6 +51,6 @@ class DataInitializer {
         }
 
         single { Dispatchers() }
-        factory { ComicsMapper() as MapperList<Comics, dev.thiagosouto.marvelpoc.data.model.view.Comics> }
+        factory { ComicsMapper() as MapperList<Comics, dev.thiagosouto.domain.model.Comics> }
     }
 }

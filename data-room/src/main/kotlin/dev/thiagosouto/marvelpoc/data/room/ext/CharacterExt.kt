@@ -1,9 +1,9 @@
 package dev.thiagosouto.marvelpoc.data.room.ext
 
-import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.domain.model.Character
 import dev.thiagosouto.marvelpoc.data.room.CharacterLocal
 
-internal fun Character.toCharacterLocal() =
+internal fun dev.thiagosouto.domain.model.Character.toCharacterLocal() =
     CharacterLocal(
         this.id,
         this.name,

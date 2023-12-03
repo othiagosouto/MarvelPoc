@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.domain.model.Character
 import dev.thiagosouto.marvelpoc.design.components.LoadingPage
 import dev.thiagosouto.marvelpoc.detail.CharacterDetailsActivity
 import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
@@ -81,7 +81,7 @@ internal class FavoriteFragment : Fragment() {
 
     private fun startDetails(character: Character) {
         val intent = Intent(context, CharacterDetailsActivity::class.java)
-        intent.putExtra(CharacterDetailsActivity.CHARACTER_KEY, character)
+        intent.putExtra(CharacterDetailsActivity.CHARACTER_KEY, character.id)
         startActivity(intent)
     }
 }

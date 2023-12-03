@@ -20,7 +20,7 @@ internal class ComicsMapperTest {
     private fun comicsDomain(id: Long) =
         Comics(id = id, title = "title - $id", imageUrl = "thumb-$id")
 
-    private fun comicsView(id: Long) = dev.thiagosouto.marvelpoc.data.model.view.Comics(
+    private fun comicsView(id: Long) = dev.thiagosouto.domain.model.Comics(
         title = "title - $id",
         thumbnailUrl = "thumb-$id"
     )

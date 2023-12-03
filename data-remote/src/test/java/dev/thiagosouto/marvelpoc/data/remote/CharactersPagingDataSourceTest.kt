@@ -4,7 +4,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.testing.TestPager
 import com.google.common.truth.Truth.assertThat
-import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.domain.model.Character
 import dev.thiagosouto.marvelpoc.data.remote.character.MarvelCharactersResponse
 import dev.thiagosouto.marvelpoc.data.remote.character.details.DetailsResponse
 import dev.thiagosouto.marvelpoc.data.remote.ext.toCharacter

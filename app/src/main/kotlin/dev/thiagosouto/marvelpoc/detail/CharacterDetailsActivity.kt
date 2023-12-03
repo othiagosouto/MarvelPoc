@@ -14,8 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
-import dev.thiagosouto.marvelpoc.R
-import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.domain.model.Character
 import dev.thiagosouto.marvelpoc.design.components.LoadingPage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,8 +26,8 @@ internal class CharacterDetailsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            val character: Character = intent.extras!!.getSerializable(CHARACTER_KEY) as Character
-            characterDetailsViewModel.process(Intent.OpenScreen(character.id))
+            val characterId: Long = intent.extras!!.getLong(CHARACTER_KEY)
+            characterDetailsViewModel.process(Intent.OpenScreen(characterId))
         }
 
         lifecycleScope.launchWhenCreated {

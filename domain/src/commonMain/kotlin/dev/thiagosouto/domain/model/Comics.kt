@@ -1,4 +1,4 @@
-package dev.thiagosouto.marvelpoc.data.model.view
+package dev.thiagosouto.domain.model
 
 /**
  * Ui model that represent comics

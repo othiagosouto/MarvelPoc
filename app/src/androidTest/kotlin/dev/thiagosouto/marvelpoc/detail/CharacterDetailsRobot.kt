@@ -15,7 +15,7 @@ import androidx.compose.ui.test.swipeUp
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import dev.thiagosouto.compose.robots.BaseRobot
-import dev.thiagosouto.marvelpoc.data.model.view.Character
+import dev.thiagosouto.domain.model.Character
 import dev.thiagosouto.marvelpoc.data.remote.koin.KtorInitializer
 import dev.thiagosouto.webserver.TestWebServer
 import org.koin.core.component.KoinComponent

@@ -1,6 +1,6 @@
 package dev.thiagosouto.marvelpoc.detail
 
-import dev.thiagosouto.marvelpoc.data.model.view.Comics
+import dev.thiagosouto.domain.model.Comics
 
 internal sealed class Intent {
     data class OpenScreen(val characterId: Long) : Intent()

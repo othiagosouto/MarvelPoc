@@ -9,7 +9,7 @@ import dev.thiagosouto.marvelpoc.support.presentation.PresentationMapper
  * Mapper domain to DetailsViewState
  */
 internal class DetailsViewStateMapper(
-    private val comicsMapper: MapperList<Comics, dev.thiagosouto.marvelpoc.data.model.view.Comics>
+    private val comicsMapper: MapperList<Comics, dev.thiagosouto.domain.model.Comics>
 ) : PresentationMapper<DetailsViewStateMapper.Input, DetailsViewState> {
     override fun apply(
         input: Input

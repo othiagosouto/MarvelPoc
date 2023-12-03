@@ -1,9 +1,9 @@
 package dev.thiagosouto.domain.data.remote
 
 /**
- * Remote source contract that fetchs character details response
+ * Remote source contract that fetch character details response
  */
-interface CharacterDetailsRemoteContract<T : Any> {
+fun interface CharacterDetailsRemoteContract<T : Any> {
 
     /**
      * return Character details
