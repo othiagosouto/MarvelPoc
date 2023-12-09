@@ -21,7 +21,7 @@ internal class CharacterLocalRoomDataSource(private val characterDAO: CharacterL
     override suspend fun favorite(item: Character): Long =
         characterDAO.favorite(item.toCharacterLocal())
 
-    override suspend fun favoriteIds(): List<Long> = characterDAO.favoriteIds()
+    override fun favoriteIds(): Flow<List<Long>> = characterDAO.favoriteIds()
 
     override suspend fun unFavorite(item: Character): Long {
         characterDAO.unFavorite(item.toCharacterLocal())

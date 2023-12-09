@@ -11,7 +11,7 @@ interface FavoritesRepository<T: Any> {
     /**
      * return a list of the ids from the favorite [T]
      */
-    suspend fun fetchFavoriteIds(): List<Long>
+    fun fetchFavoriteIds(): Flow<List<Long>>
 
     /**
      * Execute action to unFavorite [T]

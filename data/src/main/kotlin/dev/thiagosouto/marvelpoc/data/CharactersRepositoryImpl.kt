@@ -28,7 +28,7 @@ class CharactersRepositoryImpl(
     /**
      * return a list of the ids from the favorite characters
      */
-    override suspend fun fetchFavoriteIds(): List<Long> = localDataSource.favoriteIds()
+    override fun fetchFavoriteIds(): Flow<List<Long>> = localDataSource.favoriteIds()
 
     /**
      * Execute action to unfavorite character

@@ -7,6 +7,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal interface CharacterLocalDAO {
@@ -21,7 +22,7 @@ internal interface CharacterLocalDAO {
     suspend fun favorite(item: CharacterLocal): Long
 
     @Query("SELECT id FROM ${CharacterLocal.TABLE_NAME}")
-    suspend fun favoriteIds(): List<Long>
+    fun favoriteIds(): Flow<List<Long>>
 
     @Delete
     suspend fun unFavorite(item: CharacterLocal)

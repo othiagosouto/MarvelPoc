@@ -69,6 +69,7 @@ dependencies {
     androidTestImplementation libs.test.core.android
     androidTestImplementation libs.test.truth
     androidTestImplementation libs.test.kotlin.coroutines
+    androidTestImplementation libs.test.turbine
 
     androidTestImplementation libs.test.core
     androidTestImplementation libs.test.runner

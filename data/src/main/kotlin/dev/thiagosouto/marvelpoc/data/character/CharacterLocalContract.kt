@@ -28,7 +28,7 @@ interface CharacterLocalContract<T: Any> {
     /**
      * return a list of favorite ids
      */
-    suspend fun favoriteIds(): List<Long>
+    fun favoriteIds(): Flow<List<Long>>
 
     /**
      * unfavorite character and returns its id

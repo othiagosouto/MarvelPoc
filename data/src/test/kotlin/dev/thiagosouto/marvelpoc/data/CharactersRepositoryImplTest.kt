@@ -8,6 +8,7 @@ import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContra
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -77,7 +78,7 @@ internal class CharactersRepositoryImplTest {
             throw FavoriteListCalledException()
         }
 
-        override suspend fun favoriteIds(): List<Long> = favoriteIds.toList()
+        override fun favoriteIds(): Flow<List<Long>> = flowOf(favoriteIds.toList())
 
         override suspend fun unFavorite(item: Character): Long {
             favoriteIds.remove(item.id)

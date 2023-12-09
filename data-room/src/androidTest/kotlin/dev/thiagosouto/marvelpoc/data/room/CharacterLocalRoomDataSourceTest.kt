@@ -5,6 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PositionalDataSource
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
+import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.data.room.ext.toCharacter
@@ -78,7 +79,11 @@ internal class CharacterLocalRoomDataSourceTest {
             characterLocalDAO.favorite(characterLocal.copy(id = 1))
             characterLocalDAO.favorite(characterLocal.copy(id = 2))
             characterLocalDAO.favorite(characterLocal.copy(id = 3))
-            assertThat(dataSource.favoriteIds()).isEqualTo(listOf<Long>(1, 2, 3))
+
+            dataSource.favoriteIds().test{
+
+                assertThat(awaitItem()).isEqualTo(listOf<Long>(1, 2, 3))
+            }
         }
 
     @Test

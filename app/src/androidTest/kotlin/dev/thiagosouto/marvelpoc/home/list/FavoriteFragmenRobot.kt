@@ -16,6 +16,8 @@ import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.widget.ErrorScreenTestTags
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
@@ -106,8 +108,8 @@ private class FakeCharacterLocalContract(private val isEmpty: Boolean) :
 
     override suspend fun favorite(item: Character): Long = 30L
 
-    override suspend fun favoriteIds(): List<Long> {
-        return if (isEmpty) emptyList() else listOf(30)
+    override fun favoriteIds(): Flow<List<Long>> {
+        return if (isEmpty) emptyFlow() else flowOf(listOf(30))
     }
 
     override suspend fun unFavorite(item: Character): Long = 30L
