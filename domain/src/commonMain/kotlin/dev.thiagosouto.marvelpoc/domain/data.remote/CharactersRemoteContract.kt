@@ -1,4 +1,4 @@
-package dev.thiagosouto.marvelpoc.data.character
+package dev.thiagosouto.marvelpoc.domain.data.remote
 
 import dev.thiagosouto.marvelpoc.domain.model.Character
 

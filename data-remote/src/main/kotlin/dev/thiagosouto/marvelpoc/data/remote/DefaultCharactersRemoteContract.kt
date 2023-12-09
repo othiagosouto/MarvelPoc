@@ -1,6 +1,6 @@
 package dev.thiagosouto.marvelpoc.data.remote
 
-import dev.thiagosouto.marvelpoc.data.character.CharactersRemoteContract
+import dev.thiagosouto.marvelpoc.domain.data.remote.CharactersRemoteContract
 import dev.thiagosouto.marvelpoc.data.remote.character.Result
 import dev.thiagosouto.marvelpoc.data.remote.ext.toCharacter
 import dev.thiagosouto.marvelpoc.data.remote.interceptors.HttpException
