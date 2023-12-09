@@ -8,7 +8,7 @@ data class Character(
     val name: String,
     val thumbnailUrl: String,
     val description: String,
-    var favorite: Boolean
+    val favorite: Boolean
 ) {
 
     companion object {

@@ -8,23 +8,25 @@ import android.view.ViewGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.paging.LoadState
-import androidx.paging.compose.collectAsLazyPagingItems
-import dev.thiagosouto.marvelpoc.domain.model.Character
+import androidx.lifecycle.lifecycleScope
 import dev.thiagosouto.marvelpoc.design.components.LoadingPage
 import dev.thiagosouto.marvelpoc.detail.CharacterDetailsActivity
+import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.widget.CharacterItem
 import dev.thiagosouto.marvelpoc.widget.ErrorScreen
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class CharactersFragment : Fragment() {
     private val charactersViewModel: CharactersViewModel by viewModel()
+    private lateinit var customView: ComposeView
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,41 +34,49 @@ internal class CharactersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         queryText()
-        return ComposeView(requireContext()).apply {
-            setContent {
-                val pager = remember { charactersViewModel.createPager() }
-                val lazyPagingItems = pager
-                    .flow
-                    .collectAsLazyPagingItems()
+        charactersViewModel.list()
+        customView = ComposeView(requireContext())
 
-                when (val result = lazyPagingItems.loadState.refresh) {
-                    is LoadState.Loading -> LoadingPage(Modifier.testTag(CharactersListTestTags.LOADING))
-                    is LoadState.Error -> {
-                        val (message, image) = charactersViewModel.handleException(result.error)
-                        ErrorScreen(
-                            message = message,
-                            image = image
+        return customView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launch {
+
+            charactersViewModel.state.collectLatest { state ->
+                customView.setContent {
+                    when (state) {
+                        is CharacterViewState.Loading -> LoadingPage(
+                            Modifier.testTag(
+                                CharactersListTestTags.LOADING
+                            )
                         )
-                    }
-                    else -> LazyVerticalGrid(
-                        modifier = Modifier.testTag(CharactersListTestTags.LIST),
-                        columns = GridCells.Fixed(2),
-                        verticalArrangement = Arrangement.spacedBy(1.dp),
-                        horizontalArrangement = Arrangement.spacedBy(1.dp)
-                    ) {
-                        items(lazyPagingItems.itemCount) { index ->
-                            lazyPagingItems[index]?.let { character ->
-                                CharacterItem(
-                                    modifier = Modifier,
-                                    character.copy(
-                                        favorite = charactersViewModel.favoritesIds.isCharacterFavorite(
-                                            character.id
-                                        )
-                                    ),
-                                    ::startDetails
-                                ) {
-                                    val charItem = character.copy(favorite = it)
-                                    charItem.let(charactersViewModel::favoriteClick)
+
+                        is CharacterViewState.Error -> {
+                            ErrorScreen(
+                                message = state.title,
+                                image = state.image
+                            )
+                        }
+
+                        is CharacterViewState.Loaded -> LazyVerticalGrid(
+                            modifier = Modifier.testTag(CharactersListTestTags.LIST),
+                            columns = GridCells.Fixed(2),
+                            verticalArrangement = Arrangement.spacedBy(1.dp),
+                            horizontalArrangement = Arrangement.spacedBy(1.dp)
+                        ) {
+                            items(state.content.size) { index ->
+                                state.content[index].let { character ->
+                                    CharacterItem(
+                                        modifier = Modifier,
+                                        character,
+                                        ::startDetails
+                                    ) {
+                                        val charItem = character.copy(favorite = it)
+                                        charItem.let(charactersViewModel::favoriteClick)
+                                    }
                                 }
                             }
                         }

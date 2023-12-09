@@ -1,40 +1,68 @@
 package dev.thiagosouto.marvelpoc.home.list
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
-import dev.thiagosouto.marvelpoc.data.PagingService
-import dev.thiagosouto.marvelpoc.domain.model.Character
-import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.domain.exception.EmptyDataException
+import dev.thiagosouto.marvelpoc.domain.model.Character
+import dev.thiagosouto.marvelpoc.domain.services.CharacterListParams
+import dev.thiagosouto.marvelpoc.domain.services.CharacterListService
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 internal class CharactersViewModel(
-    private val repository: PagingService<Character>,
+    private val service: CharacterListService,
     private val favoritesRepository: FavoritesRepository<Character>
 ) : ViewModel() {
 
     var searchedQuery: String? = null
 
-    val favoritesIds: SnapshotStateList<Long> = mutableStateListOf()
+    private val _state: MutableStateFlow<CharacterViewState> =
+        MutableStateFlow(CharacterViewState.Loading)
+    val state: StateFlow<CharacterViewState> = _state.asStateFlow()
 
-    init {
+    fun favoriteClick(item: Character) {
         viewModelScope.launch {
-            fetchFavoriteIds()
+            if (item.favorite) {
+                favorite(item)
+            } else {
+                unFavorite(item)
+            }
         }
     }
 
-    private suspend fun fetchFavoriteIds() {
-        favoritesIds.clear()
-        favoritesIds.addAll(favoritesRepository.fetchFavoriteIds())
+    private suspend fun favorite(item: Character) {
+        favoritesRepository.favorite(item)
     }
 
-    fun handleException(e: Throwable): Pair<Int, Int> {
+    private suspend fun unFavorite(character: Character): Unit {
+        favoritesRepository.unFavorite(character)
+    }
+
+    fun list() {
+        viewModelScope.launch {
+            try {
+                val result = service.fetch(CharacterListParams(pageSize = PAGE_SIZE, searchedQuery))
+                val data = _state.value
+                val newState = when (data) {
+                    is CharacterViewState.Loading -> CharacterViewState.Loaded(result)
+                    is CharacterViewState.Loaded -> CharacterViewState.Loaded(data.content + result)
+                    is CharacterViewState.Error -> data
+                }
+                _state.value = newState
+            } catch (e: Exception) {
+                val (title, image) = handleException(e)
+                _state.value = CharacterViewState.Error(title, image)
+            }
+
+        }
+    }
+
+    private fun handleException(e: Throwable): Pair<Int, Int> {
         return if (searchedQuery.isNullOrEmpty()) {
             handleHomeCharactersException(e)
         } else {
@@ -67,37 +95,6 @@ internal class CharactersViewModel(
                 R.string.search_error_loading,
                 dev.thiagosouto.marvelpoc.design.R.drawable.thanos
             )
-        }
-    }
-
-    fun favoriteClick(item: Character) {
-        viewModelScope.launch {
-            if (item.favorite) {
-                favorite(item)
-            } else {
-                unFavorite(item)
-            }
-            fetchFavoriteIds()
-        }
-    }
-
-    private suspend fun favorite(item: Character) {
-        favoritesRepository.favorite(item)
-    }
-
-    private suspend fun unFavorite(character: Character): Unit {
-        favoritesRepository.unFavorite(character)
-    }
-
-    fun createPager(): Pager<Int, Character> {
-        return Pager<Int, Character>(
-            PagingConfig(
-                pageSize = FavoritesViewModel.PAGE_SIZE,
-                enablePlaceholders = true,
-                maxSize = 200
-            )
-        ) {
-            repository.charactersPagingDataSource(searchedQuery, FavoritesViewModel.PAGE_SIZE)
         }
     }
 

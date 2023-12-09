@@ -10,6 +10,5 @@ fun interface CharacterListService : ServiceList<CharacterListParams, Character>
 
 data class CharacterListParams(
     val pageSize: Int,
-    val queryText: String?,
-    val provideFavoriteIds: suspend () -> List<Long>
+    val queryText: String?
 )

@@ -6,6 +6,7 @@ import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.PagingService
+import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.data.services.DefaultCharacterListService
 import dev.thiagosouto.marvelpoc.domain.MapperList
@@ -54,6 +55,11 @@ class DataInitializer {
 
         single { Dispatchers() }
         factory { ComicsMapper() as MapperList<Comics, dev.thiagosouto.marvelpoc.domain.model.Comics> }
-        factory { DefaultCharacterListService(get()) as CharacterListService }
+        factory {
+            DefaultCharacterListService(
+                get<CharacterLocalContract<Character>>()::favoriteIds,
+                get()
+            ) as CharacterListService
+        }
     }
 }

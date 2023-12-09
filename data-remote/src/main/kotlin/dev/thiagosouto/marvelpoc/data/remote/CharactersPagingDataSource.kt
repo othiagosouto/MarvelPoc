@@ -61,11 +61,6 @@ internal class CharactersPagingDataSource(
 
     private fun mapToFavoriteCharacter(result: Result, favoriteIds: List<Long>): Character {
         val character = result.toCharacter()
-        character.checkIfFavorite(favoriteIds)
-        return character
-    }
-
-    private fun Character.checkIfFavorite(list: List<Long>) {
-        this.favorite = list.contains(this.id)
+        return character.copy(favorite = favoriteIds.contains(character.id))
     }
 }
