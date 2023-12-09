@@ -20,7 +20,11 @@ internal class AppModulesInitializer {
             viewModel { FavoritesViewModel(get()) }
             viewModel { CharactersViewModel(get(), get()) }
             viewModel { CharacterDetailsViewModel(get(), get(), get()) }
-            factory { DetailsViewStateMapper(get()) as PresentationMapper<DetailsViewStateMapper.Input, DetailsViewState> }
+            factory<PresentationMapper<DetailsViewStateMapper.Input, DetailsViewState>> {
+                DetailsViewStateMapper(
+                    get()
+                )
+            }
         }
     }
 }
