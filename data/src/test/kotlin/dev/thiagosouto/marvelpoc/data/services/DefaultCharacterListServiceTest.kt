@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.domain.data.remote.CharactersRemoteContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.domain.services.CharacterListParams
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
@@ -20,7 +21,7 @@ internal class DefaultCharacterListServiceTest {
             )
         )
         val fakeRemote = FakeCharactersRemoteContract(expectedResult)
-        val service = DefaultCharacterListService(fakeRemote)
+        val service = DefaultCharacterListService(fakeRemote) { flowOf(listOf(1)) }
         val params = CharacterListParams(pageSize = 10, queryText = "query")
 
         assertThat(service.fetch(params)).isEqualTo(expectedResult)

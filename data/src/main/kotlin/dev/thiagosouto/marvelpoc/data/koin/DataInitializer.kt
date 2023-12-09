@@ -4,6 +4,7 @@ import dev.thiagosouto.marvelpoc.data.CharacterDetailsService
 import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.Dispatchers
+import dev.thiagosouto.marvelpoc.data.FavoritesIdentifierProvider
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.data.services.DefaultCharacterListService
@@ -26,12 +27,14 @@ class DataInitializer {
             )
         }
 
-        factory<FavoritesRepository<Character>> {
+        single<FavoritesRepository<Character>> {
             CharactersRepositoryImpl(
                 get(),
                 get(),
             )
         }
+
+        single<FavoritesIdentifierProvider> { get<FavoritesRepository<Character>>() }
 
         factory<CharacterDetailsService> {
             CharactersRepositoryImpl(
@@ -41,9 +44,9 @@ class DataInitializer {
         }
 
         single { Dispatchers() }
-        factory<MapperList<Comics, dev.thiagosouto.marvelpoc.domain.model.Comics>>{ ComicsMapper()}
+        factory<MapperList<Comics, dev.thiagosouto.marvelpoc.domain.model.Comics>> { ComicsMapper() }
         factory<CharacterListService> {
-            DefaultCharacterListService(get())
+            DefaultCharacterListService(get(), get())
         }
     }
 }

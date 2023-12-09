@@ -1,14 +1,15 @@
 package dev.thiagosouto.marvelpoc.data.services
 
+import dev.thiagosouto.marvelpoc.data.FavoritesIdentifierProvider
 import dev.thiagosouto.marvelpoc.domain.data.remote.CharactersRemoteContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.domain.services.CharacterListParams
 import dev.thiagosouto.marvelpoc.domain.services.CharacterListService
 
 internal class DefaultCharacterListService(
-    private val charactersRemoteContract: CharactersRemoteContract
-) :
-    CharacterListService {
+    private val charactersRemoteContract: CharactersRemoteContract,
+    private val favoritesIdentifierProvider: FavoritesIdentifierProvider
+) : CharacterListService {
     override suspend fun fetch(input: CharacterListParams): List<Character> =
         charactersRemoteContract.listPagingCharacters(
             queryText = input.queryText,
