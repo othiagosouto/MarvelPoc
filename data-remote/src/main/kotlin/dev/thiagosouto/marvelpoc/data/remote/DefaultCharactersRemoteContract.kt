@@ -1,10 +1,9 @@
 package dev.thiagosouto.marvelpoc.data.remote
 
-import dev.thiagosouto.marvelpoc.domain.data.remote.CharactersRemoteContract
-import dev.thiagosouto.marvelpoc.data.remote.character.Result
 import dev.thiagosouto.marvelpoc.data.remote.ext.toCharacter
 import dev.thiagosouto.marvelpoc.data.remote.interceptors.HttpException
 import dev.thiagosouto.marvelpoc.data.remote.interceptors.InternetConnectionException
+import dev.thiagosouto.marvelpoc.domain.data.remote.CharactersRemoteContract
 import dev.thiagosouto.marvelpoc.domain.exception.EmptyDataException
 import dev.thiagosouto.marvelpoc.domain.exception.ServerException
 import dev.thiagosouto.marvelpoc.domain.model.Character
@@ -18,16 +17,14 @@ internal class DefaultCharactersRemoteContract(private val charactersApi: Charac
 
     override suspend fun listPagingCharacters(
         queryText: String?,
-        pageSize: Int,
-        provideFavoriteIds: suspend () -> List<Long>
+        pageSize: Int
     ): List<Character> {
         return try {
-            val favoriteIds = provideFavoriteIds()
             val response = charactersApi.listCharacters(
                 name = queryText,
                 offset = pageNumber,
                 limit = pageSize
-            ).data.results.map { mapToFavoriteCharacter(it, favoriteIds) }
+            ).data.results.map { it.toCharacter() }
 
             if (response.isEmpty()) {
                 throw EmptyDataException()
@@ -42,11 +39,5 @@ internal class DefaultCharactersRemoteContract(private val charactersApi: Charac
         } catch (e: UnknownHostException) {
             throw InternetConnectionException(e)
         }
-    }
-
-
-    private fun mapToFavoriteCharacter(result: Result, favoriteIds: List<Long>): Character {
-        val character = result.toCharacter()
-        return character.copy(favorite = favoriteIds.contains(character.id))
     }
 }

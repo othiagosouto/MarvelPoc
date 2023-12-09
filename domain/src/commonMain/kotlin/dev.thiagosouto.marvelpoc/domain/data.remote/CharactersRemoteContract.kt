@@ -6,7 +6,6 @@ fun interface CharactersRemoteContract {
 
     suspend fun listPagingCharacters(
         queryText: String?,
-        pageSize: Int,
-        provideFavoriteIds: suspend () -> List<Long>
+        pageSize: Int
     ): List<Character>
 }

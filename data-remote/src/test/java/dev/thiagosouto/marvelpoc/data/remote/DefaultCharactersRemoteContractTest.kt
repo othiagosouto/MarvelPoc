@@ -24,7 +24,6 @@ internal class DefaultCharactersRemoteContractTest {
     private lateinit var characterList: List<Character>
     private lateinit var characterFavoredList: List<Character>
     private val ids = mutableListOf<Long>()
-    private val provideFavoriteIds: suspend () -> List<Long> = { ids }
 
     @Before
     fun setup() {
@@ -50,7 +49,7 @@ internal class DefaultCharactersRemoteContractTest {
         api.marvelCharactersResponse = parseToJson()
 
         runTest {
-            val result = remote.listPagingCharacters("queryText", 10, provideFavoriteIds)
+            val result = remote.listPagingCharacters("queryText", 10)
 
             assertThat(result).isEqualTo(charactersList.data.results.map { it.toCharacter() })
         }
@@ -63,7 +62,7 @@ internal class DefaultCharactersRemoteContractTest {
         api.exception = HttpException(400)
 
         runTest {
-            remote.listPagingCharacters("queryText", 10, provideFavoriteIds)
+            remote.listPagingCharacters("queryText", 10)
         }
     }
 
@@ -74,7 +73,7 @@ internal class DefaultCharactersRemoteContractTest {
         api.exception = UnknownHostException("")
 
         runTest {
-            remote.listPagingCharacters("queryText", 10, provideFavoriteIds)
+            remote.listPagingCharacters("queryText", 10)
         }
     }
 
@@ -86,7 +85,7 @@ internal class DefaultCharactersRemoteContractTest {
         api.exception = ConnectException("")
 
         runTest {
-            remote.listPagingCharacters("queryText", 10, provideFavoriteIds)
+            remote.listPagingCharacters("queryText", 10)
         }
     }
 
@@ -97,9 +96,9 @@ internal class DefaultCharactersRemoteContractTest {
         api.marvelCharactersResponse = parseToJson()
 
         runTest {
-            remote.listPagingCharacters("queryText", 10, provideFavoriteIds)
-            remote.listPagingCharacters("queryText", 10, provideFavoriteIds)
-            remote.listPagingCharacters("queryText", 10, provideFavoriteIds)
+            remote.listPagingCharacters("queryText", 10)
+            remote.listPagingCharacters("queryText", 10)
+            remote.listPagingCharacters("queryText", 10)
 
             assertThat(api.offset).isEqualTo(20)
             assertThat(api.page).isEqualTo(10)

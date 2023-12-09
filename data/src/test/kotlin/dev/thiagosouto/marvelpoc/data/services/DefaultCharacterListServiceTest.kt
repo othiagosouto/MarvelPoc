@@ -1,7 +1,6 @@
 package dev.thiagosouto.marvelpoc.data.services
 
 import com.google.common.truth.Truth.assertThat
-import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.domain.data.remote.CharactersRemoteContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.domain.services.CharacterListParams
@@ -21,9 +20,7 @@ internal class DefaultCharacterListServiceTest {
             )
         )
         val fakeRemote = FakeCharactersRemoteContract(expectedResult)
-        val service = DefaultCharacterListService({
-            emptyList()
-        }, fakeRemote)
+        val service = DefaultCharacterListService(fakeRemote)
         val params = CharacterListParams(pageSize = 10, queryText = "query")
 
         assertThat(service.fetch(params)).isEqualTo(expectedResult)
@@ -33,8 +30,7 @@ internal class DefaultCharacterListServiceTest {
         CharactersRemoteContract {
         override suspend fun listPagingCharacters(
             queryText: String?,
-            pageSize: Int,
-            provideFavoriteIds: suspend () -> List<Long>
+            pageSize: Int
         ): List<Character> {
             return characters
         }
