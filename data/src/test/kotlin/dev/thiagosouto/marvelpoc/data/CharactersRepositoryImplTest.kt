@@ -4,9 +4,9 @@ import androidx.paging.DataSource
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.google.common.truth.Truth.assertThat
-import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
+import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -59,7 +59,7 @@ internal class CharactersRepositoryImplTest {
 
         repository.unFavorite(parameter)
 
-      assertThat(localSourceMock.favoriteIds).isEmpty()
+        assertThat(localSourceMock.favoriteIds).isEmpty()
     }
 
     @Test
@@ -69,53 +69,52 @@ internal class CharactersRepositoryImplTest {
 
         assertThat(repository.fetchFavoriteIds()).isEqualTo(ids)
     }
-}
 
-class FakeRemote : CharacterRemoteContract<Character> {
-    override fun listPagingCharacters(
-        queryText: String?,
-        pageSize: Int,
-        provideFavoriteIds: suspend () -> List<Long>
-    ): PagingSource<Int, Character> {
-        TODO("Not yet implemented")
-    }
-}
-
-
-class FakeLocal : CharacterLocalContract<Character> {
-
-    val favoriteIds = mutableSetOf<Long>()
-    override fun favoritesList(pageSize: Int, maxSize: Int): Flow<PagingData<Character>> {
-        TODO("Not yet implemented")
+    class FakeRemote : CharacterRemoteContract<Character> {
+        override fun listPagingCharacters(
+            queryText: String?,
+            pageSize: Int,
+            provideFavoriteIds: suspend () -> List<Long>
+        ): PagingSource<Int, Character> {
+            TODO("Not yet implemented")
+        }
     }
 
-    override fun favoriteList(): DataSource.Factory<Int, Character> {
-       throw FavoriteListCalledException()
+    class FakeLocal : CharacterLocalContract<Character> {
+
+        val favoriteIds = mutableSetOf<Long>()
+        override fun favoritesList(pageSize: Int, maxSize: Int): Flow<PagingData<Character>> {
+            TODO("Not yet implemented")
+        }
+
+        override fun favoriteList(): DataSource.Factory<Int, Character> {
+            throw FavoriteListCalledException()
+        }
+
+        override suspend fun favoriteIds(): List<Long> = favoriteIds.toList()
+
+        override suspend fun unFavorite(item: Character): Long {
+            favoriteIds.remove(item.id)
+            return item.id
+        }
+
+        override suspend fun favorite(item: Character): Long {
+            favoriteIds.add(item.id)
+            return item.id
+        }
+
+        class FavoriteListCalledException : Exception()
     }
 
-    override suspend fun favoriteIds(): List<Long> = favoriteIds.toList()
-
-    override suspend fun unFavorite(item: Character): Long {
-        favoriteIds.remove(item.id)
-        return item.id
-    }
-
-    override suspend fun favorite(item: Character): Long {
-        favoriteIds.add(item.id)
-        return item.id
-    }
-
-    class FavoriteListCalledException : Exception()
-}
-
-class FakeDetails : CharacterDetailsRemoteContract<CharacterDetails> {
-    override suspend fun fetchCharacterDetails(characterId: String): CharacterDetails {
-        return CharacterDetails(
-            id = characterId.toLong(),
-            name = "name",
-            description = "description",
-            imageUrl = "",
-            comics = emptyList()
-        )
+    class FakeDetails : CharacterDetailsRemoteContract<CharacterDetails> {
+        override suspend fun fetchCharacterDetails(characterId: String): CharacterDetails {
+            return CharacterDetails(
+                id = characterId.toLong(),
+                name = "name",
+                description = "description",
+                imageUrl = "",
+                comics = emptyList()
+            )
+        }
     }
 }
