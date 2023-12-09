@@ -51,7 +51,6 @@ internal class CharactersViewModelTest {
     @Test
     fun `favoriteClick Given favorite Then should favorite`() = runTest {
         val character = Character.EMPTY.copy(id = 2L, favorite = true)
-        val ids = listOf(1L, 2L)
 
         viewModel.favoriteClick(character)
 

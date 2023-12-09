@@ -5,7 +5,6 @@ import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
-import dev.thiagosouto.marvelpoc.data.PagingService
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.data.services.DefaultCharacterListService
@@ -25,7 +24,6 @@ class DataInitializer {
             CharactersRepositoryImpl(
                 get(),
                 get(),
-                get()
             )
         }
 
@@ -33,7 +31,6 @@ class DataInitializer {
             CharactersRepositoryImpl(
                 get(),
                 get(),
-                get()
             ) as FavoritesRepository<Character>
         }
 
@@ -41,15 +38,6 @@ class DataInitializer {
             CharactersRepositoryImpl(
                 get(),
                 get(),
-                get()
-            ) as PagingService<Character>
-        }
-
-        factory {
-            CharactersRepositoryImpl(
-                get(),
-                get(),
-                get()
             ) as CharacterDetailsService
         }
 

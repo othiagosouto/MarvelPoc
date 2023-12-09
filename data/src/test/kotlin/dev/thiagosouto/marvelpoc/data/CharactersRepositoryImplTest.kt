@@ -2,10 +2,8 @@ package dev.thiagosouto.marvelpoc.data
 
 import androidx.paging.DataSource
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
 import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
-import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
 import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,13 +16,11 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class CharactersRepositoryImplTest {
 
-    private val remoteSourceMock = FakeRemote()
     private val localSourceMock = FakeLocal()
     private val characterDetailsRemoteContract: CharacterDetailsRemoteContract<CharacterDetails> =
         FakeDetails()
     private val repository: CharactersRepositoryImpl = CharactersRepositoryImpl(
         localSourceMock,
-        remoteSourceMock,
         characterDetailsRemoteContract
     )
     private lateinit var item: Character
@@ -68,16 +64,6 @@ internal class CharactersRepositoryImplTest {
         localSourceMock.favoriteIds.addAll(ids)
 
         assertThat(repository.fetchFavoriteIds()).isEqualTo(ids)
-    }
-
-    class FakeRemote : CharacterRemoteContract<Character> {
-        override fun listPagingCharacters(
-            queryText: String?,
-            pageSize: Int,
-            provideFavoriteIds: suspend () -> List<Long>
-        ): PagingSource<Int, Character> {
-            TODO("Not yet implemented")
-        }
     }
 
     class FakeLocal : CharacterLocalContract<Character> {

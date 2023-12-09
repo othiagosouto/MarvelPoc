@@ -1,9 +1,8 @@
 package dev.thiagosouto.marvelpoc.data
 
 import androidx.paging.PagingData
-import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
-import dev.thiagosouto.marvelpoc.data.character.CharacterRemoteContract
+import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.flow.Flow
 
@@ -12,10 +11,8 @@ import kotlinx.coroutines.flow.Flow
  */
 class CharactersRepositoryImpl(
     private val localDataSource: CharacterLocalContract<Character>,
-    private val remoteDataSource: CharacterRemoteContract<Character>,
     private val remoteCharacterDetailsSource: CharacterDetailsRemoteContract<CharacterDetails>
-) : FavoritesRepository<Character>, PagingService<Character>,
-    CharacterDetailsService {
+) : FavoritesRepository<Character>, CharacterDetailsService {
 
     /**
      * return a list of favorite characters
@@ -48,18 +45,6 @@ class CharactersRepositoryImpl(
     override suspend fun favorite(item: Character) {
         localDataSource.favorite(item)
     }
-
-    /**
-     * return paged data source for characters
-     */
-    override fun charactersPagingDataSource(
-        queryText: String?,
-        pageSize: Int
-    ) = remoteDataSource.listPagingCharacters(
-        queryText,
-        pageSize,
-        localDataSource::favoriteIds
-    )
 
     /**
      * Fetch character details

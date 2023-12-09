@@ -43,6 +43,7 @@ internal class CharactersViewModel(
         favoritesRepository.unFavorite(character)
     }
 
+    @SuppressWarnings("TooGenericExceptionCaught")
     fun list() {
         viewModelScope.launch {
             try {
