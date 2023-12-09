@@ -5,4 +5,4 @@ import java.io.IOException
 /**
  * Represent internet issues
  */
-class InternetConnectionException : IOException()
+class InternetConnectionException(e: Exception) : IOException(e)

@@ -36,11 +36,11 @@ internal class DefaultCharactersRemoteContract(private val charactersApi: Charac
                 response
             }
         } catch (e: HttpException) {
-            throw ServerException()
+            throw ServerException(e)
         } catch (e: ConnectException) {
-            throw InternetConnectionException()
+            throw InternetConnectionException(e)
         } catch (e: UnknownHostException) {
-            throw InternetConnectionException()
+            throw InternetConnectionException(e)
         }
     }
 

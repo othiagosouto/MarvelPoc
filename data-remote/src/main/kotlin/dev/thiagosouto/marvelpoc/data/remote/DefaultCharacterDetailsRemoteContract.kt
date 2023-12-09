@@ -9,15 +9,14 @@ import dev.thiagosouto.marvelpoc.data.remote.interceptors.InternetConnectionExce
 import java.net.ConnectException
 import java.net.UnknownHostException
 
-@Suppress("SwallowedException")
 internal class DefaultCharacterDetailsRemoteContract(private val charactersApi: CharactersBFFApi) :
     CharacterDetailsRemoteContract<CharacterDetails> {
     override suspend fun fetchCharacterDetails(characterId: String): CharacterDetails = try {
         charactersApi.listCharacters(characterId).toCharacterDetails()
     } catch (e: ConnectException) {
-        throw InternetConnectionException()
+        throw InternetConnectionException(e)
     } catch (e: UnknownHostException) {
-        throw InternetConnectionException()
+        throw InternetConnectionException(e)
     }
 }
 
