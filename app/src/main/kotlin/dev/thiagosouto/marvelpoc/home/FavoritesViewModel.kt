@@ -3,15 +3,14 @@ package dev.thiagosouto.marvelpoc.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.thiagosouto.marvelpoc.R
-import dev.thiagosouto.marvelpoc.data.FavoritesRepository
+import dev.thiagosouto.marvelpoc.data.FavoritesService
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.home.favorites.FavoritesViewState
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-internal class FavoritesViewModel(private val repository: FavoritesRepository<Character>) :
+internal class FavoritesViewModel(private val repository: FavoritesService<Character>) :
     ViewModel() {
 
     fun list(): Flow<FavoritesViewState> = repository.favorites().map {
