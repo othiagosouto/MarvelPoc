@@ -10,13 +10,13 @@ import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-internal class CharactersRepositoryImplTest {
+internal class DefaultCharacterDetailsServiceTest {
     private val item = Character(1011334, "some name", "some url", "description", true)
 
     private val localSourceMock = FakeLocal(mutableListOf())
     private val characterDetailsRemoteContract: CharacterDetailsRemoteContract<CharacterDetails> =
         FakeDetails()
-    private val repository: CharactersRepositoryImpl = CharactersRepositoryImpl(
+    private val repository: DefaultCharacterDetailsService = DefaultCharacterDetailsService(
         localSourceMock,
         characterDetailsRemoteContract
     )

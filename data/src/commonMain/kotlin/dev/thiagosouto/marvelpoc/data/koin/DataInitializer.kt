@@ -1,7 +1,7 @@
 package dev.thiagosouto.marvelpoc.data.koin
 
 import dev.thiagosouto.marvelpoc.data.CharacterDetailsService
-import dev.thiagosouto.marvelpoc.data.CharactersRepositoryImpl
+import dev.thiagosouto.marvelpoc.data.DefaultCharacterDetailsService
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.data.FavoriteActions
@@ -22,14 +22,14 @@ class DataInitializer {
     fun provides(): Module = module {
 
         single {
-            CharactersRepositoryImpl(
+            DefaultCharacterDetailsService(
                 get(),
                 get(),
             )
         }
 
         single<FavoritesRepository<Character>> {
-            CharactersRepositoryImpl(
+            DefaultCharacterDetailsService(
                 get(),
                 get(),
             )
@@ -38,7 +38,7 @@ class DataInitializer {
         single<FavoritesIdentifierProvider> { get<FavoritesRepository<Character>>() }
 
         factory<CharacterDetailsService> {
-            CharactersRepositoryImpl(
+            DefaultCharacterDetailsService(
                 get(),
                 get(),
             )
