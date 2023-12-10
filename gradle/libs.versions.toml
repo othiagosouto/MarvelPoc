@@ -46,6 +46,7 @@ android-compose-accompanist-pager = { module = "com.google.accompanist:accompani
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
 room = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
 koin = "io.insert-koin:koin-android:3.2.0"
+koin-kmp = "io.insert-koin:koin-core:3.2.0"
 android-lifecycle = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycleVersion" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }

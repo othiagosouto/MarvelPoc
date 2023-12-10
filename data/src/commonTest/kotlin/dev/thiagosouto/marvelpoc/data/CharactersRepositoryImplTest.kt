@@ -1,14 +1,14 @@
 package dev.thiagosouto.marvelpoc.data
 
 import app.cash.turbine.test
-import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class CharactersRepositoryImplTest {
     private val item = Character(1011334, "some name", "some url", "description", true)
@@ -26,7 +26,7 @@ internal class CharactersRepositoryImplTest {
         localSourceMock.favorite(item)
 
         repository.favorites().test {
-            assertThat(awaitItem()).isEqualTo(listOf(item))
+            assertEquals(expected = listOf(item), actual = awaitItem())
             awaitComplete()
         }
     }
@@ -36,8 +36,7 @@ internal class CharactersRepositoryImplTest {
         repository.favorite(item)
 
         localSourceMock.favoriteIds().test {
-
-            assertThat(awaitItem()).isEqualTo(listOf(item.id))
+            assertEquals(expected = listOf(item.id), actual = awaitItem())
             awaitComplete()
         }
     }
@@ -50,7 +49,7 @@ internal class CharactersRepositoryImplTest {
         repository.unFavorite(parameter)
 
         localSourceMock.favoriteIds().test {
-            assertThat(awaitItem()).isEmpty()
+            assertEquals(expected = emptyList(), actual = awaitItem())
             awaitComplete()
         }
 
@@ -65,25 +64,24 @@ internal class CharactersRepositoryImplTest {
         }
 
         repository.fetchFavoriteIds().test {
-            assertThat(awaitItem()).isEqualTo(items.map { it.id })
+            assertEquals(expected = items.map { it.id }, actual = awaitItem())
             awaitComplete()
         }
     }
 
     @Test
     fun `fetch returns details`() = runTest {
-        assertThat(
-            repository.fetch("123")
+
+        assertEquals(
+            expected = CharacterDetails(
+                id = 123L,
+                name = CHARACTER_NAME,
+                description = CHARACTER_DESCRIPTION,
+                imageUrl = "",
+                comics = emptyList()
+            ),
+            actual = repository.fetch("123")
         )
-            .isEqualTo(
-                CharacterDetails(
-                    id = 123L,
-                    name = CHARACTER_NAME,
-                    description = CHARACTER_DESCRIPTION,
-                    imageUrl = "",
-                    comics = emptyList()
-                )
-            )
     }
 
     private class FakeLocal(val characters: MutableList<Character>) :

@@ -1,8 +1,8 @@
 package dev.thiagosouto.marvelpoc.data.mappers
 
 import dev.thiagosouto.marvelpoc.data.Comics
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class ComicsMapperTest {
 
@@ -14,7 +14,7 @@ internal class ComicsMapperTest {
         val mapper = ComicsMapper()
 
         val expectedResult = ids.map(::comicsView)
-        assertEquals(expectedResult, mapper.apply(comics))
+        assertEquals(expected = expectedResult, actual = mapper.apply(comics))
     }
 
     private fun comicsDomain(id: Long) =

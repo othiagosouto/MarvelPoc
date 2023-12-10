@@ -1,13 +1,13 @@
 package dev.thiagosouto.marvelpoc.data.services
 
 import app.cash.turbine.test
-import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.domain.data.remote.CharactersRemoteContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.domain.services.CharacterListParams
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class DefaultCharacterListServiceTest {
     @Test
@@ -28,7 +28,7 @@ internal class DefaultCharacterListServiceTest {
         service.source.test {
             service.fetch(params)
 
-            assertThat(awaitItem()).isEqualTo(expectedResult)
+            assertEquals(expected = expectedResult, actual = awaitItem())
         }
     }
 
