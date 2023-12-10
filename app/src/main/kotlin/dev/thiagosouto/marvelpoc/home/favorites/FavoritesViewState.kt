@@ -2,7 +2,7 @@ package dev.thiagosouto.marvelpoc.home.favorites
 
 import dev.thiagosouto.marvelpoc.domain.model.Character
 
-sealed class FavoritesViewState {
+internal sealed class FavoritesViewState {
 
     data object Loading : FavoritesViewState()
 

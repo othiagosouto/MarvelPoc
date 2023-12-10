@@ -72,18 +72,18 @@ internal class CharactersRepositoryImplTest {
 
     @Test
     fun `fetch returns details`() = runTest {
-            assertThat(
-                repository.fetch("123")
-            )
-                .isEqualTo(
-                    CharacterDetails(
-                        id = 123L,
-                        name = "name",
-                        description = "description",
-                        imageUrl = "",
-                        comics = emptyList()
-                    )
+        assertThat(
+            repository.fetch("123")
+        )
+            .isEqualTo(
+                CharacterDetails(
+                    id = 123L,
+                    name = CHARACTER_NAME,
+                    description = CHARACTER_DESCRIPTION,
+                    imageUrl = "",
+                    comics = emptyList()
                 )
+            )
     }
 
     private class FakeLocal(val characters: MutableList<Character>) :
@@ -103,16 +103,20 @@ internal class CharactersRepositoryImplTest {
         }
     }
 
-
     private class FakeDetails : CharacterDetailsRemoteContract<CharacterDetails> {
         override suspend fun fetchCharacterDetails(characterId: String): CharacterDetails {
             return CharacterDetails(
                 id = characterId.toLong(),
-                name = "name",
-                description = "description",
+                name = CHARACTER_NAME,
+                description = CHARACTER_DESCRIPTION,
                 imageUrl = "",
                 comics = emptyList()
             )
         }
+    }
+
+    private companion object {
+        const val CHARACTER_NAME = "name"
+        const val CHARACTER_DESCRIPTION = "description"
     }
 }

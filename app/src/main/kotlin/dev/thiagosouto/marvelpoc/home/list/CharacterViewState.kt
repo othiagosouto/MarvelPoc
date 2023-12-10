@@ -2,7 +2,7 @@ package dev.thiagosouto.marvelpoc.home.list
 
 import dev.thiagosouto.marvelpoc.domain.model.Character
 
-sealed interface CharacterViewState {
+internal sealed interface CharacterViewState {
 
     data object Loading : CharacterViewState
 
