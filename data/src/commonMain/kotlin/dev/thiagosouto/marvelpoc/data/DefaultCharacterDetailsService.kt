@@ -9,36 +9,8 @@ import kotlinx.coroutines.flow.Flow
  * Fetch data related from character between remote and local source
  */
 internal class DefaultCharacterDetailsService(
-    private val localDataSource: CharacterLocalContract<Character>,
     private val remoteCharacterDetailsSource: CharacterDetailsRemoteContract<CharacterDetails>
-) : FavoritesRepository<Character>, CharacterDetailsService {
-
-    /**
-     * return a list of favorite characters
-     */
-    override fun favorites(): Flow<List<Character>> =
-        localDataSource.favoritesList()
-
-    /**
-     * return a list of the ids from the favorite characters
-     */
-    override fun fetchFavoriteIds(): Flow<List<Long>> = localDataSource.favoriteIds()
-
-    /**
-     * Execute action to unfavorite character
-     */
-    override suspend fun unFavorite(
-        item: Character
-    ) {
-        localDataSource.unFavorite(item)
-    }
-
-    /**
-     * Execute action to favorite character
-     */
-    override suspend fun favorite(item: Character) {
-        localDataSource.favorite(item)
-    }
+) : CharacterDetailsService {
 
     /**
      * Fetch character details
@@ -47,4 +19,3 @@ internal class DefaultCharacterDetailsService(
         remoteCharacterDetailsSource.fetchCharacterDetails(input)
 
 }
-

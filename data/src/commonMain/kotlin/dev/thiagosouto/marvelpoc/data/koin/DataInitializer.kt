@@ -9,6 +9,7 @@ import dev.thiagosouto.marvelpoc.data.FavoritesIdentifierProvider
 import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.data.services.DefaultCharacterListService
+import dev.thiagosouto.marvelpoc.data.services.DefaultFavoritesService
 import dev.thiagosouto.marvelpoc.domain.MapperList
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.domain.services.CharacterListService
@@ -21,28 +22,13 @@ import org.koin.dsl.module
 class DataInitializer {
     fun provides(): Module = module {
 
-        single {
-            DefaultCharacterDetailsService(
-                get(),
-                get(),
-            )
-        }
+        single { DefaultCharacterDetailsService(get()) }
 
-        single<FavoritesRepository<Character>> {
-            DefaultCharacterDetailsService(
-                get(),
-                get(),
-            )
-        }
+        single<FavoritesRepository<Character>> { DefaultFavoritesService(get()) }
 
         single<FavoritesIdentifierProvider> { get<FavoritesRepository<Character>>() }
 
-        factory<CharacterDetailsService> {
-            DefaultCharacterDetailsService(
-                get(),
-                get(),
-            )
-        }
+        factory<CharacterDetailsService> { DefaultCharacterDetailsService(get(),) }
 
         single { Dispatchers() }
         factory<MapperList<Comics, dev.thiagosouto.marvelpoc.domain.model.Comics>> { ComicsMapper() }
