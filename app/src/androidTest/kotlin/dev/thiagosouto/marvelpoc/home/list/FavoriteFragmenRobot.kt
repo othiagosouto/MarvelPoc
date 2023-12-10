@@ -100,13 +100,13 @@ private class FakeCharacterLocalContract(private val isEmpty: Boolean) :
         return flowOf(data)
     }
 
-    override suspend fun favorite(item: Character): Long = 30L
+    override suspend fun favorite(item: Character) = Unit
 
     override fun favoriteIds(): Flow<List<Long>> {
         return if (isEmpty) emptyFlow() else flowOf(listOf(30))
     }
 
-    override suspend fun unFavorite(item: Character): Long = 30L
+    override suspend fun unFavorite(item: Character) = Unit
 
     private companion object Mock {
         const val DESCRIPTION = "description"
