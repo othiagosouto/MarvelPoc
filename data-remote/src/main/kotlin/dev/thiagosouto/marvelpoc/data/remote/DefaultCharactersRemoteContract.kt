@@ -14,7 +14,6 @@ internal class DefaultCharactersRemoteContract(private val charactersApi: Charac
     CharactersRemoteContract {
     private var pageNumber = 0
 
-
     override suspend fun listPagingCharacters(
         queryText: String?,
         pageSize: Int

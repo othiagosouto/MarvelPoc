@@ -28,7 +28,7 @@ class DataInitializer {
 
         single<FavoritesIdentifierProvider> { get<FavoritesService<Character>>() }
 
-        factory<CharacterDetailsService> { DefaultCharacterDetailsService(get(),) }
+        factory<CharacterDetailsService> { DefaultCharacterDetailsService(get()) }
 
         single { Dispatchers() }
         factory<MapperList<Comics, dev.thiagosouto.marvelpoc.domain.model.Comics>> { ComicsMapper() }

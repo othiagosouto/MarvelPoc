@@ -20,7 +20,7 @@ fun interface FavoritesIdentifierProvider {
     fun fetchFavoriteIds(): Flow<List<Long>>
 }
 
-interface FavoriteActions<T: Any> {
+interface FavoriteActions<T : Any> {
     /**
      * Execute action to unFavorite [T]
      */

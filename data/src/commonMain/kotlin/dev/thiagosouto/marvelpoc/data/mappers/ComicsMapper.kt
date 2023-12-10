@@ -6,7 +6,7 @@ import dev.thiagosouto.marvelpoc.data.Comics
 /**
  * Mapper to comics domain to ui model
  */
-class ComicsMapper: MapperList<Comics, dev.thiagosouto.marvelpoc.domain.model.Comics> {
+class ComicsMapper : MapperList<Comics, dev.thiagosouto.marvelpoc.domain.model.Comics> {
 
     /**
      * Mapper to comics domain to ui model

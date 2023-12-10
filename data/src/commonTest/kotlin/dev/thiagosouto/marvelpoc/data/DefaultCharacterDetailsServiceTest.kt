@@ -1,7 +1,6 @@
 package dev.thiagosouto.marvelpoc.data
 
 import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContract
-import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -27,7 +26,6 @@ internal class DefaultCharacterDetailsServiceTest {
             actual = repository.fetch("123")
         )
     }
-
 
     private class FakeDetails : CharacterDetailsRemoteContract<CharacterDetails> {
         override suspend fun fetchCharacterDetails(characterId: String): CharacterDetails {

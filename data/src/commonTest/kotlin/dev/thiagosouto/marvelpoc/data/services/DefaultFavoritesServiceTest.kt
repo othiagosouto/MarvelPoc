@@ -47,7 +47,6 @@ internal class DefaultFavoritesServiceTest {
             assertEquals(expected = emptyList(), actual = awaitItem())
             awaitComplete()
         }
-
     }
 
     @Test
@@ -80,6 +79,4 @@ internal class DefaultFavoritesServiceTest {
             return item.id
         }
     }
-
-
 }

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * Local source contract that interact with characters
  */
-interface CharacterLocalContract<T: Any> {
+interface CharacterLocalContract<T : Any> {
 
     /**
      * returns a paged source of favorte characters
@@ -26,5 +26,5 @@ interface CharacterLocalContract<T: Any> {
     /**
      * unfavorite character and returns its id
      */
-    suspend fun unFavorite(item: T) : Long
+    suspend fun unFavorite(item: T): Long
 }

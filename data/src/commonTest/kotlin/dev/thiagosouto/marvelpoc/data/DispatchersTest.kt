@@ -4,7 +4,7 @@ import kotlinx.coroutines.IO
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class DispatchersTest {
+internal class DispatchersTest {
 
     @Test
     fun `returns specific dispatchers from coroutines`() {
