@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * Fetch data related from character between remote and local source
  */
-class CharactersRepositoryImpl(
+internal class CharactersRepositoryImpl(
     private val localDataSource: CharacterLocalContract<Character>,
     private val remoteCharacterDetailsSource: CharacterDetailsRemoteContract<CharacterDetails>
 ) : FavoritesRepository<Character>, CharacterDetailsService {
