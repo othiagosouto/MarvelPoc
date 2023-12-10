@@ -3,17 +3,11 @@ package dev.thiagosouto.marvelpoc.home.list
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.paging.DataSource
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
-import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.widget.ErrorScreenTestTags
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -65,16 +59,17 @@ internal class FavoriteFragmentResult(private val composeTestRule: ComposeTestRu
     }
 
     private fun checkCharacterName(characterName: String) {
-        composeTestRule
-            .onNodeWithTag("character-0")
-            .assertTextEquals(characterName)
-            .assertIsDisplayed()
+        composeTestRule.waitUntil {
+            composeTestRule.onAllNodesWithText(characterName)
+                .fetchSemanticsNodes().size == 1
+        }
     }
 
 
     private fun checkErrorMessage(message: String) {
         composeTestRule.onNodeWithTag(ErrorScreenTestTags.IMAGE).assertIsDisplayed()
-        composeTestRule.onNodeWithTag(ErrorScreenTestTags.MESSAGE).assertIsDisplayed().assertTextEquals(message)
+        composeTestRule.onNodeWithTag(ErrorScreenTestTags.MESSAGE).assertIsDisplayed()
+            .assertTextEquals(message)
     }
 
     fun recyclerViewIsHidden() {
@@ -91,7 +86,7 @@ internal class FavoriteFragmentResult(private val composeTestRule: ComposeTestRu
 
 private class FakeCharacterLocalContract(private val isEmpty: Boolean) :
     CharacterLocalContract<Character> {
-    override fun favoriteList(): DataSource.Factory<Int, Character> {
+    override fun favoritesList(): Flow<List<Character>> {
 
         val data = if (isEmpty) emptyList() else listOf(
             Character(
@@ -102,8 +97,7 @@ private class FakeCharacterLocalContract(private val isEmpty: Boolean) :
                 true
             )
         )
-        return FakeHomeDataSource(data)
-
+        return flowOf(data)
     }
 
     override suspend fun favorite(item: Character): Long = 30L
@@ -117,60 +111,8 @@ private class FakeCharacterLocalContract(private val isEmpty: Boolean) :
     private companion object Mock {
         const val DESCRIPTION = "description"
     }
-
-    override fun favoritesList(pageSize: Int, maxSize: Int): Flow<PagingData<Character>> {
-
-        return Pager<Int, Character>(
-            PagingConfig(
-                pageSize = FavoritesViewModel.PAGE_SIZE,
-                enablePlaceholders = true,
-                maxSize = 200
-            )
-        ) {
-            PagingSourceCharacter(
-                if (isEmpty) {
-                    emptyList<Character>()
-                } else {
-                    listOf(
-                        Character(
-                            30,
-                            HERO_NAME,
-                            "http://www.google.com",
-                            DESCRIPTION,
-                            true
-                        )
-                    )
-                }, 20
-            )
-        }.flow
-    }
 }
 
-private class PagingSourceCharacter(
-    private val characters: List<Character>,
-    private val pageSize: Int
-) :
-    PagingSource<Int, Character>() {
-
-    override fun getRefreshKey(state: PagingState<Int, Character>): Int? {
-        return state.anchorPosition?.let {
-            state.closestPageToPosition(it)?.prevKey?.plus(pageSize)
-                ?: state.closestPageToPosition(it)?.nextKey?.minus(pageSize)
-        }
-    }
-
-    override suspend fun load(params: PagingSource.LoadParams<Int>): PagingSource.LoadResult<Int, Character> {
-        val pageNumber = params.key ?: 0
-
-        val prevKey = if (pageNumber > 0) pageNumber - pageSize else null
-        val nextKey = if (characters.isNotEmpty()) pageNumber + pageSize else null
-        return PagingSource.LoadResult.Page(
-            data = characters,
-            prevKey = prevKey,
-            nextKey = nextKey
-        )
-    }
-}
 
 private const val HERO_NAME = "3-D Test HAHAH"
 

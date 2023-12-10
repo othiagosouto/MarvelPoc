@@ -58,8 +58,6 @@ dependencies {
 
     implementation libs.kotlin.coroutines.android
     implementation libs.koin
-    implementation libs.android.paging
-    implementation libs.room.paging
     implementation libs.room
     kapt libs.room.compiler
 

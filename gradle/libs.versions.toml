@@ -43,10 +43,7 @@ android-compose-graphics = { group = "androidx.compose.animation", name = "anima
 android-compose-activity = "androidx.activity:activity-compose:1.8.1"
 android-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 android-compose-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPagerVersion" }
-android-compose-paging = "androidx.paging:paging-compose:3.2.1"
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
-room-paging = { module = "androidx.room:room-paging", version.ref = "roomVersion" }
-android-paging = "androidx.paging:paging-runtime-ktx:3.2.1"
 room = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
 koin = "io.insert-koin:koin-android:3.2.0"
 android-lifecycle = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycleVersion" }
@@ -76,7 +73,6 @@ test-junit-ktx = "androidx.test.ext:junit-ktx:1.1.5"
 test-fragment = "androidx.fragment:fragment-testing:1.6.2"
 test-android-manifest = "androidx.fragment:fragment-testing-manifest:1.6.2"
 test-orchestrator = "androidx.test:orchestrator:1.4.2"
-test-android-paging = "androidx.paging:paging-testing:3.2.1"
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 [bundles]
 

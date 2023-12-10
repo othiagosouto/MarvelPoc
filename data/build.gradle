@@ -50,12 +50,9 @@ dependencies {
     implementation project(path: ':domain')
 
     implementation libs.kotlin.std
-    implementation libs.kotlin.coroutines.android
+    implementation libs.kotlin.coroutines
 
     implementation libs.koin
-
-    implementation libs.android.paging
-    implementation libs.android.compose.accompanist.pager
 
     testImplementation libs.test.turbine
 

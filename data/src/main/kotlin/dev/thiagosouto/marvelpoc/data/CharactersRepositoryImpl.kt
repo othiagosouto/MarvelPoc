@@ -1,6 +1,5 @@
 package dev.thiagosouto.marvelpoc.data
 
-import androidx.paging.PagingData
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
@@ -17,13 +16,8 @@ class CharactersRepositoryImpl(
     /**
      * return a list of favorite characters
      */
-    override fun favorites(pageSize: Int, maxPageSize: Int): Flow<PagingData<Character>> =
-        localDataSource.favoritesList(pageSize, maxPageSize)
-
-    /**
-     * return a list of favorite characters
-     */
-    fun fetchFavoriteCharacters() = localDataSource.favoriteList()
+    override fun favorites(): Flow<List<Character>> =
+        localDataSource.favoritesList()
 
     /**
      * return a list of the ids from the favorite characters

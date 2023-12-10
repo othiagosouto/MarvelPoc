@@ -1,7 +1,5 @@
 package dev.thiagosouto.marvelpoc.data.character
 
-import androidx.paging.DataSource
-import androidx.paging.PagingData
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.flow.Flow
 
@@ -13,12 +11,7 @@ interface CharacterLocalContract<T: Any> {
     /**
      * returns a paged source of favorte characters
      */
-    fun favoritesList(pageSize: Int, maxSize: Int): Flow<PagingData<Character>>
-
-    /**
-     * returns a paged source of favorte characters
-     */
-    fun favoriteList(): DataSource.Factory<Int, T>
+    fun favoritesList(): Flow<List<Character>>
 
     /**
      * favorite character and returns its id

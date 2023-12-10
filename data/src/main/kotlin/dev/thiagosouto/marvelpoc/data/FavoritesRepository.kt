@@ -1,6 +1,5 @@
 package dev.thiagosouto.marvelpoc.data
 
-import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -11,7 +10,7 @@ interface FavoritesRepository<T : Any> : FavoritesIdentifierProvider, FavoriteAc
     /**
      * returns a paged source of favorite [T]
      */
-    fun favorites(pageSize: Int, maxPageSize: Int): Flow<PagingData<T>>
+    fun favorites(): Flow<List<T>>
 }
 
 fun interface FavoritesIdentifierProvider {

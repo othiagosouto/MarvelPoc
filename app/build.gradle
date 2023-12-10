@@ -99,7 +99,6 @@ dependencies {
     implementation libs.koin
 
     implementation libs.android.core
-    implementation libs.android.paging
     implementation libs.android.lifecycle.viewmodel
 
     //Compose
@@ -112,7 +111,6 @@ dependencies {
     implementation libs.android.compose.animation
     implementation libs.android.compose.graphics
     implementation libs.android.compose.accompanist.pager
-    implementation libs.android.compose.paging
 
     debugImplementation libs.android.compose.preview
 

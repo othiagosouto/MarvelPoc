@@ -2,14 +2,14 @@ package dev.thiagosouto.marvelpoc.data.room
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.paging.PositionalDataSource
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.data.room.ext.toCharacter
+import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -87,8 +87,7 @@ internal class CharacterLocalRoomDataSourceTest {
         }
 
     @Test
-    fun favoriteList_shouldReturnFavoriteList() =
-        coroutineTestRule.testDispatcher.runBlockingTest {
+    fun favoriteList_shouldReturnFavoriteList() = runTest {
             val character1 = characterLocal.copy(id = 1)
             val character2 = characterLocal.copy(id = 2)
             val character3 = characterLocal.copy(id = 3)
@@ -97,24 +96,14 @@ internal class CharacterLocalRoomDataSourceTest {
             characterLocalDAO.favorite(character2)
             characterLocalDAO.favorite(character3)
 
-            val favorites = dataSource.favoriteList()
+           dataSource.favoritesList().test{
 
-            val params = PositionalDataSource.LoadRangeParams(0, 10)
-            var characters: List<Character>? = null
-            val teste = object : PositionalDataSource.LoadRangeCallback<Character>() {
-                override fun onResult(data: List<Character>) {
-                    characters = data
-                }
-
-            }
-            (favorites.create() as PositionalDataSource).loadRange(params, teste)
-            assertThat(characters).isEqualTo(
-                listOf(
-                    character1.toCharacter(),
-                    character2.toCharacter(),
-                    character3.toCharacter()
-                )
-            )
+               assertThat(awaitItem()).isEqualTo(listOf(
+                   character1.toCharacter(),
+                   character2.toCharacter(),
+                   character3.toCharacter()
+               ))
+           }
         }
 
     private companion object Mock{

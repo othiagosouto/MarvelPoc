@@ -3,7 +3,7 @@ package dev.thiagosouto.marvelpoc.data
 /**
  * Character details domain model
  */
-class CharacterDetails(
+data class CharacterDetails(
     val id: Long,
     val name: String,
     val description: String,
