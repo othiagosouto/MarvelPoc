@@ -38,13 +38,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':data')
     implementation project(path: ':domain')
-    implementation platform(libs.android.compose.bom)
 
-    implementation libs.kotlin.coroutines.android
-    implementation libs.koin
+    implementation libs.kotlin.coroutines
+    implementation libs.koin.kmp
 
     implementation libs.kotlin.serialization
-    implementation libs.okhttp
     implementation libs.ktor.core
     implementation libs.ktor.cio
     implementation libs.ktor.serialization
