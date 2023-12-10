@@ -5,7 +5,9 @@ import dev.thiagosouto.marvelpoc.data.remote.character.details.DetailsComics
 import dev.thiagosouto.marvelpoc.data.remote.character.details.DetailsResponse
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.Comics
+import dev.thiagosouto.marvelpoc.data.remote.interceptors.HttpException
 import dev.thiagosouto.marvelpoc.data.remote.interceptors.InternetConnectionException
+import dev.thiagosouto.marvelpoc.domain.exception.ServerException
 import java.net.ConnectException
 import java.net.UnknownHostException
 
@@ -17,6 +19,8 @@ internal class DefaultCharacterDetailsRemoteContract(private val charactersApi: 
         throw InternetConnectionException(e)
     } catch (e: UnknownHostException) {
         throw InternetConnectionException(e)
+    } catch(e: HttpException){
+        throw ServerException(e)
     }
 }
 

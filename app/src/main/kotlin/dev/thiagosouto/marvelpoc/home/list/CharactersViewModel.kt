@@ -1,29 +1,35 @@
 package dev.thiagosouto.marvelpoc.home.list
 
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.thiagosouto.marvelpoc.R
-import dev.thiagosouto.marvelpoc.data.FavoritesRepository
+import dev.thiagosouto.marvelpoc.data.FavoriteActions
 import dev.thiagosouto.marvelpoc.domain.exception.EmptyDataException
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.domain.services.CharacterListParams
 import dev.thiagosouto.marvelpoc.domain.services.CharacterListService
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 internal class CharactersViewModel(
     private val service: CharacterListService,
-    private val favoritesRepository: FavoritesRepository<Character>
+    private val favoriteActions: FavoriteActions<Character>
 ) : ViewModel() {
 
     var searchedQuery: String? = null
 
-    private val _state: MutableStateFlow<CharacterViewState> =
-        MutableStateFlow(CharacterViewState.Loading)
-    val state: StateFlow<CharacterViewState> = _state.asStateFlow()
+    val state: Flow<CharacterViewState> = service.source
+        .map {
+            CharacterViewState.Loaded(it)
+        }.catch {
+            val (title, image) = handleException(it)
+            CharacterViewState.Error(title, image)
+        }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, CharacterViewState.Loading)
 
     fun favoriteClick(item: Character) {
         viewModelScope.launch {
@@ -36,30 +42,16 @@ internal class CharactersViewModel(
     }
 
     private suspend fun favorite(item: Character) {
-        favoritesRepository.favorite(item)
+        favoriteActions.favorite(item)
     }
 
     private suspend fun unFavorite(character: Character): Unit {
-        favoritesRepository.unFavorite(character)
+        favoriteActions.unFavorite(character)
     }
 
-    @SuppressWarnings("TooGenericExceptionCaught")
-    fun list() {
+    fun load() {
         viewModelScope.launch {
-            try {
-                val result = service.fetch(CharacterListParams(pageSize = PAGE_SIZE, searchedQuery))
-                val data = _state.value
-                val newState = when (data) {
-                    is CharacterViewState.Loading -> CharacterViewState.Loaded(result)
-                    is CharacterViewState.Loaded -> CharacterViewState.Loaded(data.content + result)
-                    is CharacterViewState.Error -> data
-                }
-                _state.value = newState
-            } catch (e: Exception) {
-                val (title, image) = handleException(e)
-                _state.value = CharacterViewState.Error(title, image)
-            }
-
+            service.fetch(CharacterListParams(pageSize = PAGE_SIZE, searchedQuery))
         }
     }
 
@@ -102,8 +94,4 @@ internal class CharactersViewModel(
     companion object {
         const val PAGE_SIZE = 20
     }
-}
-
-internal fun SnapshotStateList<Long>.isCharacterFavorite(id: Long): Boolean {
-    return this.contains(id)
 }

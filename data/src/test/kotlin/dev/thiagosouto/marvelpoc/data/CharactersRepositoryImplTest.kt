@@ -2,6 +2,7 @@ package dev.thiagosouto.marvelpoc.data
 
 import androidx.paging.DataSource
 import androidx.paging.PagingData
+import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.domain.data.remote.CharacterDetailsRemoteContract
@@ -64,7 +65,10 @@ internal class CharactersRepositoryImplTest {
         val ids: List<Long> = listOf(1, 2, 3)
         localSourceMock.favoriteIds.addAll(ids)
 
-        assertThat(repository.fetchFavoriteIds()).isEqualTo(ids)
+        repository.fetchFavoriteIds().test{
+            assertThat(awaitItem()).isEqualTo(ids)
+            awaitComplete()
+        }
     }
 
     class FakeLocal : CharacterLocalContract<Character> {

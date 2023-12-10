@@ -57,6 +57,8 @@ dependencies {
     implementation libs.android.paging
     implementation libs.android.compose.accompanist.pager
 
+    testImplementation libs.test.turbine
+
     allTestsConfigs libs.test.junit
     allTestsConfigs libs.test.kotlin.coroutines
     allTestsConfigs libs.test.truth

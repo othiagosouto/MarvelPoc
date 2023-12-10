@@ -1,5 +1,6 @@
 package dev.thiagosouto.marvelpoc.data.services
 
+import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.domain.data.remote.CharactersRemoteContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
@@ -24,7 +25,11 @@ internal class DefaultCharacterListServiceTest {
         val service = DefaultCharacterListService(fakeRemote) { flowOf(listOf(1)) }
         val params = CharacterListParams(pageSize = 10, queryText = "query")
 
-        assertThat(service.fetch(params)).isEqualTo(expectedResult)
+        service.source.test {
+            service.fetch(params)
+
+            assertThat(awaitItem()).isEqualTo(expectedResult)
+        }
     }
 
     private class FakeCharactersRemoteContract(private val characters: List<Character>) :

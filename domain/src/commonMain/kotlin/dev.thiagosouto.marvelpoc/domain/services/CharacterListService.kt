@@ -6,7 +6,7 @@ import dev.thiagosouto.marvelpoc.domain.service.ServiceList
 /**
  * Interface to delivery [T]
  */
-fun interface CharacterListService : ServiceList<CharacterListParams, Character>
+interface CharacterListService : ServiceList<CharacterListParams, Character>
 
 data class CharacterListParams(
     val pageSize: Int,

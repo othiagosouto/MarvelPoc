@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.ui.Modifier
@@ -13,7 +14,9 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dev.thiagosouto.marvelpoc.design.components.LoadingPage
 import dev.thiagosouto.marvelpoc.detail.CharacterDetailsActivity
 import dev.thiagosouto.marvelpoc.domain.model.Character
@@ -34,7 +37,7 @@ internal class CharactersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         queryText()
-        charactersViewModel.list()
+        charactersViewModel.load()
         customView = ComposeView(requireContext())
 
         return customView
@@ -43,39 +46,46 @@ internal class CharactersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                charactersViewModel.state.collectLatest { state ->
+                    customView.setContent {
+                        when (state) {
+                            is CharacterViewState.Loading -> {
+                                LoadingPage(
+                                    Modifier.testTag(
+                                        CharactersListTestTags.LOADING
+                                    )
+                                )
+                            }
 
-            charactersViewModel.state.collectLatest { state ->
-                customView.setContent {
-                    when (state) {
-                        is CharacterViewState.Loading -> LoadingPage(
-                            Modifier.testTag(
-                                CharactersListTestTags.LOADING
-                            )
-                        )
+                            is CharacterViewState.Error -> {
+                                ErrorScreen(
+                                    message = state.title,
+                                    image = state.image
+                                )
+                            }
 
-                        is CharacterViewState.Error -> {
-                            ErrorScreen(
-                                message = state.title,
-                                image = state.image
-                            )
-                        }
-
-                        is CharacterViewState.Loaded -> LazyVerticalGrid(
-                            modifier = Modifier.testTag(CharactersListTestTags.LIST),
-                            columns = GridCells.Fixed(2),
-                            verticalArrangement = Arrangement.spacedBy(1.dp),
-                            horizontalArrangement = Arrangement.spacedBy(1.dp)
-                        ) {
-                            items(state.content.size) { index ->
-                                state.content[index].let { character ->
-                                    CharacterItem(
-                                        modifier = Modifier,
-                                        character,
-                                        ::startDetails
-                                    ) {
-                                        val charItem = character.copy(favorite = it)
-                                        charItem.let(charactersViewModel::favoriteClick)
+                            is CharacterViewState.Loaded -> {
+                                LazyVerticalGrid(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .testTag(CharactersListTestTags.LIST),
+                                    columns = GridCells.Fixed(2),
+                                    verticalArrangement = Arrangement.spacedBy(1.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(1.dp)
+                                ) {
+                                    items(state.content.size) { index ->
+                                        state.content[index].let { character ->
+                                            CharacterItem(
+                                                modifier = Modifier,
+                                                character,
+                                                ::startDetails
+                                            ) {
+                                                val charItem = character.copy(favorite = it)
+                                                charItem.let(charactersViewModel::favoriteClick)
+                                            }
+                                        }
                                     }
                                 }
                             }

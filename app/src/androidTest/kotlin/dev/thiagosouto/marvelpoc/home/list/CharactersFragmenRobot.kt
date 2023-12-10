@@ -57,7 +57,9 @@ internal class CharactersFragmentConfiguration(private val composeTestRule: Comp
     }
 
     fun withErrorHome() {
-        webServer.init(emptyMap())
+        webServer.init(mapOf(
+            "/characters/home?offset=0&limit=20" to TestWebServer.Response("characters/characters_response_ok.json", 400)
+        ))
     }
 
     fun withHomeCharacters() {
@@ -66,14 +68,19 @@ internal class CharactersFragmentConfiguration(private val composeTestRule: Comp
                 "/characters/home?offset=0&limit=20" to TestWebServer.Response("characters/characters_response_ok.json"),
                 "/characters/home?offset=1&limit=20" to TestWebServer.Response("characters/characters_response_ok_empty.json"),
                 "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg" to TestWebServer.Response("characters/images/image.jpeg")
-            ))
+            )
+        )
     }
 
     fun withSearchContent() {
         webServer.init(
             mapOf(
-                "/characters/home?nameStartsWith=searchQuery&offset=0&limit=20" to TestWebServer.Response("characters/characters_response_ok.json"),
-                "/characters/home?nameStartsWith=searchQuery&offset=1&limit=20" to TestWebServer.Response("characters/characters_response_ok_empty.json"),
+                "/characters/home?nameStartsWith=searchQuery&offset=0&limit=20" to TestWebServer.Response(
+                    "characters/characters_response_ok.json"
+                ),
+                "/characters/home?nameStartsWith=searchQuery&offset=1&limit=20" to TestWebServer.Response(
+                    "characters/characters_response_ok_empty.json"
+                ),
                 "/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg" to TestWebServer.Response("characters/images/image.jpeg")
             )
         )
@@ -81,8 +88,6 @@ internal class CharactersFragmentConfiguration(private val composeTestRule: Comp
     }
 
     fun withNoFavorites() = Unit
-
-    fun withMockedViewModelLoading() = Unit
 }
 
 internal class CharactersFragmentRobot(
@@ -109,7 +114,7 @@ internal class CharactersFragmentResult(
     }
 
     private fun waitUntilNodeWithTagVisible(tag: String) {
-        retryWithDelay(func= {
+        retryWithDelay(func = {
             waitUntil {
                 onAllNodesWithTag(tag).fetchSemanticsNodes().size == 1
             }
@@ -127,7 +132,7 @@ internal class CharactersFragmentResult(
     }
 
     private fun checkCharacterName(characterName: String) = applyComposable {
-        retry (Retryable.RetryConfig()){
+        retry(Retryable.RetryConfig()) {
             waitUntil {
                 onAllNodesWithText(characterName)
                     .fetchSemanticsNodes().size == 1
@@ -136,16 +141,6 @@ internal class CharactersFragmentResult(
 
         onNodeWithText(characterName)
             .assertIsDisplayed()
-    }
-
-    fun loadingIsVisible() = applyComposable {
-        onNodeWithTag(CharactersListTestTags.LOADING)
-            .assertIsDisplayed()
-    }
-
-    fun loadingIsNotVisible() = applyComposable {
-        onNodeWithTag(CharactersListTestTags.LOADING)
-            .waitUntilDoesNotExist()
     }
 
     fun checkErrorHomeTab() {

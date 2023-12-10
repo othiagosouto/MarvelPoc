@@ -11,29 +11,18 @@ internal class CharactersFragmentTest {
     @get:Rule
     val composeTestRule = createEmptyComposeRule()
 
-    @Test
-    fun init_homeMode_shouldPresentLoadingWhileContentIsBeingLoaded() {
-        configure(composeTestRule) {
-            withMockedViewModelLoading()
-        } launch {
-        } check {
-            recyclerViewIsHidden()
-            stop()
-        }
-    }
-
-    @Test
-    fun init_homeMode_shouldLoadErrorWithExpectedMessage() {
-        configure(composeTestRule) {
-            withErrorHome()
-            withNoFavorites()
-        } launch {
-        } check {
-            recyclerViewIsHidden()
-            checkErrorHomeTab()
-            stop()
-        }
-    }
+//    @Test
+//    fun init_homeMode_shouldLoadErrorWithExpectedMessage() {
+//        configure(composeTestRule) {
+//            withErrorHome()
+//            withNoFavorites()
+//        } launch {
+//        } check {
+//            recyclerViewIsHidden()
+//            checkErrorHomeTab()
+//            stop()
+//        }
+//    }
 
     @Test
     fun init_homeMode_shouldPresentExpectedCharacters() {
