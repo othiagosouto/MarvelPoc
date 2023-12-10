@@ -24,7 +24,7 @@ internal class DefaultFavoritesService(
      */
     override suspend fun unFavorite(
         item: Character
-    ) {
+    ) : Unit  {
         localDataSource.unFavorite(item)
     }
 

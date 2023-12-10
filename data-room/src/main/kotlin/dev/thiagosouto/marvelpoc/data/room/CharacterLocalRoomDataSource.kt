@@ -10,15 +10,13 @@ import kotlinx.coroutines.flow.map
 internal class CharacterLocalRoomDataSource(private val characterDAO: CharacterLocalDAO) :
     CharacterLocalContract<Character> {
 
-    override suspend fun favorite(item: Character): Long =
+    override suspend fun favorite(item: Character): Unit =
         characterDAO.favorite(item.toCharacterLocal())
 
     override fun favoriteIds(): Flow<List<Long>> = characterDAO.favoriteIds()
 
-    override suspend fun unFavorite(item: Character): Long {
+    override suspend fun unFavorite(item: Character) =
         characterDAO.unFavorite(item.toCharacterLocal())
-        return item.id
-    }
 
     override fun favoritesList(): Flow<List<Character>> =
         characterDAO.favoriteList().map(::characterAdapter)

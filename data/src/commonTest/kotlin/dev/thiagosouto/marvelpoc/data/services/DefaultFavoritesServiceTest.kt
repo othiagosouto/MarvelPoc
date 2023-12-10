@@ -69,14 +69,12 @@ internal class DefaultFavoritesServiceTest {
 
         override fun favoriteIds(): Flow<List<Long>> = flowOf(characters.map { it.id })
 
-        override suspend fun unFavorite(item: Character): Long {
+        override suspend fun unFavorite(item: Character): Unit {
             characters.remove(item)
-            return item.id
         }
 
-        override suspend fun favorite(item: Character): Long {
+        override suspend fun favorite(item: Character): Unit {
             characters.add(item)
-            return item.id
         }
     }
 }

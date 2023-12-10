@@ -15,7 +15,7 @@ internal interface CharacterLocalDAO {
     fun favoriteList(): Flow<List<CharacterLocal>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun favorite(item: CharacterLocal): Long
+    suspend fun favorite(item: CharacterLocal): Unit
 
     @Query("SELECT id FROM ${CharacterLocal.TABLE_NAME}")
     fun favoriteIds(): Flow<List<Long>>

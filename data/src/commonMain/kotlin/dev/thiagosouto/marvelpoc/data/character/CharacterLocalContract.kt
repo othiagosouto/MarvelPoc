@@ -16,7 +16,7 @@ interface CharacterLocalContract<T : Any> {
     /**
      * favorite character and returns its id
      */
-    suspend fun favorite(item: T): Long
+    suspend fun favorite(item: T): Unit
 
     /**
      * return a list of favorite ids
@@ -26,5 +26,5 @@ interface CharacterLocalContract<T : Any> {
     /**
      * unfavorite character and returns its id
      */
-    suspend fun unFavorite(item: T): Long
+    suspend fun unFavorite(item: T): Unit
 }
