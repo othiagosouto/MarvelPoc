@@ -1,7 +1,6 @@
 package dev.thiagosouto.marvelpoc.data.remote.koin
 
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
-import dev.thiagosouto.marvelpoc.data.remote.BuildConfig
 import dev.thiagosouto.marvelpoc.data.remote.CharactersBFFApi
 import dev.thiagosouto.marvelpoc.data.remote.DefaultCharacterDetailsRemoteContract
 import dev.thiagosouto.marvelpoc.data.remote.DefaultCharactersBFFApi
@@ -23,7 +22,6 @@ import org.koin.dsl.module
 class KtorInitializer {
     fun provides(): Module =
         module {
-            single(named(SERVER_URL)) { BuildConfig.BFF_HOST }
             single {
                 HttpClient(CIO) {
                     install(ContentNegotiation) {

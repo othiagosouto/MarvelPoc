@@ -24,11 +24,15 @@ android {
         execution 'ANDROIDX_TEST_ORCHESTRATOR'
     }
 
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BFF_HOST", "\"http://161.35.18.166:8080/\"")
+        }
+
+        debug {
+            buildConfigField("String", "BFF_HOST", "\"http://161.35.18.166:8080/\"")
         }
     }
 
@@ -60,12 +64,15 @@ android {
         lintConfig = file("$rootDir/android_glide_lint.xml")
     }
 
-
     packaging {
         resources {
             excludes += "/META-INF/LICENSE.md"
             excludes += "/META-INF/LICENSE-notice.md"
         }
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 
