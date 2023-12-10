@@ -7,7 +7,7 @@ import org.junit.Test
 class DispatchersTest {
 
     @Test
-    fun `returns specific dispatchers from okhttp`() {
+    fun `returns specific dispatchers from coroutines`() {
         val dispatchers = Dispatchers()
 
         assertThat(dispatchers.main).isEqualTo(kotlinx.coroutines.Dispatchers.Main)

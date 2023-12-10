@@ -69,7 +69,5 @@ dependencies {
     testImplementation libs.test.kotlin.coroutines
     testImplementation libs.test.truth
 
-    testImplementation libs.test.core
     testImplementation libs.test.runner
-    testImplementation libs.test.junit.ktx
 }
