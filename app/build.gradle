@@ -84,7 +84,6 @@ def allTestsConfigs(dependency) {
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    implementation project(path: ':data-room')
     implementation project(path: ':data-remote')
     implementation project(path: ':data-local')
     implementation project(path: ':domain')
