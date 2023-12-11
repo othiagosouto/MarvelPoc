@@ -13,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import dev.thiagosouto.marvelpoc.design.R
 
-
 /**
  * Component for favorite toggle from the design system
  */

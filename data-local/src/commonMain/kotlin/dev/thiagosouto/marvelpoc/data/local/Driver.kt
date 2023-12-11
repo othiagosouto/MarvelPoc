@@ -2,6 +2,6 @@ package dev.thiagosouto.marvelpoc.data.local
 
 import app.cash.sqldelight.db.SqlDriver
 
-expect class DriverFactory {
+internal expect class DriverFactory {
     fun createDriver(): SqlDriver
 }
