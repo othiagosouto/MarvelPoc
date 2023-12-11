@@ -1,0 +1,27 @@
+import kotlin.Boolean;
+
+CREATE TABLE characterLocal (
+  id INTEGER PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  thumbnailUrl TEXT NOT NULL,
+  description TEXT NOT NULL,
+  favorite INTEGER AS Boolean DEFAULT 0
+);
+
+CREATE INDEX characterLocal_name ON characterLocal(name);
+
+selectAll:
+SELECT *
+FROM characterLocal;
+
+favoriteIds:
+SELECT id
+FROM characterLocal;
+
+favorite:
+INSERT INTO characterLocal(id, name, thumbnailUrl, description,favorite)
+VALUES ?;
+
+unFavorite:
+DELETE FROM characterLocal
+WHERE id = ?;
