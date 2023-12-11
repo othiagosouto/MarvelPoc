@@ -1,6 +1,5 @@
 package dev.thiagosouto.marvelpoc.data.remote
 
-import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.remote.character.MarvelCharactersResponse
 import dev.thiagosouto.marvelpoc.data.remote.character.details.DetailsResponse
 import dev.thiagosouto.marvelpoc.data.remote.ext.toCharacter
@@ -51,7 +50,10 @@ internal class DefaultCharactersRemoteContractTest {
         runTest {
             val result = remote.listPagingCharacters("queryText", 10)
 
-            assertThat(result).isEqualTo(charactersList.data.results.map { it.toCharacter() })
+            assertEquals(
+                expected = charactersList.data.results.map { it.toCharacter() },
+                actual = result
+            )
         }
     }
 
@@ -100,8 +102,9 @@ internal class DefaultCharactersRemoteContractTest {
             remote.listPagingCharacters("queryText", 10)
             remote.listPagingCharacters("queryText", 10)
 
-            assertThat(api.offset).isEqualTo(20)
-            assertThat(api.page).isEqualTo(10)
+
+            assertEquals(expected = 20, actual = api.offset)
+            assertEquals(expected = 10, actual = api.page)
         }
     }
 
