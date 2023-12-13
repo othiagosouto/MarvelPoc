@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * Interface accountable to enable favorites functionality for [T]
  */
-interface FavoritesService<T : Any> : FavoritesIdentifierProvider, FavoriteActions<T> {
+interface FavoritesRepository<T : Any> : FavoritesIdentifierProvider, FavoriteActions<T> {
 
     /**
      * returns a paged source of favorite [T]

@@ -1,7 +1,7 @@
 package dev.thiagosouto.marvelpoc.data.services
 
 import app.cash.turbine.test
-import dev.thiagosouto.marvelpoc.data.FavoritesService
+import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.flow.Flow
@@ -13,8 +13,8 @@ import kotlin.test.assertEquals
 internal class DefaultFavoritesServiceTest {
     private val localSourceMock = FakeLocal(mutableListOf())
     private val item = Character(1011334, "some name", "some url", "description", true)
-    private val repository: FavoritesService<Character> =
-        DefaultFavoritesService(localSourceMock)
+    private val repository: FavoritesRepository<Character> =
+        DefaultFavoritesRepository(localSourceMock)
 
     @Test
     fun `favorites should call dao to retrieve all favorite items`() = runTest {

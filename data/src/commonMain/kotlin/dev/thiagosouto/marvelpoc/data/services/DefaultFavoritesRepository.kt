@@ -1,13 +1,13 @@
 package dev.thiagosouto.marvelpoc.data.services
 
-import dev.thiagosouto.marvelpoc.data.FavoritesService
+import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.flow.Flow
 
-internal class DefaultFavoritesService(
+internal class DefaultFavoritesRepository(
     private val localDataSource: CharacterLocalContract<Character>
-) : FavoritesService<Character> {
+) : FavoritesRepository<Character> {
     /**
      * return a list of favorite characters
      */

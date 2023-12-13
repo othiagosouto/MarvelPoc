@@ -6,10 +6,10 @@ import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.data.FavoriteActions
 import dev.thiagosouto.marvelpoc.data.FavoritesIdentifierProvider
-import dev.thiagosouto.marvelpoc.data.FavoritesService
+import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.data.services.DefaultCharacterListService
-import dev.thiagosouto.marvelpoc.data.services.DefaultFavoritesService
+import dev.thiagosouto.marvelpoc.data.services.DefaultFavoritesRepository
 import dev.thiagosouto.marvelpoc.domain.MapperList
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.domain.services.CharacterListService
@@ -24,9 +24,9 @@ class DataInitializer {
 
         single { DefaultCharacterDetailsService(get()) }
 
-        single<FavoritesService<Character>> { DefaultFavoritesService(get()) }
+        single<FavoritesRepository<Character>> { DefaultFavoritesRepository(get()) }
 
-        single<FavoritesIdentifierProvider> { get<FavoritesService<Character>>() }
+        single<FavoritesIdentifierProvider> { get<FavoritesRepository<Character>>() }
 
         factory<CharacterDetailsService> { DefaultCharacterDetailsService(get()) }
 
@@ -35,6 +35,6 @@ class DataInitializer {
         factory<CharacterListService> {
             DefaultCharacterListService(get(), get())
         }
-        factory<FavoriteActions<Character>> { get<FavoritesService<Character>>() }
+        factory<FavoriteActions<Character>> { get<FavoritesRepository<Character>>() }
     }
 }
