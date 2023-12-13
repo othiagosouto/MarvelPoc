@@ -9,7 +9,7 @@ import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-internal class FavoritesRepositoryTest {
+internal class DefaultFavoritesRepositoryTest {
     private val localSourceMock = FakeLocal(mutableListOf())
     private val item = Character(1011334, "some name", "some url", "description", true)
     private val repository: FavoritesRepository<Character> =
