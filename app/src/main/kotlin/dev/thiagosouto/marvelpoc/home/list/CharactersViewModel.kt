@@ -3,7 +3,7 @@ package dev.thiagosouto.marvelpoc.home.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.thiagosouto.marvelpoc.R
-import dev.thiagosouto.marvelpoc.data.FavoriteActions
+import dev.thiagosouto.marvelpoc.data.repositories.FavoriteActions
 import dev.thiagosouto.marvelpoc.domain.exception.EmptyDataException
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.domain.services.CharacterListParams

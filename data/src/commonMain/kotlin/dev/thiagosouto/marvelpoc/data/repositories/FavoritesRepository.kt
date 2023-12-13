@@ -1,4 +1,4 @@
-package dev.thiagosouto.marvelpoc.data
+package dev.thiagosouto.marvelpoc.data.repositories
 
 import kotlinx.coroutines.flow.Flow
 

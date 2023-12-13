@@ -1,7 +1,6 @@
-package dev.thiagosouto.marvelpoc.data.services
+package dev.thiagosouto.marvelpoc.data.repositories
 
 import app.cash.turbine.test
-import dev.thiagosouto.marvelpoc.data.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +9,7 @@ import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-internal class DefaultFavoritesServiceTest {
+internal class FavoritesRepositoryTest {
     private val localSourceMock = FakeLocal(mutableListOf())
     private val item = Character(1011334, "some name", "some url", "description", true)
     private val repository: FavoritesRepository<Character> =

@@ -1,6 +1,6 @@
 package dev.thiagosouto.marvelpoc.data.services
 
-import dev.thiagosouto.marvelpoc.data.FavoritesIdentifierProvider
+import dev.thiagosouto.marvelpoc.data.repositories.FavoritesIdentifierProvider
 import dev.thiagosouto.marvelpoc.domain.data.remote.CharactersRemoteContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.domain.services.CharacterListParams

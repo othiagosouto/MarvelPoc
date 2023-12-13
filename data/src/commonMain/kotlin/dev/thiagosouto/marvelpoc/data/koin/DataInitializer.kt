@@ -4,12 +4,12 @@ import dev.thiagosouto.marvelpoc.data.CharacterDetailsService
 import dev.thiagosouto.marvelpoc.data.DefaultCharacterDetailsService
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.Dispatchers
-import dev.thiagosouto.marvelpoc.data.FavoriteActions
-import dev.thiagosouto.marvelpoc.data.FavoritesIdentifierProvider
-import dev.thiagosouto.marvelpoc.data.FavoritesRepository
+import dev.thiagosouto.marvelpoc.data.repositories.FavoriteActions
+import dev.thiagosouto.marvelpoc.data.repositories.FavoritesIdentifierProvider
+import dev.thiagosouto.marvelpoc.data.repositories.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
 import dev.thiagosouto.marvelpoc.data.services.DefaultCharacterListService
-import dev.thiagosouto.marvelpoc.data.services.DefaultFavoritesRepository
+import dev.thiagosouto.marvelpoc.data.repositories.DefaultFavoritesRepository
 import dev.thiagosouto.marvelpoc.domain.MapperList
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.domain.services.CharacterListService

@@ -1,6 +1,6 @@
-package dev.thiagosouto.marvelpoc.data.services
+package dev.thiagosouto.marvelpoc.data.repositories
 
-import dev.thiagosouto.marvelpoc.data.FavoritesRepository
+import dev.thiagosouto.marvelpoc.data.repositories.FavoritesRepository
 import dev.thiagosouto.marvelpoc.data.character.CharacterLocalContract
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import kotlinx.coroutines.flow.Flow

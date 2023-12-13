@@ -3,7 +3,7 @@ package dev.thiagosouto.marvelpoc.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.thiagosouto.marvelpoc.R
-import dev.thiagosouto.marvelpoc.data.FavoritesRepository
+import dev.thiagosouto.marvelpoc.data.repositories.FavoritesRepository
 import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.home.favorites.FavoritesViewState
 import kotlinx.coroutines.flow.Flow
