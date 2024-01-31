@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.mokoResources)
 }
 
 kotlin {
@@ -12,45 +13,52 @@ kotlin {
             }
         }
     }
-    
+
     listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
+            iosX64(),
+            iosArm64(),
     ).forEach {
         it.binaries.framework {
-            baseName = "data-local"
+            baseName = "design"
             isStatic = true
         }
     }
 
     sourceSets {
+
         commonMain.dependencies {
             //put your multiplatform dependencies here
-            implementation(libs.koin.kmp)
-            implementation(libs.sqldelight.coroutines)
-            implementation(project(":data"))
-            implementation(project(":domain"))
+            implementation(libs.kmp.coil.core.compose)
+            implementation(libs.kmp.coil.network)
+            implementation(libs.kmp.moko.resources)
+            implementation(libs.kmp.moko.resources.compose)
+            implementation(libs.ktor.core)
+
+            implementation(compose.runtime)
+            implementation(compose.material)
+            implementation(compose.material3)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
 
-        sourceSets.androidMain.dependencies {
-            implementation(libs.koin.kmp)
-            implementation(libs.sqldelight.android)
+        androidMain {
+            dependsOn(commonMain.get())
         }
 
-        // or iosMain, windowsMain, etc.
+        sourceSets.androidMain.dependencies {
+            implementation(libs.android.compose.material)
+        }
+
         sourceSets.iosMain.dependencies {
-            implementation(libs.sqldelight.ios)
-            implementation(libs.koin.kmp)
+            implementation(compose.material3)
         }
     }
 }
 
 android {
-    namespace = "dev.thiagosouto.marvelpoc.data.local"
+    namespace = "dev.thiagosouto.marvelpoc.design"
     compileSdk = 34
     defaultConfig {
         minSdk = 24
@@ -62,10 +70,6 @@ android {
     }
 }
 
-sqldelight {
-    databases {
-        create("MarvelDatabase") {
-            packageName.set("dev.thiagosouto.marvelpoc.data.local")
-        }
-    }
+multiplatformResources {
+    multiplatformResourcesPackage = "dev.thiagosouto.marvelpoc.design"
 }

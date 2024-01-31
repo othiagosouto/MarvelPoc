@@ -67,12 +67,12 @@ internal class CharactersViewModel(
         return when (e) {
             is EmptyDataException -> Pair(
                 R.string.empty_characters_home,
-                dev.thiagosouto.marvelpoc.design.R.drawable.ic_deadpool
+                dev.thiagosouto.marvelpoc.design.R.drawable.spiderman
             )
 
             else -> Pair(
                 R.string.home_error_loading,
-                dev.thiagosouto.marvelpoc.design.R.drawable.thanos
+                dev.thiagosouto.marvelpoc.design.R.drawable.spiderman
             )
         }
     }
@@ -86,7 +86,7 @@ internal class CharactersViewModel(
 
             else -> Pair(
                 R.string.search_error_loading,
-                dev.thiagosouto.marvelpoc.design.R.drawable.thanos
+                dev.thiagosouto.marvelpoc.design.R.drawable.spiderman
             )
         }
     }

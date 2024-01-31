@@ -32,7 +32,6 @@ import dev.thiagosouto.marvelpoc.R
 import dev.thiagosouto.marvelpoc.domain.model.Comics
 import dev.thiagosouto.marvelpoc.design.components.ImageLoading
 import dev.thiagosouto.marvelpoc.design.components.Loading
-import dev.thiagosouto.marvelpoc.design.R as RDesign
 
 @Composable
 internal fun CharacterDetails(
@@ -88,8 +87,8 @@ internal fun ScrollableArea(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                horizontal = dimensionResource(id = RDesign.dimen.spacing_medium),
-                vertical = dimensionResource(id = RDesign.dimen.spacing_small)
+                horizontal = dimensionResource(id = R.dimen.spacing_medium),
+                vertical = dimensionResource(id = R.dimen.spacing_small)
             )
             .testTag("description"),
         text = description.ifBlank { stringResource(id = R.string.character_details_description_not_available) })
@@ -108,14 +107,14 @@ internal fun ComicsView(comics: Comics, index: Int) {
     SubcomposeAsyncImage(
         model = comics.thumbnailUrl,
         loading = {
-            val loadingSize = dimensionResource(id = RDesign.dimen.loading_page_size)
+            val loadingSize = dimensionResource(id = R.dimen.loading_page_size)
             Loading(modifier = Modifier
                 .width(220.dp)
                 .height(200.dp), loadingSize)
                   },
         contentDescription = "",
         success = {
-            Column(modifier = Modifier.padding(dimensionResource(id = RDesign.dimen.spacing_small))) {
+            Column(modifier = Modifier.padding(dimensionResource(id = R.dimen.spacing_small))) {
                 Image(
                     painter = painterImage,
                     contentDescription = comics.title,

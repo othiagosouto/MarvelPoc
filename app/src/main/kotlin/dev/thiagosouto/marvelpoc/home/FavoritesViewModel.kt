@@ -17,7 +17,7 @@ internal class FavoritesViewModel(private val repository: FavoritesRepository<Ch
         if (it.isEmpty()) {
             FavoritesViewState.Error(
                 message = R.string.empty_characters_favorites,
-                image = dev.thiagosouto.marvelpoc.design.R.drawable.ic_favorites
+                image = dev.thiagosouto.marvelpoc.design.R.drawable.favorites
             )
         } else {
             FavoritesViewState.Loaded(it)

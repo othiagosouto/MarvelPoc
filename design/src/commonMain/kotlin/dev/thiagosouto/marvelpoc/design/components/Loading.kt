@@ -10,9 +10,8 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.Dp
-import dev.thiagosouto.marvelpoc.design.R
+import androidx.compose.ui.unit.dp
 
 /**
  * Component for loading from the design system
@@ -24,7 +23,7 @@ fun Loading(modifier: Modifier = Modifier, heightIn: Dp) {
             .heightIn(heightIn),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(modifier = Modifier.size(dimensionResource(id = R.dimen.loading_page_size)))
+        CircularProgressIndicator(modifier = Modifier.size(72.dp))
     }
 }
 
@@ -38,8 +37,8 @@ fun LoadingPage(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val size = dimensionResource(id = R.dimen.loading_page_size)
-        val loadingSize = dimensionResource(id = R.dimen.loading_page_size)
+        val size = 72.dp
+        val loadingSize = 72.dp
         Loading(modifier = Modifier.size(size), loadingSize)
     }
 }

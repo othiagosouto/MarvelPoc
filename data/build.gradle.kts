@@ -29,6 +29,7 @@ kotlin {
             implementation(libs.kotlin.std)
             implementation(project(":domain"))
             implementation(libs.koin.kmp)
+            implementation("co.touchlab:stately-common:2.0.5")
 
         }
         commonTest.dependencies {

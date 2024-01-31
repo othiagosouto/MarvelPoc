@@ -20,10 +20,10 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.thiagosouto.marvelpoc.domain.model.Character
 import dev.thiagosouto.marvelpoc.design.R
 import dev.thiagosouto.marvelpoc.design.components.FavoriteToggle
 import dev.thiagosouto.marvelpoc.design.components.ImageLoading
+import dev.thiagosouto.marvelpoc.domain.model.Character
 
 @Composable
 internal fun CharacterItem(

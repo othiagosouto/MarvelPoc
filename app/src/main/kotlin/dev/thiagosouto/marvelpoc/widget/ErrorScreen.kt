@@ -42,7 +42,7 @@ internal fun ErrorScreen(
         )
         Spacer(
             modifier = Modifier.height(
-                dimensionResource(id = dev.thiagosouto.marvelpoc.design.R.dimen.spacing_small)
+                dimensionResource(id = R.dimen.spacing_small)
             )
         )
         Text(
@@ -58,7 +58,7 @@ private fun ErrorScreenPreview() {
     ErrorScreen(
         modifier = Modifier.fillMaxSize(),
         message = R.string.home_error_loading,
-        image = dev.thiagosouto.marvelpoc.design.R.drawable.thanos
+        image = dev.thiagosouto.marvelpoc.design.R.drawable.spiderman
     )
 }
 

@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
+import dev.thiagosouto.marvelpoc.design.R.color
 import dev.thiagosouto.marvelpoc.design.components.LoadingPage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -71,7 +72,7 @@ private fun LoadedViewState(viewState: DetailsViewState.Loaded, process: (Intent
                     )
                 }
             },
-            backgroundColor = colorResource(id = dev.thiagosouto.marvelpoc.design.R.color.colorPrimary),
+            backgroundColor = colorResource(id = color.colorPrimary),
             elevation = 2.dp
         )
 
