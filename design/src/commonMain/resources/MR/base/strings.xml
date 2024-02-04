@@ -15,6 +15,6 @@
     <string name="search_error_loading">Looks like thanos didn\'t like your searched characters</string>
     <string name="empty_characters_searched">Black Widow and Captain weren\'t able to find any characters :(</string>
     <string name="search_title">Marvel characters search</string>
-    <string name="character_details_description_not_available">This character doesn't have any description available :(</string>
+    <string name="character_details_description_not_available">This character doesn\'t have any description available :(</string>
 
 </resources>
