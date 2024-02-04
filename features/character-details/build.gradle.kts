@@ -21,7 +21,7 @@ kotlin {
             iosArm64(),
     ).forEach {
         it.binaries.framework {
-            baseName = "design"
+            baseName = "character-details"
             isStatic = true
         }
     }
@@ -32,9 +32,15 @@ kotlin {
             //put your multiplatform dependencies here
             implementation(libs.kmp.coil.core.compose)
             implementation(libs.kmp.coil.network)
-            implementation(libs.kmp.moko.resources)
-            implementation(libs.kmp.moko.resources.compose)
             implementation(libs.ktor.core)
+//            implementation(libs.kmp.moko.resources)
+            implementation(libs.kmp.moko.resources.compose)
+            implementation(project(":data"))
+            implementation(project(":design"))
+            implementation(project(":domain"))
+            implementation(project(":support:presentation"))
+
+            implementation(libs.koin.kmp)
 
             implementation(compose.runtime)
             implementation(compose.ui)
@@ -62,7 +68,7 @@ kotlin {
 }
 
 android {
-    namespace = "dev.thiagosouto.marvelpoc.design"
+    namespace = "dev.thiagosouto.marvelpoc.features.character.details"
     compileSdk = 34
     defaultConfig {
         minSdk = 24
@@ -80,8 +86,4 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
-}
-multiplatformResources {
-    multiplatformResourcesPackage = "dev.thiagosouto.marvelpoc.design"
-    multiplatformResourcesClassName = "DesignSystemRes"
 }

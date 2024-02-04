@@ -7,7 +7,9 @@ import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.Dispatchers
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
-import dev.thiagosouto.marvelpoc.detail.domain.DetailsViewStateMapper
+import dev.thiagosouto.marvelpoc.features.character.details.DetailsViewState
+import dev.thiagosouto.marvelpoc.features.character.details.Intent
+import dev.thiagosouto.marvelpoc.features.character.details.domain.DetailsViewStateMapper
 import dev.thiagosouto.marvelpoc.home.CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking

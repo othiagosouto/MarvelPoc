@@ -90,6 +90,7 @@ dependencies {
     implementation project(path: ':data')
     implementation project(path: ':design')
     implementation project(path: ':support:presentation')
+    implementation project(path: ':features:character-details')
     implementation platform(libs.android.compose.bom)
     androidTestImplementation enforcedPlatform(libs.android.compose.bom)
 

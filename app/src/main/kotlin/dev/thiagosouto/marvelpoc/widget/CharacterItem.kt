@@ -21,8 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.thiagosouto.marvelpoc.design.R
-import dev.thiagosouto.marvelpoc.design.components.composables.FavoriteToggle
 import dev.thiagosouto.marvelpoc.design.components.ImageLoading
+import dev.thiagosouto.marvelpoc.design.components.composables.FavoriteToggle
 import dev.thiagosouto.marvelpoc.domain.model.Character
 
 @Composable
@@ -47,7 +47,7 @@ internal fun CharacterItem(
 
         Row(
             modifier = Modifier
-                .background(color = colorResource(id = R.color.gray_background))
+                .background(color = colorResource(id = R.color.grayBackgorund))
                 .padding(2.dp),
             horizontalArrangement = Arrangement.Center
         ) {

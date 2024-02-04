@@ -1,4 +1,4 @@
-package dev.thiagosouto.marvelpoc.detail
+package dev.thiagosouto.marvelpoc.features.character.details
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,19 +19,19 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
-import coil.compose.rememberAsyncImagePainter
-import dev.thiagosouto.marvelpoc.R
-import dev.thiagosouto.marvelpoc.domain.model.Comics
+import coil3.ImageLoader
+import coil3.compose.LocalPlatformContext
+import coil3.compose.SubcomposeAsyncImage
+import dev.icerock.moko.resources.compose.colorResource
+import dev.thiagosouto.marvelpoc.design.DesignSystemRes
 import dev.thiagosouto.marvelpoc.design.components.ImageLoading
 import dev.thiagosouto.marvelpoc.design.components.Loading
+import dev.thiagosouto.marvelpoc.design.dimens.Dimens
+import dev.thiagosouto.marvelpoc.domain.model.Comics
 
 @Composable
 internal fun CharacterDetails(
@@ -50,7 +50,6 @@ internal fun CharacterDetails(
     ) {
         ScrollableArea(imageUrl, name, description, comics)
     }
-
 }
 
 @Composable
@@ -73,7 +72,7 @@ internal fun ScrollableArea(
         modifier = Modifier
             .height(50.dp)
             .fillMaxWidth()
-            .background(color = Color(android.graphics.Color.parseColor("#25000000"))),
+            .background(color = colorResource(DesignSystemRes.colors.black25)),
     ) {
         Text(
             text = name,
@@ -87,11 +86,11 @@ internal fun ScrollableArea(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                horizontal = dimensionResource(id = R.dimen.spacing_medium),
-                vertical = dimensionResource(id = R.dimen.spacing_small)
+                horizontal = Dimens.Spacing.medium,
+                vertical = Dimens.Spacing.small
             )
             .testTag("description"),
-        text = description.ifBlank { stringResource(id = R.string.character_details_description_not_available) })
+        text = description.ifBlank { "This character doesn't have any description available :(" })
 
     LazyRow(modifier = Modifier.testTag("character-details-comics")) {
         this.itemsIndexed(comics) { index, item ->
@@ -102,21 +101,23 @@ internal fun ScrollableArea(
 
 @Composable
 internal fun ComicsView(comics: Comics, index: Int) {
-    val painterImage = rememberAsyncImagePainter(comics.thumbnailUrl)
 
     SubcomposeAsyncImage(
         model = comics.thumbnailUrl,
-        loading = {
-            val loadingSize = dimensionResource(id = R.dimen.loading_page_size)
-            Loading(modifier = Modifier
-                .width(220.dp)
-                .height(200.dp), loadingSize)
-                  },
         contentDescription = "",
-        success = {
-            Column(modifier = Modifier.padding(dimensionResource(id = R.dimen.spacing_small))) {
+        imageLoader = ImageLoader.Builder(LocalPlatformContext.current).build(),
+        loading = {
+            val loadingSize = 72.dp
+            Loading(
+                modifier = Modifier
+                    .width(220.dp)
+                    .height(200.dp), loadingSize
+            )
+        },
+        success = { painterImage ->
+            Column(modifier = Modifier.padding(Dimens.Spacing.small)) {
                 Image(
-                    painter = painterImage,
+                    painter = painterImage.painter,
                     contentDescription = comics.title,
                     Modifier
                         .height(220.dp)
@@ -129,7 +130,7 @@ internal fun ComicsView(comics: Comics, index: Int) {
                     modifier = Modifier
                         .width(150.dp)
                         .heightIn(48.dp)
-                        .background(color = Color(android.graphics.Color.parseColor("#25000000")))
+                        .background(color = colorResource(DesignSystemRes.colors.black25))
                         .padding(2.dp)
                         .testTag("comics-title-$index"),
                     maxLines = 2,

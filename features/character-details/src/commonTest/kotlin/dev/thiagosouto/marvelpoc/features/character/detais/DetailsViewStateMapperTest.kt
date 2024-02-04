@@ -1,11 +1,12 @@
-package dev.thiagosouto.marvelpoc.detail.domain
+package dev.thiagosouto.marvelpoc.features.character.detais
 
-import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.mappers.ComicsMapper
-import dev.thiagosouto.marvelpoc.detail.DetailsViewState
+import dev.thiagosouto.marvelpoc.features.character.details.DetailsViewState
+import dev.thiagosouto.marvelpoc.features.character.details.domain.DetailsViewStateMapper
 import dev.thiagosouto.marvelpoc.support.presentation.PresentationMapper
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class DetailsViewStateMapperTest {
 
@@ -38,6 +39,6 @@ internal class DetailsViewStateMapperTest {
                 )
             )
         )
-        assertThat(mapper.apply(input)).isEqualTo(expected)
+        assertEquals(expected, actual = mapper.apply(input))
     }
 }

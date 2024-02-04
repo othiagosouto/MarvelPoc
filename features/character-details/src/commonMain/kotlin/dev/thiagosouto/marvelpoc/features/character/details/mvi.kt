@@ -1,8 +1,8 @@
-package dev.thiagosouto.marvelpoc.detail
+package dev.thiagosouto.marvelpoc.features.character.details
 
 import dev.thiagosouto.marvelpoc.domain.model.Comics
 
-internal sealed class Intent {
+sealed class Intent {
     data class OpenScreen(val characterId: Long) : Intent()
 
     object CloseScreen : Intent()
@@ -12,7 +12,7 @@ internal sealed class Intent {
     }
 }
 
-internal sealed class DetailsViewState {
+sealed class DetailsViewState {
 
     data class Loaded(val name: String, val description: String, val imageUrl: String, val comics: List<Comics>) :
         DetailsViewState()

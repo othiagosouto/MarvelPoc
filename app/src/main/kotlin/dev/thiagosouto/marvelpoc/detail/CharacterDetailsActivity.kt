@@ -3,19 +3,9 @@ package dev.thiagosouto.marvelpoc.detail
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
-import dev.thiagosouto.marvelpoc.design.R.color
-import dev.thiagosouto.marvelpoc.design.components.LoadingPage
+import dev.thiagosouto.marvelpoc.features.character.details.CharacterDetailsScreen
+import dev.thiagosouto.marvelpoc.features.character.details.Intent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class CharacterDetailsActivity : ComponentActivity() {
@@ -46,41 +36,3 @@ internal class CharacterDetailsActivity : ComponentActivity() {
     }
 }
 
-@Composable
-private fun CharacterDetailsScreen(
-    process: (Intent) -> Unit,
-    viewState: DetailsViewState
-) {
-    when (viewState) {
-        is DetailsViewState.Loading -> LoadingPage()
-        is DetailsViewState.Loaded -> LoadedViewState(viewState, process)
-        else -> Unit
-    }
-}
-
-@Composable
-private fun LoadedViewState(viewState: DetailsViewState.Loaded, process: (Intent) -> Unit) {
-    Column {
-        TopAppBar(
-            title = {},
-            navigationIcon = {
-                IconButton(onClick = { process(Intent.CloseScreen) }) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color(android.graphics.Color.WHITE)
-                    )
-                }
-            },
-            backgroundColor = colorResource(id = color.colorPrimary),
-            elevation = 2.dp
-        )
-
-        CharacterDetails(
-            viewState.name,
-            viewState.description,
-            viewState.imageUrl,
-            viewState.comics
-        )
-    }
-}
