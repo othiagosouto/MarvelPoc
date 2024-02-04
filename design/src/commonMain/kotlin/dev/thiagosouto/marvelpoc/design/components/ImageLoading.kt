@@ -6,11 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import coil3.ImageLoader
-import coil3.PlatformContext
-import coil3.compose.AsyncImagePainter
 import coil3.compose.LocalPlatformContext
 import coil3.compose.SubcomposeAsyncImage
-import coil3.compose.SubcomposeAsyncImageScope
 
 /**
  * Component for presenting a loading as placeholder and the image when the download is finished

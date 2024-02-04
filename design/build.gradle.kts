@@ -1,3 +1,5 @@
+import org.jetbrains.compose.ComposeExtension
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.library)
@@ -35,6 +37,8 @@ kotlin {
             implementation(libs.ktor.core)
 
             implementation(compose.runtime)
+            implementation(compose.ui)
+            implementation(compose.materialIconsExtended)
             implementation(compose.material)
             implementation(compose.material3)
 
@@ -68,8 +72,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    buildFeatures { compose = true }
+    composeOptions {
+        kotlinCompilerExtensionVersion = extensions.getByType(ComposeExtension::class.java)
+            .dependencies.compiler.auto.substringAfterLast(":")
+    }
+    dependencies {
+        debugImplementation(compose.uiTooling)
+    }
 }
-
 multiplatformResources {
     multiplatformResourcesPackage = "dev.thiagosouto.marvelpoc.design"
 }
