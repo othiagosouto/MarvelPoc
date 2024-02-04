@@ -43,7 +43,6 @@ kotlin {
             implementation(libs.test.turbine)
             implementation(libs.test.kotlin.coroutines)
             implementation(libs.test.runner)
-            implementation(libs.test.kotlin.coroutines)
         }
     }
 }

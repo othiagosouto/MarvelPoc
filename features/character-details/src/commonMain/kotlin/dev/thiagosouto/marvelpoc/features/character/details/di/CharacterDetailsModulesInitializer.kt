@@ -21,8 +21,4 @@ class CharacterDetailsModulesInitializer {
             }
         }
     }
-
-    companion object {
-        const val SERVER_URL = "SERVER_URL"
-    }
 }

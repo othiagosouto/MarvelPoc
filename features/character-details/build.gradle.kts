@@ -51,14 +51,18 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.test.turbine)
+            implementation(libs.test.kotlin.coroutines)
+            implementation(libs.test.runner)
         }
-
         androidMain {
             dependsOn(commonMain.get())
         }
 
         sourceSets.androidMain.dependencies {
             implementation(libs.android.compose.material)
+            implementation(libs.android.ktx.viewmodel)
+            implementation(libs.android.lifecycle)
         }
 
         sourceSets.iosMain.dependencies {

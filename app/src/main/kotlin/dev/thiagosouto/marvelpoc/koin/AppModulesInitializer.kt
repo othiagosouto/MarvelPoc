@@ -2,7 +2,7 @@ package dev.thiagosouto.marvelpoc.koin
 
 import dev.thiagosouto.marvelpoc.BuildConfig
 import dev.thiagosouto.marvelpoc.data.remote.koin.KtorInitializer
-import dev.thiagosouto.marvelpoc.detail.CharacterDetailsViewModel
+import dev.thiagosouto.marvelpoc.features.character.details.CharacterDetailsViewModel
 import dev.thiagosouto.marvelpoc.home.FavoritesViewModel
 import dev.thiagosouto.marvelpoc.home.list.CharactersViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel

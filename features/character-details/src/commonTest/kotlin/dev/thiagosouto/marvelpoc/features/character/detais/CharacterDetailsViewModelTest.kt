@@ -1,8 +1,6 @@
-package dev.thiagosouto.marvelpoc.detail
+package dev.thiagosouto.marvelpoc.features.character.detais
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import com.google.common.truth.Truth.assertThat
 import dev.thiagosouto.marvelpoc.data.CharacterDetails
 import dev.thiagosouto.marvelpoc.data.Comics
 import dev.thiagosouto.marvelpoc.data.Dispatchers
@@ -11,23 +9,13 @@ import dev.thiagosouto.marvelpoc.features.character.details.CharacterDetailsView
 import dev.thiagosouto.marvelpoc.features.character.details.DetailsViewState
 import dev.thiagosouto.marvelpoc.features.character.details.Intent
 import dev.thiagosouto.marvelpoc.features.character.details.domain.DetailsViewStateMapper
-import dev.thiagosouto.marvelpoc.home.CoroutineTestRule
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import org.junit.Rule
-import org.junit.Test
-import java.io.IOException
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 internal class CharacterDetailsViewModelTest {
     private val mapper = DetailsViewStateMapper(ComicsMapper())
     private lateinit var viewModel: CharacterDetailsViewModel
-
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
-
-    @get:Rule
-    var coroutineTestRule = CoroutineTestRule()
 
     @Test
     fun `should publish expected states`() = runBlocking {
@@ -39,7 +27,11 @@ internal class CharacterDetailsViewModelTest {
             imageUrl = "image-url",
             comics = ids.map(::comicsDomain)
         )
-        viewModel = CharacterDetailsViewModel({ characterDetails }, mapper, Dispatchers())
+        viewModel = CharacterDetailsViewModel(
+            { characterDetails },
+            mapper,
+            Dispatchers()
+        )
 
 
         viewModel.run {
@@ -57,14 +49,18 @@ internal class CharacterDetailsViewModelTest {
                     )
                 )
 
-                assertThat(emissions).isEqualTo(viewStates)
+                assertEquals(viewStates, actual = emissions)
             }
         }
     }
 
     @Test
     fun `should emit closed state`() = runBlocking {
-        viewModel = CharacterDetailsViewModel({ throw IOException() }, mapper, Dispatchers())
+        viewModel = CharacterDetailsViewModel(
+            { throw Exception() },
+            mapper,
+            Dispatchers()
+        )
 
         viewModel.run {
             state.test {
@@ -75,7 +71,7 @@ internal class CharacterDetailsViewModelTest {
                     DetailsViewState.Closed
                 )
 
-                assertThat(emissions).isEqualTo(viewStates)
+                assertEquals(viewStates, actual = emissions)
             }
         }
     }

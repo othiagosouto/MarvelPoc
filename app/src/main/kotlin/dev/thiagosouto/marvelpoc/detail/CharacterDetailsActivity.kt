@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
 import dev.thiagosouto.marvelpoc.features.character.details.CharacterDetailsScreen
+import dev.thiagosouto.marvelpoc.features.character.details.CharacterDetailsViewModel
 import dev.thiagosouto.marvelpoc.features.character.details.Intent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

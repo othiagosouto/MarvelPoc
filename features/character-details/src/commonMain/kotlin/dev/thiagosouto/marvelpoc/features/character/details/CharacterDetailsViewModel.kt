@@ -1,11 +1,7 @@
-package dev.thiagosouto.marvelpoc.detail
+package dev.thiagosouto.marvelpoc.features.character.details
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dev.thiagosouto.marvelpoc.data.CharacterDetailsService
 import dev.thiagosouto.marvelpoc.data.Dispatchers
-import dev.thiagosouto.marvelpoc.features.character.details.DetailsViewState
-import dev.thiagosouto.marvelpoc.features.character.details.Intent
 import dev.thiagosouto.marvelpoc.features.character.details.domain.DetailsViewStateMapperInput
 import dev.thiagosouto.marvelpoc.support.presentation.PresentationMapper
 import dev.thiagosouto.marvelpoc.support.presentation.Presenter
@@ -14,12 +10,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-internal class CharacterDetailsViewModel(
+class CharacterDetailsViewModel(
     private val repository: CharacterDetailsService,
     private val detailsViewStateMapper: PresentationMapper<DetailsViewStateMapperInput, DetailsViewState>,
     private val dispatchers: Dispatchers
-) : ViewModel(),
-    Presenter<Intent, DetailsViewState> {
+) : Presenter<Intent, DetailsViewState>() {
 
     override fun process(intent: Intent) {
         processIntent(intent)
@@ -29,7 +24,7 @@ internal class CharacterDetailsViewModel(
     val state: StateFlow<DetailsViewState> = _state.asStateFlow()
 
     private fun processIntent(intent: Intent) {
-        viewModelScope.launch(dispatchers.io) {
+        presenterScope.launch(dispatchers.io) {
             when (intent) {
                 is Intent.OpenScreen -> {
                     process(Intent.Internal.LoadScreen(intent.characterId))
