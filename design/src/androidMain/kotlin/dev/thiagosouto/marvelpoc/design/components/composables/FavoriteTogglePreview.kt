@@ -5,12 +5,12 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Preview
 @Composable
-fun FavoriteTogglePreview1() {
+private fun FavoriteTogglePreview1() {
     FavoriteToggle( isFavorite = true){}
 }
 
 @Preview
 @Composable
-fun FavoriteTogglePreview2() {
+private fun FavoriteTogglePreview2() {
     FavoriteToggle( isFavorite = false){}
 }
