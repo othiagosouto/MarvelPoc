@@ -15,11 +15,13 @@ import dev.thiagosouto.marvelpoc.design.DesignSystemRes
 @Composable
 fun CharacterDetailsScreen(
     process: (Intent) -> Unit,
-    viewState: DetailsViewState
+    viewState: DetailsViewState,
+    close: () -> Unit
 ) {
     when (viewState) {
         is DetailsViewState.Loading -> LoadingPage()
         is DetailsViewState.Loaded -> LoadedViewState(viewState, process)
+        is DetailsViewState.Closed -> close()
         else -> Unit
     }
 }

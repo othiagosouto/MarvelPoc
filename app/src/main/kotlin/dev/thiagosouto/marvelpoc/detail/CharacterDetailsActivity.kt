@@ -24,7 +24,7 @@ internal class CharacterDetailsActivity : ComponentActivity() {
         lifecycleScope.launchWhenCreated {
             characterDetailsViewModel.state.collect {
                 setContent {
-                    CharacterDetailsScreen(characterDetailsViewModel::process, it)
+                    CharacterDetailsScreen(characterDetailsViewModel::process, it, ::finish)
                 }
             }
         }
