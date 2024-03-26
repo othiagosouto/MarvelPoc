@@ -24,12 +24,21 @@ internal class CharactersViewModel(
 
     val state: Flow<CharacterViewState> = service.source
         .map {
-            CharacterViewState.Loaded(it)
+            if (it.isEmpty()) {
+                errorState(EmptyDataException())
+            } else {
+                CharacterViewState.Loaded(it)
+            }
         }.catch {
             val (title, image) = handleException(it)
             CharacterViewState.Error(title, image)
         }
         .stateIn(viewModelScope, SharingStarted.Eagerly, CharacterViewState.Loading)
+
+    private fun errorState(throwable: Throwable): CharacterViewState {
+        val (title, image) = handleException(throwable)
+        return CharacterViewState.Error(title, image)
+    }
 
     fun favoriteClick(item: Character) {
         viewModelScope.launch {
